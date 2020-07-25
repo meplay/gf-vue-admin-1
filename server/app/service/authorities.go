@@ -39,6 +39,8 @@ func CopyAuthority(copyInfo *request.AuthorityCopy) (authority *authorities.Auth
 		menuList []*model.AuthorityMenu
 		baseMenu []model.BaseMenu
 	)
+	authority = (*authorities.Authorities)(nil)
+	authorityDb := global.GFVA_DB.Table("authorities").Safe()
 	if !authorities.RecordNotFound(g.Map{"authority_id": copyInfo.Authority.AuthorityId}) {
 		return authority, errors.New("存在相同角色id")
 	}
@@ -49,32 +51,17 @@ func CopyAuthority(copyInfo *request.AuthorityCopy) (authority *authorities.Auth
 		baseMenu = append(baseMenu, v.BaseMenu)
 	}
 	copyInfo.Authority.BaseMenu = baseMenu
-
-	//var menusReturn []model.AuthorityMenus
-	//authority = &authorities.Authorities{
-	//	AuthorityId:   copyInfo.Authority.AuthorityId,
-	//	AuthorityName: copyInfo.Authority.AuthorityName,
-	//	ParentId:      copyInfo.Authority.ParentId,
-	//	Children:      []authorities.Authorities{},
-	//}
-	//if !authorities.RecordNotFound(g.Map{"authority_id": copyInfo.Authority.AuthorityId}) {
-	//	return authority, errors.New("存在相同角色id")
-	//}
-	//menusReturn, err = GetMenuAuthority(copyInfo.OldAuthorityId)
-	//var baseMenu []menus.Entity
-	//for _, v := range menusReturn {
-	//	intNum, _ := strconv.Atoi(v.MenuId)
-	//	v.Entity.Id = uint(intNum)
-	//	baseMenu = append(baseMenu, v.Entity)
-	//}
-	//copyInfo.Authority.Menus = baseMenu
-	//_, err = menus.Insert(&copyInfo.Authority)
-	//paths := GetPolicyPathByAuthorityId(copyInfo.OldAuthorityId)
-	//if err = UpdateCasbin(copyInfo.Authority.AuthorityId, paths); err != nil {
-	//	_ = DeleteAuthority(&copyInfo.Authority)
-	//}
-	//return &copyInfo.Authority, err
-	return
+	_, err = authorities.Insert(g.Map{
+		"authority_id":   copyInfo.Authority.AuthorityId,
+		"authority_name": copyInfo.Authority.AuthorityName,
+		"parent_id":      copyInfo.Authority.ParentId,
+	})
+	paths := GetPolicyPathByAuthorityId(copyInfo.OldAuthorityId)
+	if err = UpdateCasbin(copyInfo.Authority.AuthorityId, paths); err != nil {
+		_ = DeleteAuthority(&request.DeleteAuthority{AuthorityId: copyInfo.Authority.AuthorityId})
+	}
+	err = authorityDb.Where(g.Map{"authority_id": copyInfo.Authority.AuthorityId}).Struct(&authority)
+	return authority, err
 }
 
 // @title    UpdateAuthority
