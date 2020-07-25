@@ -16,5 +16,5 @@ type SetAdminAuthority struct {
 
 // DeleteAdmin request Structure
 type DeleteAdmin struct {
-	Id float64 `p:"id" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
+	Id int `p:"id" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
 }
