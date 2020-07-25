@@ -1,13 +1,14 @@
-package system
+package router
 
 import (
 	v1 "server/app/api/v1"
-	"server/library/global"
+
+	"github.com/gogf/gf/frame/g"
 )
 
 // InitBaseRouter 注册基础功能路由
 func InitBaseRouter() {
-	BaseRouter := global.GFVA_SERVER.Group("base")
+	BaseRouter := g.Server().Group("base")
 	{
 		BaseRouter.POST("register", v1.AdminRegister)                 // 注册
 		BaseRouter.POST("login", v1.GfJWTMiddleware.LoginHandler)     // 登录

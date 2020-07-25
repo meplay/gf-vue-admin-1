@@ -1,15 +1,15 @@
-package system
+package router
 
 import (
 	v1 "server/app/api/v1"
 	"server/app/middleware"
-	"server/library/global"
+
+	"github.com/gogf/gf/frame/g"
 )
 
 // InitApiRouter 注册功能api路由
 func InitApiRouter() {
-	ApiRouter := global.GFVA_SERVER.Group("api").Middleware(middleware.JwtAuth)
-	//ApiRouter := global.GFVA_SERVER.Group("api").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	ApiRouter := g.Server().Group("api").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
 	{
 		ApiRouter.POST("createApi", v1.CreateApi)   // 创建Api
 		ApiRouter.POST("updateApi", v1.UpdateApi)   // 更新api

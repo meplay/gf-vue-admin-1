@@ -1,14 +1,15 @@
-package system
+package router
 
 import (
 	v1 "server/app/api/v1"
 	"server/app/middleware"
-	"server/library/global"
+
+	"github.com/gogf/gf/frame/g"
 )
 
 // InitOperationRouter 注册操作记录路由
 func InitOperationRouter() {
-	OperationRouter := global.GFVA_SERVER.Group("operation").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	OperationRouter := g.Server().Group("operation").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
 	{
 		OperationRouter.POST("CreateOperation", v1.CreateOperation)     // 新建Operation
 		OperationRouter.DELETE("deleteOperation", v1.DeleteOperation)   // 删除Operation

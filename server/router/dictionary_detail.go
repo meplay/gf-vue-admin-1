@@ -1,15 +1,15 @@
-package system
+package router
 
 import (
 	v1 "server/app/api/v1"
 	"server/app/middleware"
-	"server/library/global"
+
+	"github.com/gogf/gf/frame/g"
 )
 
 // InitDictionaryDetailRouter 注册字典详情管理路由
 func InitDictionaryDetailRouter() {
-	DictionaryDetailRouter := global.GFVA_SERVER.Group("sysDictionaryDetail").Middleware(middleware.JwtAuth)
-	//DictionaryDetailRouter := global.GFVA_SERVER.Group("sysDictionaryDetail").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	DictionaryDetailRouter := g.Server().Group("sysDictionaryDetail").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
 	{
 		DictionaryDetailRouter.POST("createSysDictionaryDetail", v1.CreateDictionaryDetail)   // 新建DictionaryDetail
 		DictionaryDetailRouter.DELETE("deleteSysDictionaryDetail", v1.DeleteDictionaryDetail) // 删除DictionaryDetail

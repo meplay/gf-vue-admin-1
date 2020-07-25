@@ -1,13 +1,14 @@
-package extend
+package router
 
 import (
 	v1 "server/app/api/v1"
-	"server/library/global"
+
+	"github.com/gogf/gf/frame/g"
 )
 
 // InitFileRouter 注册文件上传下载功能路由
 func InitFileRouter() {
-	FileRouter := global.GFVA_SERVER.Group("fileUploadAdDownload")
+	FileRouter := g.Server().Group("fileUploadAdDownload")
 	{
 		FileRouter.POST("upload", v1.UploadFile)                                 // 上传文件
 		FileRouter.POST("getFileList", v1.GetFileList)                           // 获取上传文件列表

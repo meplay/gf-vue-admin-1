@@ -1,14 +1,15 @@
-package extend
+package router
 
 import (
 	v1 "server/app/api/v1"
 	"server/app/middleware"
-	"server/library/global"
+
+	"github.com/gogf/gf/frame/g"
 )
 
 // InitCustomerRouter 注册功能api路由
 func InitCustomerRouter() {
-	CustomerRouter := global.GFVA_SERVER.Group("customer").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	CustomerRouter := g.Server().Group("customer").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
 	{
 		CustomerRouter.POST("customer", v1.CreateCustomer)     // 创建客户
 		CustomerRouter.PUT("customer", v1.UpdateCustomer)      // 更新客户
