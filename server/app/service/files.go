@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"server/app/api/request"
+	"server/app/model/breakpoint_chucks"
 	"server/app/model/breakpoint_files"
 	"server/app/model/files"
 	"server/library/utils"
@@ -48,7 +49,7 @@ func FindOrCreateFile(fileMd5 string, fileName string, chunkTotal int) (file *br
 		"chunk_total": chunkTotal,
 	}
 	if breakpoint_files.RecordNotFound(g.Map{"file_md5": fileMd5, "is_finish": utils.BoolToInt(true)}) {
-
+		return breakpoint_files.FindOne(g.Map{"file_md5": fileMd5})
 	}
 	insert["is_finish"] = utils.BoolToInt(true)
 	insert["file_path"] = file.FilePath // TODO file.FilePath
@@ -56,6 +57,28 @@ func FindOrCreateFile(fileMd5 string, fileName string, chunkTotal int) (file *br
 	return breakpoint_files.FindOne(g.Map{"file_md5": fileMd5})
 }
 
+// CreateFileChunk create a chunk of the file
+// CreateFileChunk 创建文件切片记录
 func CreateFileChunk(id uint, fileChunkPath string, fileChunkNumber int) (err error) {
-	return
+	insert := g.Map{
+		"exa_file_id":       id,
+		"file_chunk_path":   fileChunkPath,
+		"file_chunk_number": fileChunkNumber,
+	}
+	_, err = breakpoint_chucks.Insert(insert)
+	return err
+}
+
+// DeleteFileChunk delete a chuck of the file
+// DeleteFileChunk 删除文件切片记录
+func DeleteFileChunk(fileMd5 string, fileName string, filePath string) (err error) {
+	var files *breakpoint_files.Entity
+	condition := g.Map{
+		"file_md5":  fileMd5,
+		"file_name": fileName,
+	}
+	_, err = breakpoint_files.Update(condition, g.Map{"is_finish": utils.BoolToInt(true)})
+	files, err = breakpoint_files.FindOne(g.Map{"file_md5": fileMd5})
+	_, err = breakpoint_chucks.Delete(g.Map{"exa_file_id": files.ChunkId})
+	return err
 }

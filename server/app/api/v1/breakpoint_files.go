@@ -1,12 +1,16 @@
 package v1
 
 import (
+	"fmt"
 	"io/ioutil"
 	"mime/multipart"
+	"server/app/api/response"
 	"server/app/model/breakpoint_files"
 	"server/app/service"
 	"server/library/global"
 	"server/library/utils"
+
+	"github.com/gogf/gf/frame/g"
 
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
@@ -70,6 +74,15 @@ func BreakpointContinue(r *ghttp.Request) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查找成功"}"
 // @Router /fileUploadAndDownload/findFile [post]
 func FindFile(r *ghttp.Request) {
+	fileMd5 := gconv.String(r.GetQuery("fileMd5"))
+	fileName := gconv.String(r.GetQuery("fileName"))
+	chunkTotal := gconv.Int(r.GetQuery("chunkTotal"))
+	file, err := service.FindOrCreateFile(fileMd5, fileName, chunkTotal)
+	if err != nil {
+		global.FailWithMessage(r, "查找失败")
+		r.Exit()
+	}
+	global.OkWithData(r, response.ExaFile{File: file})
 }
 
 // @Tags ExaFileUploadAndDownload
@@ -81,6 +94,15 @@ func FindFile(r *ghttp.Request) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"file uploaded, 文件创建成功"}"
 // @Router /fileUploadAndDownload/findFile [post]
 func BreakpointContinueFinish(r *ghttp.Request) {
+	fileMd5 := r.GetString("fileMd5")
+	fileName := r.GetString("fileName")
+	filePath, err := utils.MakeFile(fileName, fileMd5)
+	if err != nil {
+		global.FailWithDetailed(r, global.ERROR, g.Map{"filePath": filePath}, fmt.Sprintf("文件创建失败：%v", err))
+		r.Exit()
+	}
+	global.OkDetailed(r, g.Map{"filePath": filePath}, "文件创建成功")
+
 }
 
 // @Tags ExaFileUploadAndDownload
@@ -92,14 +114,14 @@ func BreakpointContinueFinish(r *ghttp.Request) {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查找成功"}"
 // @Router /fileUploadAndDownload/removeChunk [post]
 func RemoveChunk(r *ghttp.Request) {
-	//fileMd5 := r.GetString("fileMd5")
-	//fileName := r.GetString("fileName")
-	//filePath := r.GetString("filePath")
-	//err := utils.RemoveChunk(fileMd5)
-	//err = service.DeleteFileChunk(fileMd5, fileName, filePath)
-	//if err != nil {
-	//	global.FailWithDetailed(r, global.ERROR, g.Map{"filePath": filePath}, fmt.Sprintf("缓存切片删除失败：%v", err))
-	//	r.Exit()
-	//}
-	//global.OkDetailed(r, g.Map{"filePath": filePath}, "缓存切片删除成功")
+	fileMd5 := r.GetString("fileMd5")
+	fileName := r.GetString("fileName")
+	filePath := r.GetString("filePath")
+	err := utils.RemoveChunk(fileMd5)
+	err = service.DeleteFileChunk(fileMd5, fileName, filePath)
+	if err != nil {
+		global.FailWithDetailed(r, global.ERROR, g.Map{"filePath": filePath}, fmt.Sprintf("缓存切片删除失败：%v", err))
+		r.Exit()
+	}
+	global.OkDetailed(r, g.Map{"filePath": filePath}, "缓存切片删除成功")
 }
