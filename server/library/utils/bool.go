@@ -1,6 +1,6 @@
 package utils
 
-func BoolToInt(b bool) (i int) {
+func BoolToInt(b bool) int {
 	if b {
 		return 1
 	}

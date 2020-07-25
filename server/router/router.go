@@ -20,5 +20,5 @@ func InitializeRouters() {
 	system.InitDictionaryRouter()       // 初始化字典管理路由
 	system.InitDictionaryDetailRouter() // 初始化字典详情管理路由
 	extend.InitCustomerRouter()         // 初始化客户路由
-	//extend.InitFileRouter()             // 初始化文件上传下载功能路由
+	extend.InitFileRouter()             // 初始化文件上传下载功能路由
 }

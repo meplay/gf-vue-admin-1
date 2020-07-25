@@ -3,7 +3,9 @@ package service
 import (
 	"errors"
 	"server/app/api/request"
+	"server/app/model/breakpoint_files"
 	"server/app/model/files"
+	"server/library/utils"
 
 	"github.com/gogf/gf/frame/g"
 )
@@ -35,4 +37,23 @@ func GetFileList(info *request.PageInfo) (list interface{}, total int, err error
 	total, err = db.Count()
 	err = db.Limit(limit).Offset(offset).Scan(&fileList)
 	return fileList, total, err
+}
+
+func FindOrCreateFile(fileMd5 string, fileName string, chunkTotal int) (file breakpoint_files.Entity, err error) {
+	insert := g.Map{
+		"file_md5":    fileMd5,
+		"file_name":   fileName,
+		"chunk_total": chunkTotal,
+	}
+	if breakpoint_files.RecordNotFound(g.Map{"file_md5": fileMd5, "is_finish": utils.BoolToInt(true)}) {
+
+	}
+	insert["is_finish"] = utils.BoolToInt(true)
+	insert["file_path"] = file.FilePath
+	_, err = breakpoint_files.Insert(insert)
+	return
+}
+
+func CreateFileChunk(id uint, fileChunkPath string, fileChunkNumber int) error {
+
 }

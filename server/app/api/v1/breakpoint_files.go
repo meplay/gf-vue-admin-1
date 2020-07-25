@@ -1,7 +1,14 @@
 package v1
 
 import (
+	"io/ioutil"
+	"mime/multipart"
+	"server/app/service"
+	"server/library/global"
+	"server/library/utils"
+
 	"github.com/gogf/gf/net/ghttp"
+	"github.com/gogf/gf/util/gconv"
 )
 
 // @Tags ExaFileUploadAndDownload
@@ -13,6 +20,42 @@ import (
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"上传成功"}"
 // @Router /fileUploadAndDownload/breakpointContinue [post]
 func BreakpointContinue(r *ghttp.Request) {
+	var (
+		pathc string
+		f     multipart.File
+	)
+	fileMd5 := r.Request.FormValue("fileMd5")
+	fileName := r.Request.FormValue("fileName")
+	chunkMd5 := r.Request.FormValue("chunkMd5")
+	chunkNumber := gconv.Int(r.Request.FormValue("chunkNumber"))
+	chunkTotal := gconv.Int(r.Request.FormValue("chunkTotal"))
+	_, FileHeader, err := r.Request.FormFile("file")
+	if err != nil {
+		global.FailWithMessage(r, err.Error())
+		r.Exit()
+	}
+	if f, err = FileHeader.Open(); err != nil {
+		global.FailWithMessage(r, err.Error())
+		r.Exit()
+	}
+	defer f.Close()
+	cen, _ := ioutil.ReadAll(f)
+	if flag := utils.CheckMd5(cen, chunkMd5); !flag {
+		return
+	}
+	if file, err = service.FindOrCreateFile(fileMd5, fileName, chunkTotal); err != nil {
+		global.FailWithMessage(r, err.Error())
+		r.Exit()
+	}
+	pathc, err = utils.BreakPointContinue(cen, fileName, chunkNumber, chunkTotal, fileMd5)
+	if err != nil {
+		global.FailWithMessage(r, err.Error())
+		r.Exit()
+	}
+	if err = service.CreateFileChunk(bk_files.Id, pathc, chunkNumber); err != nil {
+		global.FailWithMessage(r, err.Error())
+		return
+	}
 }
 
 // @Tags ExaFileUploadAndDownload

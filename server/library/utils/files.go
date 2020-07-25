@@ -78,15 +78,13 @@ func DeleteFile(key string) error {
 const breakpointDir = "./breakpointDir/"
 const finishDir = "./fileDir/"
 
-func BreakPointContinue(content []byte, fileName string, contentNumber int, contentTotal int, fileMd5 string) (error, string) {
+func BreakPointContinue(content []byte, fileName string, contentNumber int, contentTotal int, fileMd5 string) (string, error) {
 	path := breakpointDir + fileMd5 + "/"
 	err := os.MkdirAll(path, os.ModePerm)
 	if err != nil {
-		return err, path
+		return path, err
 	}
-	err, pathc := makeFileContent(content, fileName, path, contentNumber)
-	return err, pathc
-
+	return makeFileContent(content, fileName, path, contentNumber)
 }
 
 func CheckMd5(content []byte, chunkMd5 string) (CanUpload bool) {
@@ -98,19 +96,19 @@ func CheckMd5(content []byte, chunkMd5 string) (CanUpload bool) {
 	}
 }
 
-func makeFileContent(content []byte, fileName string, FileDir string, contentNumber int) (error, string) {
+func makeFileContent(content []byte, fileName string, FileDir string, contentNumber int) (string, error) {
 	path := FileDir + fileName + "_" + strconv.Itoa(contentNumber)
 	f, err := os.Create(path)
 	defer f.Close()
 	if err != nil {
-		return err, path
+		return path, err
 	} else {
 		_, err = f.Write(content)
 		if err != nil {
-			return err, path
+			return path, err
 		}
 	}
-	return nil, path
+	return path, err
 }
 
 func MakeFile(fileName string, FileMd5 string) (error, string) {

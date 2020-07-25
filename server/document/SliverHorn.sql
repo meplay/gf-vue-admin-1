@@ -274,3 +274,39 @@ create index menu_id
 
 create index authority_id
     on authority_menu (authority_id);
+
+
+-- ----------------------------
+-- Table structure for breakpoint_files Model
+-- ----------------------------
+DROP TABLE IF EXISTS `breakpoint_files`;
+CREATE TABLE `breakpoint_files`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `create_at` timestamp(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_at` timestamp(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `delete_at` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+  `file_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名',
+  `file_md5` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件md5',
+  `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
+  `chunk_id` int(11) NULL DEFAULT NULL COMMENT '关联id',
+  `chunk_total` int(11) NULL DEFAULT NULL COMMENT '切片总数',
+  `is_finish` tinyint(1) NULL DEFAULT NULL COMMENT '是否完整',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_breakpoint_files_deleted_at`(`delete_at`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for breakpoint_chucks Model
+-- ----------------------------
+DROP TABLE IF EXISTS `breakpoint_chucks`;
+CREATE TABLE `breakpoint_chucks`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `create_at` timestamp(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_at` timestamp(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `delete_at` timestamp(0) NULL DEFAULT NULL COMMENT '删除时间',
+  `exa_file_id` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '文件id',
+  `file_chunk_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '切片路径',
+  `file_chunk_number` int(11) NULL DEFAULT NULL COMMENT '切片标号',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_exa_file_chunks_deleted_at`(`delete_at`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
