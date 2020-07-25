@@ -3,6 +3,7 @@ package v1
 import (
 	"io/ioutil"
 	"mime/multipart"
+	"server/app/model/breakpoint_files"
 	"server/app/service"
 	"server/library/global"
 	"server/library/utils"
@@ -23,18 +24,19 @@ func BreakpointContinue(r *ghttp.Request) {
 	var (
 		pathc string
 		f     multipart.File
+		file  *breakpoint_files.Entity
 	)
 	fileMd5 := r.Request.FormValue("fileMd5")
 	fileName := r.Request.FormValue("fileName")
 	chunkMd5 := r.Request.FormValue("chunkMd5")
 	chunkNumber := gconv.Int(r.Request.FormValue("chunkNumber"))
 	chunkTotal := gconv.Int(r.Request.FormValue("chunkTotal"))
-	_, FileHeader, err := r.Request.FormFile("file")
+	_, fileHeader, err := r.Request.FormFile("file")
 	if err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
-	if f, err = FileHeader.Open(); err != nil {
+	if f, err = fileHeader.Open(); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
@@ -52,10 +54,11 @@ func BreakpointContinue(r *ghttp.Request) {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
-	if err = service.CreateFileChunk(bk_files.Id, pathc, chunkNumber); err != nil {
+	if err = service.CreateFileChunk(file.Id, pathc, chunkNumber); err != nil {
 		global.FailWithMessage(r, err.Error())
 		return
 	}
+	global.OkWithMessage(r, "切片创建成功")
 }
 
 // @Tags ExaFileUploadAndDownload

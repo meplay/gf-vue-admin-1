@@ -39,7 +39,9 @@ func GetFileList(info *request.PageInfo) (list interface{}, total int, err error
 	return fileList, total, err
 }
 
-func FindOrCreateFile(fileMd5 string, fileName string, chunkTotal int) (file breakpoint_files.Entity, err error) {
+// FindOrCreateFile Check your file if it does not exist, or return current slice of the file
+// FindOrCreateFile 上传文件时检测当前文件属性，如果没有文件则创建，有则返回文件的当前切片
+func FindOrCreateFile(fileMd5 string, fileName string, chunkTotal int) (file *breakpoint_files.Entity, err error) {
 	insert := g.Map{
 		"file_md5":    fileMd5,
 		"file_name":   fileName,
@@ -49,11 +51,11 @@ func FindOrCreateFile(fileMd5 string, fileName string, chunkTotal int) (file bre
 
 	}
 	insert["is_finish"] = utils.BoolToInt(true)
-	insert["file_path"] = file.FilePath
+	insert["file_path"] = file.FilePath // TODO file.FilePath
 	_, err = breakpoint_files.Insert(insert)
-	return
+	return breakpoint_files.FindOne(g.Map{"file_md5": fileMd5})
 }
 
-func CreateFileChunk(id uint, fileChunkPath string, fileChunkNumber int) error {
-
+func CreateFileChunk(id uint, fileChunkPath string, fileChunkNumber int) (err error) {
+	return
 }
