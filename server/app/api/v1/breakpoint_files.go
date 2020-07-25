@@ -16,14 +16,8 @@ import (
 	"github.com/gogf/gf/util/gconv"
 )
 
-// @Tags ExaFileUploadAndDownload
-// @Summary 断点续传到服务器
-// @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
-// @Param file formData file true "an example for breakpoint resume, 断点续传示例"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"上传成功"}"
-// @Router /fileUploadAndDownload/breakpointContinue [post]
+// BreakpointContinue The breakpoint continues to the server
+// BreakpointContinue 断点续传到服务器
 func BreakpointContinue(r *ghttp.Request) {
 	var (
 		pathc string
@@ -65,14 +59,8 @@ func BreakpointContinue(r *ghttp.Request) {
 	global.OkWithMessage(r, "切片创建成功")
 }
 
-// @Tags ExaFileUploadAndDownload
-// @Summary 查找文件
-// @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
-// @Param file formData file true "Find the file, 查找文件"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查找成功"}"
-// @Router /fileUploadAndDownload/findFile [post]
+// FindFile Find files
+// FindFile 查找文件
 func FindFile(r *ghttp.Request) {
 	fileMd5 := gconv.String(r.GetQuery("fileMd5"))
 	fileName := gconv.String(r.GetQuery("fileName"))
@@ -85,14 +73,8 @@ func FindFile(r *ghttp.Request) {
 	global.OkWithData(r, response.ExaFile{File: file})
 }
 
-// @Tags ExaFileUploadAndDownload
-// @Summary 查找文件
-// @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
-// @Param file formData file true "上传文件完成"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"file uploaded, 文件创建成功"}"
-// @Router /fileUploadAndDownload/findFile [post]
+// BreakpointContinueFinish Find files
+// BreakpointContinueFinish 查找文件
 func BreakpointContinueFinish(r *ghttp.Request) {
 	fileMd5 := r.GetString("fileMd5")
 	fileName := r.GetString("fileName")
@@ -105,14 +87,8 @@ func BreakpointContinueFinish(r *ghttp.Request) {
 
 }
 
-// @Tags ExaFileUploadAndDownload
-// @Summary 删除切片
-// @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
-// @Param file formData file true "删除缓存切片"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查找成功"}"
-// @Router /fileUploadAndDownload/removeChunk [post]
+// RemoveChunk Delete slices
+// RemoveChunk 删除切片
 func RemoveChunk(r *ghttp.Request) {
 	fileMd5 := r.GetString("fileMd5")
 	fileName := r.GetString("fileName")

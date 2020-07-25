@@ -10,13 +10,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags jwt
-// @Summary jwt加入黑名单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"拉黑成功"}"
-// @Router /jwt/jsonInBlacklist [post]
+// JsonInBlacklist JWT joins the blacklist
+// JsonInBlacklist jwt加入黑名单
 func JsonInBlacklist(r *ghttp.Request) {
 	token := r.Request.Header.Get("Authorization")
 	parts := strings.SplitN(token, " ", 2)

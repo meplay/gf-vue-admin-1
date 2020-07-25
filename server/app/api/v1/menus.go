@@ -11,13 +11,8 @@ import (
 	"github.com/gogf/gf/util/gconv"
 )
 
-// @Tags authorityAndMenu
-// @Summary 获取用户动态路由
-// @Security ApiKeyAuth
-// @Produce  application/json
-// @Param data body string true "可以什么都不填"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"返回成功"}"
-// @Router /menu/getMenu [post]
+// GetMenu Gets the user dynamic routing
+// GetMenu 获取用户动态路由
 func GetMenu(r *ghttp.Request) {
 	authorityId := gconv.String(r.GetParam("authority_id"))
 	menus, err := service.GetMenuTree(authorityId)
@@ -28,14 +23,8 @@ func GetMenu(r *ghttp.Request) {
 	global.OkWithData(r, response.AuthorityMenu{Menus: menus})
 }
 
-// @Tags menus
-// @Summary 分页获取基础menu列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.PageInfo true "分页获取基础menu列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/getMenuList [post]
+// GetMenuList Paging gets the base Menu list
+// GetMenuList 分页获取基础menu列表
 func GetMenuList(r *ghttp.Request) {
 	var pageInfo request.PageInfo
 	if err := r.Parse(&pageInfo); err != nil {
@@ -55,13 +44,8 @@ func GetMenuList(r *ghttp.Request) {
 	})
 }
 
-// @Tags authorityAndMenu
-// @Summary 获取用户动态路由
-// @Security ApiKeyAuth
-// @Produce  application/json
-// @Param data body string true "可以什么都不填"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"返回成功"}"
-// @Router /menu/getBaseMenuTree [post]
+// GetBaseMenuTree Gets the user dynamic routing
+// GetBaseMenuTree 获取用户动态路由
 func GetBaseMenuTree(r *ghttp.Request) {
 	menus, err := service.GetBaseMenuTree()
 	if err != nil {
@@ -71,14 +55,8 @@ func GetBaseMenuTree(r *ghttp.Request) {
 	global.OkWithData(r, response.BaseMenus{Menus: menus})
 }
 
-// @Tags authorityAndMenu
-// @Summary 增加menu和角色关联关系
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.AddMenuAuthorityInfo true "增加menu和角色关联关系"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/addMenuAuthority [post]
+// AddMenuAuthority Increases menu and role association
+// AddMenuAuthority 增加menu和角色关联关系
 func AddMenuAuthority(r *ghttp.Request) {
 	var addMenuAuthorityInfo request.AddMenuAuthorityInfo
 	err := service.AddMenuAuthority(&addMenuAuthorityInfo)
@@ -89,14 +67,8 @@ func AddMenuAuthority(r *ghttp.Request) {
 	global.OkWithMessage(r, "添加成功")
 }
 
-// @Tags authorityAndMenu
-// @Summary 获取指定角色menu
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.AuthorityIdInfo true "获取指定角色menu"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/GetMenuAuthority [post]
+// GetMenuAuthority Gets the specified role Menu
+// GetMenuAuthority 获取指定角色menu
 func GetMenuAuthority(r *ghttp.Request) {
 	var authorityIdInfo request.AuthorityIdInfo
 	if err := r.Parse(&authorityIdInfo); err != nil {
@@ -111,14 +83,8 @@ func GetMenuAuthority(r *ghttp.Request) {
 	global.Result(r, global.SUCCESS, response.AuthorityMenu{Menus: menus}, "获取成功")
 }
 
-// @Tags menus
-// @Summary 新增菜单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CreateBaseMenu true "新增菜单"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/addBaseMenu [post]
+// CreateBaseMenu The new menu
+// CreateBaseMenu 新增菜单
 func CreateBaseMenu(r *ghttp.Request) {
 	var create request.CreateBaseMenu
 	if err := r.Parse(&create); err != nil {
@@ -132,14 +98,8 @@ func CreateBaseMenu(r *ghttp.Request) {
 	global.FailWithMessage(r, "添加成功")
 }
 
-// @Tags menu
-// @Summary 删除菜单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.GetById true "删除菜单"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/deleteBaseMenu [post]
+// DeleteBaseMenu Delete menu
+// DeleteBaseMenu 删除菜单
 func DeleteBaseMenu(r *ghttp.Request) {
 	var deleteInfo request.GetById
 	if err := r.Parse(&deleteInfo); err != nil {
@@ -153,14 +113,8 @@ func DeleteBaseMenu(r *ghttp.Request) {
 	global.OkWithMessage(r, "删除成功")
 }
 
-// @Tags menus
-// @Summary 更新菜单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.UpdateBaseMenu true "更新菜单"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/updateBaseMenu [post]
+// UpdateBaseMenu Update menu
+// UpdateBaseMenu 更新菜单
 func UpdateBaseMenu(r *ghttp.Request) {
 	var updateInfo request.UpdateBaseMenu
 	if err := r.Parse(&updateInfo); err != nil {
@@ -174,14 +128,8 @@ func UpdateBaseMenu(r *ghttp.Request) {
 	global.OkWithMessage(r, "修改成功")
 }
 
-// @Tags menus
-// @Summary 根据id获取菜单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.GetById true "根据id获取菜单"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/getBaseMenuById [post]
+// GetBaseMenuById Get the menu by ID
+// GetBaseMenuById 根据id获取菜单
 func GetBaseMenuById(r *ghttp.Request) {
 	var idInfo request.GetById
 	if err := r.Parse(&idInfo); err != nil {

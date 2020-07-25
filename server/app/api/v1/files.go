@@ -13,14 +13,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags Files
-// @Summary 上传文件示例
-// @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
-// @Param file formData file true "上传文件示例"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"上传成功"}"
-// @Router /fileUploadAndDownload/upload [post]
+// UploadFile Upload file example
+// UploadFile 上传文件示例
 func UploadFile(r *ghttp.Request) {
 	var (
 		filePath string
@@ -54,13 +48,8 @@ func UploadFile(r *ghttp.Request) {
 	}
 }
 
-// @Tags Files
-// @Summary 删除文件
-// @Security ApiKeyAuth
-// @Produce  application/json
-// @Param data body request.DeleteFile true "传入文件里面id即可"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /fileUploadAndDownload/deleteFile [post]
+// DeleteFile Delete File
+// DeleteFile 删除文件
 func DeleteFile(r *ghttp.Request) {
 	var d request.DeleteFile
 	if err := r.Parse(&d); err != nil {
@@ -74,14 +63,8 @@ func DeleteFile(r *ghttp.Request) {
 	global.OkWithMessage(r, "删除成功")
 }
 
-// @Tags Files
-// @Summary 分页文件列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.PageInfo true "分页获取文件户列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /fileUploadAndDownload/getFileList [post]
+// GetFileList List of paging files
+// GetFileList 分页文件列表
 func GetFileList(r *ghttp.Request) {
 	var g request.PageInfo
 	if err := r.Parse(&g); err != nil {

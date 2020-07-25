@@ -12,14 +12,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags Dictionary
-// @Summary 创建Dictionary
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CreateDictionary true "创建Dictionary"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /sysDictionary/createDictionary [post]
+// CreateDictionary Create Dictionary
+// CreateDictionary 创建Dictionary
 func CreateDictionary(r *ghttp.Request) {
 	var createInfo request.CreateDictionary
 	if err := r.Parse(&createInfo); err != nil {
@@ -32,14 +26,8 @@ func CreateDictionary(r *ghttp.Request) {
 	global.OkWithMessage(r, "创建成功")
 }
 
-// @Tags Dictionary
-// @Summary 删除Dictionary
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.DeleteDictionary true "删除Dictionary"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /sysDictionary/deleteDictionary [delete]
+// DeleteDictionary Delete Dictionary
+// DeleteDictionary 删除Dictionary
 func DeleteDictionary(r *ghttp.Request) {
 	var deleteInfo request.DeleteDictionary
 	if err := r.Parse(&deleteInfo); err != nil {
@@ -52,14 +40,8 @@ func DeleteDictionary(r *ghttp.Request) {
 	global.OkWithMessage(r, "删除成功")
 }
 
-// @Tags Dictionary
-// @Summary 更新Dictionary
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.UpdateDictionary true "更新Dictionary"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /sysDictionary/updateDictionary [put]
+// UpdateDictionary Update Dictionary
+// UpdateDictionary 更新Dictionary
 func UpdateDictionary(r *ghttp.Request) {
 	var updateInfo request.UpdateDictionary
 	if err := r.Parse(&updateInfo); err != nil {
@@ -72,14 +54,8 @@ func UpdateDictionary(r *ghttp.Request) {
 	global.OkWithMessage(r, "更新成功")
 }
 
-// @Tags Dictionary
-// @Summary 用id查询Dictionary
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.FindDictionary true "用id查询Dictionary"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /sysDictionary/findDictionary [get]
+// FindDictionary Look up a Dictionary with an ID
+// FindDictionary 用id查询Dictionary
 func FindDictionary(r *ghttp.Request) {
 	var findInfo request.FindDictionary
 	if err := r.Parse(&findInfo); err != nil {
@@ -93,14 +69,8 @@ func FindDictionary(r *ghttp.Request) {
 	global.OkWithData(r, g.Map{"resysDictionary": dictionary})
 }
 
-// @Tags Dictionary
-// @Summary 分页获取Dictionary列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.DictionaryInfoList true "分页获取SysDictionary列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /sysDictionary/getSysDictionaryList [get]
+// GetDictionaryList Pagination gets the Dictionary list
+// GetDictionaryList 分页获取Dictionary列表
 func GetDictionaryList(r *ghttp.Request) {
 	var pageInfo request.DictionaryInfoList
 	if err := r.Parse(&pageInfo); err != nil {

@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/gogf/gf/frame/g"
-	"github.com/gogf/swagger"
 )
 
 func InitializeRunServer() {
@@ -17,6 +16,5 @@ func InitializeRunServer() {
 	global.GFVA_SERVER.SetWriteTimeout(10 * time.Second)
 	global.GFVA_SERVER.SetMaxHeaderBytes(1 << 20)
 	router.InitializeRouters()
-	global.GFVA_SERVER.Plugin(&swagger.Swagger{})
 	global.GFVA_SERVER.Run()
 }

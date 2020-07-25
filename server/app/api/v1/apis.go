@@ -10,14 +10,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags Apis
-// @Summary 创建基础api
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CreateApi true "创建api"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/createApi [post]
+// CreateApi Creating the base API
+// CreateApi 创建基础api
 func CreateApi(r *ghttp.Request) {
 	var c request.CreateApi
 	if err := r.Parse(&c); err != nil {
@@ -31,14 +25,8 @@ func CreateApi(r *ghttp.Request) {
 	global.OkWithMessage(r, "创建成功")
 }
 
-// @Tags Apis
-// @Summary 更新基础api
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.UpdateApi true "更新api"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /api/updateApi [post]
+// UpdateApi Update the base API
+// UpdateApi 更新基础api
 func UpdateApi(r *ghttp.Request) {
 	var u request.UpdateApi
 	if err := r.Parse(&u); err != nil {
@@ -52,14 +40,8 @@ func UpdateApi(r *ghttp.Request) {
 	global.OkWithMessage(r, "更新成功")
 }
 
-// @Tags Apis
-// @Summary 删除指定api
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.DeleteApi true "删除api"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /api/deleteApi [post]
+// DeleteApi Delete the specified API
+// DeleteApi 删除指定api
 func DeleteApi(r *ghttp.Request) {
 	var d request.DeleteApi
 	if err := r.Parse(&d); err != nil {
@@ -73,14 +55,8 @@ func DeleteApi(r *ghttp.Request) {
 	global.OkWithMessage(r, "删除成功")
 }
 
-// @Tags Apis
-// @Summary 根据id获取api
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.GetApiById true "根据id获取api"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getApiById [post]
+// GetApiById Get the API by ID
+// GetApiById 根据id获取api
 func GetApiById(r *ghttp.Request) {
 	var G request.GetApiById
 	if err := r.Parse(&G); err != nil {
@@ -95,13 +71,8 @@ func GetApiById(r *ghttp.Request) {
 	global.OkDetailed(r, response.ApiResponse{Api: apiReturn}, "获取成功")
 }
 
-// @Tags Apis
-// @Summary 获取所有的Api 不分页
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getAllApis [post]
+// GetAllApis Gets all apis not paged
+// GetAllApis 获取所有的Api 不分页
 func GetAllApis(r *ghttp.Request) {
 	apisReturn, err := service.GetAllApis()
 	if err != nil {
@@ -111,16 +82,8 @@ func GetAllApis(r *ghttp.Request) {
 	global.OkDetailed(r, response.ApiListResponse{Apis: apisReturn}, "获取成功")
 }
 
-// 条件搜索后端看此api
-
-// @Tags Apis
-// @Summary 分页获取API列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.GetApiList true "分页获取API列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /api/getApiList [post]
+// GetApiList Paging gets the LIST of apis
+// GetApiList 分页获取API列表, 条件搜索后端看此api
 func GetApiList(r *ghttp.Request) {
 	var pageInfo request.GetApiList // 此结构体仅本方法使用
 	if err := r.Parse(&pageInfo); err != nil {

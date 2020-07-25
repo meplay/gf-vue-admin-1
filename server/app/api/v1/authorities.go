@@ -11,14 +11,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags authority
-// @Summary 创建角色
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CreateAuthority true "创建角色"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
-// @Router /authority/createAuthority [post]
+// CreateAuthority Create the role
+// CreateAuthority 创建角色
 func CreateAuthority(r *ghttp.Request) {
 	var c request.CreateAuthority
 	if err := r.Parse(&c); err != nil {
@@ -33,14 +27,8 @@ func CreateAuthority(r *ghttp.Request) {
 	global.OkDetailed(r, response.Authority{Authority: authority}, "创建成功")
 }
 
-// @Tags authority
-// @Summary 拷贝角色
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.AuthorityCopy true "拷贝角色"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"拷贝成功"}"
-// @Router /authority/copyAuthority [post]
+// CopyAuthority Copy the role
+// CopyAuthority 拷贝角色
 func CopyAuthority(r *ghttp.Request) {
 	var copyInfo request.AuthorityCopy
 	if err := r.Parse(&copyInfo); err != nil {
@@ -55,14 +43,8 @@ func CopyAuthority(r *ghttp.Request) {
 	global.OkWithData(r, response.CopyAuthority{Authority: authority})
 }
 
-// @Tags authority
-// @Summary 删除角色
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.DeleteAuthority true "删除角色"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /authority/deleteAuthority [post]
+// DeleteAuthority Delete the role
+// DeleteAuthority 删除角色
 func DeleteAuthority(r *ghttp.Request) {
 	var d request.DeleteAuthority
 	if err := r.Parse(&d); err != nil {
@@ -76,14 +58,8 @@ func DeleteAuthority(r *ghttp.Request) {
 	global.OkWithMessage(r, "删除成功")
 }
 
-// @Tags authority
-// @Summary 设置角色资源权限
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.UpdateAuthority true "设置角色资源权限"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
-// @Router /authority/updateAuthority [post]
+// UpdateAuthority Set the role resource permissions
+// UpdateAuthority 设置角色资源权限
 func UpdateAuthority(r *ghttp.Request) {
 	var u request.UpdateAuthority
 	if err := r.Parse(&u); err != nil {
@@ -98,14 +74,8 @@ func UpdateAuthority(r *ghttp.Request) {
 	global.OkDetailed(r, response.Authority{Authority: authority}, "更改成功")
 }
 
-// @Tags authority
-// @Summary 分页获取角色列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.PageInfo true "分页获取用户列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /authority/getAuthorityList [post]
+// GetAuthorityList Paging gets the list of roles
+// GetAuthorityList 分页获取角色列表
 func GetAuthorityList(r *ghttp.Request) {
 	var pageInfo request.PageInfo
 	if err := r.Parse(&pageInfo); err != nil {
@@ -120,14 +90,8 @@ func GetAuthorityList(r *ghttp.Request) {
 	global.OkDetailed(r, response.PageResult{List: list, Total: total, Page: pageInfo.Page, PageSize: pageInfo.PageSize}, "获取成功")
 }
 
-// @Tags authority
-// @Summary 设置角色资源权限
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body authorities.Authorities true "设置角色资源权限"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
-// @Router /authority/setDataAuthority [post]
+// SetDataAuthority Set the role resource permissions
+// SetDataAuthority 设置角色资源权限
 func SetDataAuthority(r *ghttp.Request) {
 	var auth authorities.Authorities
 	if err := r.Parse(&auth); err != nil {

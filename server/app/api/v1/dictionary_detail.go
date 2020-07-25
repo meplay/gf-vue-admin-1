@@ -12,14 +12,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags DictionaryDetail
-// @Summary 创建DictionaryDetail
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CreateDictionaryDetail true "创建DictionaryDetail"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /DictionaryDetail/createDictionaryDetail [post]
+// CreateDictionaryDetail Create DictionaryDetail
+// CreateDictionaryDetail 创建DictionaryDetail
 func CreateDictionaryDetail(r *ghttp.Request) {
 	var createInfo request.CreateDictionaryDetail
 	if err := r.Parse(&createInfo); err != nil {
@@ -32,14 +26,8 @@ func CreateDictionaryDetail(r *ghttp.Request) {
 	global.OkWithMessage(r, "创建成功")
 }
 
-// @Tags DictionaryDetail
-// @Summary 删除DictionaryDetail
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.DeleteDictionaryDetail true "删除DictionaryDetail"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /DictionaryDetail/deleteDictionaryDetail [delete]
+// DeleteDictionaryDetail Delete DictionaryDetail
+// DeleteDictionaryDetail 删除DictionaryDetail
 func DeleteDictionaryDetail(r *ghttp.Request) {
 	var deleteRequest request.DeleteDictionaryDetail
 	if err := r.Parse(&deleteRequest); err != nil {
@@ -52,14 +40,8 @@ func DeleteDictionaryDetail(r *ghttp.Request) {
 	global.OkWithMessage(r, "删除成功")
 }
 
-// @Tags DictionaryDetail
-// @Summary 更新DictionaryDetail
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.UpdateDictionaryDetail true "更新DictionaryDetail"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /DictionaryDetail/updateDictionaryDetail [put]
+// UpdateDictionaryDetail Update DictionaryDetail
+// UpdateDictionaryDetail 更新DictionaryDetail
 func UpdateDictionaryDetail(r *ghttp.Request) {
 	var updateRequest request.UpdateDictionaryDetail
 	if err := r.Parse(&updateRequest); err != nil {
@@ -72,14 +54,8 @@ func UpdateDictionaryDetail(r *ghttp.Request) {
 	global.OkWithMessage(r, "更新成功")
 }
 
-// @Tags DictionaryDetail
-// @Summary 用id查询DictionaryDetail
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.FindDictionaryDetail true "用id查询DictionaryDetail"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /DictionaryDetail/findDictionaryDetail [get]
+// FindDictionaryDetail Query DictionaryDetail with id
+// FindDictionaryDetail 用id查询DictionaryDetail
 func FindDictionaryDetail(r *ghttp.Request) {
 	var findRequest request.FindDictionaryDetail
 	if err := r.Parse(&findRequest); err != nil {
@@ -93,14 +69,8 @@ func FindDictionaryDetail(r *ghttp.Request) {
 	global.OkDetailed(r, g.Map{"DictionaryDetail": dataReturn}, "查询成功")
 }
 
-// @Tags DictionaryDetail
-// @Summary 分页获取DictionaryDetail列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.GetDictionaryDetailList true "分页获取DictionaryDetail列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /DictionaryDetail/getDictionaryDetailList [get]
+// GetDictionaryDetailList Paging to get a list of DictionaryDetails
+// GetDictionaryDetailList 分页获取DictionaryDetail列表
 func GetDictionaryDetailList(r *ghttp.Request) {
 	var pageInfoList request.GetDictionaryDetailList
 	if err := r.Parse(&pageInfoList); err != nil {

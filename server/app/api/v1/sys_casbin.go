@@ -12,14 +12,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags casbin
-// @Summary 更改角色api权限
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CasbinInReceive true "更改角色api权限"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /casbin/UpdateCasbin [post]
+// UpdateCasbin Change role API permissions
+// UpdateCasbin 更改角色api权限
 func UpdateCasbin(r *ghttp.Request) {
 	var update request.CasbinInReceive
 	if err := r.Parse(&update); err != nil {
@@ -33,14 +27,8 @@ func UpdateCasbin(r *ghttp.Request) {
 	global.OkWithMessage(r, "添加规则成功")
 }
 
-// @Tags casbin
-// @Summary 获取权限列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CasbinInReceive true "获取权限列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /casbin/getPolicyPathByAuthorityId [post]
+// GetPolicyPathByAuthorityId Get permission list
+// GetPolicyPathByAuthorityId 获取权限列表
 func GetPolicyPathByAuthorityId(r *ghttp.Request) {
 	var cmr request.CasbinInReceive
 	if err := r.Parse(&cmr); err != nil {
@@ -51,14 +39,7 @@ func GetPolicyPathByAuthorityId(r *ghttp.Request) {
 	global.OkWithData(r, response.PolicyPath{Paths: paths})
 }
 
-// @Tags casbin
-// @Summary casb RBAC RESTFUL测试路由
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.CasbinInReceive true "获取权限列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /casbin/CasbinTest [get]
+// CasbinTest casb RBAC RESTFUL测试路由
 func CasbinTest(r *ghttp.Request) {
 	// 测试restful以及占位符代码  随意书写
 	pathParam := r.GetParam("pathParam")

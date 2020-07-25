@@ -15,13 +15,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags Admins
-// @Summary 用户修改密码
-// @Security ApiKeyAuth
-// @Produce  application/json
-// @Param data body request.ChangePassword true "用户修改密码"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /user/changePassword [post]
+// ChangePassword "Administrator changes password"
+// ChangePassword "管理员修改密码"
 func ChangePassword(r *ghttp.Request) {
 	var c request.ChangePassword
 	if err := r.Parse(&c); err != nil {
@@ -36,15 +31,8 @@ func ChangePassword(r *ghttp.Request) {
 	global.OkWithMessage(r, "修改成功")
 }
 
-// @Tags Admins
-// @Summary 用户上传头像
-// @Security ApiKeyAuth
-// @accept multipart/form-data
-// @Produce  application/json
-// @Param headerImg formData file true "用户上传头像"
-// @Param username formData string true "用户上传头像"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"上传成功"}"
-// @Router /user/uploadHeaderImg [post]
+// UploadHeaderImg User uploads profile picture
+// UploadHeaderImg 用户上传头像
 func UploadHeaderImg(r *ghttp.Request) {
 	var (
 		err      error
@@ -68,14 +56,8 @@ func UploadHeaderImg(r *ghttp.Request) {
 	}
 }
 
-// @Tags Admins
-// @Summary 分页获取用户列表
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.PageInfo true "分页获取用户列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /user/getUserList [post]
+// GetAdminList Paging gets the list of users
+// GetAdminList 分页获取用户列表
 func GetAdminList(r *ghttp.Request) {
 	var get request.PageInfo
 	if err := r.Parse(&get); err != nil {
@@ -90,14 +72,8 @@ func GetAdminList(r *ghttp.Request) {
 	global.OkDetailed(r, response.PageResult{List: list, Total: total, Page: get.Page, PageSize: get.PageSize}, "获取成功")
 }
 
-// @Tags Admins
-// @Summary 设置用户权限
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.SetAdminAuthority true "设置用户权限"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
-// @Router /user/setUserAuthority [post]
+// SetUserAuthority Set user permissions
+// SetUserAuthority 设置用户权限
 func SetUserAuthority(r *ghttp.Request) {
 	var set request.SetAdminAuthority
 	if err := r.Parse(&set); err != nil {
@@ -111,14 +87,8 @@ func SetUserAuthority(r *ghttp.Request) {
 	global.OkWithMessage(r, "修改成功")
 }
 
-// @Tags Admins
-// @Summary 删除用户
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.DeleteAdmin true "删除用户"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /user/deleteUser [delete]
+// DeleteAdmin Delete user
+// DeleteAdmin 删除用户
 func DeleteAdmin(r *ghttp.Request) {
 	var d request.DeleteAdmin
 	if err := r.Parse(&d); err != nil {

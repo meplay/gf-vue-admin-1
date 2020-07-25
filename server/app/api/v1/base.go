@@ -10,12 +10,8 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-// @Tags Base
-// @Summary 管理员注册账号
-// @Produce  application/json
-// @Param data body request.AdminRegister true "管理员注册接口"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
-// @Router /base/register [post]
+// AdminRegister Administrator account registration
+// AdminRegister 管理员注册账号
 func AdminRegister(r *ghttp.Request) {
 	var R request.AdminRegister
 	if err := r.Parse(&R); err != nil {
@@ -28,13 +24,8 @@ func AdminRegister(r *ghttp.Request) {
 	global.OkDetailed(r, g.Map{}, "注册成功!")
 }
 
-// @Tags base
-// @Summary 生成验证码
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /base/captcha [post]
+// Captcha Generate verification code
+// Captcha 生成验证码
 func Captcha(r *ghttp.Request) {
 	id, b64s, err := service.Captcha()
 	if err != nil {
