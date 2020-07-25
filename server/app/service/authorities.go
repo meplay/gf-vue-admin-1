@@ -8,7 +8,6 @@ import (
 	"server/app/model/authorities"
 	"server/app/model/authority_menu"
 	"server/app/model/authority_resources"
-	"server/library/global"
 
 	"github.com/gogf/gf/util/gconv"
 
@@ -40,7 +39,7 @@ func CopyAuthority(copyInfo *request.AuthorityCopy) (authority *authorities.Auth
 		baseMenu []model.BaseMenu
 	)
 	authority = (*authorities.Authorities)(nil)
-	authorityDb := global.GFVA_DB.Table("authorities").Safe()
+	authorityDb := g.DB("default").Table("authorities").Safe()
 	if !authorities.RecordNotFound(g.Map{"authority_id": copyInfo.Authority.AuthorityId}) {
 		return authority, errors.New("存在相同角色id")
 	}
@@ -99,7 +98,7 @@ func DeleteAuthority(auth *request.DeleteAuthority) (err error) {
 func GetAuthorityInfoList(info *request.PageInfo) (list interface{}, total int, err error) {
 	var associated []*authority_resources.Entity
 	authorityList := ([]*authorities.Authorities)(nil)
-	authorityDb := global.GFVA_DB.Table("authorities").Safe()
+	authorityDb := g.DB("default").Table("authorities").Safe()
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	err = authorityDb.Where(g.Map{"parent_id": "0"}).Limit(limit).Offset(offset).Structs(&authorityList)

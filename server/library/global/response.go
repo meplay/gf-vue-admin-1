@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -22,7 +23,7 @@ func Result(r *ghttp.Request, code int, data interface{}, message string) {
 		data,
 		message,
 	}); err != nil {
-		GFVA_LOG.Error(err)
+		g.Log().Error(err)
 	}
 }
 

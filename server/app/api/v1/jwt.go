@@ -47,7 +47,7 @@ func init() {
 		PayloadFunc:     PayloadFunc,
 	})
 	if err != nil {
-		global.GFVA_LOG.Fatal("JWT Error:" + err.Error())
+		g.Log().Fatal("JWT Error:" + err.Error())
 	}
 	GfJWTMiddleware = authMiddleware
 }

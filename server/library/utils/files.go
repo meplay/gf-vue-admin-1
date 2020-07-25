@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"os"
-	"server/library/global"
 	"strconv"
 	"time"
 
@@ -46,7 +45,7 @@ func Upload(file *multipart.FileHeader) (path string, key string, err error) {
 	fileKey := fmt.Sprintf("%d%s", time.Now().Unix(), file.Filename) // 文件名格式 自己可以改 建议保证唯一性
 	err = formUploader.Put(context.Background(), &ret, upToken, fileKey, f, dataLen, &putExtra)
 	if err != nil {
-		global.GFVA_LOG.Error("upload file fail:", err)
+		g.Log().Error("upload file fail:", err)
 		return "", "", err
 	}
 	return g.Cfg().GetString("qiniu.ImgPath") + "/" + ret.Key, ret.Key, err

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"server/app/api/request"
 	"server/app/model"
-	"server/library/global"
 	"strings"
 
 	"server/library/gdbadapter"
@@ -44,7 +43,7 @@ func AddCasbin(cm model.CasbinModel) bool {
 // UpdateCasbinApi update casbin apis
 // UpdateCasbinApi API更新随动
 func UpdateCasbinApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
-	_, err := global.GFVA_DB.Table("casbin_rule").Data(g.Map{"v1": newPath, "v2": newMethod}).Where(g.Map{"v1": oldPath, "v2": oldMethod}).Update()
+	_, err := g.DB("default").Table("casbin_rule").Data(g.Map{"v1": newPath, "v2": newMethod}).Where(g.Map{"v1": oldPath, "v2": oldMethod}).Update()
 	return err
 }
 
@@ -73,7 +72,7 @@ func ClearCasbin(v int, p ...string) bool {
 // Casbin store to DB,
 // Casbin 持久化到数据库  引入自定义规则
 func Casbin() *casbin.Enforcer {
-	a, err := gdbadapter.NewAdapterByDB(global.GFVA_DB, "casbins")
+	a, err := gdbadapter.NewAdapterByDB(g.DB("default"), "casbins")
 	if err != nil {
 		panic(err)
 	}

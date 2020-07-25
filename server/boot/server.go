@@ -9,11 +9,11 @@ import (
 )
 
 func InitializeRunServer() {
-	g.Server() = g.Server()
-	g.Server().Use(middleware.Error)
-	g.Server().SetReadTimeout(10 * time.Second)
-	g.Server().SetWriteTimeout(10 * time.Second)
-	g.Server().SetMaxHeaderBytes(1 << 20)
+	s := g.Server()
+	s.Use(middleware.Error)
+	s.SetReadTimeout(10 * time.Second)
+	s.SetWriteTimeout(10 * time.Second)
+	s.SetMaxHeaderBytes(1 << 20)
 	router.InitializeRouters()
-	g.Server().Run()
+	s.Run()
 }
