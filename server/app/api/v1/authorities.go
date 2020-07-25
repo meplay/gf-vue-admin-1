@@ -16,7 +16,7 @@ import (
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysAuthority true "创建角色"
+// @Param data body request.CreateAuthority true "创建角色"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
 // @Router /authority/createAuthority [post]
 func CreateAuthority(r *ghttp.Request) {
@@ -38,7 +38,7 @@ func CreateAuthority(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body response.SysAuthorityCopyResponse true "拷贝角色"
+// @Param data body request.AuthorityCopy true "拷贝角色"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"拷贝成功"}"
 // @Router /authority/copyAuthority [post]
 func CopyAuthority(r *ghttp.Request) {
@@ -60,7 +60,7 @@ func CopyAuthority(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysAuthority true "删除角色"
+// @Param data body request.DeleteAuthority true "删除角色"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /authority/deleteAuthority [post]
 func DeleteAuthority(r *ghttp.Request) {
@@ -81,7 +81,7 @@ func DeleteAuthority(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysAuthority true "设置角色资源权限"
+// @Param data body request.UpdateAuthority true "设置角色资源权限"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
 // @Router /authority/updateAuthority [post]
 func UpdateAuthority(r *ghttp.Request) {
@@ -125,7 +125,7 @@ func GetAuthorityList(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysAuthority true "设置角色资源权限"
+// @Param data body authorities.Authorities true "设置角色资源权限"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
 // @Router /authority/setDataAuthority [post]
 func SetDataAuthority(r *ghttp.Request) {

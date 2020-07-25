@@ -19,7 +19,7 @@ import (
 // @Summary 用户修改密码
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body request.ChangePasswordStruct true "用户修改密码"
+// @Param data body request.ChangePassword true "用户修改密码"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/changePassword [post]
 func ChangePassword(r *ghttp.Request) {
@@ -95,7 +95,7 @@ func GetAdminList(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.SetUserAuth true "设置用户权限"
+// @Param data body request.SetAdminAuthority true "设置用户权限"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/setUserAuthority [post]
 func SetUserAuthority(r *ghttp.Request) {
@@ -116,7 +116,7 @@ func SetUserAuthority(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetById true "删除用户"
+// @Param data body request.DeleteAdmin true "删除用户"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /user/deleteUser [delete]
 func DeleteAdmin(r *ghttp.Request) {

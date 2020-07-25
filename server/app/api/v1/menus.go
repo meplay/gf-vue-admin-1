@@ -15,7 +15,7 @@ import (
 // @Summary 获取用户动态路由
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body request.RegisterAndLoginStruct true "可以什么都不填"
+// @Param data body string true "可以什么都不填"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"返回成功"}"
 // @Router /menu/getMenu [post]
 func GetMenu(r *ghttp.Request) {
@@ -59,7 +59,7 @@ func GetMenuList(r *ghttp.Request) {
 // @Summary 获取用户动态路由
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body request.RegisterAndLoginStruct true "可以什么都不填"
+// @Param data body string true "可以什么都不填"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"返回成功"}"
 // @Router /menu/getBaseMenuTree [post]
 func GetBaseMenuTree(r *ghttp.Request) {
@@ -116,7 +116,7 @@ func GetMenuAuthority(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysBaseMenu true "新增菜单"
+// @Param data body request.CreateBaseMenu true "新增菜单"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /menu/addBaseMenu [post]
 func CreateBaseMenu(r *ghttp.Request) {
@@ -158,7 +158,7 @@ func DeleteBaseMenu(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysBaseMenu true "更新菜单"
+// @Param data body request.UpdateBaseMenu true "更新菜单"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /menu/updateBaseMenu [post]
 func UpdateBaseMenu(r *ghttp.Request) {

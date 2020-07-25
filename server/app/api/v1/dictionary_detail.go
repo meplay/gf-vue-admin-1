@@ -17,7 +17,7 @@ import (
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.DictionaryDetail true "创建DictionaryDetail"
+// @Param data body request.CreateDictionaryDetail true "创建DictionaryDetail"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /DictionaryDetail/createDictionaryDetail [post]
 func CreateDictionaryDetail(r *ghttp.Request) {
@@ -37,7 +37,7 @@ func CreateDictionaryDetail(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.DictionaryDetail true "删除DictionaryDetail"
+// @Param data body request.DeleteDictionaryDetail true "删除DictionaryDetail"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /DictionaryDetail/deleteDictionaryDetail [delete]
 func DeleteDictionaryDetail(r *ghttp.Request) {
@@ -57,7 +57,7 @@ func DeleteDictionaryDetail(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.DictionaryDetail true "更新DictionaryDetail"
+// @Param data body request.UpdateDictionaryDetail true "更新DictionaryDetail"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
 // @Router /DictionaryDetail/updateDictionaryDetail [put]
 func UpdateDictionaryDetail(r *ghttp.Request) {
@@ -77,7 +77,7 @@ func UpdateDictionaryDetail(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.DictionaryDetail true "用id查询DictionaryDetail"
+// @Param data body request.FindDictionaryDetail true "用id查询DictionaryDetail"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /DictionaryDetail/findDictionaryDetail [get]
 func FindDictionaryDetail(r *ghttp.Request) {
@@ -98,7 +98,7 @@ func FindDictionaryDetail(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.DictionaryDetailSearch true "分页获取DictionaryDetail列表"
+// @Param data body request.GetDictionaryDetailList true "分页获取DictionaryDetail列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /DictionaryDetail/getDictionaryDetailList [get]
 func GetDictionaryDetailList(r *ghttp.Request) {

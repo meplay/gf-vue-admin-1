@@ -15,7 +15,7 @@ import (
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysApi true "创建api"
+// @Param data body request.CreateApi true "创建api"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /api/createApi [post]
 func CreateApi(r *ghttp.Request) {
@@ -36,7 +36,7 @@ func CreateApi(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysApi true "更新api"
+// @Param data body request.UpdateApi true "更新api"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
 // @Router /api/updateApi [post]
 func UpdateApi(r *ghttp.Request) {
@@ -57,7 +57,7 @@ func UpdateApi(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysApi true "删除api"
+// @Param data body request.DeleteApi true "删除api"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /api/deleteApi [post]
 func DeleteApi(r *ghttp.Request) {
@@ -78,7 +78,7 @@ func DeleteApi(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetById true "根据id获取api"
+// @Param data body request.GetApiById true "根据id获取api"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /api/getApiById [post]
 func GetApiById(r *ghttp.Request) {
@@ -118,7 +118,7 @@ func GetAllApis(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.SearchApiParams true "分页获取API列表"
+// @Param data body request.GetApiList true "分页获取API列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /api/getApiList [post]
 func GetApiList(r *ghttp.Request) {

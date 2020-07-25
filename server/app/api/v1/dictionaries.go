@@ -17,7 +17,7 @@ import (
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.Dictionary true "创建Dictionary"
+// @Param data body request.CreateDictionary true "创建Dictionary"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /sysDictionary/createDictionary [post]
 func CreateDictionary(r *ghttp.Request) {
@@ -37,7 +37,7 @@ func CreateDictionary(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.Dictionary true "删除Dictionary"
+// @Param data body request.DeleteDictionary true "删除Dictionary"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /sysDictionary/deleteDictionary [delete]
 func DeleteDictionary(r *ghttp.Request) {
@@ -57,7 +57,7 @@ func DeleteDictionary(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.Dictionary true "更新Dictionary"
+// @Param data body request.UpdateDictionary true "更新Dictionary"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
 // @Router /sysDictionary/updateDictionary [put]
 func UpdateDictionary(r *ghttp.Request) {
@@ -77,7 +77,7 @@ func UpdateDictionary(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.Dictionary true "用id查询Dictionary"
+// @Param data body request.FindDictionary true "用id查询Dictionary"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /sysDictionary/findDictionary [get]
 func FindDictionary(r *ghttp.Request) {
@@ -98,7 +98,7 @@ func FindDictionary(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.DictionarySearch true "分页获取SysDictionary列表"
+// @Param data body request.DictionaryInfoList true "分页获取SysDictionary列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /sysDictionary/getSysDictionaryList [get]
 func GetDictionaryList(r *ghttp.Request) {

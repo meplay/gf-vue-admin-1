@@ -99,7 +99,7 @@ func UpdateOperation(r *ghttp.Request) {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.SysOperationRecord true "用id查询Operation"
+// @Param data body request.UpdateOperation true "用id查询Operation"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /operation/findOperation [get]
 func FindOperation(r *ghttp.Request) {

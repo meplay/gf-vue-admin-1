@@ -13,7 +13,7 @@ import (
 // @Tags Base
 // @Summary 管理员注册账号
 // @Produce  application/json
-// @Param data body model.SysUser true "管理员注册接口"
+// @Param data body request.AdminRegister true "管理员注册接口"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
 // @Router /base/register [post]
 func AdminRegister(r *ghttp.Request) {
