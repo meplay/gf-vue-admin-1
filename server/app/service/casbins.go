@@ -7,9 +7,10 @@ import (
 	"server/library/global"
 	"strings"
 
+	"server/library/gdbadapter"
+
 	"github.com/casbin/casbin"
 	"github.com/casbin/casbin/util"
-	gdbadapter "github.com/flipped-aurora/gdb-adapter"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -72,7 +73,7 @@ func ClearCasbin(v int, p ...string) bool {
 // Casbin store to DB,
 // Casbin 持久化到数据库  引入自定义规则
 func Casbin() *casbin.Enforcer {
-	a, err := gdbadapter.NewAdapterByDB(global.GFVA_DB)
+	a, err := gdbadapter.NewAdapterByDB(global.GFVA_DB, "casbins")
 	if err != nil {
 		panic(err)
 	}
