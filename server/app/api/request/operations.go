@@ -40,8 +40,8 @@ type FindOperation struct {
 }
 
 type GetOperationList struct {
-	Method string `p:"method"        v:"required | length:1, 20#请输入请求方法|请求方法长度为:min到max"`
-	Path   string `p:"path"          v:"required | length:1, 20#请输入请求路由|请求路由长度为:min到max"`
-	Status int    `p:"status"        v:"required | length:1, 20#请输入状态|状态长度为:min到max"`
+	Method string `p:"method"`
+	Path   string `p:"path"`
+	Status int    `p:"status"`
 	PageInfo
 }

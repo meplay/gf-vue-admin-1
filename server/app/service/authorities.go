@@ -65,16 +65,16 @@ func CopyAuthority(copyInfo *request.AuthorityCopy) (authority *authorities.Auth
 
 // @title    UpdateAuthority
 // @description   更改一个角色
-func UpdateAuthority(update *request.UpdateAuthority) (authority *authorities.Entity, err error) {
+func UpdateAuthority(update *request.UpdateAuthority) (err error) {
 	updateData := &authorities.Entity{
 		AuthorityId:   update.AuthorityId,
 		AuthorityName: update.AuthorityName,
 		ParentId:      update.ParentId,
 	}
-	if _, err = authorities.Update(g.Map{"authority_id": update.AuthorityId}); err != nil {
-		return updateData, err
+	if _, err = authorities.Update(updateData, g.Map{"authority_id": update.AuthorityId}); err != nil {
+		return err
 	}
-	return updateData, nil
+	return
 }
 
 // DeleteAuthority Delete role
@@ -105,9 +105,13 @@ func GetAuthorityInfoList(info *request.PageInfo) (list interface{}, total int, 
 	for _, v := range authorityList {
 		associated, err = authority_resources.FindAll(g.Map{"authority_id": v.AuthorityId})
 		for _, a := range associated {
-			err = authorityDb.Where(g.Map{"authority_id": a.ResourcesId}).Scan(v.DataAuthority) // 资源权限
+			if a.ResourcesId != "" {
+				err = authorityDb.Where(g.Map{"authority_id": a.ResourcesId}).Scan(v.DataAuthority) // 资源权限
+			}
 		}
-		err = authorityDb.Where(g.Map{"parent_id": v.AuthorityId}).Scan(v.Children) // 子用户
+		if v.ParentId != "0" {
+			err = authorityDb.Where(g.Map{"parent_id": v.AuthorityId}).Scan(v.Children) // 子用户
+		}
 	}
 	if err != nil {
 		return authorityList, total, errors.New("查询失败! ")

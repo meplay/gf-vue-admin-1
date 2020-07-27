@@ -6,13 +6,13 @@ import (
 
 	"github.com/gogf/gf/database/gdb"
 
-	"github.com/casbin/casbin/v2/model"
-	"github.com/casbin/casbin/v2/persist"
+	"github.com/casbin/casbin/model"
+	"github.com/casbin/casbin/persist"
 )
 
 type CasbinRule struct {
 	PType string `orm:"ptype" json:"ptype"`
-	V0    string `orm:"v0"json:"v0"`
+	V0    string `orm:"v0" json:"v0"`
 	V1    string `orm:"v1" json:"v1"`
 	V2    string `orm:"v2" json:"v2"`
 	V3    string `orm:"v3" json:"v3"`
@@ -25,10 +25,8 @@ type CasbinRule struct {
 type Adapter struct {
 	driverName     string
 	dataSourceName string
-	dbSpecified    bool
 	tableName      string
 	db             gdb.DB
-	isFiltered     bool
 }
 
 // finalizer is the destructor for Adapter.
@@ -66,6 +64,19 @@ func NewAdapter(driverName string, dataSourceName string) (*Adapter, error) {
 	return a, nil
 }
 
+// NewAdapterByConfig
+func NewAdapterByConfig() (a *Adapter, err error) {
+	a = &Adapter{}
+	a.tableName = "casbin_rule"
+	a.db, err = gdb.New("casbin")
+	if err := a.createTable(); err != nil {
+		return a, err
+	}
+	// Call the destructor when the object is released.
+	runtime.SetFinalizer(a, finalizer)
+	return a, nil
+}
+
 // NewAdapterByDB is the constructor for Adapter.Need to pass in gdb.DB
 // NewAdapterByDB 是Adapter的构造函数,需要传入gdb.DB
 func NewAdapterByDB(db gdb.DB, tableName string) (*Adapter, error) {
@@ -73,16 +84,21 @@ func NewAdapterByDB(db gdb.DB, tableName string) (*Adapter, error) {
 		db:        db,
 		tableName: tableName,
 	}
+	if a.tableName == "" {
+		a.tableName = "casbin_rule"
+	}
 	if err := a.createTable(); err != nil {
 		return nil, err
 	}
+	// Call the destructor when the object is released.
+	// 在释放对象时调用析构函数。
+	runtime.SetFinalizer(a, finalizer)
 	return a, nil
 }
 
 // NewAdapterFromOptions is the constructor for Adapter with existed connection
 // NewAdapterFromOptions 适配器的构造函数是否具有已存在的连接
 func NewAdapterFromOptions(adapter *Adapter) (*Adapter, error) {
-
 	if adapter.tableName == "" {
 		adapter.tableName = "casbin_rule"
 	}
@@ -91,16 +107,13 @@ func NewAdapterFromOptions(adapter *Adapter) (*Adapter, error) {
 		if err != nil {
 			return nil, err
 		}
-
 		runtime.SetFinalizer(adapter, finalizer)
 	}
 	return adapter, nil
 }
 
-func (a *Adapter) open() error {
-	var err error
+func (a *Adapter) open() (err error) {
 	var db gdb.DB
-
 	gdb.SetConfig(gdb.Config{
 		"casbin": gdb.ConfigGroup{
 			gdb.ConfigNode{
@@ -128,21 +141,27 @@ func (a *Adapter) close() error {
 	return nil
 }
 
+// hasTable determine whether the table name exists in the database.
+// hasTable 确定数据库中是否存在表名。
+func (a *Adapter) hasTable(name string) (bool, error) {
+	tables, err := a.db.Tables()
+	if err != nil {
+		return false, err
+	}
+	for _, table := range tables {
+		if table == name {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 // createTable Create a data table
 // createTable 创建数据表
 func (a *Adapter) createTable() error {
-	if a.db != nil {
-		_, err := a.db.Exec(fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (ptype VARCHAR(10), v0 VARCHAR(256), v1 VARCHAR(256), v2 VARCHAR(256), v3 VARCHAR(256), v4 VARCHAR(256), v5 VARCHAR(256))", a.tableName))
-		return err
-	}
-	tables, err := a.db.Tables()
-	if err != nil {
-		return err
-	}
-	for _, v := range tables {
-		if v == a.tableName {
-			return nil
-		}
+	hasTable, err := a.hasTable(a.tableName)
+	if hasTable {
+		return nil
 	}
 	_, err = a.db.Exec(fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (ptype VARCHAR(10), v0 VARCHAR(256), v1 VARCHAR(256), v2 VARCHAR(256), v3 VARCHAR(256), v4 VARCHAR(256), v5 VARCHAR(256))", a.tableName))
 	return err
@@ -182,7 +201,8 @@ func loadPolicyLine(rule CasbinRule, model model.Model) {
 // LoadPolicy loads policy from database.
 // LoadPolicy 从数据库加载策略。
 func (a *Adapter) LoadPolicy(model model.Model) error {
-	var lines []CasbinRule
+	//var lines []CasbinRule
+	lines := ([]CasbinRule)(nil)
 
 	if err := a.db.Table(a.tableName).Scan(&lines); err != nil {
 		return err

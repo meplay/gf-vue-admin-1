@@ -66,12 +66,11 @@ func UpdateAuthority(r *ghttp.Request) {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
-	authority, err := service.UpdateAuthority(&u)
-	if err != nil {
+	if err := service.UpdateAuthority(&u); err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("更改失败，err:%v", err))
 		r.Exit()
 	}
-	global.OkDetailed(r, response.Authority{Authority: authority}, "更改成功")
+	global.OkWithMessage(r, "更改成功")
 }
 
 // GetAuthorityList Paging gets the list of roles

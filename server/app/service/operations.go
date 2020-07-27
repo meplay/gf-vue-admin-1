@@ -2,6 +2,7 @@ package service
 
 import (
 	"server/app/api/request"
+	"server/app/model/admins"
 	"server/app/model/operations"
 
 	"github.com/gogf/gf/frame/g"
@@ -69,11 +70,12 @@ func FindOperation(find *request.FindOperation) (operation *operations.Entity, e
 // GetOperationList Page out the Operation list
 // GetOperationList 分页获取Operation列表
 func GetOperationList(info *request.GetOperationList) (list interface{}, total int, err error) {
-	var operationList []*operations.Entity
+	var operationList []*operations.Operations
 	condition := g.Map{}
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := g.DB("default").Table("operations").Safe()
+	adminDb := g.DB("default").Table("admins").Safe()
 	if info.Method != "" {
 		condition["method"] = info.Method
 	}
@@ -85,5 +87,10 @@ func GetOperationList(info *request.GetOperationList) (list interface{}, total i
 	}
 	total, err = db.Where(condition).Count()
 	err = db.Order("id desc").Limit(limit).Offset(offset).Scan(&operationList)
+	for _, v := range operationList {
+		admin := (*admins.Admin)(nil)
+		err = adminDb.Where(g.Map{"id": v.UserId}).Struct(&admin)
+		v.User = admin
+	}
 	return operationList, total, err
 }

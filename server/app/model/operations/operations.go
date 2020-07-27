@@ -4,4 +4,26 @@
 
 package operations
 
-// Fill with you ideas below.
+import (
+	"server/app/model/admins"
+
+	"github.com/gogf/gf/os/gtime"
+)
+
+type Operations struct {
+	Id           uint          `orm:"id,primary"    json:"ID"`            // 自增ID
+	CreateAt     *gtime.Time   `orm:"create_at"     json:"CreatedAt"`     // 创建时间
+	UpdateAt     *gtime.Time   `orm:"update_at"     json:"UpdatedAt"`     // 更新时间
+	DeleteAt     *gtime.Time   `orm:"delete_at"     json:"DeletedAt"`     // 删除时间
+	Ip           string        `orm:"ip"            json:"ip"`            // 请求ip
+	Method       string        `orm:"method"        json:"method"`        // 请求方法
+	Path         string        `orm:"path"          json:"path"`          // 请求路由
+	Status       int           `orm:"status"        json:"status"`        // 状态
+	Latency      int64         `orm:"latency"       json:"latency"`       // 延迟
+	Agent        string        `orm:"agent"         json:"agent"`         // 代理
+	ErrorMessage string        `orm:"error_message" json:"error_message"` // 报错信息
+	Request      string        `orm:"request"       json:"body"`          // 请求Body
+	UserId       int           `orm:"user_id"       json:"user_id"`       // 用户id
+	Response     string        `orm:"response"      json:"resp"`          // 响应Body
+	User         *admins.Admin `json:"user"`
+}

@@ -72,7 +72,8 @@ func ClearCasbin(v int, p ...string) bool {
 // Casbin store to DB,
 // Casbin 持久化到数据库  引入自定义规则
 func Casbin() *casbin.Enforcer {
-	a, err := gdbadapter.NewAdapterByDB(g.DB("default"), "casbins")
+	//a, err := gdbadapter.NewAdapter("mysql", "root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin")
+	a, err := gdbadapter.NewAdapterByConfig()
 	if err != nil {
 		panic(err)
 	}

@@ -64,6 +64,20 @@
     Link  = "mysql:root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin"
     Debug = true
 
+    # casbin Mysql配置
+    [database.casbin]
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Role         = "casbin"
+    Debug        = "true"
+    Dryrun       = 1
+    Weight       = "100"
+    Charset      = "utf8"
+
     # 测试环境Mysql配置
     [database.test]
     Link  = "mysql:root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin-test"
@@ -79,4 +93,4 @@
 [redis]
     # host:port[,db,pass?maxIdle=x&maxActive=x&idleTimeout=x&maxConnLifetime=x]
     default = "127.0.0.1:6379,1,?idleTimeout=600"
-    cache   = "127.0.0.1:6379,1,?idleTimeout=600"
+    cache   = "127.0.0.1:6379,2,?idleTimeout=600"

@@ -12,6 +12,7 @@ func InitializeRouters() {
 	InitJwtRouter()    // 初始化jwt相关路由
 	//system.InitSystemRouter()           // 初始化system配置相关路由
 	//system.InitAutoCodeRouter()         // 创建自动化代码
+	InitOperationRouter()        // 初始化操作记录路由
 	InitDictionaryRouter()       // 初始化字典管理路由
 	InitDictionaryDetailRouter() // 初始化字典详情管理路由
 	InitCustomerRouter()         // 初始化客户路由
