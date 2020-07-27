@@ -12,12 +12,6 @@ import (
 	"github.com/gogf/gf/util/gconv"
 )
 
-// JwtAuth authHook is the HOOK function implements JWT logistics.
-//func JwtAuth(r *ghttp.Request) {
-//	service.GfJWTMiddleware.MiddlewareFunc()(r)
-//	r.Middleware.Next()
-//}
-
 // JwtAuth 验证token有效性
 func JwtAuth(r *ghttp.Request) {
 	v1.GfJWTMiddleware.MiddlewareFunc()(r)
