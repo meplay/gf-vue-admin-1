@@ -95,9 +95,10 @@ func DeleteAuthority(auth *request.DeleteAuthority) (err error) {
 
 // GetInfoList Get data by page
 // GetInfoList 分页获取数据
-func GetAuthorityInfoList(info *request.PageInfo) (list interface{}, total int, err error) {
+func GetAuthorityInfoList(info *request.PageInfo) (authorityList []*authorities.Authorities, total int, err error) {
 	var associated []*authority_resources.Entity
-	authorityList := ([]*authorities.Authorities)(nil)
+	authorityList = ([]*authorities.Authorities)(nil)
+	Children := ([]*authorities.Authorities)(nil)
 	authorityDb := g.DB("default").Table("authorities").Safe()
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
@@ -106,15 +107,18 @@ func GetAuthorityInfoList(info *request.PageInfo) (list interface{}, total int, 
 		associated, err = authority_resources.FindAll(g.Map{"authority_id": v.AuthorityId})
 		for _, a := range associated {
 			if a.ResourcesId != "" {
-				err = authorityDb.Where(g.Map{"authority_id": a.ResourcesId}).Scan(v.DataAuthority) // 资源权限
+				err = authorityDb.Where(g.Map{"authority_id": a.ResourcesId}).Structs(&v.DataAuthority) // 资源权限
 			}
 		}
-		if v.ParentId != "0" {
-			err = authorityDb.Where(g.Map{"parent_id": v.AuthorityId}).Scan(v.Children) // 子用户
+		err = authorityDb.Where(g.Map{"parent_id": v.AuthorityId}).Structs(&Children)
+		for _, c := range Children {
+			if v.AuthorityId == c.ParentId {
+				v.Children = append(v.Children, c)
+			}
 		}
 	}
 	if err != nil {
-		return authorityList, total, errors.New("查询失败! ")
+		return authorityList, total, errors.New("查询失败")
 	}
 	return authorityList, total, err
 }

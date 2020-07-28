@@ -30,10 +30,11 @@ func JwtAuth(r *ghttp.Request) {
 		r.ExitAll()
 	}
 	var claims = gconv.Map(Token.Claims)
-	r.SetParam("uuid", claims["uuid"])
-	r.SetParam("authority_id", claims["authority_id"])
-	if !service.ValidatorRedisToken(gconv.String(claims["uuid"]), token) {
+	r.SetParam("user_uuid", claims["user_uuid"])
+	r.SetParam("user_authority_id", claims["user_authority_id"])
+	if !service.ValidatorRedisToken(gconv.String(claims["user_uuid"]), token) {
 		global.FailWithMessage(r, "Token鉴权失败")
+		r.Exit()
 	}
 	r.Middleware.Next()
 }

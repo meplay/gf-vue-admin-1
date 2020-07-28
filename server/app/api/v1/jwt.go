@@ -172,5 +172,5 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 		return nil, jwt.ErrFailedAuthentication
 	}
 	r.SetParam("admin", admin) // 设置参数保存到请求中
-	return g.Map{"uuid": admin.Uuid, "user_id": admin.Id, "nickname": admin.Nickname, "authority_id": admin.AuthorityId}, nil
+	return g.Map{"user_uuid": admin.Uuid, "user_id": admin.Id, "user_nickname": admin.Nickname, "user_authority_id": admin.AuthorityId}, nil
 }
