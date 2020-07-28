@@ -18,26 +18,26 @@
             </el-row>
             <el-row :gutter="10">
               <el-col :span="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
+                <a href="https://github.com/flipped-aurora/gf-vue-admin">
                   <img
                     class="dom-center"
-                    src="https://img.shields.io/github/watchers/flipped-aurora/gin-vue-admin.svg?label=Watch"
+                    src="https://img.shields.io/github/watchers/flipped-aurora/gf-vue-admin.svg?label=Watch"
                     alt=""
                   />
                 </a>
               </el-col>
               <el-col :span="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
+                <a href="https://github.com/flipped-aurora/gf-vue-admin">
                   <img
                     class="dom-center"
-                    src="https://img.shields.io/github/stars/flipped-aurora/gin-vue-admin.svg?style=social"
+                    src="https://img.shields.io/github/stars/flipped-aurora/gf-vue-admin.svg?style=social"
                     alt=""/></a
               ></el-col>
               <el-col :span="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
+                <a href="https://github.com/flipped-aurora/gf-vue-admin">
                   <img
                     class="dom-center"
-                    src="https://img.shields.io/github/forks/flipped-aurora/gin-vue-admin.svg?label=Fork"
+                    src="https://img.shields.io/github/forks/flipped-aurora/gf-vue-admin.svg?label=Fork"
                     alt=""/></a
               ></el-col>
             </el-row>

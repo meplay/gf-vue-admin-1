@@ -25,7 +25,7 @@ func CreateDictionaryDetail(create *request.CreateDictionaryDetail) (err error) 
 
 // CreateDictionaryDetail create a DictionaryDetail
 // CreateDictionaryDetail 创建一个DictionaryDetail
-func DeleteDictionaryDetail(delete *request.DeleteDictionaryDetail) (err error) {
+func DeleteDictionaryDetail(delete *request.DeleteById) (err error) {
 	_, err = dictionary_details.Delete(g.Map{"id": delete.Id})
 	return err
 }
@@ -52,14 +52,17 @@ func UpdateDictionaryDetail(update *request.UpdateDictionaryDetail) (err error) 
 
 // FindDictionaryDetail Query DictionaryDetail with id
 // FindDictionaryDetail 用id查询DictionaryDetail
-func FindDictionaryDetail(find *request.FindDictionaryDetail) (dataReturn *dictionary_details.Entity, err error) {
-	return dictionary_details.FindOne(g.Map{"id": find.Id})
+func FindDictionaryDetail(find *request.FindById) (dictionaryDetails *dictionary_details.DictionaryDetails, err error) {
+	dictionaryDetails = (*dictionary_details.DictionaryDetails)(nil)
+	db := g.DB("default").Table("dictionary_details").Safe()
+	err = db.Where(g.Map{"id": find.Id}).Struct(&dictionaryDetails)
+	return dictionaryDetails, err
 }
 
 // GetDictionaryDetailList Paging to get a list of DictionaryDetails
 // GetDictionaryDetailList 分页获取DictionaryDetail列表
-func GetDictionaryDetailList(get *request.GetDictionaryDetailList) (list interface{}, total int, err error) {
-	var dictionaryList []*dictionary_details.Entity
+func GetDictionaryDetailList(get *request.GetDictionaryDetailList) (list []*dictionary_details.DictionaryDetails, total int, err error) {
+	list = ([]*dictionary_details.DictionaryDetails)(nil)
 	condition := g.Map{}
 	limit := get.PageSize
 	offset := get.PageSize * (get.Page - 1)
@@ -77,6 +80,6 @@ func GetDictionaryDetailList(get *request.GetDictionaryDetailList) (list interfa
 		condition["dictionary_id"] = get.DictionaryId
 	}
 	total, err = db.Where(condition).Count()
-	err = db.Limit(limit).Offset(offset).Where(condition).Scan(&dictionaryList)
-	return dictionaryList, total, err
+	err = db.Limit(limit).Offset(offset).Where(condition).Scan(&list)
+	return list, total, err
 }

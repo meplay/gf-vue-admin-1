@@ -7,21 +7,21 @@
       <el-table-column label="头像" min-width="50">
         <template slot-scope="scope">
           <div :style="{'textAlign':'center'}">
-            <img :src="scope.row.header_img" height="35" width="35" />
+            <img :src="scope.row.headerImg" height="35" width="35" />
           </div>
         </template>
       </el-table-column>
       <el-table-column label="uuid" min-width="250" prop="uuid"></el-table-column>
-      <el-table-column label="用户名" min-width="150" prop="username"></el-table-column>
-      <el-table-column label="昵称" min-width="150" prop="nickname"></el-table-column>
+      <el-table-column label="用户名" min-width="150" prop="userName"></el-table-column>
+      <el-table-column label="昵称" min-width="150" prop="nickName"></el-table-column>
       <el-table-column label="用户角色" min-width="150">
         <template slot-scope="scope">
           <el-cascader
             @change="changeAuthority(scope.row)"
-            v-model="scope.row.authority.authority_id"
+            v-model="scope.row.authority.authorityId"
             :options="authOptions"
             :show-all-levels="false"
-            :props="{ checkStrictly: true,label:'authority_name',value:'authority_id',disabled:'disabled',emitPath:false}"
+            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
             filterable
           ></el-cascader>
         </template>
@@ -59,7 +59,7 @@
           <el-input v-model="userInfo.password"></el-input>
         </el-form-item>
         <el-form-item label="别名" label-width="80px" prop="nickName">
-          <el-input v-model="userInfo.nickname"></el-input>
+          <el-input v-model="userInfo.nickName"></el-input>
         </el-form-item>
         <el-form-item label="头像" label-width="80px">
           <el-upload
@@ -70,17 +70,17 @@
             class="avatar-uploader"
             name="file"
           >
-            <img :src="userInfo.header_img" class="avatar" v-if="userInfo.header_img" />
+            <img :src="userInfo.headerImg" class="avatar" v-if="userInfo.headerImg" />
             <i class="el-icon-plus avatar-uploader-icon" v-else></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="用户角色" label-width="80px" prop="authority_id">
+        <el-form-item label="用户角色" label-width="80px" prop="authorityId">
           <el-cascader
             @change="changeAuthority(scope.row)"
-            v-model="userInfo.authority_id"
+            v-model="userInfo.authorityId"
             :options="authOptions"
             :show-all-levels="false"
-            :props="{ checkStrictly: true,label:'authority_name',value:'authority_id',disabled:'disabled',emitPath:false}"
+            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
             filterable
           ></el-cascader>
         </el-form-item>
@@ -118,9 +118,9 @@ export default {
       userInfo: {
         username: "",
         password: "",
-       nickname: "",
-        header_img: "",
-        authority_id: ""
+        nickName: "",
+        headerImg: "",
+        authorityId: ""
       },
       rules: {
         username: [
@@ -131,10 +131,10 @@ export default {
           { required: true, message: "请输入用户密码", trigger: "blur" },
           { min: 6, message: "最低6位字符", trigger: "blur"}
         ],
-       nickname: [
+        nickName: [
           { required: true, message: "请输入用户昵称", trigger: "blur" }
         ],
-        authority_id: [
+        authorityId: [
           { required: true, message: "请选择用户角色", trigger: "blur" }
         ]
       }
@@ -153,23 +153,23 @@ export default {
         AuthorityData.map(item => {
           if (item.children&&item.children.length) {
             const option = {
-              authority_id: item.authority_id,
-              authority_name: item.authority_name,
+              authorityId: item.authorityId,
+              authorityName: item.authorityName,
               children: []
             };
             this.setAuthorityOptions(item.children, option.children);
             optionsData.push(option);
           } else {
             const option = {
-              authority_id: item.authority_id,
-              authority_name: item.authority_name
+              authorityId: item.authorityId,
+              authorityName: item.authorityName
             };
             optionsData.push(option);
           }
         });
     },
     async deleteUser(row) {
-      const res = await deleteUser({ id: row.id });
+      const res = await deleteUser({ id: row.ID });
       if (res.code == 0) {
         this.getTableData();
         row.visible = false;
@@ -192,7 +192,7 @@ export default {
       this.addUserDialog = false;
     },
     handleAvatarSuccess(res) {
-      this.userInfo.header_img = res.data.file.url;
+      this.userInfo.headerImg = res.data.file.url;
     },
     addUser() {
       this.addUserDialog = true;
@@ -200,7 +200,7 @@ export default {
     async changeAuthority(row) {
       const res = await setUserAuthority({
         uuid: row.uuid,
-        authority_id: row.authority.authority_id
+        authorityId: row.authority.authorityId
       });
       if (res.code == 0) {
         this.$message({ type: "success", message: "角色设置成功" });

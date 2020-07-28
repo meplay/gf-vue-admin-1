@@ -1,6 +1,6 @@
 # HTTP Server
 [server]
-    Address          = ":7777"
+    Address          = ":8888"
     ServerRoot       = ""
     ServerAgent      = ""
     IndexFiles       = []

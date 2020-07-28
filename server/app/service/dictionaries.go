@@ -67,7 +67,7 @@ func FindDictionary(find *request.FindDictionary) (dictReturn *dictionaries.Enti
 // GetDictionaryInfoList get Dictionary list by pagination
 // GetDictionaryInfoList 通过分页获得Dictionary列表
 func GetDictionaryInfoList(info *request.DictionaryInfoList) (list interface{}, total int, err error) {
-	var dictionaryList []*dictionaries.Entity
+	var dictionaryList []*dictionaries.Dictionaries
 	condition := g.Map{}
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)

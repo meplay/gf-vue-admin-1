@@ -66,8 +66,8 @@ func GetAllApis() (list []*apis.Entity, err error) {
 
 // GetApiInfoList Page to get the data
 // GetApiInfoList 分页获取数据
-func GetApiInfoList(api *request.GetApiList) (list []*apis.Entity, total int, err error) {
-	list = ([]*apis.Entity)(nil)
+func GetApiInfoList(api *request.GetApiList) (list []*apis.Apis, total int, err error) {
+	list = ([]*apis.Apis)(nil)
 	db := g.DB("default").Table("apis").Safe()
 	limit := api.PageSize
 	offset := api.PageSize * (api.Page - 1)

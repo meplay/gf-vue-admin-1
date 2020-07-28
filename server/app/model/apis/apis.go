@@ -4,6 +4,19 @@
 
 package apis
 
+import "github.com/gogf/gf/os/gtime"
+
+type Apis struct {
+	Id          uint        `orm:"id,primary"  json:"ID"`          // 自增ID
+	CreateAt    *gtime.Time `orm:"create_at"   json:"CreatedAt"`   // 创建时间
+	UpdateAt    *gtime.Time `orm:"update_at"   json:"UpdatedAt"`   // 更新时间
+	DeleteAt    *gtime.Time `orm:"delete_at"   json:"DeletedAt"`   // 删除时间
+	Path        string      `orm:"path"        json:"path"`        // api路径
+	Description string      `orm:"description" json:"description"` // api中文描述
+	ApiGroup    string      `orm:"api_group"   json:"apiGroup"`    // api组
+	Method      string      `orm:"method"      json:"method"`      // 方法
+}
+
 // RecordNotFound 根据条件判断数据是否存在
 // 有数据返回false
 // 没数据 true

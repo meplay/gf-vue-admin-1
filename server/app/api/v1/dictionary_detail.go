@@ -29,11 +29,11 @@ func CreateDictionaryDetail(r *ghttp.Request) {
 // DeleteDictionaryDetail Delete DictionaryDetail
 // DeleteDictionaryDetail 删除DictionaryDetail
 func DeleteDictionaryDetail(r *ghttp.Request) {
-	var deleteRequest request.DeleteDictionaryDetail
-	if err := r.Parse(&deleteRequest); err != nil {
+	var delete request.DeleteById
+	if err := r.Parse(&delete); err != nil {
 		global.FailWithMessage(r, err.Error())
 	}
-	if err := service.DeleteDictionaryDetail(&deleteRequest); err != nil {
+	if err := service.DeleteDictionaryDetail(&delete); err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("删除失败，err:%v", err))
 		r.Exit()
 	}
@@ -43,11 +43,11 @@ func DeleteDictionaryDetail(r *ghttp.Request) {
 // UpdateDictionaryDetail Update DictionaryDetail
 // UpdateDictionaryDetail 更新DictionaryDetail
 func UpdateDictionaryDetail(r *ghttp.Request) {
-	var updateRequest request.UpdateDictionaryDetail
-	if err := r.Parse(&updateRequest); err != nil {
+	var update request.UpdateDictionaryDetail
+	if err := r.Parse(&update); err != nil {
 		global.FailWithMessage(r, err.Error())
 	}
-	if err := service.UpdateDictionaryDetail(&updateRequest); err != nil {
+	if err := service.UpdateDictionaryDetail(&update); err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("更新失败，err:%v", err))
 		r.Exit()
 	}
@@ -57,11 +57,12 @@ func UpdateDictionaryDetail(r *ghttp.Request) {
 // FindDictionaryDetail Query DictionaryDetail with id
 // FindDictionaryDetail 用id查询DictionaryDetail
 func FindDictionaryDetail(r *ghttp.Request) {
-	var findRequest request.FindDictionaryDetail
-	if err := r.Parse(&findRequest); err != nil {
+	var find request.FindById
+	if err := r.Parse(&find); err != nil {
 		global.FailWithMessage(r, err.Error())
+		r.Exit()
 	}
-	dataReturn, err := service.FindDictionaryDetail(&findRequest)
+	dataReturn, err := service.FindDictionaryDetail(&find)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("查询失败，err:%v", err))
 		r.Exit()

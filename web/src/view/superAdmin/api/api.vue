@@ -9,7 +9,7 @@
           <el-input placeholder="描述" v-model="searchInfo.description"></el-input>
         </el-form-item>
         <el-form-item label="api组">
-          <el-input placeholder="api组" v-model="searchInfo.api_group"></el-input>
+          <el-input placeholder="api组" v-model="searchInfo.apiGroup"></el-input>
         </el-form-item>
         <el-form-item label="请求">
           <el-select clearable placeholder="请选择" v-model="searchInfo.method">
@@ -30,9 +30,9 @@
       </el-form>
     </div>
     <el-table :data="tableData" @sort-change="sortChange" border stripe>
-      <el-table-column label="id" min-width="60" prop="id" sortable="custom"></el-table-column>
+      <el-table-column label="id" min-width="60" prop="ID" sortable="custom"></el-table-column>
       <el-table-column label="api路径" min-width="150" prop="path" sortable="custom"></el-table-column>
-      <el-table-column label="api分组" min-width="150" prop="api_group" sortable="custom"></el-table-column>
+      <el-table-column label="api分组" min-width="150" prop="apiGroup" sortable="custom"></el-table-column>
       <el-table-column label="api简介" min-width="150" prop="description" sortable="custom"></el-table-column>
       <el-table-column label="请求" min-width="150" prop="method" sortable="custom">
         <template slot-scope="scope">
@@ -82,8 +82,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="api分组" prop="api_group">
-          <el-input autocomplete="off" v-model="form.api_group"></el-input>
+        <el-form-item label="api分组" prop="apiGroup">
+          <el-input autocomplete="off" v-model="form.apiGroup"></el-input>
         </el-form-item>
         <el-form-item label="api简介" prop="description">
           <el-input autocomplete="off" v-model="form.description"></el-input>
@@ -144,7 +144,7 @@ export default {
       dialogTitle: '新增Api',
       form: {
         path: '',
-        api_group: '',
+        apiGroup: '',
         method: '',
         description: ''
       },
@@ -152,7 +152,7 @@ export default {
       type: '',
       rules: {
         path: [{ required: true, message: '请输入api路径', trigger: 'blur' }],
-        api_group: [
+        apiGroup: [
           { required: true, message: '请输入组名称', trigger: 'blur' }
         ],
         method: [
@@ -183,7 +183,7 @@ export default {
       this.$refs.apiForm.resetFields()
       this.form= {
         path: '',
-        api_group: '',
+        apiGroup: '',
         method: '',
         description: ''
       }
@@ -207,7 +207,7 @@ export default {
       this.dialogFormVisible = true
     },
     async editApi(row) {
-      const res = await getApiById({ id: row.id })
+      const res = await getApiById({ id: row.ID })
       this.form = res.data.api
       this.openDialog('edit')
     },
