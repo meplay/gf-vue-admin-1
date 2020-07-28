@@ -58,7 +58,7 @@ func DeleteApi(r *ghttp.Request) {
 // GetApiById Get the API by ID
 // GetApiById 根据id获取api
 func GetApiById(r *ghttp.Request) {
-	var G request.GetApiById
+	var G request.GetById
 	if err := r.Parse(&G); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()

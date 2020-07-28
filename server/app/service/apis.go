@@ -3,7 +3,6 @@ package service
 import (
 	"errors"
 	"server/app/api/request"
-	"server/app/api/response"
 	"server/app/model/apis"
 
 	"github.com/gogf/gf/frame/g"
@@ -53,13 +52,13 @@ func DeleteApi(api *request.DeleteApi) error {
 }
 
 // GetApiById 根据id获取api
-func GetApiById(api *request.GetApiById) (apisReturn *apis.Entity, err error) {
-	return apis.FindOne(g.Map{"id": api.ID})
+func GetApiById(api *request.GetById) (apisReturn *apis.Entity, err error) {
+	return apis.FindOne(g.Map{"id": api.Id})
 }
 
 // GetAllApis 获取所有的Api
-func GetAllApis() (list []*response.Apis, err error) {
-	list = ([]*response.Apis)(nil)
+func GetAllApis() (list []*apis.Entity, err error) {
+	list = ([]*apis.Entity)(nil)
 	db := g.DB("default").Table("apis").Safe()
 	err = db.Structs(&list)
 	return list, err
@@ -67,8 +66,8 @@ func GetAllApis() (list []*response.Apis, err error) {
 
 // GetApiInfoList Page to get the data
 // GetApiInfoList 分页获取数据
-func GetApiInfoList(api *request.GetApiList) (list []*response.Apis, total int, err error) {
-	list = ([]*response.Apis)(nil)
+func GetApiInfoList(api *request.GetApiList) (list []*apis.Entity, total int, err error) {
+	list = ([]*apis.Entity)(nil)
 	db := g.DB("default").Table("apis").Safe()
 	limit := api.PageSize
 	offset := api.PageSize * (api.Page - 1)

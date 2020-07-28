@@ -8,7 +8,8 @@ gf-vue-admin
     - [x] casbin鉴权
     - [ ] 自动化生成代码
  
-- 功能api已基本开发完成,下周进行与web的联调
+- web的联调情况
+    - api管理测试完成
 
 ## TODO
 - [ ] 用户多角色
