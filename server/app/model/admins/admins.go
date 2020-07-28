@@ -5,21 +5,24 @@
 package admins
 
 import (
+	"server/app/model/authorities"
+
 	"github.com/gogf/gf/os/gtime"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type Admin struct {
-	Id          uint        `orm:"id,primary"   json:"ID"`           // 自增ID
-	CreateAt    *gtime.Time `orm:"create_at"    json:"CreatedAt"`    // 创建时间
-	UpdateAt    *gtime.Time `orm:"update_at"    json:"UpdatedAt"`    // 更新时间
-	DeleteAt    *gtime.Time `orm:"delete_at"    json:"DeletedAt"`    // 删除时间
-	Uuid        string      `orm:"uuid"         json:"uuid"`         // 用户唯一标识UUID
-	Nickname    string      `orm:"nickname"     json:"nickName"`     // 用户昵称
-	HeaderImg   string      `orm:"header_img"   json:"header_img"`   // 用户头像
-	AuthorityId string      `orm:"authority_id" json:"authority_id"` // 用户角色ID
-	Username    string      `orm:"username"     json:"userName"`     // 用户名
-	Password    string      `orm:"password"     json:"password"`     // 用户登录密码
+	Id          uint                    `orm:"id,primary"   json:"ID"`          // 自增ID
+	CreateAt    *gtime.Time             `orm:"create_at"    json:"CreatedAt"`   // 创建时间
+	UpdateAt    *gtime.Time             `orm:"update_at"    json:"UpdatedAt"`   // 更新时间
+	DeleteAt    *gtime.Time             `orm:"delete_at"    json:"DeletedAt"`   // 删除时间
+	Uuid        string                  `orm:"uuid"         json:"uuid"`        // 用户唯一标识UUID
+	Nickname    string                  `orm:"nickname"     json:"nickName"`    // 用户昵称
+	HeaderImg   string                  `orm:"header_img"   json:"headerImg"`   // 用户头像
+	AuthorityId string                  `orm:"authority_id" json:"authorityId"` // 用户角色ID
+	Username    string                  `orm:"username"     json:"userName"`    // 用户名
+	Password    string                  `orm:"password"     json:"password"`    // 用户登录密码
+	Authority   authorities.Authorities `json:"authority"`
 }
 
 // RecordNotFound 根据条件判断数据是否存在

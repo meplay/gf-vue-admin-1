@@ -3,7 +3,6 @@ package service
 import (
 	"errors"
 	"server/app/api/request"
-	"server/app/api/response"
 	"server/app/model/admins"
 	"server/library/utils"
 
@@ -16,8 +15,8 @@ var Store = base64Captcha.DefaultMemStore
 
 // AdminLogin Administrator login
 // AdminLogin 管理员登录
-func AdminLogin(l *request.AdminLogin) (data *response.Admin, err error) {
-	admin := (*response.Admin)(nil) // 用法解释 https://goframe.org/database/gdb/chaining/select#tip4
+func AdminLogin(l *request.AdminLogin) (data *admins.Admin, err error) {
+	admin := (*admins.Admin)(nil) // 用法解释 https://goframe.org/database/gdb/chaining/select#tip4
 	adminDb := g.DB("default").Table("admins").Safe()
 	authorityDb := g.DB("default").Table("authorities").Safe()
 	if err = adminDb.Where(g.Map{"username": l.Username}).Scan(&admin); err != nil {

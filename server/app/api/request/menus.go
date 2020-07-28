@@ -43,6 +43,6 @@ type AuthorityIdInfo struct {
 
 // Add menu authority info structure
 type AddMenuAuthorityInfo struct {
-	Menus       []model.BaseMenu
-	AuthorityId string
+	Menus       []model.BaseMenu `r:"menus"`
+	AuthorityId string           `r:"authorityId"`
 }

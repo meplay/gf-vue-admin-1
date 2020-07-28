@@ -4,6 +4,7 @@ import (
 	"errors"
 	"server/app/api/request"
 	"server/app/api/response"
+	"server/app/model/admins"
 	"server/app/model/jwts"
 	"server/app/service"
 	"server/library/global"
@@ -93,7 +94,7 @@ func Unauthorized(r *ghttp.Request, code int, message string) {
 // LoginResponse is used to define customized login-successful callback function.
 // LoginResponse 用于定义自定义的登录成功回调函数
 func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
-	admin := (*response.Admin)(nil)
+	admin := (*admins.Admin)(nil)
 	if err := gconv.Struct(r.GetParam("admin"), &admin); err != nil {
 		global.FailWithMessage(r, "登录失败")
 		r.Exit()
@@ -125,7 +126,7 @@ func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 // RefreshResponse is used to get a new token no matter current token is expired or not.
 // RefreshResponse 用于获取新令牌，无论当前令牌是否过期。
 func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time) {
-	admin := (*response.Admin)(nil)
+	admin := (*admins.Admin)(nil)
 	if err := gconv.Struct(r.GetParam("admin"), &admin); err != nil {
 		global.FailWithMessage(r, "更新失败")
 		r.Exit()

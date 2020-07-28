@@ -9,8 +9,7 @@ import (
 
 // InitMenuRouter 注册menu路由
 func InitMenuRouter() {
-	MenuRouter := g.Server().Group("menu").Middleware(middleware.JwtAuth)
-	//MenuRouter := g.Server().Group("menu").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	MenuRouter := g.Server().Group("menu").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
 	{
 		MenuRouter.POST("getMenu", v1.GetMenu)                   // 获取菜单树
 		MenuRouter.POST("getMenuList", v1.GetMenuList)           // 分页获取基础menu列表

@@ -3,11 +3,11 @@
     <el-row :gutter="10">
       <el-col :span="12">
         <el-card>
-          <div slot="header">gin-vue-admin</div>
+          <div slot="header">gf-vue-admin</div>
           <div>
             <el-row>
               <el-col :span="8" :offset="8">
-                <a href="https://github.com/flipped-aurora/gin-vue-admin">
+                <a href="https://github.com/flipped-aurora/gf-vue-admin">
                   <img
                     class="org-img dom-center"
                     src="@/assets/logo.png"

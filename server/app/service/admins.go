@@ -3,7 +3,6 @@ package service
 import (
 	"errors"
 	"server/app/api/request"
-	"server/app/api/response"
 	"server/app/model/admins"
 	"server/library/utils"
 
@@ -42,7 +41,7 @@ func UploadHeaderImg(userUuid string, filePath string) (adminInfo *admins.Entity
 // GetAdminList Paging gets the list of users
 // GetAdminList 分页获取用户列表
 func GetAdminList(info *request.PageInfo) (list interface{}, total int, err error) {
-	var adminList []*response.Admin
+	var adminList []*admins.Admin
 	adminDb := g.DB("default").Table("admins").Safe()
 	authorityDb := g.DB("default").Table("authorities").Safe()
 	limit := info.PageSize

@@ -59,6 +59,10 @@ func GetBaseMenuTree(r *ghttp.Request) {
 // AddMenuAuthority 增加menu和角色关联关系
 func AddMenuAuthority(r *ghttp.Request) {
 	var addMenuAuthorityInfo request.AddMenuAuthorityInfo
+	if err := r.Parse(&addMenuAuthorityInfo); err != nil {
+		global.FailWithMessage(r, err.Error())
+		r.Exit()
+	}
 	err := service.AddMenuAuthority(&addMenuAuthorityInfo)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("添加失败，%v", err))
