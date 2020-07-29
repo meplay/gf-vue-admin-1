@@ -16,11 +16,11 @@ func CreateDictionaryDetail(create *request.CreateDictionaryDetail) (err error) 
 		Label:        create.Label,
 		Value:        create.Value,
 		Status:       utils.BoolToInt(create.Status),
-		Sort:         create.DictionaryId,
+		Sort:         create.Sort,
 		DictionaryId: create.DictionaryId,
 	}
 	_, err = dictionary_details.Insert(insert)
-	return nil
+	return
 }
 
 // CreateDictionaryDetail create a DictionaryDetail
@@ -61,25 +61,12 @@ func FindDictionaryDetail(find *request.FindById) (dictionaryDetails *dictionary
 
 // GetDictionaryDetailList Paging to get a list of DictionaryDetails
 // GetDictionaryDetailList 分页获取DictionaryDetail列表
-func GetDictionaryDetailList(get *request.GetDictionaryDetailList) (list []*dictionary_details.DictionaryDetails, total int, err error) {
+func GetDictionaryDetailList(info *request.GetDictionaryDetailList, condition g.Map) (list []*dictionary_details.DictionaryDetails, total int, err error) {
 	list = ([]*dictionary_details.DictionaryDetails)(nil)
-	condition := g.Map{}
-	limit := get.PageSize
-	offset := get.PageSize * (get.Page - 1)
-	db := g.DB("default").Table("dictionaries").Safe()
-	if get.Label != "" {
-		condition["label like ?"] = "%" + get.Label + "%"
-	}
-	if get.Value != 0 {
-		condition["value"] = get.Value
-	}
-	if get.Status {
-		condition["status"] = get.Status
-	}
-	if get.DictionaryId != 0 {
-		condition["dictionary_id"] = get.DictionaryId
-	}
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	db := g.DB("default").Table("dictionary_details").Safe()
 	total, err = db.Where(condition).Count()
-	err = db.Limit(limit).Offset(offset).Where(condition).Scan(&list)
+	err = db.Limit(limit).Offset(offset).Where(condition).Structs(&list)
 	return list, total, err
 }

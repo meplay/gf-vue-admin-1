@@ -90,7 +90,7 @@ func SetUserAuthority(r *ghttp.Request) {
 // DeleteAdmin Delete user
 // DeleteAdmin 删除用户
 func DeleteAdmin(r *ghttp.Request) {
-	var d request.DeleteAdmin
+	var d request.DeleteById
 	if err := r.Parse(&d); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()

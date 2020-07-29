@@ -30,14 +30,14 @@ type GetDictionary struct {
 // FindDictionary 用id查询Dictionary
 type FindDictionary struct {
 	Id   float64 `p:"id" v:"required|length:1,1000#请输入id|id长度为:min到:max位"` // 自增ID
-	Type string  `p:"type" v:"required|length:1,1000#请输入字典英文名|字典英文名长度为:min到:max位"`
+	Type string  `p:"type" `
 }
 
 // DictionaryInfoList 分页获取SysDictionary列表
 type DictionaryInfoList struct {
 	Name   string `p:"name"`
 	Type   string `p:"type"`
-	Status int    `p:"status"`
+	Status bool   `p:"status"`
 	Desc   string `p:"desc"`
 	PageInfo
 }

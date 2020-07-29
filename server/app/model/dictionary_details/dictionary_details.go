@@ -14,7 +14,7 @@ type DictionaryDetails struct {
 	DeleteAt     *gtime.Time `orm:"delete_at"     json:"DeletedAt"`       // 删除时间
 	Label        string      `orm:"label"         json:"label"`           // 展示值
 	Value        int         `orm:"value"         json:"value"`           // 字典值
-	Status       int         `orm:"status"        json:"status"`          // 启用状态
+	Status       bool        `orm:"status"        json:"status"`          // 启用状态
 	Sort         int         `orm:"sort"          json:"sort"`            // 排序标记
 	DictionaryId int         `orm:"dictionary_id" json:"sysDictionaryID"` // 关联标记
 }

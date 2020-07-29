@@ -14,7 +14,7 @@ type Dictionaries struct {
 	DeleteAt *gtime.Time `orm:"delete_at"  json:"DeletedAt"` // 删除时间
 	Name     string      `orm:"name"       json:"name"`      // 字典名（中）
 	Type     string      `orm:"type"       json:"type"`      // 字典名（英）
-	Status   int         `orm:"status"     json:"status"`    // 状态
+	Status   bool        `orm:"status"     json:"status"`    // 状态
 	Desc     string      `orm:"desc"       json:"desc"`      // 描述
 }
 

@@ -63,7 +63,7 @@ func SetUserAuthority(set *request.SetAdminAuthority) (err error) {
 
 // DeleteAdmin Delete administrator
 // DeleteAdmin 删除管理员
-func DeleteAdmin(delete *request.DeleteAdmin) (err error) {
+func DeleteAdmin(delete *request.DeleteById) (err error) {
 	_, err = admins.Delete(g.Map{"id": delete.Id})
 	return err
 }

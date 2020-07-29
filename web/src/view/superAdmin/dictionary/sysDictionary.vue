@@ -11,6 +11,11 @@
             <el-form-item label="状态" prop="status">
             <el-select v-model="searchInfo.status" clear placeholder="请选择">
                 <el-option
+                    key="empty"
+                    label="空"
+                    value="empty">
+                </el-option>
+                <el-option
                     key="true"
                     label="是"
                     value="true">

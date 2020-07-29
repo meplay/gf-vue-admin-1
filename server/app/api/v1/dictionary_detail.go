@@ -6,6 +6,7 @@ import (
 	"server/app/api/response"
 	"server/app/service"
 	"server/library/global"
+	"server/library/utils"
 
 	"github.com/gogf/gf/frame/g"
 
@@ -67,21 +68,37 @@ func FindDictionaryDetail(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("查询失败，err:%v", err))
 		r.Exit()
 	}
-	global.OkDetailed(r, g.Map{"DictionaryDetail": dataReturn}, "查询成功")
+	global.OkDetailed(r, g.Map{"resysDictionaryDetail": dataReturn}, "查询成功")
 }
 
 // GetDictionaryDetailList Paging to get a list of DictionaryDetails
 // GetDictionaryDetailList 分页获取DictionaryDetail列表
 func GetDictionaryDetailList(r *ghttp.Request) {
-	var pageInfoList request.GetDictionaryDetailList
-	if err := r.Parse(&pageInfoList); err != nil {
+	var pageInfo request.GetDictionaryDetailList
+	if err := r.Parse(&pageInfo); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
-	list, total, err := service.GetDictionaryDetailList(&pageInfoList)
+	condition := g.Map{}
+	if pageInfo.Label != "" {
+		condition["`label` like ?"] = "%" + pageInfo.Label + "%"
+	}
+	if pageInfo.Value != 0 {
+		condition["`value`"] = pageInfo.Value
+	}
+	if pageInfo.Status == true || pageInfo.Status == false {
+		condition["status"] = utils.BoolToInt(pageInfo.Status)
+	}
+	if pageInfo.DictionaryId != 0 {
+		condition["`dictionary_id`"] = pageInfo.DictionaryId
+	}
+	if r.GetString("status") == "empty" || r.GetString("status") == "" {
+		delete(condition, "status")
+	}
+	list, total, err := service.GetDictionaryDetailList(&pageInfo, condition)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("获取数据失败，err:%v", err))
 		r.Exit()
 	}
-	global.OkWithData(r, response.PageResult{List: list, Total: total, Page: pageInfoList.Page, PageSize: pageInfoList.PageSize})
+	global.OkWithData(r, response.PageResult{List: list, Total: total, Page: pageInfo.Page, PageSize: pageInfo.PageSize})
 }

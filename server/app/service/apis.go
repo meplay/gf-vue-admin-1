@@ -28,7 +28,15 @@ func CreateApi(api *request.CreateApi) error {
 
 // UpdateApi 更新api信息
 func UpdateApi(api *request.UpdateApi) error {
-	oldA, err := apis.FindOne(g.Map{"id": api.ID})
+	condition := g.Map{"id": api.ID}
+	updateData := g.Map{
+		"path":        api.Path,
+		"description": api.Description,
+		"api_group":   api.ApiGroup,
+		"method":      api.Method,
+	}
+
+	oldA, err := apis.FindOne(condition)
 	if oldA.Path != api.Path || oldA.Method != api.Method {
 		if !apis.RecordNotFound(g.Map{"path": api.Path, "method": api.Method}) {
 			return errors.New("存在相同api路径")
@@ -40,7 +48,7 @@ func UpdateApi(api *request.UpdateApi) error {
 	if err = UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method); err != nil {
 		return err
 	}
-	_, err = apis.Save(api)
+	_, err = apis.Update(updateData, condition)
 	return err
 }
 
@@ -52,13 +60,16 @@ func DeleteApi(api *request.DeleteApi) error {
 }
 
 // GetApiById 根据id获取api
-func GetApiById(api *request.GetById) (apisReturn *apis.Entity, err error) {
-	return apis.FindOne(g.Map{"id": api.Id})
+func GetApiById(api *request.GetById) (apisReturn *apis.Apis, err error) {
+	apisReturn = (*apis.Apis)(nil)
+	db := g.DB("default").Table("apis").Safe()
+	err = db.Where(g.Map{"id": api.Id}).Struct(&apisReturn)
+	return apisReturn, err
 }
 
 // GetAllApis 获取所有的Api
-func GetAllApis() (list []*apis.Entity, err error) {
-	list = ([]*apis.Entity)(nil)
+func GetAllApis() (list []*apis.Apis, err error) {
+	list = ([]*apis.Apis)(nil)
 	db := g.DB("default").Table("apis").Safe()
 	err = db.Structs(&list)
 	return list, err
@@ -72,14 +83,16 @@ func GetApiInfoList(api *request.GetApiList) (list []*apis.Apis, total int, err 
 	limit := api.PageSize
 	offset := api.PageSize * (api.Page - 1)
 	condition := g.Map{}
-	switch {
-	case api.Path != "":
+	if api.Path != "" {
 		condition["path like ?"] = "%" + api.Path + "%"
-	case api.Description != "":
+	}
+	if api.Description != "" {
 		condition["description like ?"] = "%" + api.Description + "%"
-	case api.Method != "":
+	}
+	if api.Method != "" {
 		condition["method"] = api.Method
-	case api.ApiGroup != "":
+	}
+	if api.ApiGroup != "" {
 		condition["api_group"] = api.ApiGroup
 	}
 	total, err = db.Where(condition).Count()

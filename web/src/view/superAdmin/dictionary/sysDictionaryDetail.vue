@@ -10,6 +10,7 @@
         </el-form-item>
         <el-form-item label="启用状态" prop="status">
           <el-select v-model="searchInfo.status" placeholder="请选择">
+            <el-option key="empty" label="空" value="empty"></el-option>
             <el-option key="true" label="是" value="true"></el-option>
             <el-option key="false" label="否" value="false"></el-option>
           </el-select>

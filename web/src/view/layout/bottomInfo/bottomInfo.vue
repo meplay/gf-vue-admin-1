@@ -3,7 +3,7 @@
     <div>
       <span>Powered by</span>
       <span>
-      <a href="https://github.com/flipped-aurora/gf-vue-admin">gin-vue-admin</a>
+      <a href="https://github.com/flipped-aurora/gf-vue-admin">gf-vue-admin</a>
       </span>
       <el-divider direction="vertical"></el-divider>
       <span>Copyright</span>

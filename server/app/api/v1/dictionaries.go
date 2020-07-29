@@ -6,6 +6,7 @@ import (
 	"server/app/api/response"
 	"server/app/service"
 	"server/library/global"
+	"server/library/utils"
 
 	"github.com/gogf/gf/frame/g"
 
@@ -60,6 +61,7 @@ func FindDictionary(r *ghttp.Request) {
 	var findInfo request.FindDictionary
 	if err := r.Parse(&findInfo); err != nil {
 		global.FailWithMessage(r, err.Error())
+		r.Exit()
 	}
 	dictionary, err := service.FindDictionary(&findInfo)
 	if err != nil {
@@ -76,7 +78,23 @@ func GetDictionaryList(r *ghttp.Request) {
 	if err := r.Parse(&pageInfo); err != nil {
 		global.FailWithMessage(r, err.Error())
 	}
-	list, total, err := service.GetDictionaryInfoList(&pageInfo)
+	condition := g.Map{}
+	if pageInfo.Name != "" {
+		condition["`name` like ?"] = "%" + pageInfo.Name + "%"
+	}
+	if pageInfo.Type != "" {
+		condition["`type` like ?"] = "%" + pageInfo.Type + "%"
+	}
+	if pageInfo.Status == true || pageInfo.Status == false {
+		condition["status"] = utils.BoolToInt(pageInfo.Status)
+	}
+	if pageInfo.Desc != "" {
+		condition["`desc` like ?"] = "%" + pageInfo.Desc + "%"
+	}
+	if r.GetString("status") == "empty" || r.GetString("status") == "" {
+		delete(condition, "status")
+	}
+	list, total, err := service.GetDictionaryInfoList(&pageInfo, condition)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("获取数据失败，err:%v", err))
 		r.Exit()

@@ -7,6 +7,8 @@ import (
 	"server/app/service"
 	"server/library/global"
 
+	"github.com/gogf/gf/frame/g"
+
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -68,7 +70,7 @@ func GetApiById(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("获取失败, err:%v", err))
 		r.Exit()
 	}
-	global.OkDetailed(r, response.ApiResponse{Api: apiReturn}, "获取成功")
+	global.OkDetailed(r, g.Map{"api": apiReturn}, "获取成功")
 }
 
 // GetAllApis Gets all apis not paged
@@ -79,7 +81,7 @@ func GetAllApis(r *ghttp.Request) {
 		global.FailWithMessage(r, "获取失败")
 		r.Exit()
 	}
-	global.OkDetailed(r, response.ApiListResponse{Apis: apisReturn}, "获取成功")
+	global.OkDetailed(r, g.Map{"api": apisReturn}, "获取成功")
 }
 
 // GetApiList Paging gets the LIST of apis
