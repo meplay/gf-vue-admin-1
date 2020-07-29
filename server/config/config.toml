@@ -15,6 +15,7 @@
 
 # system configuration
 [system]
+    Db = "default"
     UseMultipoint = true
     Env = "public" # Change to "develop" to skip authentication for development mode
 
