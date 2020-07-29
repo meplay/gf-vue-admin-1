@@ -20,7 +20,7 @@ type Admin struct {
 	Nickname    string                  `orm:"nickname"     json:"nickName"`    // 用户昵称
 	HeaderImg   string                  `orm:"header_img"   json:"headerImg"`   // 用户头像
 	AuthorityId string                  `orm:"authority_id" json:"authorityId"` // 用户角色ID
-	Username    string                  `orm:"username"     json:"username"`    // 用户名
+	Username    string                  `orm:"username"     json:"userName"`    // 用户名
 	Password    string                  `orm:"password"     json:"password"`    // 用户登录密码
 	Authority   authorities.Authorities `json:"authority"`
 }
