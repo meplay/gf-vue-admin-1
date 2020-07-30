@@ -20,10 +20,10 @@ type tplData struct {
 }
 
 func CreateTemp(autoCode model.AutoCodeStruct) (err error) {
-	basePath := "resource/template"
+	var tplFileList []string
+	basePath := "public/template"
 	// 获取 basePath 文件夹下所有tpl文件
-	tplFileList, err := GetAllTplFile(basePath, nil)
-	if err != nil {
+	if tplFileList, err = GetAllTplFile(basePath, nil); err != nil {
 		return err
 	}
 	dataList := make([]tplData, 0, len(tplFileList))

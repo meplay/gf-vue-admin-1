@@ -44,8 +44,8 @@ func DeleteOperations(deletes *request.DeleteOperations) (err error) {
 // UpdateOperation update Operations
 // UpdateOperation 更新 Operations
 func UpdateOperation(update *request.UpdateOperation) (err error) {
+	condition := g.Map{"id": update.Id}
 	updateData := g.Map{
-		"id":            update.Id,
 		"ip":            update.Ip,
 		"method":        update.Method,
 		"path":          update.Path,
@@ -57,7 +57,7 @@ func UpdateOperation(update *request.UpdateOperation) (err error) {
 		"userId":        update.UserId,
 		"response":      update.Response,
 	}
-	_, err = operations.Save(updateData)
+	_, err = operations.Update(updateData, condition)
 	return err
 }
 
@@ -86,7 +86,7 @@ func GetOperationList(info *request.GetOperationList) (list interface{}, total i
 		condition["status"] = info.Status
 	}
 	total, err = db.Where(condition).Count()
-	err = db.Order("id desc").Limit(limit).Offset(offset).Scan(&operationList)
+	err = db.Order("id desc").Limit(limit).Offset(offset).Structs(&operationList)
 	for _, v := range operationList {
 		admin := (*admins.Admin)(nil)
 		err = adminDb.Where(g.Map{"id": v.UserId}).Struct(&admin)
