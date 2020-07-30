@@ -43,7 +43,7 @@ func TestCreateTemp(t *testing.T) {
 	err := CreateTemp(model.AutoCodeStruct{
 		StructName:         "CasbinRule",
 		TableName:          "casbin_rule",
-		PackageName:        "casbinRule",
+		PackageName:        "casbin_rule",
 		Abbreviation:       "casbinRule",
 		Description:        "casbinRule",
 		AutoCreateApiToSql: true,
