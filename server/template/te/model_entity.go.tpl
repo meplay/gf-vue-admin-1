@@ -13,9 +13,7 @@ import (
 // Entity is the golang structure for table {{.TableName}}.
 type Entity struct {
     {{- range .Fields}}
-        {{- if eq .FieldName "Id" }}
-    {{.FieldName}} uint `orm:"{{.ColumnName}},primary" json:"{{.FieldJson}}"` // {{.Comment}}
-        {{- if eq .FieldName "ID" }}
+        {{- if eq .FieldName "Id" "ID" }}
     {{.FieldName}} uint `orm:"{{.ColumnName}},primary" json:"{{.FieldJson}}"` // {{.Comment}}
         {{- else if eq .FieldType "bool" }}
     {{.FieldName}} int `orm:"{{.ColumnName}}" json:"{{.FieldJson}}"` // {{.Comment}}

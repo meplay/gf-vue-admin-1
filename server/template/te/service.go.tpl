@@ -71,7 +71,7 @@ func Get{{.StructName}}List(info *request.Get{{.StructName}}List, condition g.Ma
     if pageInfo.{{.ColumnName}} != "" {
         condition["`{{.ColumnName}}` {{.FieldSearchType}} ?"] = {{if eq .FieldSearchType "LIKE"}}"%"+ {{ end }}info.{{.FieldName}}{{if eq .FieldSearchType "LIKE"}}+"%"{{ end }}
     }
-    	        {{- if eq .FieldType "int" }}
+    	        {{- else if eq .FieldType "int" }}
     if pageInfo.{{.ColumnName}} != 0 {
         condition["`{{.ColumnName}}` {{.FieldSearchType}} ?"] = {{if eq .FieldSearchType "LIKE"}}"%"+ {{ end }}info.{{.FieldName}}{{if eq .FieldSearchType "LIKE"}}+"%"{{ end }}
     }
