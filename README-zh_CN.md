@@ -3,34 +3,36 @@
 <img src="http://qmplusimg.henrongyi.top/gvalogo.jpg" width=300" height="300" />
 </div>
 <div align=center>
-<img src="https://img.shields.io/badge/golang-1.12-blue"/>
+<img src="https://img.shields.io/badge/goframe-1.13.1-blue.svg"/>
+<img src="https://img.shields.io/badge/golang-1.11-blue"/>
 <img src="https://img.shields.io/badge/gin-1.4.0-lightBlue"/>
 <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen"/>
 <img src="https://img.shields.io/badge/element--ui-2.12.0-green"/>
 <img src="https://img.shields.io/badge/gorm-1.9.12-red"/>
 </div>
-
 [English](gin-vue-admin README.md) | 简体中文
 
 # 项目文档
-[在线文档](http://doc.henrongyi.top/)
+
+[在线文档(待完善)](http://)
 
 - 前端UI框架：[element-ui](https://github.com/ElemeFE/element) 
-- 后台框架：[gin](https://github.com/gin-gonic/gin) 
+- 后台框架：[GoFrame](https://goframe.org/index)
 
 ## 1. 基本介绍
 
 ### 1.1 项目介绍
 
-[在线预览](http://qmplus.henrongyi.top/)
-> Gin-vue-admin是一个基于vue和gin开发的全栈前后端分离的后台管理系统，集成jwt鉴权，动态路由，动态菜单，casbin鉴权，表单生成器，代码生成器等功能，提供多种示例文件，让您把更多时间专注在业务开发上。
+[在线预览(待完善)](http://qmplus.henrongyi.top/)
+> Gf-vue-admin是一个基于vue和GoFrame开发的全栈前后端分离的后台管理系统，集成jwt鉴权，动态路由，动态菜单，casbin鉴权，表单生成器，代码生成器等功能，提供多种示例文件，让您把更多时间专注在业务开发上。
 
 ### 1.2 贡献指南
-Hi! 首先感谢你使用 gin-vue-admin。
 
-Gin-vue-admin 是一套为后台管理平台准备的一整套前后端分离架构式的开源框架，旨在快速搭建后台管理系统。
+Hi! 首先感谢你使用 gf-vue-admin。
 
-Gin-vue-admin 的成长离不开大家的支持，如果你愿意为 gin-vue-admin 贡献代码或提供建议，请阅读以下内容。
+GoFrame-vue-admin 是一套为后台管理平台准备的一整套前后端分离架构式的开源框架，旨在快速搭建后台管理系统。
+
+GoFrame-vue-admin 的成长离不开大家的支持，如果你愿意为 GoFrame-vue-admin 贡献代码或提供建议，请阅读以下内容。
 
 #### 1.2.1 Issue 规范
 - issue 仅用于提交 Bug 或 Feature 以及设计相关的内容，其它内容可能会被直接关闭。如果你在使用时产生了疑问，请到 Slack 或 [Gitter](https://gitter.im/ElemeFE/element) 里咨询。
@@ -50,16 +52,7 @@ Gin-vue-admin 的成长离不开大家的支持，如果你愿意为 gin-vue-adm
 
 ### 1.3 版本列表
 
-- master: 2.0, 用于生产环境
-
-- develop: 2.0, 用于测试环境
-
-- [gin-vue-admin_v2.0_dev](https://github.com/flipped-aurora/gin-vue-admin/tree/gin-vue-admin_v2_dev) （v2.0 不再兼容 v1.0）
-
-- [gin-vue-admin_v1.0_stable](https://github.com/flipped-aurora/gin-vue-admin/tree/gin-vue-admin_v1_stable) （v1.0停止维护）
-
-- [gin-vue-admin_v1.0_dev](https://github.com/flipped-aurora/gin-vue-admin/tree/gin-vue-admin_v1_dev) （v1.0停止维护）
-
+- master: 1.0, 功能目前测试ing
 
 ## 2. 使用说明
 
@@ -101,43 +94,17 @@ go build
 
 ### 2.3 swagger自动化API文档
 
-#### 2.3.1 安装 swagger
-
-##### （1）可以翻墙
-````
-go get -u github.com/swaggo/swag/cmd/swag
-````
-
-##### （2）无法翻墙
-由于国内没法安装 go.org/x 包下面的东西，需要先安装`gopm`
-
-```bash
-# 下载gopm包
-go get -v -u github.com/gpmgo/gopm
-
-# 执行
-gopm get -g -v github.com/swaggo/swag/cmd/swag
-
-# 到GOPATH的/src/github.com/swaggo/swag/cmd/swag路径下执行
-go install
-```
-
-#### 2.3.2 生成API文档
-
-````
-cd server
-swag init
-````
-执行上面的命令后，server目录下会出现docs文件夹，登录http://localhost:8888/swagger/index.html，即可查看swagger文档
+- 去掉swagger的原因
+	- 注释多余代码,导致代码臃肿
+	- 推荐替代工具apipost
 
 
 ## 3. 技术选型
 
 - 前端：用基于`vue`的`Element-UI`构建基础页面。
-- 后端：用`Gin`快速搭建基础restful风格API，`Gin`是一个go语言编写的Web框架。
-- 数据库：采用`MySql`(5.6.44)版本，使用`gorm`实现对数据库的基本操作,已添加对sqlite数据库的支持。
+- 后端：用`GoFrame`快速搭建基础restful风格API，`GF(Go Frame)`是一款模块化、高性能、生产级的Go基础开发框架。实现了比较完善的基础设施建设以及开发工具链，提供了常用的基础开发模块，如：缓存、日志、队列、数组、集合、容器、定时器、命令行、内存锁、对象池、配置管理、资源管理、数据校验、数据编码、定时任务、数据库ORM、TCP/UDP组件、进程管理/通信等等。并提供了Web服务开发的系列核心组件，如：Router、Cookie、Session、Middleware、服务注册、模板引擎等等，支持热重启、热更新、域名绑定、TLS/HTTPS、Rewrite等特性。
+- 数据库：采用`MySql`(8.0.19)版本，使用`gdb`实现对数据库的基本操作。
 - 缓存：使用`Redis`实现记录当前活跃用户的`jwt`令牌并实现多点登录限制。
-- API文档：使用`Swagger`构建自动化文档。
 - 配置文件：使用`fsnotify`和`viper`实现`yaml`格式的配置文件。
 - 日志：使用`go-logging`实现日志记录。
 
@@ -199,7 +166,7 @@ swag init
 前端文件参考: src\view\superAdmin\api\api.vue 
 后台文件参考: model\dnModel\api.go 
 ```
-- 多点登录限制：需要在`config.yaml`中把`system`中的`useMultipoint`修改为true(需要自行配置Redis和Config中的Redis参数，测试阶段，有bug请及时反馈)。
+- 多点登录限制：需要在`config.toml`中把`system`中的`UseMultipoint`修改为true
 - 分片长传：提供文件分片上传和大文件分片上传功能示例。
 - 表单生成器：表单生成器借助 [@form-generator](https://github.com/JakHuang/form-generator)。
 - 代码生成器：后台基础逻辑以及简单curd的代码生成器。 
@@ -222,7 +189,7 @@ swag init
 
 （1）环境搭建
 > Bilibili：https://www.bilibili.com/video/BV1Fg4y187Bw/ (v1.0版本视频，v2.0操作相同目录不同)
-    
+
 （2）模板使用
 > Bilibili：https://www.bilibili.com/video/BV16K4y1r7BD/ (v1.0版本视频，v2.0操作相同目录不同)
 
@@ -234,7 +201,7 @@ swag init
 
 ## 8. 联系方式
 ### 8.1 技术群
-| QQ群 |  
+| QQ群 |
 |  :---:  |
 | <img src="http://qmplusimg.henrongyi.top/qq.jpg" width="180"/> |
 
@@ -242,6 +209,7 @@ swag init
 ### 微信交流群：可以添加上面任意一位开发者，备注"加入gin-vue-admin交流群"
 
 ### 8.2 项目组成员
+
 | 蒋 | 尹 | 严 | 杜 | 印 | 宋 |
 |  :---:  |  :---: | :---: | :---:  |  :---: | :---: |
 | <img width="150" src="http://qmplusimg.henrongyi.top/qrjjz.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qryx.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qryr.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrdjl.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrygl.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrsong.png"> |
