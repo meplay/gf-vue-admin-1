@@ -79,17 +79,8 @@ func GetDictionaryList(r *ghttp.Request) {
 		global.FailWithMessage(r, err.Error())
 	}
 	condition := g.Map{}
-	if pageInfo.Name != "" {
-		condition["`name` like ?"] = "%" + pageInfo.Name + "%"
-	}
-	if pageInfo.Type != "" {
-		condition["`type` like ?"] = "%" + pageInfo.Type + "%"
-	}
 	if pageInfo.Status == true || pageInfo.Status == false {
 		condition["status"] = utils.BoolToInt(pageInfo.Status)
-	}
-	if pageInfo.Desc != "" {
-		condition["`desc` like ?"] = "%" + pageInfo.Desc + "%"
 	}
 	if r.GetString("status") == "empty" || r.GetString("status") == "" {
 		delete(condition, "status")

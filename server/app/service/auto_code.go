@@ -130,7 +130,7 @@ func GetDB() (DBNames []*request.DBReq, err error) {
 
 // GetColumn Get the table fields of the specified database and the specified table name
 // GetColumn 获取指定数据库与指定表名的表字段
-func GetColumn(dbName string, tableName string) (Columns []request.ColumnReq, err error) {
+func GetColumn(dbName string, tableName string) (Columns []*request.ColumnReq, err error) {
 	err = g.DB(global.Db).GetStructs(&Columns, "SELECT COLUMN_NAME column_name,DATA_TYPE data_type,CASE DATA_TYPE WHEN 'longtext' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'varchar' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'double' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'decimal' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'int' THEN c.NUMERIC_PRECISION WHEN 'bigint' THEN c.NUMERIC_PRECISION ELSE '' END AS data_type_long,COLUMN_COMMENT colume_comment FROM INFORMATION_SCHEMA.COLUMNS c WHERE table_name = ? AND table_schema = ?", tableName, dbName)
 	return Columns, err
 }

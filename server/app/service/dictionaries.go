@@ -77,6 +77,15 @@ func GetDictionaryInfoList(info *request.DictionaryInfoList, condition g.Map) (l
 	var dictionaryList []*dictionaries.Dictionaries
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
+	if info.Name != "" {
+		condition["`name` like ?"] = "%" + info.Name + "%"
+	}
+	if info.Type != "" {
+		condition["`type` like ?"] = "%" + info.Type + "%"
+	}
+	if info.Desc != "" {
+		condition["`desc` like ?"] = "%" + info.Desc + "%"
+	}
 	db := g.DB("default").Table("dictionaries").Safe()
 	total, err = db.Where(condition).Count()
 	err = db.Limit(limit).Offset(offset).Where(condition).Scan(&dictionaryList)

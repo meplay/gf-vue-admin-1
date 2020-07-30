@@ -64,6 +64,15 @@ func FindDictionaryDetail(find *request.FindById) (dictionaryDetails *dictionary
 func GetDictionaryDetailList(info *request.GetDictionaryDetailList, condition g.Map) (list []*dictionary_details.DictionaryDetails, total int, err error) {
 	list = ([]*dictionary_details.DictionaryDetails)(nil)
 	limit := info.PageSize
+	if info.Label != "" {
+		condition["`label` like ?"] = "%" + info.Label + "%"
+	}
+	if info.Value != 0 {
+		condition["`value`"] = info.Value
+	}
+	if info.DictionaryId != 0 {
+		condition["`dictionary_id`"] = info.DictionaryId
+	}
 	offset := info.PageSize * (info.Page - 1)
 	db := g.DB("default").Table("dictionary_details").Safe()
 	total, err = db.Where(condition).Count()

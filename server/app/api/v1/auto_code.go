@@ -71,7 +71,9 @@ func CreateTemp(r *ghttp.Request) {
 	}
 	if err := service.CreateTemp(a); err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("创建失败，%v", err))
-		err = os.Remove("./gf-vue-admin.zip")
+		if err = os.Remove("./gf-vue-admin.zip"); err != nil {
+			panic(err)
+		}
 	}
 	r.Header.Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "gf-vue-admin.zip")) // fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
 	r.Header.Add("Content-Type", "application/json")
@@ -110,9 +112,10 @@ func GetDB(r *ghttp.Request) {
 func GetColumns(r *ghttp.Request) {
 	dbName := r.GetString("dbName", "")
 	tableName := r.GetString("tableName")
-	err, columns := service.GetColumn(dbName, tableName)
+	columns, err := service.GetColumn(dbName, tableName)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("查询table失败，%v", err))
+		r.Exit()
 	}
 	global.OkWithData(r, g.Map{"columes": columns})
 }

@@ -80,17 +80,8 @@ func GetDictionaryDetailList(r *ghttp.Request) {
 		r.Exit()
 	}
 	condition := g.Map{}
-	if pageInfo.Label != "" {
-		condition["`label` like ?"] = "%" + pageInfo.Label + "%"
-	}
-	if pageInfo.Value != 0 {
-		condition["`value`"] = pageInfo.Value
-	}
 	if pageInfo.Status == true || pageInfo.Status == false {
 		condition["status"] = utils.BoolToInt(pageInfo.Status)
-	}
-	if pageInfo.DictionaryId != 0 {
-		condition["`dictionary_id`"] = pageInfo.DictionaryId
 	}
 	if r.GetString("status") == "empty" || r.GetString("status") == "" {
 		delete(condition, "status")
