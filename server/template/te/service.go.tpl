@@ -14,7 +14,8 @@ import (
 func Create{{.StructName}}(create *request.Create{{.StructName}}) (err error) {
 	insert := {{.TableName}}.Entity{
 	{{- range .Fields}}
-        {{- if ne .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}
+        {{- if eq .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}
+        {{ else }}
         {{.ColumnName}}: create.{{.FieldName}},
         {{- end}}
     {{- end }}
@@ -43,7 +44,8 @@ func Update{{.StructName}}(update *request.Update{{.StructName}}) (err error) {
 	condition := g.Map{"id": update.Id}
 	updateData := g.Map{
     {{- range .Fields}}
-        {{- if ne .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}
+        {{- if eq .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}
+        {{ else }}
         {{.ColumnName}}: update.{{.FieldName}},
         {{- end}}
     {{- end }}
