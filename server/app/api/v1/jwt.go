@@ -126,9 +126,16 @@ func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 // RefreshResponse is used to get a new token no matter current token is expired or not.
 // RefreshResponse 用于获取新令牌，无论当前令牌是否过期。
 func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time) {
-	admin := (*admins.Admin)(nil)
-	if err := gconv.Struct(r.GetParam("admin"), &admin); err != nil {
-		global.FailWithMessage(r, "更新失败")
+	Token, err := GfJWTMiddleware.ParseToken(r) // 解析token
+	if err != nil {
+		global.FailWithMessage(r, "Token不正确,更新失败")
+		r.Exit()
+	}
+	var claims = gconv.Map(Token.Claims)
+	var admin *admins.Admin
+	admin, err = service.FindAdmin(gconv.String(claims["admin_uuid"]))
+	if err != nil {
+		global.FailWithMessage(r, "刷新Token失败")
 		r.Exit()
 	}
 	if !g.Cfg().GetBool("system.UseMultipoint") {
@@ -138,6 +145,7 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 	redisJwt, err := service.GetRedisJWT(admin.Uuid)
 	if err != nil {
 		global.FailWithMessage(r, "刷新Token失败")
+		r.Exit()
 	}
 	if err == nil && redisJwt != "" {
 		if err = service.JsonInBlacklist(&jwts.Entity{Jwt: redisJwt}); err != nil {
@@ -169,8 +177,9 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 	}
 	admin, err := service.AdminLogin(&L)
 	if err != nil {
-		return nil, jwt.ErrFailedAuthentication
+		global.FailWithMessage(r, err.Error())
+		r.ExitAll()
 	}
 	r.SetParam("admin", admin) // 设置参数保存到请求中
-	return g.Map{"user_uuid": admin.Uuid, "user_id": admin.Id, "user_nickname": admin.Nickname, "user_authority_id": admin.AuthorityId}, nil
+	return g.Map{"admin_uuid": admin.Uuid, "admin_id": admin.Id, "admin_nickname": admin.Nickname, "admin_authority_id": admin.AuthorityId}, nil
 }

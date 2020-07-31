@@ -99,11 +99,17 @@ func GetBaseMenuTree() (menu []*model.BaseMenu, err error) {
 // AddMenuAuthority 菜单与角色绑定
 func AddMenuAuthority(insert *request.AddMenuAuthorityInfo) (err error) {
 	for _, v := range insert.Menus {
-		if authority_menu.RecordNotFound(g.Map{"menu_id": v.Id, "authority_id": insert.AuthorityId}) {
-			if _, err = authority_menu.Insert(g.Map{"menu_id": v.Id, "authority_id": insert.AuthorityId}); err != nil {
+		condition := g.Map{"menu_id": v.Id, "authority_id": insert.AuthorityId}
+		if authority_menu.RecordNotFound(condition) {
+			if _, err = authority_menu.Insert(condition); err != nil {
 				return err
 			}
+			continue
+		} else {
+			continue
 		}
+		_, err = authority_menu.Delete(condition)
+		continue
 	}
 	return err
 }

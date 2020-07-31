@@ -9,8 +9,7 @@ import (
 
 // InitCasbinRouter 注册权限相关路由
 func InitCasbinRouter() {
-	CasbinRouter := g.Server().Group("casbin").Middleware(middleware.JwtAuth)
-	//CasbinRouter := g.Server().Group("casbin").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	CasbinRouter := g.Server().Group("casbin").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
 	{
 		CasbinRouter.POST("updateCasbin", v1.UpdateCasbin)
 		CasbinRouter.POST("getPolicyPathByAuthorityId", v1.GetPolicyPathByAuthorityId)

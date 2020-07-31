@@ -1,20 +1,17 @@
-
 <div align=center>
-<img src="http://qmplusimg.henrongyi.top/gvalogo.jpg" width=300" height="300" />
+<img src="./docs/golang_1.png" width=300" height="300" />
 </div>
 <div align=center>
-<img src="https://img.shields.io/badge/goframe-1.13.1-blue.svg"/>
 <img src="https://img.shields.io/badge/golang-1.11-blue"/>
-<img src="https://img.shields.io/badge/gin-1.4.0-lightBlue"/>
+<img src="https://img.shields.io/badge/goframe-1.13.1-lightBlue"/>
 <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen"/>
 <img src="https://img.shields.io/badge/element--ui-2.12.0-green"/>
-<img src="https://img.shields.io/badge/gorm-1.9.12-red"/>
 </div>
-[English](gin-vue-admin README.md) | 简体中文
+[English](./README.md) | 简体中文
 
 # 项目文档
 
-[在线文档(待完善)](http://)
+[在线文档(待完善)](http://https://github.com/flipped-aurora/gf-vue-admin)
 
 - 前端UI框架：[element-ui](https://github.com/ElemeFE/element) 
 - 后台框架：[GoFrame](https://goframe.org/index)
@@ -23,7 +20,8 @@
 
 ### 1.1 项目介绍
 
-[在线预览(待完善)](http://qmplus.henrongyi.top/)
+[在线预览(待完善)](http://https://github.com/flipped-aurora/gf-vue-admin)
+
 > Gf-vue-admin是一个基于vue和GoFrame开发的全栈前后端分离的后台管理系统，集成jwt鉴权，动态路由，动态菜单，casbin鉴权，表单生成器，代码生成器等功能，提供多种示例文件，让您把更多时间专注在业务开发上。
 
 ### 1.2 贡献指南
@@ -35,6 +33,7 @@ GoFrame-vue-admin 是一套为后台管理平台准备的一整套前后端分�
 GoFrame-vue-admin 的成长离不开大家的支持，如果你愿意为 GoFrame-vue-admin 贡献代码或提供建议，请阅读以下内容。
 
 #### 1.2.1 Issue 规范
+
 - issue 仅用于提交 Bug 或 Feature 以及设计相关的内容，其它内容可能会被直接关闭。如果你在使用时产生了疑问，请到 Slack 或 [Gitter](https://gitter.im/ElemeFE/element) 里咨询。
 
 - 在提交 issue 之前，请搜索相关内容是否已被提出。
@@ -203,10 +202,11 @@ go build
 ### 8.1 技术群
 | QQ群 |
 |  :---:  |
-| <img src="http://qmplusimg.henrongyi.top/qq.jpg" width="180"/> |
+| <img src="./docs/gf-vue-admin开源项目交流群.jpg" width="180"/> |
 
-### QQ交流群：622360840
-### 微信交流群：可以添加上面任意一位开发者，备注"加入gin-vue-admin交流群"
+### QQ交流群：1040044540
+
+### 微信交流群：添加微信号SliverHorn，备注"加入gf-vue-admin交流群"
 
 ### 8.2 项目组成员
 

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"server/app/api/request"
 	"server/app/model/admins"
+	"server/library/global"
 	"server/library/utils"
 
 	"github.com/gogf/gf/frame/g"
@@ -42,16 +43,27 @@ func UploadHeaderImg(userUuid string, filePath string) (adminInfo *admins.Entity
 // GetAdminList 分页获取用户列表
 func GetAdminList(info *request.PageInfo) (list interface{}, total int, err error) {
 	var adminList []*admins.Admin
-	adminDb := g.DB("default").Table("admins").Safe()
-	authorityDb := g.DB("default").Table("authorities").Safe()
+	adminDb := g.DB(global.Db).Table("admins").Safe()
+	authorityDb := g.DB(global.Db).Table("authorities").Safe()
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	total, err = adminDb.Count()
-	err = adminDb.Limit(limit).Offset(offset).Scan(&adminList)
+	err = adminDb.Limit(limit).Offset(offset).Structs(&adminList)
 	for _, v := range adminList {
-		err = authorityDb.Where(g.Map{"authority_id": v.AuthorityId}).Scan(&v.Authority)
+		err = authorityDb.Where(g.Map{"authority_id": v.AuthorityId}).Struct(&v.Authority)
 	}
 	return adminList, total, err
+}
+
+// FindAdmin Used to refresh token and return admin information according to uuid
+// FindAdmin 用于刷新token,根据uuid返回admin信息
+func FindAdmin(adminUUID string) (admin *admins.Admin, err error) {
+	admin = (*admins.Admin)(nil)
+	db := g.DB(global.Db).Table("admins").Safe()
+	authorityDb := g.DB(global.Db).Table("authorities").Safe()
+	err = db.Where(g.Map{"uuid": adminUUID}).Struct(admin)
+	err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Struct(admin.Authority)
+	return admin, err
 }
 
 // SetUserAuthority Set user permissions

@@ -23,7 +23,7 @@ func ChangePassword(r *ghttp.Request) {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
-	c.Uuid = gconv.String(r.GetParam("user_uuid"))
+	c.Uuid = gconv.String(r.GetParam("admin_uuid"))
 	if err := service.ChangePassword(&c); err == nil {
 		global.OkWithMessage(r, "修改失败")
 		r.Exit()
@@ -40,7 +40,7 @@ func UploadHeaderImg(r *ghttp.Request) {
 		header   *multipart.FileHeader
 		admin    *admins.Entity
 	)
-	userUuid := gconv.String(r.GetParam("user_uuid"))
+	userUuid := gconv.String(r.GetParam("admin_uuid"))
 	if _, header, err = r.Request.FormFile("headerImg"); err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("上传文件失败，%v", err))
 	}

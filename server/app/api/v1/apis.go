@@ -81,7 +81,7 @@ func GetAllApis(r *ghttp.Request) {
 		global.FailWithMessage(r, "获取失败")
 		r.Exit()
 	}
-	global.OkDetailed(r, g.Map{"api": apisReturn}, "获取成功")
+	global.OkDetailed(r, g.Map{"apis": apisReturn}, "获取成功")
 }
 
 // GetApiList Paging gets the LIST of apis

@@ -14,7 +14,7 @@ import (
 // GetMenu Gets the user dynamic routing
 // GetMenu 获取用户动态路由
 func GetMenu(r *ghttp.Request) {
-	authorityId := gconv.String(r.GetParam("user_authority_id"))
+	authorityId := gconv.String(r.GetParam("admin_authority_id"))
 	menus, err := service.GetMenuTree(authorityId)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("获取失败，%v", err))
