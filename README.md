@@ -7,7 +7,9 @@
 <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen"/>
 <img src="https://img.shields.io/badge/element--ui-2.12.0-green"/>
 </div>
-English | [简体中文](https://github.com/flipped-aurora/gf-vue-admin/blob/master/README-zh_CN.md)
+This is English documentation
+
+[简体中文](https://github.com/flipped-aurora/gf-vue-admin/blob/master/README-zh_CN.md)
 
 # Project documentation
 
