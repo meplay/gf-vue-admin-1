@@ -51,6 +51,28 @@ func CreateTemp(autoCode model.AutoCodeStruct) (err error) {
 			dataList[index].autoCodePath = autoPath + "readme.txt"
 			continue
 		}
+		if trimBase == "te/model.go.tpl" || trimBase == "te/model_entity.go.tpl" || trimBase == "te/model_model.go.tpl" {
+			if lastSeparator := strings.LastIndex(trimBase, "/"); lastSeparator != -1 {
+				origFileName := strings.TrimSuffix(trimBase[lastSeparator+1:], ".tpl")
+				firstDot := strings.Index(origFileName, ".")
+				if firstDot != -1 {
+					if origFileName == "model.go" {
+						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + "model" + "/" + "model" + origFileName[firstDot:]
+						continue
+					}
+					if origFileName == "model_entity.go" {
+						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + "model" + "/" + autoCode.PackageName + "_entity" + origFileName[firstDot:]
+						continue
+					}
+					if origFileName == "model_model.go" {
+						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + "model" + "/" + autoCode.PackageName + "_model" + origFileName[firstDot:]
+						needMkdir = append(needMkdir, autoPath+trimBase[:lastSeparator]+"/"+autoCode.PackageName+"/"+"model")
+						continue
+					}
+				}
+			}
+
+		}
 
 		if lastSeparator := strings.LastIndex(trimBase, "/"); lastSeparator != -1 {
 			origFileName := strings.TrimSuffix(trimBase[lastSeparator+1:], ".tpl")
