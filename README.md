@@ -45,13 +45,13 @@ The growth of GoFrame-vue-admin is inseparable from everyone's support. If you a
 
 - Please fork a copy to your own project first, do not directly branch under the warehouse。
 
-- commit 信息要以`[文件名]: 描述信息` 的形式填写，例如 `README.md: fix xxx bug`。
+- The commit information should be `[filename]: description`  Fill in the form，for example  `README.md: fix xxx bug`。
 
-- <font color=red>确保 PR 是提交到 `develop` 分支，而不是 `master` 分支。</font>
+- <font color=red>Ensure that the PR is submitted to `develop` Branch，Instead of  `master` Branch。</font>
 
-- 如果是修复 bug，请在 PR 中给出描述信息。
+- If it is a bug fix, please provide a description in the PR。
 
-- 合并代码需要两名维护人员参与：一人进行 review 后 approve，另一人再次 review，通过后即可合并。
+- The merging code requires the participation of two maintainers: one approve after review, the other review again, and the merge can be done after approval。
 
 ### 1.3 Version list
 
@@ -102,12 +102,13 @@ go build
 
 ## 3. Technical selection
 
-- 前端：用基于`vue`的`Element-UI`构建基础页面。
-- 后端：用`GoFrame`快速搭建基础restful风格API，`GF(Go Frame)`是一款模块化、高性能、生产级的Go基础开发框架。实现了比较完善的基础设施建设以及开发工具链，提供了常用的基础开发模块，如：缓存、日志、队列、数组、集合、容器、定时器、命令行、内存锁、对象池、配置管理、资源管理、数据校验、数据编码、定时任务、数据库ORM、TCP/UDP组件、进程管理/通信等等。并提供了Web服务开发的系列核心组件，如：Router、Cookie、Session、Middleware、服务注册、模板引擎等等，支持热重启、热更新、域名绑定、TLS/HTTPS、Rewrite等特性。
-- 数据库：采用`MySql`(8.0.19)版本，使用`gdb`实现对数据库的基本操作。
-- 缓存：使用`Redis`实现记录当前活跃用户的`jwt`令牌并实现多点登录限制。
-- 配置文件：使用`fsnotify`和`viper`实现`yaml`格式的配置文件。
-- 日志：使用`go-logging`实现日志记录。
+- Frontend: using Element-UI based on vue，to code the page.
+- Backend: using Gin to quickly build basic RESTful API. Gin is a web framework written in Go (Golang).
+- DB: MySql(8.0.19)，use gdb to realize the basic operation of the database..
+- Cache: using Redis to implement the recording of the JWT token of the currently active user and implement the multi-login restriction.
+- Config: using gcfg Configuration management 。
+- Log: using glog  record logs。
+
 
 ## 4. Project structure
 
