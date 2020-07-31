@@ -6,6 +6,7 @@ import (
 	"server/app/model"
 	"server/app/model/authority_menu"
 	"server/app/model/menus"
+	"server/library/global"
 	"server/library/utils"
 	"strconv"
 
@@ -98,18 +99,12 @@ func GetBaseMenuTree() (menu []*model.BaseMenu, err error) {
 // AddMenuAuthority Menus are bound to roles
 // AddMenuAuthority 菜单与角色绑定
 func AddMenuAuthority(insert *request.AddMenuAuthorityInfo) (err error) {
-	for _, v := range insert.Menus {
-		condition := g.Map{"menu_id": v.Id, "authority_id": insert.AuthorityId}
-		if authority_menu.RecordNotFound(condition) {
-			if _, err = authority_menu.Insert(condition); err != nil {
-				return err
-			}
-			continue
-		} else {
-			continue
-		}
-		_, err = authority_menu.Delete(condition)
-		continue
+	_, err = authority_menu.Delete(g.Map{"authority_id": insert.AuthorityId})
+	if err != nil {
+		return err
+	}
+	for _, v2 := range insert.Menus {
+		_, err = authority_menu.Insert(g.Map{"authority_id": insert.AuthorityId, "menu_id": v2.Id})
 	}
 	return err
 }
@@ -118,7 +113,7 @@ func AddMenuAuthority(insert *request.AddMenuAuthorityInfo) (err error) {
 // GetMenuAuthority 查看当前角色树
 func GetMenuAuthority(info *request.AuthorityIdInfo) (authorityMenus []*model.AuthorityMenu, err error) {
 	authorityMenus = ([]*model.AuthorityMenu)(nil)
-	err = g.DB("default").Table("menus m").Safe().RightJoin("authority_menu a", "m.id=a.menu_id").Where(g.Map{"authority_id": info.AuthorityId}).Structs(&authorityMenus)
+	err = g.DB(global.Db).Table("menus m").Safe().RightJoin("authority_menu a", "m.id=a.menu_id").Where(g.Map{"authority_id": info.AuthorityId}).Structs(&authorityMenus)
 	return authorityMenus, err
 }
 
@@ -156,7 +151,7 @@ func DeleteBaseMenu(delete *request.GetById) (err error) {
 		return errors.New("此菜单存在子菜单不可删除")
 	}
 	_, err = menus.Delete(g.Map{"id": delete.Id})
-	db := g.DB("default").Table("authority_menu").Safe()
+	db := g.DB(global.Db).Table("authority_menu").Safe()
 	_, err = db.Where(g.Map{"menu_id": delete.Id}).Delete()
 	return err
 }
@@ -191,7 +186,7 @@ func UpdateBaseMenu(update *request.UpdateBaseMenu) (err error) {
 // GetBaseMenuById 返回当前选中menu
 func GetBaseMenuById(idInfo *request.GetById) (menu *model.BaseMenu, err error) {
 	menu = (*model.BaseMenu)(nil)
-	db := g.DB("default").Table("menus").Safe()
+	db := g.DB(global.Db).Table("menus").Safe()
 	err = db.Where(g.Map{"id": idInfo.Id}).Struct(&menu)
 	return menu, err
 }

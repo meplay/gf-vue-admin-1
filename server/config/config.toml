@@ -34,7 +34,7 @@
 
 # casbin configuration
 [casbin]
-    ModelPath =  "./public/resource/rbac_model.conf"
+    ModelPath =  "./public/rbac_model.conf"
 
 # jwt configuration
 [jwt]

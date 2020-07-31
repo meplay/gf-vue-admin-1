@@ -14,6 +14,10 @@ func InitializeRunServer() {
 	s.SetReadTimeout(10 * time.Second)
 	s.SetWriteTimeout(10 * time.Second)
 	s.SetMaxHeaderBytes(1 << 20)
+	//s.SetIndexFolder(true)
+	s.SetServerRoot("/public/page")
+	//s.AddStaticPath("/form-generator", "/public/page")
+	s.SetRewrite("/form-generator", "/index.html")
 	router.InitializeRouters()
 	s.Run()
 }
