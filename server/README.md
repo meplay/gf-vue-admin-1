@@ -11,4 +11,3 @@
     - 格式"header:[Authorization], query:[token], cookie:[jwt]"
     - 注意冒号后面没有空格
     - header参数设置了就必须带有TokenHeadName,不然无法识别
-    - 
