@@ -15,7 +15,7 @@ type UpdateAuthority struct {
 }
 
 type DeleteAuthority struct {
-	AuthorityId string `p:"authority_id" v:"required|length:1,1000#请输入角色id|角色id长度为:min到:max位"`
+	AuthorityId string `p:"authorityId" v:"required|length:1,1000#请输入角色id|角色id长度为:min到:max位"`
 }
 type Authorities struct {
 	AuthorityId   string           `r:"authorityId"  orm:"authority_id,primary" json:"authority_id"`    // 角色ID

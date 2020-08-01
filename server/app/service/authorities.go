@@ -80,11 +80,17 @@ func UpdateAuthority(update *request.UpdateAuthority) (err error) {
 // DeleteAuthority Delete role
 // DeleteAuthority 删除角色
 func DeleteAuthority(auth *request.DeleteAuthority) (err error) {
+	var authority *authorities.Entity
 	if _, err = admins.FindOne(g.Map{"authority_id": auth.AuthorityId}); err != nil {
 		return errors.New("此角色有用户正在使用禁止删除")
 	}
-	if _, err = authorities.Delete(g.Map{"parent_id": auth.AuthorityId}); err != nil {
-		return errors.New("此角色存在子角色不允许删除")
+	if authority, err = authorities.FindOne(g.Map{"parent_id": auth.AuthorityId}); err != nil {
+		if authority != nil {
+			return errors.New("此角色存在子角色不允许删除")
+		}
+	}
+	if _, err = authorities.Delete(g.Map{"authority_id": auth.AuthorityId}); err != nil {
+		return errors.New("角色删除失败")
 	}
 	if _, err = authority_menu.Delete(g.Map{"authority_id": auth.AuthorityId}); err != nil {
 		return errors.New("菜单删除失败")
