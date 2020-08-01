@@ -63,8 +63,8 @@ func CreateTemp(r *ghttp.Request) {
 		}
 		for _, create := range creates {
 			if err := service.CreateApi(create); err != nil {
-				r.Header.Add("success", "false")
-				r.Header.Add("msg", url.QueryEscape(fmt.Sprintf("自动化创建失败，%v，请自行清空垃圾数据", err)))
+				r.Header.Set("success", "false")
+				r.Header.Set("msg", url.QueryEscape(fmt.Sprintf("自动化创建失败，%v，请自行清空垃圾数据", err)))
 				r.Exit()
 			}
 		}
@@ -75,10 +75,11 @@ func CreateTemp(r *ghttp.Request) {
 			panic(err)
 		}
 	}
-	r.Header.Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "gf-vue-admin.zip")) // fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
-	r.Header.Add("Content-Type", "application/json")
-	r.Header.Add("success", "true")
-	//r.File("./gf-vue-admin.zip")
+	r.Response.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "gf-vue-admin.zip")) // fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名
+	r.Response.Header().Add("Content-Type", "application/json")
+	r.Response.Header().Add("success", "true")
+	r.Response.ServeFile("./gf-vue-admin.zip")
+	//r.Response.ServeFileDownload("./gf-vue-admin.zip", "gf-vue-admin.zip")
 	if err := os.Remove("./gf-vue-admin.zip"); err != nil {
 		panic(err)
 	}

@@ -275,7 +275,7 @@ export default {
           }
           const data = await createTemp(this.form);
           const blob = new Blob([data]);
-          const fileName = "ginvueadmin.zip";
+          const fileName = "gf-vue-admin.zip";
           if ("download" in document.createElement("a")) {
             // 不是IE浏览器
             let url = window.URL.createObjectURL(blob);

@@ -12,14 +12,14 @@ type AutoCodeStruct struct {
 }
 
 type Field struct {
-	FieldName       string `json:"fieldName "json:"fieldName"`
-	FieldDesc       string `json:"fieldDesc "json:"fieldDesc"`
-	FieldType       string `json:"fieldType "json:"fieldType"`
-	FieldJson       string `json:"fieldJson "json:"fieldJson"`
-	DataType        string `json:"dataType "json:"dataType"`
-	DataTypeLong    string `json:"dataTypeLong "json:"dataTypeLong"`
-	Comment         string `json:"comment "json:"comment"`
-	ColumnName      string `json:"columnName "json:"columnName"`
-	FieldSearchType string `json:"fieldSearchType "json:"fieldSearchType"`
-	DictType        string `json:"dictType "json:"dictType"`
+	FieldName       string `p:"fieldName " json:"fieldName"`
+	FieldDesc       string `p:"fieldDesc " json:"fieldDesc"`
+	FieldType       string `p:"fieldType " json:"fieldType"`
+	FieldJson       string `p:"fieldJson " json:"fieldJson"`
+	DataType        string `p:"dataType " json:"dataType"`
+	DataTypeLong    string `p:"dataTypeLong " json:"dataTypeLong"`
+	Comment         string `p:"comment " json:"comment"`
+	ColumnName      string `p:"columnName " json:"columnName"`
+	FieldSearchType string `p:"fieldSearchType " json:"fieldSearchType"`
+	DictType        string `p:"dictType " json:"dictType"`
 }

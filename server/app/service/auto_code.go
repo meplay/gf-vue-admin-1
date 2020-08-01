@@ -57,16 +57,16 @@ func CreateTemp(autoCode model.AutoCodeStruct) (err error) {
 				firstDot := strings.Index(origFileName, ".")
 				if firstDot != -1 {
 					if origFileName == "model.go" {
-						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + "model" + "/" + "model" + origFileName[firstDot:]
+						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + autoCode.PackageName + "/" + autoCode.PackageName + origFileName[firstDot:]
 						continue
 					}
 					if origFileName == "model_entity.go" {
-						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + "model" + "/" + autoCode.PackageName + "_entity" + origFileName[firstDot:]
+						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + autoCode.PackageName + "/" + autoCode.PackageName + "_entity" + origFileName[firstDot:]
 						continue
 					}
 					if origFileName == "model_model.go" {
-						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + "model" + "/" + autoCode.PackageName + "_model" + origFileName[firstDot:]
-						needMkdir = append(needMkdir, autoPath+trimBase[:lastSeparator]+"/"+autoCode.PackageName+"/"+"model")
+						dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.PackageName + "/" + autoCode.PackageName + "/" + autoCode.PackageName + "_model" + origFileName[firstDot:]
+						needMkdir = append(needMkdir, autoPath+trimBase[:lastSeparator]+"/"+autoCode.PackageName+"/"+autoCode.PackageName)
 						continue
 					}
 				}
