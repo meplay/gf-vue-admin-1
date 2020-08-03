@@ -137,7 +137,7 @@ go build
             └─view      （前端页面）
 ```
 
-[后端请看此目录](./server/document/后端目录结构.md)
+[后端请看此目录](server/db/后端目录结构.md)
 
 ## 5. 主要功能
 

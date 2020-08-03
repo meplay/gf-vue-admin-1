@@ -141,7 +141,7 @@ go build
 
 ```
 
-[See this directory for the backend](./server/document/后端目录结构.md)
+[See this directory for the backend](server/db/后端目录结构.md)
 
 ## 5. The main function
 
