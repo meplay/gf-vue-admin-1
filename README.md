@@ -201,7 +201,7 @@ go build
 
 | 蒋 | 尹 | 严 | 杜 | 印 | 宋 | 赖 | 卢 |
 |  :---:  |  :---: | :---: | :---:  |  :---: | :---: | :---: | :---: |
-| <img width="150" src="http://qmplusimg.henrongyi.top/qrjjz.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qryx.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qryr.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrdjl.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrygl.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrsong.png"> | <img src="https://sliverhorn.github.io/gf-vue-admin-doc/Images/index/image-20200803170441708.png" alt="image-20200803170441708" style="zoom:17%;" /> | <img src="https://sliverhorn.github.io/gf-vue-admin-doc/Images/index/image-20200803181537723.png" alt="image-20200803181537723" style="zoom:20%;" /> |
+| <img width="150" src="http://qmplusimg.henrongyi.top/qrjjz.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qryx.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qryr.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrdjl.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrygl.png"> | <img width="150" src="http://qmplusimg.henrongyi.top/qrsong.png"> | <img src="https://sliverhorn.github.io/gf-vue-admin-doc/Images/index/image-20200803170441708.png" alt="image-20200803170441708" style="zoom:10%;" /> | <img src="https://sliverhorn.github.io/gf-vue-admin-doc/Images/index/image-20200803181537723.png" alt="image-20200803181537723" style="zoom:10%;" /> |
 
 |  昵称   | 项目职务  | 姓  |
 |  ----  | ----  | ----  |
