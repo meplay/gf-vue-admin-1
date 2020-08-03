@@ -67,7 +67,9 @@ func UpdateDictionary(update *request.UpdateDictionary) (err error) {
 func FindDictionary(find *request.FindDictionary) (dictionary *dictionaries.Dictionaries, err error) {
 	dictionary = (*dictionaries.Dictionaries)(nil)
 	db := g.DB("default").Table("dictionaries").Safe()
+	dictionaryDetailsDb := g.DB("default").Table("dictionary_details").Safe()
 	err = db.Where(g.Map{"id": find.Id}).Or(g.Map{"`type`": find.Type}).Struct(&dictionary)
+	err = dictionaryDetailsDb.Where(g.Map{"dictionary_id": dictionary.Id}).Structs(&dictionary.DictionaryDetails)
 	return dictionary, err
 }
 
