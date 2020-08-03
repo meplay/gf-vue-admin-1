@@ -17,5 +17,6 @@ func InitializeRunServer() {
 	s.SetIndexFolder(true)
 	s.AddStaticPath("/form-generator", "public/page")
 	router.InitializeRouters()
+	s.Logger().Info(g.I18n().Translate(`[GoFrame-Vue-Admin] {#router} {#register} {#success}`, "zh-CN"))
 	s.Run()
 }

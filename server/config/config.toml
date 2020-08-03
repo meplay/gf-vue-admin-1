@@ -52,37 +52,71 @@
 [database]
     # 默认启动Mysql配置
     [database.default]
-    Link  = "mysql:root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin"
-    Debug = true
-
-    # 开发环境Mysql配置
-    [database.development]
-    Link  = "mysql:root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin"
-    Debug = true
-
-    # 生产环境Mysql配置
-    [database.produce]
-    Link  = "mysql:root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin"
-    Debug = true
-
-    # casbin Mysql配置
-    [database.casbin]
     Host         = "127.0.0.1"
     Port         = "3306"
     User         = "root"
     Pass         = "gdkid,,.."
     Name         = "gf-vue-admin"
     Type         = "mysql"
-    Role         = "casbin"
-    Debug        = "true"
-    Dryrun       = 1
-    Weight       = "100"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
     Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
+
+    # 开发环境Mysql配置
+    [database.development]
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
+    Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
+
+    # 生产环境Mysql配置
+    [database.production]
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
+    Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
 
     # 测试环境Mysql配置
     [database.test]
-    Link  = "mysql:root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin-test"
-    Debug = true
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
+    Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
 
     # Database logger.
     [database.logger]

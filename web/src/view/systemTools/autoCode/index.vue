@@ -111,7 +111,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-tag type="danger">id , created_at , updated_at , deleted_at 会自动生成请勿重复创建</el-tag>
+    <el-tag type="danger">gdb会自动识别create_at , update_at , delete_at这三个字段, 这三个字段的类型必须为时间类型，如datetime, timestamp</el-tag><br>
+    <el-tag type="danger">create_at用于记录创建时更新，仅会写入一次。</el-tag><br>
+    <el-tag type="danger">update_at用于记录修改时更新，每次记录变更时更新。</el-tag><br>
+    <el-tag type="danger">delete_at用于记录的软删除特性，只有当记录删除时会写入一次。</el-tag><br>
     <!-- 组件列表 -->
     <div class="button-box clearflex">
       <el-button @click="enterForm" type="primary">生成代码包</el-button>
