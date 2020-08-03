@@ -13,7 +13,7 @@ This is English documentation
 
 # Project documentation
 
-[Online documentation (to be improved)](https://github.com/flipped-aurora/gf-vue-admin)
+[Online documentation](https://sliverhorn.github.io/gf-vue-admin-doc)
 
 - Front-end UI framework：[element-ui](https://github.com/ElemeFE/element) 
 

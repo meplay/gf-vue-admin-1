@@ -14,7 +14,7 @@
 
 # 项目文档
 
-[在线文档(待完善)](http://https://github.com/flipped-aurora/gf-vue-admin)
+[在线文档](https://sliverhorn.github.io/gf-vue-admin-doc)
 
 - 前端UI框架：[element-ui](https://github.com/ElemeFE/element) 
 - 后台框架：[GoFrame](https://goframe.org/index)
