@@ -1,5 +1,5 @@
 <div align=center>
-<img src="./docs/golang_1.png" width=300" height="300" />
+<img src="./docs/gf-vue-admin-logo.png" width=300" height="300" />
 </div>
 <div align=center>
 <img src="https://img.shields.io/badge/golang-1.11-blue"/>
