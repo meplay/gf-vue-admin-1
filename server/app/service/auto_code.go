@@ -21,7 +21,7 @@ type tplData struct {
 
 func CreateTemp(autoCode model.AutoCodeStruct) (err error) {
 	var tplFileList []string
-	basePath := "/Users/sliverhorn/Go/src/github.com/flipped-aurora/gf-vue-admin/server/template"
+	basePath := "./template"
 	// 获取 basePath 文件夹下所有tpl文件
 	if tplFileList, err = GetAllTplFile(basePath, nil); err != nil {
 		return err
