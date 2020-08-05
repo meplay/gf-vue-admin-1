@@ -1,0 +1,131 @@
+# HTTP Server
+[server]
+    Address          = ":8888"
+    ServerRoot       = ""
+    ServerAgent      = ""
+    IndexFiles       = []
+    AccessLogEnabled = true
+    ErrorLogEnabled  = true
+    PProfEnabled     = false
+    LogPath          = "./logs/server"
+    SessionIdName    = ""
+    SessionPath      = ""
+    SessionMaxAge    = ""
+    DumpRouterMap    = true
+
+# system configuration
+[system]
+    Db = "default"
+    UseMultipoint = true
+    Env = "public" # Change to "develop" to skip authentication for development mode
+
+# 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
+[qiniu]
+    AccessKey   = "25j8dYB****************guwxzZ"
+    SecretKey   = "pgdbqE****************VecFXPDeG5JY"
+    Bucket      = "*******"
+    ImgPath     = "*******"
+
+# captcha configuration
+[captcha]
+    KeyLong     = 6
+    ImgWidth    = 240
+    ImgHeight   = 80
+
+# casbin configuration
+[casbin]
+    ModelPath =  "./public/rbac_model.conf"
+
+# jwt configuration
+[jwt]
+    SigningKey  = "SliverHorn"
+    ExpiresAt = 1 # 3600000000000秒 == 1天 默认设置为1天
+    RefreshAt = 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
+
+# Logger
+[logger]
+    Path        = "./logs/log"
+    Level       = "all"
+    Stdout      = true
+
+# MySQL 配置
+[database]
+    # 默认启动Mysql配置
+    [database.default]
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
+    Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
+
+    # 开发环境Mysql配置
+    [database.development]
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
+    Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
+
+    # 生产环境Mysql配置
+    [database.production]
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
+    Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
+
+    # 测试环境Mysql配置
+    [database.test]
+    Host         = "127.0.0.1"
+    Port         = "3306"
+    User         = "root"
+    Pass         = "gdkid,,.."
+    Name         = "gf-vue-admin"
+    Type         = "mysql"
+    Debug        = true
+    Prefix       = ""
+    DryRun       = ""
+    Charset      = "utf8"
+    Weight       = ""
+    MaxIdle      = ""
+    MaxOpen      = ""
+    MaxLifetime  = ""
+
+    # Database logger.
+    [database.logger]
+        Path   = "./logs/sql"
+        Level  = "all"
+        Stdout = true
+
+# Redis 配置
+[redis]
+    # host:port[,db,pass?maxIdle=x&maxActive=x&idleTimeout=x&maxConnLifetime=x]
+    default = "127.0.0.1:6379,1,?idleTimeout=600"
+    cache   = "127.0.0.1:6379,2,?idleTimeout=600"
