@@ -20,7 +20,7 @@ func Create{{.StructName}}(create *request.Create{{.StructName}}) (err error) {
         {{- end}}
     {{- end }}
 	}
-	_, err = operations.Insert(&insert)
+	_, err = {{.TableName}}.Insert(&insert)
 	return err
 }
 

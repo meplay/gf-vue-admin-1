@@ -1,0 +1,6 @@
+router = "router"
+register = "register"
+success = "success"
+
+# 前缀
+Prefix = "[GoFrame-Vue-Admin]"

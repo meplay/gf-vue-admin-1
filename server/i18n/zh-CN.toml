@@ -1,3 +1,6 @@
 router = "路由"
 register = "注册"
 success = "成功"
+
+# 前缀
+Prefix = "[GoFrame-Vue-Admin]"
