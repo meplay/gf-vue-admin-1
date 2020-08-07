@@ -7,6 +7,8 @@ import (
 	"server/app/service"
 	"server/library/global"
 
+	"github.com/gogf/gf/frame/g"
+
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 )
@@ -20,7 +22,7 @@ func GetMenu(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("获取失败，%v", err))
 		r.Exit()
 	}
-	global.OkWithData(r, response.AuthorityMenu{Menus: menus})
+	global.OkWithData(r, g.Map{"menus": menus})
 }
 
 // GetMenuList Paging gets the base Menu list
@@ -52,7 +54,7 @@ func GetBaseMenuTree(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("获取失败，%v", err))
 		r.Exit()
 	}
-	global.OkWithData(r, response.BaseMenus{Menus: menus})
+	global.OkWithData(r, g.Map{"menus": menus})
 }
 
 // AddMenuAuthority Increases menu and role association
@@ -81,10 +83,10 @@ func GetMenuAuthority(r *ghttp.Request) {
 	}
 	menus, err := service.GetMenuAuthority(&authorityIdInfo)
 	if err != nil {
-		global.FailWithDetailed(r, global.SUCCESS, response.AuthorityMenu{Menus: menus}, fmt.Sprintf("添加失败，%v", err))
+		global.FailWithDetailed(r, global.ERROR, g.Map{"menus": menus}, fmt.Sprintf("添加失败，%v", err))
 		r.Exit()
 	}
-	global.Result(r, global.SUCCESS, response.AuthorityMenu{Menus: menus}, "获取成功")
+	global.Result(r, global.SUCCESS, g.Map{"menus": menus}, "获取成功")
 }
 
 // CreateBaseMenu The new menu
@@ -145,5 +147,5 @@ func GetBaseMenuById(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("查询失败，err:%v", err))
 		r.Exit()
 	}
-	global.OkWithData(r, response.BaseMenu{Menu: menu})
+	global.OkWithData(r, g.Map{"menu": menu})
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"mime/multipart"
-	"server/app/api/response"
 	"server/app/model/breakpoint_files"
 	"server/app/service"
 	"server/library/global"
@@ -70,7 +69,7 @@ func FindFile(r *ghttp.Request) {
 		global.FailWithMessage(r, "查找失败")
 		r.Exit()
 	}
-	global.OkWithData(r, response.ExaFile{File: file})
+	global.OkWithData(r, g.Map{"file": file})
 }
 
 // BreakpointContinueFinish Find files

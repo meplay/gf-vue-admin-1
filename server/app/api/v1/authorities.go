@@ -8,6 +8,8 @@ import (
 	"server/app/service"
 	"server/library/global"
 
+	"github.com/gogf/gf/frame/g"
+
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -24,7 +26,7 @@ func CreateAuthority(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("创建失败，%v", err))
 		r.Exit()
 	}
-	global.OkDetailed(r, response.Authority{Authority: authority}, "创建成功")
+	global.OkDetailed(r, g.Map{"authority": authority}, "创建成功")
 }
 
 // CopyAuthority Copy the role
@@ -40,7 +42,7 @@ func CopyAuthority(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("拷贝失败，%v", err))
 		r.Exit()
 	}
-	global.OkWithData(r, response.CopyAuthority{Authority: authority})
+	global.OkWithData(r, g.Map{"authority": authority})
 }
 
 // DeleteAuthority Delete the role
