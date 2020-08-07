@@ -9,7 +9,10 @@ import (
 
 // InitJwtRouter 注册jwt相关路由
 func InitAutoCodeRouter() {
-	AutoCodeRouter := g.Server().Group("autoCode").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	AutoCodeRouter := g.Server().Group("autoCode").Middleware(
+		middleware.JwtAuth,
+		middleware.CasbinMiddleware,
+	)
 	{
 		AutoCodeRouter.POST("createTemp", v1.CreateTemp) // 创建自动化代码
 		AutoCodeRouter.GET("getTables", v1.GetTables)    // 获取对应数据库的表

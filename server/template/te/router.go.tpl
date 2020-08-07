@@ -9,7 +9,10 @@ import (
 
 // Init{{.StructName}}Router 注册{{.Description}}路由
 func Init{{.StructName}}Router() {
-	{{.StructName}}Router := g.Server().Group("{{.Abbreviation}}").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	{{.StructName}}Router := g.Server().Group("{{.Abbreviation}}").Middleware(
+		middleware.JwtAuth,
+		middleware.CasbinMiddleware,
+	)
 	{
 		{{.StructName}}Router.POST("create{{.StructName}}", v1.Create{{.StructName}})               // 新建{{.StructName}}
 		{{.StructName}}Router.DELETE("delete{{.StructName}}", v1.Delete{{.StructName}})             // 删除{{.StructName}}

@@ -9,7 +9,10 @@ import (
 
 // InitOperationRouter 注册操作记录路由
 func InitOperationRouter() {
-	OperationRouter := g.Server().Group("sysOperationRecord").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	OperationRouter := g.Server().Group("sysOperationRecord").Middleware(
+		middleware.JwtAuth,
+		middleware.CasbinMiddleware,
+	)
 	{
 		OperationRouter.POST("createOperationRecord", v1.CreateOperation)            // 新建Operation
 		OperationRouter.DELETE("deleteSysOperationRecordById", v1.DeleteOperation)   // 删除Operation

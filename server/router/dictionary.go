@@ -9,7 +9,10 @@ import (
 
 // InitDictionaryDetailRouter 注册字典详情管理
 func InitDictionaryRouter() {
-	DictionaryRouter := g.Server().Group("sysDictionary").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	DictionaryRouter := g.Server().Group("sysDictionary").Middleware(
+		middleware.JwtAuth,
+		middleware.CasbinMiddleware,
+	)
 	{
 		DictionaryRouter.POST("createSysDictionary", v1.CreateDictionary)   // 新建Dictionary
 		DictionaryRouter.DELETE("deleteSysDictionary", v1.DeleteDictionary) // 删除Dictionary

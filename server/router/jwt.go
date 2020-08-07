@@ -9,7 +9,10 @@ import (
 
 // InitJwtRouter 注册jwt相关路由
 func InitJwtRouter() {
-	ApiRouter := g.Server().Group("jwt").Middleware(middleware.JwtAuth).Middleware(middleware.CasbinMiddleware)
+	ApiRouter := g.Server().Group("jwt").Middleware(
+		middleware.JwtAuth,
+		middleware.CasbinMiddleware,
+	)
 	{
 		ApiRouter.POST("jsonInBlacklist", v1.JsonInBlacklist) // jwt加入黑名单
 	}
