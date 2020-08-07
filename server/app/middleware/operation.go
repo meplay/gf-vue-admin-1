@@ -38,7 +38,7 @@ func OperationRecord(r *ghttp.Request) {
 		Path:    r.Request.URL.Path,
 		Agent:   r.Request.UserAgent(),
 		Request: string(body),
-		UserId:  gconv.Int(claims["user_id"]),
+		UserId:  gconv.Int(claims["admin_id"]),
 	}
 	now := time.Now()
 	// Request

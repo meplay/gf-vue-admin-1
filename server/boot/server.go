@@ -17,6 +17,6 @@ func InitializeRunServer() {
 	s.SetIndexFolder(true)
 	s.AddStaticPath("/form-generator", "public/page")
 	router.InitializeRouters()
-	s.EnableAdmin()
+	//s.EnableAdmin()
 	s.Run()
 }

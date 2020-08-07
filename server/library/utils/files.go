@@ -24,7 +24,7 @@ func Upload(file *multipart.FileHeader) (path string, key string, err error) {
 	upToken := putPolicy.UploadToken(mac)
 	cfg := storage.Config{}
 	// 空间对应的机房
-	cfg.Zone = &storage.ZoneHuadong
+	cfg.Zone = &storage.ZoneHuanan
 	// 是否使用https域名
 	cfg.UseHTTPS = false
 	// 上传是否使用CDN上传加速

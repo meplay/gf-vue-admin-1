@@ -66,7 +66,7 @@
             :headers="{'x-token':token}"
             :on-success="handleAvatarSuccess"
             :show-file-list="false"
-            :action="`${path}/fileUploadAndDownload/upload?noSave=1`"
+            :action="`${path}/fileUploadAndDownload/upload?noSave=0`"
             class="avatar-uploader"
             name="file"
           >

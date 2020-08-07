@@ -13,11 +13,12 @@ import (
 // AdminRegister Administrator account registration
 // AdminRegister 管理员注册账号
 func AdminRegister(r *ghttp.Request) {
-	var R request.AdminRegister
+	var R *request.AdminRegister
 	if err := r.Parse(&R); err != nil {
 		global.FailWithMessage(r, err.Error())
+		r.Exit()
 	}
-	if err := service.AdminRegister(&R); err != nil {
+	if err := service.AdminRegister(R); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.ExitAll()
 	}

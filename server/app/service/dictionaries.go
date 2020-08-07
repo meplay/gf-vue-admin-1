@@ -4,6 +4,7 @@ import (
 	"errors"
 	"server/app/api/request"
 	"server/app/model/dictionaries"
+	"server/app/model/dictionary_details"
 	"server/library/utils"
 
 	"github.com/gogf/gf/frame/g"
@@ -37,7 +38,7 @@ func DeleteDictionary(delete *request.DeleteDictionary) (err error) {
 	if _, err = dictionaries.Delete(g.Map{"id": delete.Id}); err != nil {
 		return errors.New("删除Dictionary失败")
 	}
-	// TODO 删除DictionaryDetails
+	_, err = dictionary_details.Delete(g.Map{"dictionary_id": delete.Id})
 	return
 }
 

@@ -21,10 +21,10 @@
 
 # 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
 [qiniu]
-    AccessKey   = "25j8dYB****************guwxzZ"
-    SecretKey   = "pgdbqE****************VecFXPDeG5JY"
-    Bucket      = "*******"
-    ImgPath     = "*******"
+    AccessKey   = "iZ0I7mMMnlD1Wge4T33z-AN_Lqd8J2--J3JFzniL"
+    SecretKey   = "yu2MMwC8aANrUav_m0mTWtd65SZUgH5ERK5tRI85"
+    Bucket      = "sliver-horn-blog"
+    ImgPath     = "http://blog.sliverhorn.com"
 
 # captcha configuration
 [captcha]

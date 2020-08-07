@@ -10,6 +10,8 @@ import (
 	"server/library/utils"
 	"strings"
 
+	"github.com/gogf/gf/frame/g"
+
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -44,7 +46,7 @@ func UploadFile(r *ghttp.Request) {
 			global.FailWithMessage(r, fmt.Sprintf("修改数据库链接失败，%v", err))
 			r.Exit()
 		}
-		global.OkDetailed(r, response.Files{File: &file}, "上传成功")
+		global.OkDetailed(r, g.Map{"file": file}, "上传成功")
 	}
 }
 

@@ -6,7 +6,7 @@ import (
 )
 
 type Files struct {
-	File *files.Entity
+	File *files.Entity `json:"file"`
 }
 
 type ExaFile struct {

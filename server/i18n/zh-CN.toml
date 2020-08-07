@@ -1,3 +1,12 @@
+# Redis
+redis    = "redis"
+connect  = "连接"
+ping     = "Ping"
+response = "返回内容"
+PONG     = "PONG"
+
+
+# 路由
 router = "路由"
 register = "注册"
 success = "成功"

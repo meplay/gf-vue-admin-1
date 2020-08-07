@@ -11,6 +11,6 @@ func InitializeRedis() {
 		if err != nil {
 			g.Log().Error(err)
 		}
-		g.Log().Infof("redis connect ping response:%v", gconv.String(conn))
+		g.Log().Infof(g.I18n().Translate(`{#Prefix} {#redis} {#connect} {#ping} {#response} : %v`, "zh-CN"), gconv.String(conn))
 	}
 }

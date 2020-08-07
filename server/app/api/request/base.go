@@ -10,9 +10,10 @@ type AdminLogin struct {
 
 // AdminRegister request Structure
 type AdminRegister struct {
-	Username    string `p:"username" v:"username@required|length:1,30#请输入用户名称|账号长度为:min到:max位"`
-	Password    string `p:"password" v:"password@required|length:6,30#请输入密码|密码长度为:min到:max位"`
-	Nickname    string `p:"nickname" v:"nickname@required|length:1,30#请输入昵称|昵称长度为:min到:max位"`
-	HeaderImg   string `p:"header_img" v:"header_img@required|length:6,30#请输入用户头像|头像地址长度为:min到:max位"`
-	AuthorityId string `p:"authority_id" v:"authority_id@required|length:1,100#请输入密码|authority_id长度为:min到:max位"`
+	Username string `p:"username" v:"required|length:1,30#请输入用户名称|账号长度为:min到:max位"`
+	Password string `p:"password" v:"required|length:6,30#请输入密码|密码长度为:min到:max位"`
+	Nickname string `p:"nickName" v:"required|length:1,30#请输入昵称|昵称长度为:min到:max位"`
+	//HeaderImg   string `p:"headerImg" v:"url|length:1,30#请输入用户头像|头像地址长度为:min到:max位"`
+	HeaderImg   string `p:"headerImg"`
+	AuthorityId string `p:"authorityId" v:"required|length:1,100#请输入密码|authority_id长度为:min到:max位"`
 }
