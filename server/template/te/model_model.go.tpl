@@ -26,11 +26,7 @@ var (
 	// Columns defines and stores column names for table {{.TableName}}.
 	Columns = struct {
 	    {{- range .Fields}}
-	        {{- if eq .FieldType "bool" }}
-        {{.FieldName}} int // {{.Comment}}
-	        {{- else }}
-        {{.FieldName}} {{.FieldType}} // {{.Comment}}
-            {{- end }}
+        {{.FieldName}} string // {{.Comment}}
         {{- end }}
 	}{
 	    {{- range .Fields}}

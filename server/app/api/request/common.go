@@ -20,3 +20,8 @@ type FindById struct {
 type DeleteById struct {
 	Id int `p:"id" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
 }
+
+// DeleteById Delete by id structure
+type DeleteByIds struct {
+	Ids []int `p:"ids" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
+}

@@ -28,7 +28,7 @@ func Create{{.StructName}}(r *ghttp.Request) {
 // Delete{{.StructName}} Delete {{.StructName}}
 // Delete{{.StructName}} 删除{{.StructName}}
 func Delete{{.StructName}}(r *ghttp.Request) {
-	var delete request.Delete{{.StructName}}
+	var delete request.DeleteById
 	if err := r.Parse(&delete); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
@@ -40,15 +40,15 @@ func Delete{{.StructName}}(r *ghttp.Request) {
 	global.OkWithMessage(r, "删除成功")
 }
 
-// Delete{{.StructName}}s Batch delete {{.StructName}}
-// Delete{{.StructName}}s 批量删除{{.StructName}}
-func Delete{{.StructName}}s(r *ghttp.Request) {
-	var deletes request.Delete{{.StructName}}s
-	if err := r.Parse(&deletes; err != nil {
+// Delete{{.StructName}}ByIds Batch delete {{.StructName}}
+// Delete{{.StructName}}ByIds 批量删除{{.StructName}}
+func Delete{{.StructName}}ByIds(r *ghttp.Request) {
+	var deletes request.DeleteByIds
+	if err := r.Parse(&deletes); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
-	if err := service.Delete{{.StructName}}s(&deletes); err != nil {
+	if err := service.Delete{{.StructName}}ByIds(&deletes); err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("批量删除失败，%v", err))
 		r.Exit()
 	}
@@ -103,10 +103,11 @@ func Get{{.StructName}}List(r *ghttp.Request) {
     if r.GetString("{{.ColumnName}}") == "empty" || r.GetString("{{.ColumnName}}") == "" {
         delete(condition, "{{.ColumnName}}")
     }
+	list, total, err := service.Get{{.StructName}}List(&pageInfo, condition)
             {{- end }}
         {{- end }}
     {{- end }}
-	list, total, err := service.Get{{.StructName}}List(&pageInfo, condition)
+	list, total, err := service.Get{{.StructName}}List(&pageInfo)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("获取数据失败，%v", err))
 		r.Exit()

@@ -15,7 +15,7 @@ func Create{{.StructName}}(create *request.Create{{.StructName}}) (err error) {
 	{{- range .Fields}}
         {{- if eq .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}
         {{ else }}
-        {{.ColumnName}}: create.{{.FieldName}},
+        {{.FieldName}}: create.{{.FieldName}},
         {{- end}}
     {{- end }}
 	}
@@ -26,26 +26,26 @@ func Create{{.StructName}}(create *request.Create{{.StructName}}) (err error) {
 // Delete{{.StructName}} delete {{.StructName}}
 // Delete{{.StructName}} 删除 {{.StructName}}
 func Delete{{.StructName}}(delete *request.DeleteById) (err error) {
-	_, err = operations.Delete(g.Map{"id": delete.Id})
+	_, err = {{.TableName}}.Delete(g.Map{"id": delete.Id})
 	return err
 }
 
-// Delete{{.StructName}}s batch deletion {{.StructName}}s
-// Delete{{.StructName}}s 批量删除 {{.StructName}}s
-func Delete{{.StructName}}s(deletes *request.DeleteByIds) (err error) {
+// Delete{{.StructName}} batch deletion {{.StructName}}s
+// Delete{{.StructName}} 批量删除 {{.StructName}}s
+func Delete{{.StructName}}ByIds(deletes *request.DeleteByIds) (err error) {
 	_, err = {{.TableName}}.Delete(g.Map{"id IN(?)": deletes.Ids})
 	return err
 }
 
-// Update{{.StructName}} update {{.StructName}}s
-// Update{{.StructName}} 更新 {{.StructName}}s
+// Update{{.StructName}} update {{.StructName}}
+// Update{{.StructName}} 更新 {{.StructName}}
 func Update{{.StructName}}(update *request.Update{{.StructName}}) (err error) {
 	condition := g.Map{"id": update.Id}
 	updateData := g.Map{
     {{- range .Fields}}
         {{- if eq .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}
         {{ else }}
-        {{.ColumnName}}: update.{{.FieldName}},
+        "{{.ColumnName}}": update.{{.FieldName}},
         {{- end}}
     {{- end }}
 	}
@@ -61,6 +61,13 @@ func Find{{.StructName}}(find *request.Find{{.StructName}}) (data *{{.TableName}
 
 // Get{{.StructName}}List Page out the {{.StructName}} list
 // Get{{.StructName}}List 分页获取{{.StructName}}列表
+{{- range .Fields}}
+	    {{- if .FieldSearchType}}
+	        {{- if eq .FieldType "bool" }}
+func Get{{.StructName}}List(info *request.Get{{.StructName}}List) (list interface{}, total int, err error) {
+            {{- end }}
+        {{- end }}
+{{- end }}
 func Get{{.StructName}}List(info *request.Get{{.StructName}}List, condition g.Map) (list interface{}, total int, err error) {
 	datalist := ([]*{{.TableName}}.{{.StructName}})(nil)
 	limit := info.PageSize

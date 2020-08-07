@@ -37,7 +37,7 @@ func CreateTemp(r *ghttp.Request) {
 				Method:      "DELETE",
 			},
 			{
-				Path:        "/" + a.Abbreviation + "/" + "delete" + a.StructName + "ByIds",
+				Path:        "/" + a.Abbreviation + "/" + "delete" + a.StructName + "s",
 				Description: "批量删除" + a.Description,
 				ApiGroup:    a.Abbreviation,
 				Method:      "DELETE",
