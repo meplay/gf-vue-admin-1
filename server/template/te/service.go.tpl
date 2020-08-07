@@ -2,7 +2,6 @@ package service
 
 import (
 	"server/app/api/request"
-	"server/app/model/admins"
 	"server/app/model/{{.TableName}}"
 	"server/library/global"
 
@@ -34,7 +33,7 @@ func Delete{{.StructName}}(delete *request.DeleteById) (err error) {
 // Delete{{.StructName}}s batch deletion {{.StructName}}s
 // Delete{{.StructName}}s 批量删除 {{.StructName}}s
 func Delete{{.StructName}}s(deletes *request.DeleteByIds) (err error) {
-	_, err = operations.Delete(g.Map{"id IN(?)": deletes.Ids})
+	_, err = {{.TableName}}.Delete(g.Map{"id IN(?)": deletes.Ids})
 	return err
 }
 
@@ -50,14 +49,14 @@ func Update{{.StructName}}(update *request.Update{{.StructName}}) (err error) {
         {{- end}}
     {{- end }}
 	}
-	_, err = operations.Update(updateData, condition)
+	_, err = {{.TableName}}.Update(updateData, condition)
 	return err
 }
 
 // Find{{.StructName}} Gets a single {{.StructName}} based on id
 // Find{{.StructName}} 根据id获取单条{{.StructName}}
 func Find{{.StructName}}(find *request.Find{{.StructName}}) (data *{{.TableName}}.Entity, err error) {
-	return operations.FindOne(g.Map{"id": find.Id})
+	return {{.TableName}}.FindOne(g.Map{"id": find.Id})
 }
 
 // Get{{.StructName}}List Page out the {{.StructName}} list
