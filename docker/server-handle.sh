@@ -88,20 +88,8 @@ cat>"${filename}"<<EOF
 [database]
     # 默认启动Mysql配置
     [database.default]
-    Host         = "172.21.0.3"
-    Port         = "13306"
-    User         = "root"
-    Pass         = "gdkid,,.."
-    Name         = "gf-vue-admin"
-    Type         = "mysql"
-    Debug        = true
-    Prefix       = ""
-    DryRun       = ""
-    Charset      = "utf8"
-    Weight       = ""
-    MaxIdle      = ""
-    MaxOpen      = ""
-    MaxLifetime  = ""
+    Link      = "mysql:root:gdkid,,..@tcp(gfmysql)/gf-vue-admin"
+    Debug     = true
 
     # Database logger.
     [database.logger]
