@@ -5,11 +5,16 @@ ping     = "Ping"
 response = "返回内容"
 PONG     = "PONG"
 
+# Mysql
+mysql    = "mysql"
+
 
 # 路由
 router = "路由"
 register = "注册"
+
 success = "成功"
+fail = "失败"
 
 # 前缀
 Prefix = "[GoFrame-Vue-Admin]"

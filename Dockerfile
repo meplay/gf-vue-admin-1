@@ -1,41 +1,64 @@
-FROM golang:alpine as builder
-RUN  apk add --update --no-cache yarn make g++
-RUN yarn global add cross-env node-sass
+FROM node:12.16.1 as web
 
-ENV GOPROXY=https://goproxy.cn,https://goproxy.io,direct \
-    GO111MODULE=on \
-    CGO_ENABLED=1
-WORKDIR /go/src/gin-vue-admin
-RUN go env -w GOPROXY=https://goproxy.cn,https://goproxy.io,direct
+WORKDIR /web/
+COPY web/ .
+
+RUN cat .env.production
+COPY docker/web-handle.sh .
+RUN sh ./web-handle.sh
+RUN cat .env.production
+RUN rm -f web-handle.sh
+
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
+RUN cnpm install
+RUN npm run build
+
+FROM golang:alpine as server
+
+ENV GO111MODULE=on
+ENV GOPROXY=https://goproxy.io,direct
+WORKDIR /go/src/gf-vue-admin
 COPY server/ ./
-RUN go env && go list && go build -v -a -ldflags "-extldflags \"-static\" " -o gvadmin .
 
-WORKDIR /web
-COPY web/ ./
-RUN yarn install && yarn run build
+RUN cat ./boot/server.go
+RUN cat ./config/config.toml
+COPY docker/server-handle.sh .
+RUN sh ./server-handle.sh
+RUN rm -f server-handle.sh
+RUN cat ./boot/server.go
+RUN cat ./config/config.toml
+
+RUN go env && go list && go build -o server .
 
 
 FROM nginx:alpine
-LABEL MAINTAINER="rikugun"
+MAINTAINER SliverHorn <sliver_horn@qq.com>
 
-RUN apk add --no-cache  gettext tzdata   && \
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" >  /etc/timezone && \
-    date && \
-    apk del tzdata
+WORKDIR gf-vue-admin/
 
-COPY docker/etc/nginx/nginx.conf.tpl /etc/nginx/nginx.conf.tpl
-WORKDIR /app
-#copy web
-COPY --from=builder /web/dist/ /var/www/
-#copy go app
-COPY --from=builder /go/src/gin-vue-admin/gvadmin ./
-COPY --from=builder /go/src/gin-vue-admin/db.db ./
-COPY --from=builder /go/src/gin-vue-admin/config.yaml ./
-COPY --from=builder /go/src/gin-vue-admin/resource ./resource
-COPY docker/docker-start.sh ./
+# copy web
+COPY --from=web /web/dist ./public/dist
+# copy server
+COPY --from=server /go/src/gf-vue-admin/server ./
+COPY --from=server /go/src/gf-vue-admin/i18n ./i18n
+COPY --from=server /go/src/gf-vue-admin/public ./public
+COPY --from=server /go/src/gf-vue-admin/config ./config
+COPY --from=server /go/src/gf-vue-admin/template ./template
 
-ENV API_SERVER="http://localhost:8888/"
-EXPOSE 80
+EXPOSE 8888
 
-ENTRYPOINT ["./docker-start.sh"]
+ENTRYPOINT ./server
+
+# 根据Dockerfile生成Docker镜像
+
+# docker build -t gva-server:1.0 .
+
+#- 根据Docker镜像启动Docker容器
+#    - 后台运行
+#    - ```
+#    docker run -d -p 8888:8888 --name gva-server-v1 gva-server:1.0
+#      ```
+#    - 以可交互模式运行, Ctrl + p + q 后台运行
+#    - ```
+#    docker run -it -p 8888:8888 --name gva-server-v1 gva-server:1.0
+#      ```
