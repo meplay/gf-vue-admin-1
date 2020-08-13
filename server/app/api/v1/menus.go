@@ -101,7 +101,7 @@ func CreateBaseMenu(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("添加失败，%v", err))
 		r.Exit()
 	}
-	global.FailWithMessage(r, "添加成功")
+	global.OkWithMessage(r, "添加成功")
 }
 
 // DeleteBaseMenu Delete menu
