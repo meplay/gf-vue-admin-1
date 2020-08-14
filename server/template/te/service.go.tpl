@@ -64,11 +64,11 @@ func Find{{.StructName}}(find *request.Find{{.StructName}}) (data *{{.TableName}
 {{- range .Fields}}
 	    {{- if .FieldSearchType}}
 	        {{- if eq .FieldType "bool" }}
-func Get{{.StructName}}List(info *request.Get{{.StructName}}List) (list interface{}, total int, err error) {
+func Get{{.StructName}}List(info *request.Get{{.StructName}}List, condition g.Map) (list interface{}, total int, err error) {
             {{- end }}
         {{- end }}
 {{- end }}
-func Get{{.StructName}}List(info *request.Get{{.StructName}}List, condition g.Map) (list interface{}, total int, err error) {
+func Get{{.StructName}}List(info *request.Get{{.StructName}}List) (list interface{}, total int, err error) {
 	datalist := ([]*{{.TableName}}.{{.StructName}})(nil)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
