@@ -8,6 +8,7 @@ import (
 	"server/app/model/authorities"
 	"server/app/model/authority_menu"
 	"server/app/model/authority_resources"
+	"server/library/global"
 
 	"github.com/gogf/gf/frame/g"
 )
@@ -69,6 +70,7 @@ func UpdateAuthority(update *request.UpdateAuthority) (err error) {
 // DeleteAuthority 删除角色
 func DeleteAuthority(auth *request.DeleteAuthority) (err error) {
 	var authority *authorities.Entity
+	db := g.DB(global.Db).Table("`casbin_rule`").Safe()
 	if _, err = admins.FindOne(g.Map{"authority_id": auth.AuthorityId}); err != nil {
 		return errors.New("此角色有用户正在使用禁止删除")
 	}
@@ -83,7 +85,7 @@ func DeleteAuthority(auth *request.DeleteAuthority) (err error) {
 	if _, err = authority_menu.Delete(g.Map{"authority_id": auth.AuthorityId}); err != nil {
 		return errors.New("菜单删除失败")
 	}
-	ClearCasbin(0, auth.AuthorityId)
+	_, err = db.Delete(g.Map{"v0": auth.AuthorityId})
 	return err
 }
 
