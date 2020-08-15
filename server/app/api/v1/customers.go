@@ -7,6 +7,8 @@ import (
 	"server/app/service"
 	"server/library/global"
 
+	"github.com/gogf/gf/frame/g"
+
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -76,16 +78,17 @@ func UpdateCustomer(r *ghttp.Request) {
 // FindCustomer Query Customer with id
 // FindCustomer 用id查询Customer
 func FindCustomer(r *ghttp.Request) {
-	var find request.UpdateCustomer
+	var find request.FindById
 	if err := r.Parse(&find); err != nil {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
-	if err := service.UpdateCustomers(&find); err != nil {
+	data, err := service.FindCustomers(&find)
+	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("获取失败，%v", err))
 		r.Exit()
 	}
-	global.OkWithMessage(r, "获取成功")
+	global.OkWithData(r, g.Map{"customer": data})
 }
 
 // GetCustomerList Page out the Customers list

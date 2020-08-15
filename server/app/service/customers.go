@@ -51,8 +51,13 @@ func UpdateCustomers(update *request.UpdateCustomer) (err error) {
 
 // FindCustomers Gets a single Customers based on id
 // FindCustomers 根据id获取单条Customers
-func FindCustomers(find *request.FindCustomer) (data *customers.Entity, err error) {
-	return customers.FindOne(g.Map{"id": find.Id})
+func FindCustomers(find *request.FindById) (data *customers.Customers, err error) {
+	data = (*customers.Customers)(nil)
+	db := g.DB(global.Db).Table("customers").Safe()
+	adminDb := g.DB(global.Db).Table("admins").Safe()
+	err = db.Where(g.Map{"id": find.Id}).Struct(&data)
+	err = adminDb.Where(g.Map{"authority_id": data.SysUserAuthorityId}).Struct(&data.SysUser)
+	return
 }
 
 // GetCustomersList Page out the Customers list
@@ -66,7 +71,7 @@ func GetCustomersList(info *request.GetCustomerList) (list interface{}, total in
 	total, err = db.Count()
 	err = db.Limit(limit).Offset(offset).Structs(&datalist)
 	for _, v := range datalist {
-		err = adminDb.Where(g.Map{"authority_id": info.SysUserAuthorityId}).Scan(&v.SysUser)
+		err = adminDb.Where(g.Map{"authority_id": info.SysUserAuthorityId}).Struct(&v.SysUser)
 	}
 	return datalist, total, err
 }

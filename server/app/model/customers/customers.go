@@ -34,6 +34,6 @@ type Customers struct {
 	CustomerName       string        `orm:"customer_name" json:"customerName"`               // 客户名
 	CustomerPhoneData  string        `orm:"customer_phone_data" json:"customerPhoneData"`    // 客户电话
 	SysUserId          int           `orm:"sys_user_id" json:"sysUserId"`                    // 负责员工id
-	SysUserAuthorityId string        `orm:"sys_user_authority_id" json:"sysUserAuthorityId"` // 负责员工角色
+	SysUserAuthorityId string        `orm:"sys_user_authority_id" json:"sysUserAuthorityID"` // 负责员工角色
 	SysUser            *admins.Admin `json:"sysUser"`
 }
