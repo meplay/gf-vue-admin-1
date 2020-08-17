@@ -37,7 +37,7 @@ func TableBreakpointChucks() (err error) {
 }
 
 func TableBreakpointFiles() (err error) {
-	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `authority_menu`;\nCREATE TABLE `authority_menu` (\n  `authority_id` varchar(255) NOT NULL COMMENT '权限id',\n  `menu_id` varchar(255) NOT NULL COMMENT '菜单id',\n  KEY `menu_id` (`menu_id`),\n  KEY `authority_id` (`authority_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=latin1;")
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `breakpoint_files`;\nCREATE TABLE `breakpoint_files` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `file_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件名',\n  `file_md5` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件md5',\n  `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件路径',\n  `chunk_id` int DEFAULT NULL COMMENT '关联id',\n  `chunk_total` int DEFAULT NULL COMMENT '切片总数',\n  `is_finish` tinyint(1) DEFAULT NULL COMMENT '是否完整',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_breakpoint_files_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
 	return
 }
 

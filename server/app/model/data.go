@@ -17,7 +17,7 @@ func DataAdmins() (err error) {
 	}
 	db := g.DB(global.Db).Table("admins").Safe()
 	_, err = db.Data(g.List{
-		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "uuid": "b4c54e5a-d015-4f8c-9f01-624c527a63ae", "nickname": "超级管理员", "header_img": "http://qmplusimg.henrongyi.top/1571627762timg.png", "authority_id": "9528", "username": "admin", "password": "$2a$10$zF5PNCWobve/0RBk.3k03eAGwyvDevFBFd3AZUwETjMhYpZwNooba"},
+		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "uuid": "b4c54e5a-d015-4f8c-9f01-624c527a63ae", "nickname": "超级管理员", "header_img": "http://qmplusimg.henrongyi.top/1571627762timg.jpg", "authority_id": "888", "username": "admin", "password": "$2a$10$zF5PNCWobve/0RBk.3k03eAGwyvDevFBFd3AZUwETjMhYpZwNooba"},
 		{"id": 2, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "uuid": "fd6ef79b-944c-4888-8377-abe2d2608858", "nickname": "QMPlusUser", "header_img": "http://qmplusimg.henrongyi.top/1572075907logo.png", "authority_id": "9528", "username": "a303176530", "password": "$2a$10$zF5PNCWobve/0RBk.3k03eAGwyvDevFBFd3AZUwETjMhYpZwNooba"},
 	}).Batch(10).Insert()
 	if err != nil {
