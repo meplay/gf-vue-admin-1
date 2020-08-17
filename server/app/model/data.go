@@ -87,6 +87,9 @@ func DataApis() (err error) {
 		{"id": 52, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/sysDictionary/updateSysDictionary", "description": "更新字典", "api_group": "sysDictionary", "method": "PUT"},
 		{"id": 53, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/sysDictionary/findSysDictionary", "description": "根据ID获取字典", "api_group": "sysDictionary", "method": "GET"},
 		{"id": 54, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/sysDictionary/getSysDictionaryList", "description": "获取字典列表", "api_group": "sysDictionary", "method": "GET"},
+		{"id": 55, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getTables", "description": "获取数据库表", "api_group": "autoCode", "method": "GET"},
+		{"id": 56, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getDB", "description": "获取所有数据库", "api_group": "autoCode", "method": "GET"},
+		{"id": 57, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getColume", "description": "获取所选table的所有字段", "api_group": "autoCode", "method": "GET"},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()
@@ -140,7 +143,7 @@ func DataCasbinRule() (err error) {
 	}
 	db := g.DB(global.Db).Table("casbin_rule").Safe()
 	_, err = db.Data(g.List{
-		{"ptype": "p", "v0": "888", "v1": "base/login", "v2": "POST"},
+		{"ptype": "p", "v0": "888", "v1": "/base/login", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/base/register", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/api/createApi", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/api/getApiList", "v2": "POST"},
@@ -152,7 +155,7 @@ func DataCasbinRule() (err error) {
 		{"ptype": "p", "v0": "888", "v1": "/authority/deleteAuthority", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/authority/getAuthorityList", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/authority/setDataAuthority", "v2": "POST"},
-		{"ptype": "p", "v0": "888", "v1": "/authority/updateAuthority", "v2": "POST"},
+		{"ptype": "p", "v0": "888", "v1": "/authority/updateAuthority", "v2": "PUT"},
 		{"ptype": "p", "v0": "888", "v1": "/authority/copyAuthority", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/menu/getMenu", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/menu/getMenuList", "v2": "POST"},
@@ -179,7 +182,7 @@ func DataCasbinRule() (err error) {
 		{"ptype": "p", "v0": "888", "v1": "/system/getSystemConfig", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/system/setSystemConfig", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/customer/customer", "v2": "POST"},
-		{"ptype": "p", "v0": "888", "v1": "/customer/customer", "v2": "POST"},
+		{"ptype": "p", "v0": "888", "v1": "/customer/customer", "v2": "PUT"},
 		{"ptype": "p", "v0": "888", "v1": "/customer/customer", "v2": "DELETE"},
 		{"ptype": "p", "v0": "888", "v1": "/customer/customer", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/customer/customerList", "v2": "GET"},
@@ -189,21 +192,21 @@ func DataCasbinRule() (err error) {
 		{"ptype": "p", "v0": "888", "v1": "/autoCode/getColume", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionaryDetail/createSysDictionaryDetail", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionaryDetail/deleteSysDictionaryDetail", "v2": "DELETE"},
-		{"ptype": "p", "v0": "888", "v1": "/sysDictionaryDetail/updateSysDictionaryDetail", "v2": "POST"},
+		{"ptype": "p", "v0": "888", "v1": "/sysDictionaryDetail/updateSysDictionaryDetail", "v2": "PUT"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionaryDetail/findSysDictionaryDetail", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionaryDetail/getSysDictionaryDetailList", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionary/createSysDictionary", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionary/deleteSysDictionary", "v2": "DELETE"},
-		{"ptype": "p", "v0": "888", "v1": "/sysDictionary/updateSysDictionary", "v2": "POST"},
+		{"ptype": "p", "v0": "888", "v1": "/sysDictionary/updateSysDictionary", "v2": "PUT"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionary/findSysDictionary", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysDictionary/getSysDictionaryList", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/createSysOperationRecord", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/deleteSysOperationRecord", "v2": "DELETE"},
-		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/updateSysOperationRecord", "v2": "POST"},
+		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/updateSysOperationRecord", "v2": "PUT"},
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/findSysOperationRecord", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/getSysOperationRecordList", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/deleteSysOperationRecordByIds", "v2": "DELETE"},
-	}).Batch(10).Insert()
+	}).Batch(100).Insert()
 	if err != nil {
 		return tx.Rollback()
 	}
@@ -313,7 +316,7 @@ func DataMenus() (err error) {
 		{"id": 20, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "system", "path": "system", "hidden": 0, "component": "view/systemTools/system/system.vue", "title": "系统配置", "icon": "s-operation", "sort": 3, "keep_alive": 0, "default_menu": 0},
 		{"id": 21, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "iconList", "path": "iconList", "hidden": 0, "component": "view/iconList/index.vue", "title": "图标集合", "icon": "star-on", "sort": 2, "keep_alive": 0, "default_menu": 0},
 		{"id": 22, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionary", "path": "dictionary", "hidden": 0, "component": "view/superAdmin/dictionary/sysDictionary.vue", "title": "字典管理", "icon": "notebook-2", "sort": 5, "keep_alive": 0, "default_menu": 0},
-		{"id": 23, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionaryDetail/:id", "path": "dictionaryDetail", "hidden": 1, "component": "view/superAdmin/dictionary/sysDictionaryDetail.vue", "title": "字典详情", "icon": "s-order", "sort": 1, "keep_alive": 0, "default_menu": 0},
+		{"id": 23, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionaryDetail", "path": "dictionaryDetail/:id", "hidden": 1, "component": "view/superAdmin/dictionary/sysDictionaryDetail.vue", "title": "字典详情", "icon": "s-order", "sort": 1, "keep_alive": 0, "default_menu": 0},
 		{"id": 24, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "operation", "path": "operation", "hidden": 0, "component": "view/superAdmin/operation/sysOperationRecord.vue", "title": "操作历史", "icon": "time", "sort": 6, "keep_alive": 0, "default_menu": 0},
 		{"id": 25, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "simpleUploader", "path": "simpleUploader", "hidden": 0, "component": "view/example/simpleUploader/simpleUploader", "title": "断点续传（插件版）", "icon": "upload", "sort": 6, "keep_alive": 0, "default_menu": 0},
 	}).Batch(10).Insert()
