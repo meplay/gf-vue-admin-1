@@ -135,6 +135,8 @@ func CreateBaseMenu(create *request.CreateBaseMenu) (err error) {
 		Hidden:    utils.BoolToInt(create.Hidden),
 		Component: create.Component,
 		Sort:      create.Sort,
+		Title:     create.Title,
+		Icon:      create.Icon,
 	}
 	_, err = menus.Insert(insert)
 	return err
