@@ -6,7 +6,13 @@ import (
 	"server/app/api/response"
 	"server/app/service"
 	"server/library/global"
+	{{- range .Fields}}
+    	    {{- if .FieldSearchType}}
+    	        {{- if eq .FieldType "bool" }}
 	"github.com/gogf/gf/frame/g"
+	            {{- end }}
+            {{- end }}
+    {{- end }}
 	"github.com/gogf/gf/net/ghttp"
 )
 

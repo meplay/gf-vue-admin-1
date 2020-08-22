@@ -34,6 +34,7 @@ type CreateBaseMenu struct {
 	Hidden    bool   `r:"hidden" v:"required|length:1,1000#请输入是否在列表隐藏|是否在列表隐藏长度为:min到:max位"`
 	Component string `r:"component" v:"required|length:1,1000#请输入前端文件路径|前端文件路径长度为:min到:max位"`
 	Sort      int    `r:"sort" v:"required|length:1,1000#请输入排序标记|排序标记长度为:min到:max位"`
+	Meta      `r:"meta"`  // 附加属性
 }
 
 // Get role by id structure

@@ -135,6 +135,8 @@ func CreateBaseMenu(create *request.CreateBaseMenu) (err error) {
 		Hidden:    utils.BoolToInt(create.Hidden),
 		Component: create.Component,
 		Sort:      create.Sort,
+		Title:     create.Title,
+		Icon:      create.Icon,
 	}
 	_, err = menus.Insert(insert)
 	return err
@@ -159,7 +161,6 @@ func DeleteBaseMenu(delete *request.GetById) (err error) {
 // UpdateBaseMenu Update the routing
 // UpdateBaseMenu 更新路由
 func UpdateBaseMenu(update *request.UpdateBaseMenu) (err error) {
-	var menu *menus.Entity
 	condition := g.Map{"id": update.Id}
 	updateDate := g.Map{
 		"keep_alive":   update.KeepAlive,
@@ -167,18 +168,16 @@ func UpdateBaseMenu(update *request.UpdateBaseMenu) (err error) {
 		"parent_id":    update.ParentId,
 		"path":         update.Path,
 		"name":         update.Name,
-		"hidden":       update.Hidden,
+		"hidden":       utils.BoolToInt(update.Hidden),
 		"component":    update.Component,
 		"title":        update.Title,
 		"icon":         update.Icon,
 		"sort":         update.Sort,
 	}
-	if menu, err = menus.FindOne(g.Map{"name": update.Name}); err != nil {
+	if menus.RecordNotFound(g.Map{"name": update.Name}) {
 		return errors.New("更新失败")
 	}
-	if menu.Name != update.Name {
-		_, err = menus.Update(updateDate, condition)
-	}
+	_, err = menus.Update(updateDate, condition)
 	return err
 }
 
