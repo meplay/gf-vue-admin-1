@@ -10,20 +10,79 @@ import (
 	"github.com/gogf/gf/frame/g"
 )
 
-func DataAdmins() (err error) {
-	var tx *gdb.TX
-	if tx, err = g.DB(global.Db).Begin(); err != nil {
-		panic(err)
-	}
-	db := g.DB(global.Db).Table("admins").Safe()
-	_, err = db.Data(g.List{
-		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "uuid": "b4c54e5a-d015-4f8c-9f01-624c527a63ae", "nickname": "超级管理员", "header_img": "http://qmplusimg.henrongyi.top/1571627762timg.jpg", "authority_id": "888", "username": "admin", "password": "$2a$10$zF5PNCWobve/0RBk.3k03eAGwyvDevFBFd3AZUwETjMhYpZwNooba"},
-		{"id": 2, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "uuid": "fd6ef79b-944c-4888-8377-abe2d2608858", "nickname": "QMPlusUser", "header_img": "http://qmplusimg.henrongyi.top/1572075907logo.png", "authority_id": "9528", "username": "a303176530", "password": "$2a$10$zF5PNCWobve/0RBk.3k03eAGwyvDevFBFd3AZUwETjMhYpZwNooba"},
-	}).Batch(10).Insert()
-	if err != nil {
-		return tx.Rollback()
-	}
-	return tx.Commit()
+func TableApis() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `apis`;\nCREATE TABLE `apis` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'api路径',\n  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'api中文描述',\n  `api_group` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'api组',\n  `method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT 'POST' COMMENT '方法',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_apis_delete_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableJwts() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `jwts`;\nCREATE TABLE `jwts` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `jwt` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT 'jwt',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_jwts_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableMenus() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `menus`;\nCREATE TABLE `menus` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `menu_level` int unsigned DEFAULT NULL COMMENT '菜单等级(预留字段)',\n  `parent_id` varchar(255) DEFAULT NULL COMMENT '父菜单ID',\n  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '路由path',\n  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '路由name',\n  `hidden` tinyint(1) DEFAULT NULL COMMENT '是否在列表隐藏',\n  `component` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '前端文件路径',\n  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单名',\n  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单图标',\n  `sort` int DEFAULT NULL COMMENT '排序标记',\n  `keep_alive` tinyint(1) DEFAULT NULL COMMENT '是否缓存',\n  `default_menu` tinyint(1) DEFAULT NULL COMMENT '是否是基础路由(开发中)',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_menus_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=513 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableFiles() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `files`;\nCREATE TABLE `files` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件名',\n  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件地址',\n  `tag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件标签',\n  `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '编号',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_files_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableAdmins() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `admins`;\nCREATE TABLE `admins` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `uuid` varchar(255) DEFAULT NULL COMMENT '用户唯一标识UUID',\n  `nickname` varchar(255) DEFAULT 'QMPlusUser' COMMENT '用户昵称',\n  `header_img` varchar(255) DEFAULT 'http://www.henrongyi.top/avatar/lufu.jpg' COMMENT '用户头像',\n  `authority_id` varchar(255) DEFAULT '888' COMMENT '用户角色ID',\n  `username` varchar(255) DEFAULT NULL COMMENT '用户名',\n  `password` varchar(255) DEFAULT NULL COMMENT '用户登录密码',\n  PRIMARY KEY (`id`),\n  KEY `idx_admins_deleted_at` (`delete_at`)\n) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;")
+	return
+}
+
+func TableCustomers() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `customers`;\nCREATE TABLE `customers` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `customer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '客户名',\n  `customer_phone_data` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户电话',\n  `sys_user_id` int unsigned DEFAULT NULL COMMENT '负责员工id',\n  `sys_user_authority_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '负责员工角色',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_exa_customers_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableCasbinRule() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `casbin_rule`;\nCREATE TABLE `casbin_rule` (\n  `ptype` varchar(10) DEFAULT NULL,\n  `v0` varchar(256) DEFAULT NULL,\n  `v1` varchar(256) DEFAULT NULL,\n  `v2` varchar(256) DEFAULT NULL,\n  `v3` varchar(256) DEFAULT NULL,\n  `v4` varchar(256) DEFAULT NULL,\n  `v5` varchar(256) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;")
+	return
+}
+
+func TableOperations() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `operations`;\nCREATE TABLE `operations` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求ip',\n  `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',\n  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求路由',\n  `status` int DEFAULT NULL COMMENT '状态',\n  `latency` bigint DEFAULT NULL COMMENT '延迟',\n  `agent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '代理',\n  `error_message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '报错信息',\n  `request` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '请求Body',\n  `user_id` int DEFAULT NULL COMMENT '用户id',\n  `response` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '响应Body',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_operations_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=392 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableAuthorities() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `authorities`;\nCREATE TABLE `authorities` (\n  `authority_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',\n  `authority_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色名',\n  `parent_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '父角色ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  PRIMARY KEY (`authority_id`) USING BTREE,\n  UNIQUE KEY `authority_id` (`authority_id`) USING BTREE,\n  KEY `idx_sys_authorities_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableDictionaries() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `dictionaries`;\nCREATE TABLE `dictionaries` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '字典名（中）',\n  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '字典名（英）',\n  `status` tinyint(1) DEFAULT NULL COMMENT '状态',\n  `desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '描述',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_sys_dictionaries_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableAuthorityMenu() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `authority_menu`;\nCREATE TABLE `authority_menu` (\n  `authority_id` varchar(255) NOT NULL COMMENT '权限id',\n  `menu_id` varchar(255) NOT NULL COMMENT '菜单id',\n  KEY `menu_id` (`menu_id`),\n  KEY `authority_id` (`authority_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=latin1;")
+	return
+}
+
+func TableBreakpointFiles() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `breakpoint_files`;\nCREATE TABLE `breakpoint_files` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `file_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件名',\n  `file_md5` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件md5',\n  `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件路径',\n  `chunk_id` int DEFAULT NULL COMMENT '关联id',\n  `chunk_total` int DEFAULT NULL COMMENT '切片总数',\n  `is_finish` tinyint(1) DEFAULT NULL COMMENT '是否完整',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_breakpoint_files_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableBreakpointChucks() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `breakpoint_chucks`;\nCREATE TABLE `breakpoint_chucks` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `update_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',\n  `delete_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',\n  `exa_file_id` int unsigned DEFAULT NULL COMMENT '文件id',\n  `file_chunk_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '切片路径',\n  `file_chunk_number` int DEFAULT NULL COMMENT '切片标号',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_exa_file_chunks_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableDictionaryDetails() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `dictionary_details`;\nCREATE TABLE `dictionary_details` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '展示值',\n  `value` int DEFAULT NULL COMMENT '字典值',\n  `status` tinyint(1) DEFAULT NULL COMMENT '启用状态',\n  `sort` int DEFAULT NULL COMMENT '排序标记',\n  `dictionary_id` int DEFAULT NULL COMMENT '关联标记',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_sys_dictionary_details_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
+
+func TableAuthorityResources() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `authority_resources`;\nCREATE TABLE `authority_resources` (\n  `authority_id` varchar(255) NOT NULL COMMENT '权限id',\n  `resources_id` varchar(255) DEFAULT NULL COMMENT '资源id',\n  KEY `resources_id` (`resources_id`),\n  KEY `authority_id` (`authority_id`)\n) ENGINE=InnoDB DEFAULT CHARSET=latin1;")
+	return
 }
 
 func DataApis() (err error) {
@@ -97,38 +156,54 @@ func DataApis() (err error) {
 	return tx.Commit()
 }
 
-func DataAuthorityMenus() (err error) {
+func DataMenus() (err error) {
 	var tx *gdb.TX
 	if tx, err = g.DB(global.Db).Begin(); err != nil {
 		panic(err)
 	}
-	db := g.DB(global.Db).Table("authority_menu").Safe()
-	_, err = db.Data(g.List{ // 插入数据
-		{"authority_id": "888", "menu_id": "1"},
-		{"authority_id": "888", "menu_id": "2"},
-		{"authority_id": "888", "menu_id": "3"},
-		{"authority_id": "888", "menu_id": "4"},
-		{"authority_id": "888", "menu_id": "5"},
-		{"authority_id": "888", "menu_id": "6"},
-		{"authority_id": "888", "menu_id": "7"},
-		{"authority_id": "888", "menu_id": "8"},
-		{"authority_id": "888", "menu_id": "9"},
-		{"authority_id": "888", "menu_id": "10"},
-		{"authority_id": "888", "menu_id": "11"},
-		{"authority_id": "888", "menu_id": "12"},
-		{"authority_id": "888", "menu_id": "13"},
-		{"authority_id": "888", "menu_id": "14"},
-		{"authority_id": "888", "menu_id": "15"},
-		{"authority_id": "888", "menu_id": "16"},
-		{"authority_id": "888", "menu_id": "17"},
-		{"authority_id": "888", "menu_id": "18"},
-		{"authority_id": "888", "menu_id": "19"},
-		{"authority_id": "888", "menu_id": "20"},
-		{"authority_id": "888", "menu_id": "21"},
-		{"authority_id": "888", "menu_id": "22"},
-		{"authority_id": "888", "menu_id": "23"},
-		{"authority_id": "888", "menu_id": "24"},
-		{"authority_id": "888", "menu_id": "25"},
+	db := g.DB(global.Db).Table("menus").Safe()
+	_, err = db.Data(g.List{
+		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "dashboard", "path": "dashboard", "hidden": 0, "component": "view/dashboard/index.vue", "title": "仪表盘", "icon": "setting", "sort": 1, "keep_alive": 0, "default_menu": 0},
+		{"id": 2, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "about", "path": "about", "hidden": 0, "component": "view/about/index.vue", "title": "关于我们", "icon": "info", "sort": 7, "keep_alive": 0, "default_menu": 0},
+		{"id": 3, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "admin", "path": "superAdmin", "hidden": 0, "component": "view/superAdmin/index.vue", "title": "超级管理员", "icon": "user-solid", "sort": 3, "keep_alive": 0, "default_menu": 0},
+		{"id": 4, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "authority", "path": "authority", "hidden": 0, "component": "view/superAdmin/authority/authority.vue", "title": "角色管理", "icon": "s-custom", "sort": 1, "keep_alive": 0, "default_menu": 0},
+		{"id": 5, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "menu", "path": "menu", "hidden": 0, "component": "view/superAdmin/menu/menu.vue", "title": "菜单管理", "icon": "s-order", "sort": 2, "keep_alive": 1, "default_menu": 0},
+		{"id": 6, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "api", "path": "api", "hidden": 0, "component": "view/superAdmin/api/api.vue", "title": "api管理", "icon": "s-platform", "sort": 3, "keep_alive": 1, "default_menu": 0},
+		{"id": 7, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "user", "path": "user", "hidden": 0, "component": "view/superAdmin/user/user.vue", "title": "用户管理", "icon": "coordinate", "sort": 4, "keep_alive": 0, "default_menu": 0},
+		{"id": 8, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "person", "path": "person", "hidden": 1, "component": "view/person/person.vue", "title": "个人信息", "icon": "message-solid", "sort": 4, "keep_alive": 0, "default_menu": 0},
+		{"id": 9, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "example", "path": "example", "hidden": 0, "component": "view/example/index.vue", "title": "示例文件", "icon": "s-management", "sort": 6, "keep_alive": 0, "default_menu": 0},
+		{"id": 10, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "table", "path": "table", "hidden": 0, "component": "view/example/table/table.vue", "title": "表格示例", "icon": "s-order", "sort": 1, "keep_alive": 0, "default_menu": 0},
+		{"id": 11, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "form", "path": "form", "hidden": 0, "component": "view/example/form/form.vue", "title": "表单示例", "icon": "document", "sort": 2, "keep_alive": 0, "default_menu": 0},
+		{"id": 12, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "rte", "path": "rte", "hidden": 0, "component": "view/example/rte/rte.vue", "title": "富文本编辑器", "icon": "reading", "sort": 3, "keep_alive": 0, "default_menu": 0},
+		{"id": 13, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "excel", "path": "excel", "hidden": 0, "component": "view/example/excel/excel.vue", "title": "excel导入导出", "icon": "s-marketing", "sort": 4, "keep_alive": 0, "default_menu": 0},
+		{"id": 14, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "upload", "path": "upload", "hidden": 0, "component": "view/example/upload/upload.vue", "title": "上传下载", "icon": "upload", "sort": 5, "keep_alive": 0, "default_menu": 0},
+		{"id": 15, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "breakpoint", "path": "breakpoint", "hidden": 0, "component": "view/example/breakpoint/breakpoint.vue", "title": "断点续传", "icon": "upload", "sort": 6, "keep_alive": 0, "default_menu": 0},
+		{"id": 16, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "customer", "path": "customer", "hidden": 0, "component": "view/example/customer/customer.vue", "title": "客户列表（资源示例）", "icon": "s-custom", "sort": 7, "keep_alive": 0, "default_menu": 0},
+		{"id": 17, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "systemTools", "path": "systemTools", "hidden": 0, "component": "view/systemTools/index.vue", "title": "系统工具", "icon": "s-cooperation", "sort": 5, "keep_alive": 0, "default_menu": 0},
+		{"id": 18, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "autoCode", "path": "autoCode", "hidden": 0, "component": "view/systemTools/autoCode/index.vue", "title": "代码生成器", "icon": "cpu", "sort": 1, "keep_alive": 1, "default_menu": 0},
+		{"id": 19, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "formCreate", "path": "formCreate", "hidden": 0, "component": "view/systemTools/formCreate/index.vue", "title": "表单生成器", "icon": "magic-stick", "sort": 2, "keep_alive": 1, "default_menu": 0},
+		{"id": 20, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "system", "path": "system", "hidden": 0, "component": "view/systemTools/system/system.vue", "title": "系统配置", "icon": "s-operation", "sort": 3, "keep_alive": 0, "default_menu": 0},
+		{"id": 21, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "iconList", "path": "iconList", "hidden": 0, "component": "view/iconList/index.vue", "title": "图标集合", "icon": "star-on", "sort": 2, "keep_alive": 0, "default_menu": 0},
+		{"id": 22, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionary", "path": "dictionary", "hidden": 0, "component": "view/superAdmin/dictionary/sysDictionary.vue", "title": "字典管理", "icon": "notebook-2", "sort": 5, "keep_alive": 0, "default_menu": 0},
+		{"id": 23, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionaryDetail", "path": "dictionaryDetail/:id", "hidden": 1, "component": "view/superAdmin/dictionary/sysDictionaryDetail.vue", "title": "字典详情", "icon": "s-order", "sort": 1, "keep_alive": 0, "default_menu": 0},
+		{"id": 24, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "operation", "path": "operation", "hidden": 0, "component": "view/superAdmin/operation/sysOperationRecord.vue", "title": "操作历史", "icon": "time", "sort": 6, "keep_alive": 0, "default_menu": 0},
+		{"id": 25, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "simpleUploader", "path": "simpleUploader", "hidden": 0, "component": "view/example/simpleUploader/simpleUploader", "title": "断点续传（插件版）", "icon": "upload", "sort": 6, "keep_alive": 0, "default_menu": 0},
+	}).Batch(10).Insert()
+	if err != nil {
+		return tx.Rollback()
+	}
+	return tx.Commit()
+}
+
+func DataAdmins() (err error) {
+	var tx *gdb.TX
+	if tx, err = g.DB(global.Db).Begin(); err != nil {
+		panic(err)
+	}
+	db := g.DB(global.Db).Table("admins").Safe()
+	_, err = db.Data(g.List{
+		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "uuid": "b4c54e5a-d015-4f8c-9f01-624c527a63ae", "nickname": "超级管理员", "header_img": "http://qmplusimg.henrongyi.top/1571627762timg.jpg", "authority_id": "888", "username": "admin", "password": "$2a$10$zF5PNCWobve/0RBk.3k03eAGwyvDevFBFd3AZUwETjMhYpZwNooba"},
+		{"id": 2, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "uuid": "fd6ef79b-944c-4888-8377-abe2d2608858", "nickname": "QMPlusUser", "header_img": "http://qmplusimg.henrongyi.top/1572075907logo.png", "authority_id": "9528", "username": "a303176530", "password": "$2a$10$zF5PNCWobve/0RBk.3k03eAGwyvDevFBFd3AZUwETjMhYpZwNooba"},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()
@@ -250,6 +325,45 @@ func DataDictionaries() (err error) {
 	return tx.Commit()
 }
 
+func DataAuthorityMenus() (err error) {
+	var tx *gdb.TX
+	if tx, err = g.DB(global.Db).Begin(); err != nil {
+		panic(err)
+	}
+	db := g.DB(global.Db).Table("authority_menu").Safe()
+	_, err = db.Data(g.List{ // 插入数据
+		{"authority_id": "888", "menu_id": "1"},
+		{"authority_id": "888", "menu_id": "2"},
+		{"authority_id": "888", "menu_id": "3"},
+		{"authority_id": "888", "menu_id": "4"},
+		{"authority_id": "888", "menu_id": "5"},
+		{"authority_id": "888", "menu_id": "6"},
+		{"authority_id": "888", "menu_id": "7"},
+		{"authority_id": "888", "menu_id": "8"},
+		{"authority_id": "888", "menu_id": "9"},
+		{"authority_id": "888", "menu_id": "10"},
+		{"authority_id": "888", "menu_id": "11"},
+		{"authority_id": "888", "menu_id": "12"},
+		{"authority_id": "888", "menu_id": "13"},
+		{"authority_id": "888", "menu_id": "14"},
+		{"authority_id": "888", "menu_id": "15"},
+		{"authority_id": "888", "menu_id": "16"},
+		{"authority_id": "888", "menu_id": "17"},
+		{"authority_id": "888", "menu_id": "18"},
+		{"authority_id": "888", "menu_id": "19"},
+		{"authority_id": "888", "menu_id": "20"},
+		{"authority_id": "888", "menu_id": "21"},
+		{"authority_id": "888", "menu_id": "22"},
+		{"authority_id": "888", "menu_id": "23"},
+		{"authority_id": "888", "menu_id": "24"},
+		{"authority_id": "888", "menu_id": "25"},
+	}).Batch(10).Insert()
+	if err != nil {
+		return tx.Rollback()
+	}
+	return tx.Commit()
+}
+
 func DataDictionaryDetails() (err error) {
 	var tx *gdb.TX
 	if tx, err = g.DB(global.Db).Begin(); err != nil {
@@ -280,45 +394,6 @@ func DataDictionaryDetails() (err error) {
 		{"id": 21, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "label": "longblob", "value": 0, "status": 1, "sort": 0, "dictionary_id": 5},
 		{"id": 22, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "label": "longtext", "value": 0, "status": 1, "sort": 0, "dictionary_id": 5},
 		{"id": 23, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "label": "tinyint", "value": 4, "status": 1, "sort": 4, "dictionary_id": 6},
-	}).Batch(10).Insert()
-	if err != nil {
-		return tx.Rollback()
-	}
-	return tx.Commit()
-}
-
-func DataMenus() (err error) {
-	var tx *gdb.TX
-	if tx, err = g.DB(global.Db).Begin(); err != nil {
-		panic(err)
-	}
-	db := g.DB(global.Db).Table("menus").Safe()
-	_, err = db.Data(g.List{
-		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "dashboard", "path": "dashboard", "hidden": 0, "component": "view/dashboard/index.vue", "title": "仪表盘", "icon": "setting", "sort": 1, "keep_alive": 0, "default_menu": 0},
-		{"id": 2, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "about", "path": "about", "hidden": 0, "component": "view/about/index.vue", "title": "关于我们", "icon": "info", "sort": 7, "keep_alive": 0, "default_menu": 0},
-		{"id": 3, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "admin", "path": "superAdmin", "hidden": 0, "component": "view/superAdmin/index.vue", "title": "超级管理员", "icon": "user-solid", "sort": 3, "keep_alive": 0, "default_menu": 0},
-		{"id": 4, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "authority", "path": "authority", "hidden": 0, "component": "view/superAdmin/authority/authority.vue", "title": "角色管理", "icon": "s-custom", "sort": 1, "keep_alive": 0, "default_menu": 0},
-		{"id": 5, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "menu", "path": "menu", "hidden": 0, "component": "view/superAdmin/menu/menu.vue", "title": "菜单管理", "icon": "s-order", "sort": 2, "keep_alive": 1, "default_menu": 0},
-		{"id": 6, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "api", "path": "api", "hidden": 0, "component": "view/superAdmin/api/api.vue", "title": "api管理", "icon": "s-platform", "sort": 3, "keep_alive": 1, "default_menu": 0},
-		{"id": 7, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "user", "path": "user", "hidden": 0, "component": "view/superAdmin/user/user.vue", "title": "用户管理", "icon": "coordinate", "sort": 4, "keep_alive": 0, "default_menu": 0},
-		{"id": 8, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "person", "path": "person", "hidden": 1, "component": "view/person/person.vue", "title": "个人信息", "icon": "message-solid", "sort": 4, "keep_alive": 0, "default_menu": 0},
-		{"id": 9, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "example", "path": "example", "hidden": 0, "component": "view/example/index.vue", "title": "示例文件", "icon": "s-management", "sort": 6, "keep_alive": 0, "default_menu": 0},
-		{"id": 10, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "table", "path": "table", "hidden": 0, "component": "view/example/table/table.vue", "title": "表格示例", "icon": "s-order", "sort": 1, "keep_alive": 0, "default_menu": 0},
-		{"id": 11, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "form", "path": "form", "hidden": 0, "component": "view/example/form/form.vue", "title": "表单示例", "icon": "document", "sort": 2, "keep_alive": 0, "default_menu": 0},
-		{"id": 12, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "rte", "path": "rte", "hidden": 0, "component": "view/example/rte/rte.vue", "title": "富文本编辑器", "icon": "reading", "sort": 3, "keep_alive": 0, "default_menu": 0},
-		{"id": 13, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "excel", "path": "excel", "hidden": 0, "component": "view/example/excel/excel.vue", "title": "excel导入导出", "icon": "s-marketing", "sort": 4, "keep_alive": 0, "default_menu": 0},
-		{"id": 14, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "upload", "path": "upload", "hidden": 0, "component": "view/example/upload/upload.vue", "title": "上传下载", "icon": "upload", "sort": 5, "keep_alive": 0, "default_menu": 0},
-		{"id": 15, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "breakpoint", "path": "breakpoint", "hidden": 0, "component": "view/example/breakpoint/breakpoint.vue", "title": "断点续传", "icon": "upload", "sort": 6, "keep_alive": 0, "default_menu": 0},
-		{"id": 16, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "customer", "path": "customer", "hidden": 0, "component": "view/example/customer/customer.vue", "title": "客户列表（资源示例）", "icon": "s-custom", "sort": 7, "keep_alive": 0, "default_menu": 0},
-		{"id": 17, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "systemTools", "path": "systemTools", "hidden": 0, "component": "view/systemTools/index.vue", "title": "系统工具", "icon": "s-cooperation", "sort": 5, "keep_alive": 0, "default_menu": 0},
-		{"id": 18, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "autoCode", "path": "autoCode", "hidden": 0, "component": "view/systemTools/autoCode/index.vue", "title": "代码生成器", "icon": "cpu", "sort": 1, "keep_alive": 1, "default_menu": 0},
-		{"id": 19, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "formCreate", "path": "formCreate", "hidden": 0, "component": "view/systemTools/formCreate/index.vue", "title": "表单生成器", "icon": "magic-stick", "sort": 2, "keep_alive": 1, "default_menu": 0},
-		{"id": 20, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "system", "path": "system", "hidden": 0, "component": "view/systemTools/system/system.vue", "title": "系统配置", "icon": "s-operation", "sort": 3, "keep_alive": 0, "default_menu": 0},
-		{"id": 21, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "iconList", "path": "iconList", "hidden": 0, "component": "view/iconList/index.vue", "title": "图标集合", "icon": "star-on", "sort": 2, "keep_alive": 0, "default_menu": 0},
-		{"id": 22, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionary", "path": "dictionary", "hidden": 0, "component": "view/superAdmin/dictionary/sysDictionary.vue", "title": "字典管理", "icon": "notebook-2", "sort": 5, "keep_alive": 0, "default_menu": 0},
-		{"id": 23, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionaryDetail", "path": "dictionaryDetail/:id", "hidden": 1, "component": "view/superAdmin/dictionary/sysDictionaryDetail.vue", "title": "字典详情", "icon": "s-order", "sort": 1, "keep_alive": 0, "default_menu": 0},
-		{"id": 24, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "operation", "path": "operation", "hidden": 0, "component": "view/superAdmin/operation/sysOperationRecord.vue", "title": "操作历史", "icon": "time", "sort": 6, "keep_alive": 0, "default_menu": 0},
-		{"id": 25, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "simpleUploader", "path": "simpleUploader", "hidden": 0, "component": "view/example/simpleUploader/simpleUploader", "title": "断点续传（插件版）", "icon": "upload", "sort": 6, "keep_alive": 0, "default_menu": 0},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()
