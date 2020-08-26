@@ -6,6 +6,7 @@ import (
 	"server/app/model"
 	"server/app/model/authority_menu"
 	"server/app/model/menus"
+	"server/app/model/parameters"
 	"server/library/global"
 	"server/library/utils"
 	"strconv"
@@ -139,22 +140,29 @@ func CreateBaseMenu(create *request.CreateBaseMenu) (err error) {
 		Icon:      create.Icon,
 	}
 	_, err = menus.Insert(insert)
+	if menu, err = menus.FindOne(g.Map{"name": create.Name}); err != nil {
+		return err
+	}
+	var inserts g.List
+	for _, v := range create.Parameters {
+		value := g.Map{"base_menu_id": int(menu.Id), "value": v.Value, "key": v.Key, "type": v.Type}
+		inserts = append(inserts, value)
+	}
+	_, err = parameters.Insert(inserts)
 	return err
 }
 
 // DeleteBaseMenu Delete the underlying route
 // DeleteBaseMenu 删除基础路由
 func DeleteBaseMenu(delete *request.GetById) (err error) {
-	var menu *menus.Entity
-	if menu, err = menus.FindOne(g.Map{"parent_id": delete.Id}); err != nil {
-		return err
-	}
-	if menu != nil {
+	db := g.DB(global.Db).Table("authority_menu").Safe()
+	parametersDb := g.DB(global.Db).Table("parameters").Safe()
+	if menus.RecordNotFound(g.Map{"parent_id": delete.Id}) {
 		return errors.New("此菜单存在子菜单不可删除")
 	}
 	_, err = menus.Delete(g.Map{"id": delete.Id})
-	db := g.DB(global.Db).Table("authority_menu").Safe()
 	_, err = db.Where(g.Map{"menu_id": delete.Id}).Delete()
+	_, err = parametersDb.Where(g.Map{"base_menu_id": delete.Id}).Delete()
 	return err
 }
 
@@ -175,8 +183,14 @@ func UpdateBaseMenu(update *request.UpdateBaseMenu) (err error) {
 		"sort":         update.Sort,
 	}
 	if menus.RecordNotFound(g.Map{"name": update.Name}) {
-		return errors.New("更新失败")
+		return errors.New("存在相同name修改失败")
 	}
+	var inserts g.List
+	for _, v := range update.Parameters {
+		value := g.Map{"base_menu_id": int(update.Id), "value": v.Value, "key": v.Key, "type": v.Type}
+		inserts = append(inserts, value)
+	}
+	_, err = parameters.Save(inserts)
 	_, err = menus.Update(updateDate, condition)
 	return err
 }
@@ -186,6 +200,8 @@ func UpdateBaseMenu(update *request.UpdateBaseMenu) (err error) {
 func GetBaseMenuById(idInfo *request.GetById) (menu *model.BaseMenu, err error) {
 	menu = (*model.BaseMenu)(nil)
 	db := g.DB(global.Db).Table("menus").Safe()
+	parametersDb := g.DB(global.Db).Table("parameters").Safe()
 	err = db.Where(g.Map{"id": idInfo.Id}).Struct(&menu)
+	err = parametersDb.Where(g.Map{"base_menu_id": idInfo.Id}).Struct(&menu.Parameters)
 	return menu, err
 }

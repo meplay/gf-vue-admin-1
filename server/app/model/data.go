@@ -50,6 +50,11 @@ func TableOperations() (err error) {
 	return
 }
 
+func TableParameters() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `parameters`;\nCREATE TABLE `parameters`  (\n  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT comment '自增ID',\n  `create_at` datetime(0) NULL DEFAULT NULL comment '创建时间',\n  `update_at` datetime(0) NULL DEFAULT NULL comment '更新时间',\n  `delete_at` datetime(0) NULL DEFAULT NULL comment '删除时间',\n  `base_menu_id` int(10) UNSIGNED NULL DEFAULT NULL comment 'BaseMenu的ID',\n  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL comment '地址栏携带参数为params还是query',\n  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL comment '地址栏携带参数的key',\n  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL comment '地址栏携带参数的值',\n  PRIMARY KEY (`id`) USING BTREE,\n  INDEX `idx_sys_base_menu_parameters_deleted_at`(`delete_at`) USING BTREE\n) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin  ROW_FORMAT = Compact;")
+	return
+}
+
 func TableAuthorities() (err error) {
 	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `authorities`;\nCREATE TABLE `authorities` (\n  `authority_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',\n  `authority_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色名',\n  `parent_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '父角色ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  PRIMARY KEY (`authority_id`) USING BTREE,\n  UNIQUE KEY `authority_id` (`authority_id`) USING BTREE,\n  KEY `idx_sys_authorities_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
 	return

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"server/app/model/parameters"
+
 	"github.com/gogf/gf/os/gtime"
 )
 
@@ -12,19 +14,20 @@ type AuthorityMenu struct {
 }
 
 type BaseMenu struct {
-	Id        uint          `p:"ID" orm:"id,primary"   json:"ID"`               // 自增ID
-	CreateAt  *gtime.Time   `p:"CreateAt" orm:"create_at"   json:"CreateAt"`    // 创建时间
-	UpdateAt  *gtime.Time   `p:"UpdateAt" orm:"update_at"   json:"UpdateAt"`    // 更新时间
-	DeleteAt  *gtime.Time   `p:"DeleteAt" orm:"delete_at"   json:"DeleteAt"`    // 删除时间
-	MenuLevel uint          `p:"-" orm:"menu_level"   json:"-"`                 // 菜单等级(预留字段)
-	ParentId  string        `p:"parentId" orm:"parent_id"    json:"parentId"`   // 父菜单ID
-	Path      string        `p:"path" orm:"path"         json:"path"`           // 路由path
-	Name      string        `p:"name" orm:"name"         json:"name"`           // 路由name
-	Hidden    bool          `p:"hidden" orm:"hidden"       json:"hidden"`       // 是否在列表隐藏
-	Component string        `p:"component" orm:"component"    json:"component"` // 前端文件路径
-	Sort      int           `p:"sort" orm:"sort"         json:"sort"`           // 排序标记
-	Meta      `json:"meta"` // 附加属性
-	Children  []*BaseMenu   `orm:"children" json:"children"`
+	Id         uint                    `p:"ID" orm:"id,primary"   json:"ID"`               // 自增ID
+	CreateAt   *gtime.Time             `p:"CreateAt" orm:"create_at"   json:"CreateAt"`    // 创建时间
+	UpdateAt   *gtime.Time             `p:"UpdateAt" orm:"update_at"   json:"UpdateAt"`    // 更新时间
+	DeleteAt   *gtime.Time             `p:"DeleteAt" orm:"delete_at"   json:"DeleteAt"`    // 删除时间
+	MenuLevel  uint                    `p:"-" orm:"menu_level"   json:"-"`                 // 菜单等级(预留字段)
+	ParentId   string                  `p:"parentId" orm:"parent_id"    json:"parentId"`   // 父菜单ID
+	Path       string                  `p:"path" orm:"path"         json:"path"`           // 路由path
+	Name       string                  `p:"name" orm:"name"         json:"name"`           // 路由name
+	Hidden     bool                    `p:"hidden" orm:"hidden"       json:"hidden"`       // 是否在列表隐藏
+	Component  string                  `p:"component" orm:"component"    json:"component"` // 前端文件路径
+	Sort       int                     `p:"sort" orm:"sort"         json:"sort"`           // 排序标记
+	Meta       `json:"meta"`           // 附加属性
+	Children   []*BaseMenu             `orm:"children" json:"children"`
+	Parameters []parameters.Parameters `json:"parameters"`
 }
 
 type Meta struct {

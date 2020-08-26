@@ -115,7 +115,6 @@ import {
 } from '@/api/sysOperationRecord' //  此处请自行替换地址
 import { formatTimeToStr } from '@/utils/data'
 import infoList from '@/components/mixins/infoList'
-
 export default {
   name: 'SysOperationRecord',
   mixins: [infoList],
