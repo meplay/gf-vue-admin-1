@@ -42,8 +42,7 @@ func Update{{.StructName}}(update *request.Update{{.StructName}}) (err error) {
 	condition := g.Map{"id": update.Id}
 	updateData := g.Map{
     {{- range .Fields}}
-        {{- if eq .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}
-        {{ else }}
+        {{- if eq .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}{{ else }}
         "{{.ColumnName}}": update.{{.FieldName}},
         {{- end}}
     {{- end }}
@@ -75,14 +74,15 @@ func Get{{.StructName}}List(info *request.Get{{.StructName}}List) (list interfac
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := g.DB(global.Db).Table("{{.TableName}}").Safe()
+	{{ with .Fields }}condition := g.Map{}{{ end }}
 	{{- range .Fields}}
     	    {{- if .FieldSearchType}}
     	        {{- if eq .FieldType "string" }}
-    if pageInfo.{{.ColumnName}} != "" {
+    if info.{{.FieldName}} != "" {
         condition["`{{.ColumnName}}` {{.FieldSearchType}} ?"] = {{if eq .FieldSearchType "LIKE"}}"%"+ {{ end }}info.{{.FieldName}}{{if eq .FieldSearchType "LIKE"}}+"%"{{ end }}
     }
     	        {{- else if eq .FieldType "int" }}
-    if pageInfo.{{.ColumnName}} != 0 {
+    if info.{{.FieldName}} != 0 {
         condition["`{{.ColumnName}}` {{.FieldSearchType}} ?"] = {{if eq .FieldSearchType "LIKE"}}"%"+ {{ end }}info.{{.FieldName}}{{if eq .FieldSearchType "LIKE"}}+"%"{{ end }}
     }
                 {{- else if eq .FieldType "float64" }}

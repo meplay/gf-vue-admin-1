@@ -30,7 +30,7 @@ type Find{{.StructName}} struct {
 
 type Get{{.StructName}}List struct {
     {{- range .Fields}}
-        {{- if eq .FieldName "Id" "ID" "CreateAt" "UpdateAt" "DeleteAt"}}{{ else }}
+        {{- if eq .FieldName "CreateAt" "UpdateAt" "DeleteAt"}}{{ else }}
     {{.FieldName}} {{.FieldType}} `p:"{{.FieldJson}}"`
         {{- end }}
     {{- end }}

@@ -201,6 +201,9 @@ func GetBaseMenuById(idInfo *request.GetById) (menu *model.BaseMenu, err error) 
 	menu = (*model.BaseMenu)(nil)
 	db := g.DB(global.Db).Table("menus").Safe()
 	parametersDb := g.DB(global.Db).Table("parameters").Safe()
+	if parameters.RecordNotFound(g.Map{"base_menu_id": idInfo.Id}) {
+		return menu, err
+	}
 	err = db.Where(g.Map{"id": idInfo.Id}).Struct(&menu)
 	err = parametersDb.Where(g.Map{"base_menu_id": idInfo.Id}).Struct(&menu.Parameters)
 	return menu, err
