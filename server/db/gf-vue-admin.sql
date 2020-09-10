@@ -141,9 +141,9 @@ CREATE TABLE `authorities` (
 -- Records of authorities
 -- ----------------------------
 BEGIN;
-INSERT INTO `authorities` VALUES ('888', '超级管理员', '0', '2020-07-22 16:44:33', '2020-07-28 13:15:57', NULL, '');
-INSERT INTO `authorities` VALUES ('8881', '超级管理员子账号', '888', '2020-07-28 14:11:24', '2020-07-28 14:11:27', NULL, ' ');
-INSERT INTO `authorities` VALUES ('9528', '测试角色', '0', '2020-07-28 14:12:01', '2020-07-28 14:12:06', NULL, ' ');
+INSERT INTO `authorities` VALUES ('888', '超级管理员', '0', '2020-07-22 16:44:33', '2020-07-28 13:15:57', NULL);
+INSERT INTO `authorities` VALUES ('8881', '超级管理员子账号', '888', '2020-07-28 14:11:24', '2020-07-28 14:11:27', NULL);
+INSERT INTO `authorities` VALUES ('9528', '测试角色', '0', '2020-07-28 14:12:01', '2020-07-28 14:12:06', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -256,7 +256,7 @@ CREATE TABLE `casbin_rule` (
   `v3` varchar(256) DEFAULT NULL,
   `v4` varchar(256) DEFAULT NULL,
   `v5` varchar(256) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of casbin_rule
