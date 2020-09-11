@@ -41,7 +41,7 @@ func TableCustomers() (err error) {
 }
 
 func TableCasbinRule() (err error) {
-	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `casbin_rule`;\nCREATE TABLE `casbin_rule` (\n  `ptype` varchar(10) DEFAULT NULL,\n  `v0` varchar(256) DEFAULT NULL,\n  `v1` varchar(256) DEFAULT NULL,\n  `v2` varchar(256) DEFAULT NULL,\n  `v3` varchar(256) DEFAULT NULL,\n  `v4` varchar(256) DEFAULT NULL,\n  `v5` varchar(256) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4;")
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `casbin_rule`;\nCREATE TABLE `casbin_rule` (\n  `ptype` varchar(10) DEFAULT NULL,\n  `v0` varchar(256) DEFAULT NULL,\n  `v1` varchar(256) DEFAULT NULL,\n  `v2` varchar(256) DEFAULT NULL,\n  `v3` varchar(256) DEFAULT NULL,\n  `v4` varchar(256) DEFAULT NULL,\n  `v5` varchar(256) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;")
 	return
 }
 
