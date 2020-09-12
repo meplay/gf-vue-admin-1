@@ -1,34 +1,5 @@
 #! /bin/bash
 
-rm -f ./boot/server.go
-# 生成server.go文件, 添加Router.Static("/admin", "./resource/dist")这个代码
-touch ./boot/server.go
-filename="./boot/server.go"
-cat>"${filename}"<<EOF
-package boot
-
-import (
-	"server/app/middleware"
-	"server/router"
-	"time"
-
-	"github.com/gogf/gf/frame/g"
-)
-
-func InitializeRunServer() {
-	s := g.Server()
-	s.Use(middleware.Error)
-	s.SetReadTimeout(10 * time.Second)
-	s.SetWriteTimeout(10 * time.Second)
-	s.SetMaxHeaderBytes(1 << 20)
-	s.SetIndexFolder(true)
-	s.AddStaticPath("/form-generator", "public/page")
-	s.AddStaticPath("/admin", "public/dist")
-	router.InitializeRouters()
-	s.Run()
-}
-EOF
-
 rm -f ./config/config.toml
 # 生成config.toml文件, 用于docker-compose的使用
 touch ./config/config.toml
@@ -88,7 +59,7 @@ cat>"${filename}"<<EOF
 [database]
     # 默认启动Mysql配置
     [database.default]
-    Link      = "mysql:root:gdkid,,..@tcp(gfmysql)/gf-vue-admin"
+    Link      = "mysql:root:gdkid,,..@tcp(mysql)/gf-vue-admin"
     Debug     = true
 
     # Database logger.
