@@ -16,7 +16,7 @@
 # system configuration
 [system]
     Db = "default"
-    UseMultipoint = true
+    UseMultipoint = false
     Env = "public" # Change to "develop" to skip authentication for development mode
 
 # 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
