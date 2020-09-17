@@ -20,6 +20,7 @@ func UpdateCasbin(r *ghttp.Request) {
 		global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
+	update.AuthorityId = getAdminClaims(r).AdminAuthorityId
 	if err := service.UpdateCasbin(update.AuthorityId, update.CasbinInfos); err != nil {
 		global.OkWithMessage(r, fmt.Sprintf("添加规则失败，%v", err))
 		r.Exit()

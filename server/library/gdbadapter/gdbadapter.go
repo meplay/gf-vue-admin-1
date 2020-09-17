@@ -7,8 +7,8 @@ import (
 
 	"github.com/gogf/gf/database/gdb"
 
-	"github.com/casbin/casbin/model"
-	"github.com/casbin/casbin/persist"
+	"github.com/casbin/casbin/v2/model"
+	"github.com/casbin/casbin/v2/persist"
 )
 
 type CasbinRule struct {
@@ -202,7 +202,6 @@ func loadPolicyLine(rule CasbinRule, model model.Model) {
 // LoadPolicy loads policy from database.
 // LoadPolicy 从数据库加载策略。
 func (a *Adapter) LoadPolicy(model model.Model) error {
-	//var lines []CasbinRule
 	lines := ([]CasbinRule)(nil)
 
 	if err := a.db.Table(a.tableName).Scan(&lines); err != nil {

@@ -20,7 +20,8 @@ func CasbinMiddleware(r *ghttp.Request) {
 	sub := r.GetParam("admin_authority_id")
 	e := service.Casbin()
 	// 判断策略中是否存在
-	if g.Cfg().GetString("system.Env") == "develop" || e.Enforce(sub, obj, act) {
+	success, _ := e.Enforce(sub, obj, act)
+	if g.Cfg().GetString("system.Env") == "develop" || success {
 		r.Middleware.Next()
 	} else {
 		global.Result(r, global.ERROR, g.Map{}, "权限不足")

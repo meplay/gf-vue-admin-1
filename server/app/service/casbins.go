@@ -8,8 +8,8 @@ import (
 
 	"server/library/gdbadapter"
 
-	"github.com/casbin/casbin"
 	"github.com/casbin/casbin/util"
+	"github.com/casbin/casbin/v2"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -37,7 +37,8 @@ func UpdateCasbin(authorityId string, casbinInfos []request.CasbinInfo) error {
 // AddCasbin 添加权限
 func AddCasbin(cm model.CasbinModel) bool {
 	e := Casbin()
-	return e.AddPolicy(cm.AuthorityId, cm.Path, cm.Method)
+	success, _ := e.AddPolicy(cm.AuthorityId, cm.Path, cm.Method)
+	return success
 }
 
 // UpdateCasbinApi update casbin apis
@@ -65,19 +66,18 @@ func GetPolicyPathByAuthorityId(authorityId string) (pathMaps []request.CasbinIn
 // ClearCasbin 清除匹配的权限
 func ClearCasbin(v int, p ...string) bool {
 	e := Casbin()
-	return e.RemoveFilteredPolicy(v, p...)
-
+	success, _ := e.RemoveFilteredPolicy(v, p...)
+	return success
 }
 
 // Casbin store to DB,
 // Casbin 持久化到数据库  引入自定义规则
 func Casbin() *casbin.Enforcer {
-	//a, err := gdbadapter.NewAdapter("mysql", "root:gdkid,,..@tcp(127.0.0.1:3306)/gf-vue-admin")
 	a, err := gdbadapter.NewAdapterByConfig()
 	if err != nil {
 		panic(err)
 	}
-	e := casbin.NewEnforcer(g.Cfg().GetString("casbin.ModelPath"), a)
+	e, _ := casbin.NewEnforcer(g.Cfg().GetString("casbin.ModelPath"), a)
 	e.AddFunction("ParamsMatch", ParamsMatchFunc)
 	_ = e.LoadPolicy()
 	return e
