@@ -7,69 +7,66 @@
 <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen"/>
 <img src="https://img.shields.io/badge/element--ui-2.12.0-green"/>
 </div>
-This is English documentation
 
-[简体中文](https://github.com/flipped-aurora/gf-vue-admin/blob/master/README-zh_CN.md)
+这是简体中文文档
 
-# Project documentation
+[English](https://github.com/flipped-aurora/gf-vue-admin/blob/master/README.md)
 
-[Online documentation](https://sliverhorn.github.io/gf-vue-admin-doc)
+# 项目文档
 
-- Front-end UI framework：[element-ui](https://github.com/ElemeFE/element) 
+[在线文档](https://sliverhorn.github.io/gf-vue-admin-doc)
 
-- Background framework：[GoFrame](https://goframe.org/index)
+- 前端UI框架：[element-ui](https://github.com/ElemeFE/element) 
+- 后台框架：[GoFrame](https://goframe.org/index)
 
-## 1. basic introduction
+## 1. 基本介绍
 
-### 1.1 Project Introduction
+### 1.1 项目介绍
 
-[Online preview](http://47.103.209.178:8888/admin/index.html)
+[在线预览](http://sliverhorn.com/)
 
-> Gf-vue-admin is a full-stack back-end management system based on vue and GoFrame. It integrates jwt authentication, dynamic routing, dynamic menu, casbin authentication, form generator, code generator and other functions, providing multiple 
->
-> This kind of sample files allows you to devote more time to business development.
+> Gf-vue-admin是一个基于vue和GoFrame开发的全栈前后端分离的后台管理系统，集成jwt鉴权，动态路由，动态菜单，casbin鉴权，表单生成器，代码生成器等功能，提供多种示例文件，让您把更多时间专注在业务开发上。
 
-### 1.2 Contribution guide
+### 1.2 贡献指南
 
-Hi! First of all, thank you for using gf-vue-admin.
+Hi! 首先感谢你使用 gf-vue-admin。
 
-GoFrame-vue-admin is a set of open source frameworks prepared for the back-end management platform with a separated architecture of front and back ends, aiming to quickly build a back-end management system.
+GoFrame-vue-admin 是一套为后台管理平台准备的一整套前后端分离架构式的开源框架，旨在快速搭建后台管理系统。
 
-The growth of GoFrame-vue-admin is inseparable from everyone's support. If you are willing to contribute code or provide suggestions for GoFrame-vue-admin, please read the following.
+GoFrame-vue-admin 的成长离不开大家的支持，如果你愿意为 GoFrame-vue-admin 贡献代码或提供建议，请阅读以下内容。
 
-#### 1.2.1 Issue specification
+#### 1.2.1 Issue 规范
 
-- Issues are only used to submit bugs or features and design-related content, other content may be directly closed。If you have questions while using，Go to Slack or [Gitter](https://gitter.im/ElemeFE/element) Consulting。
+- issue 仅用于提交 Bug 或 Feature 以及设计相关的内容，其它内容可能会被直接关闭。如果你在使用时产生了疑问，请到 Slack 或 [Gitter](https://gitter.im/ElemeFE/element) 里咨询。
 
-- Before submitting an issue, please search whether the relevant content has been submitted。
+- 在提交 issue 之前，请搜索相关内容是否已被提出。
 
-#### 1.2.2 Pull Request specification
+#### 1.2.2 Pull Request 规范
+- 请先 fork 一份到自己的项目下，不要直接在仓库下建分支。
 
-- Please fork a copy to your own project first, do not directly branch under the warehouse。
+- commit 信息要以`[文件名]: 描述信息` 的形式填写，例如 `README.md: fix xxx bug`。
 
-- The commit information should be `[filename]: description`  Fill in the form，for example  `README.md: fix xxx bug`。
+- <font color=red>确保 PR 是提交到 `develop` 分支，而不是 `master` 分支。</font>
 
-- <font color=red>Ensure that the PR is submitted to `develop` Branch，Instead of  `master` Branch。</font>
+- 如果是修复 bug，请在 PR 中给出描述信息。
 
-- If it is a bug fix, please provide a description in the PR。
+- 合并代码需要两名维护人员参与：一人进行 review 后 approve，另一人再次 review，通过后即可合并。
 
-- The merging code requires the participation of two maintainers: one approve after review, the other review again, and the merge can be done after approval。
+### 1.3 版本列表
 
-### 1.3 Version list
+- master: 1.0, 功能目前测试ing
 
-- master: 1.0, function is currently being tested
-
-## 2. Instructions for use
+## 2. 使用说明
 
 ```
--node version> v8.6.0
--golang version >= v1.11
--IDE recommendation: Goland
--After the clone project, after you import the db file into the library you created, it is best to go to Qiniu Cloud to apply for your own space address.
--Replace the Qiniu Cloud public key, private key, warehouse name and default URL address in the project to avoid data confusion in the test file
+- node版本 > v8.6.0
+- golang版本 >= v1.11
+- IDE推荐：Goland
+- 各位在clone项目以后，把db文件导入自己创建的库后，最好前往七牛云申请自己的空间地址。
+- 替换掉项目中的七牛云公钥，私钥，仓名和默认url地址，以免发生测试文件数据错乱
 ```
 
-### 2.1 web
+### 2.1 web端
 
 ```bash
 # clone the project
@@ -85,119 +82,126 @@ npm install
 npm run serve
 ```
 
-### 2.2 server
+### 2.2 server端
 
 ```bash
-# Use go.mod
-# Install go dependencies
+# 使用 go.mod
+
+# 安装go依赖包
 go list (go mod tidy)
 
-# Compile
+# 编译
 go build
 ```
 
-### 2.3 swagger automation API documentation
+### 2.3 swagger自动化API文档
 
-- Reasons to remove swagger
-	- Comment redundant code, resulting in bloated code
-	- Recommend alternative tool apipost
-
-## 3. Technical selection
-
-- Frontend: using Element-UI based on vue，to code the page.
-- Backend: using Gin to quickly build basic RESTful API. Gin is a web framework written in Go (Golang).
-- DB: MySql(8.0.19)，use gdb to realize the basic operation of the database..
-- Cache: using Redis to implement the recording of the JWT token of the currently active user and implement the multi-login restriction.
-- Config: using gcfg Configuration management 。
-- Log: using glog  record logs。
+- 去掉swagger的原因
+	- 注释多余代码,导致代码臃肿
+	- 推荐替代工具apipost
 
 
-## 4. Project structure
+## 3. 技术选型
 
-### 4.1 System architecture diagram
+- 前端：用基于`vue`的`Element-UI`构建基础页面。
+- 后端：用`GoFrame`快速搭建基础restful风格API，`GF(Go Frame)`是一款模块化、高性能、生产级的Go基础开发框架。实现了比较完善的基础设施建设以及开发工具链，提供了常用的基础开发模块，如：缓存、日志、队列、数组、集合、容器、定时器、命令行、内存锁、对象池、配置管理、资源管理、数据校验、数据编码、定时任务、数据库ORM、TCP/UDP组件、进程管理/通信等等。并提供了Web服务开发的系列核心组件，如：Router、Cookie、Session、Middleware、服务注册、模板引擎等等，支持热重启、热更新、域名绑定、TLS/HTTPS、Rewrite等特性。
+- 数据库：采用`MySql`(8.0.19)版本，使用`gdb`实现对数据库的基本操作。
+- 缓存：使用`Redis`实现记录当前活跃用户的`jwt`令牌并实现多点登录限制。
+- 配置文件：使用`gcfg`配置管理。
+- 日志：使用`glog`实现日志记录。
+
+
+## 4. 项目架构
+### 4.1 系统架构图
 
 ![系统架构图](http://qmplusimg.henrongyi.top/gva/gin-vue-admin.png)
 
-### 4.2 Front-end detailed design drawing （provider:<a href="https://github.com/baobeisuper">baobeisuper</a>）
+### 4.2 前端详细设计图 （提供者:<a href="https://github.com/baobeisuper">baobeisuper</a>）
 
 ![前端详细设计图](http://qmplusimg.henrongyi.top/naotu.png)
 
 ### 4.3 目录结构
 
 ```
-    ├─server  	     （backend）
-    └─web            （frontend）
-        ├─public        （deploy templates）
-        └─src           （source code）
-            ├─api       （frontend APIs）
-            ├─assets	（static files）
-            ├─components（components）
-            ├─router	（frontend routers）
-            ├─store     （vuex state management）
-            ├─style     （common styles）
-            ├─utils     （frontend common utilitie）
-            └─view      （pages）
-
-
+    ├─server  	     （后端文件夹）
+    └─web            （前端文件）
+        ├─public        （发布模板）
+        └─src           （源码包）
+            ├─api       （向后台发送ajax的封装层）
+            ├─assets	（静态文件）
+            ├─components（组件）
+            ├─router	（前端路由）
+            ├─store     （vuex 状态管理仓）
+            ├─style     （通用样式文件）
+            ├─utils     （前端工具库）
+            └─view      （前端页面）
 ```
 
-[See this directory for the backend](server/db/后端目录结构.md)
+[后端请看此目录](server/db/后端目录结构.md)
 
-## 5. The main function
+## 5. 主要功能
 
-- authority management：based on [gf-jwt](https://github.com/gogf/gf-jwt) And [casbin](https://github.com/casbin/casbin) Implemented rights management
--  File upload and download：Realize file upload operation based on Qiniu Cloud
-- Paging package：The front end uses mixins to encapsulate paging, and the paging method calls mixins
-- User Management：System administrators assign user roles and role permissions。
-- Role management：Create the main object of permission control, you can assign different api permissions and menu permissions to roles。
-- Menu management：Realize user dynamic menu configuration, realize different menus for different roles。
-- api management：Different users have different permissions on the api interface that can be called。
--  Rich text editor：MarkDown Editor function embedded。
-- Conditional search：Add conditional search example。
-- restful Example：You can refer to the sample API in the user management module。 
-- Multi-sign-in restrictions：需要在`config.toml`中把`system`中的`UseMultipoint`修改为true
-- Split long pass：Provide examples of file segment upload and large file segment upload function
-- Form builder：The form builder uses [@form-generator](https://github.com/JakHuang/form-generator)。
-- Code generator：Basic background logic and simple curd code generator。 
+- 权限管理：基于[gf-jwt](https://github.com/gogf/gf-jwt) 和 [casbin](https://github.com/casbin/casbin)实现的权限管理 
+- 文件上传下载：实现基于七牛云的文件上传操作（为了方便大家测试，我公开了自己的七牛测试号的各种重要token，恳请大家不要乱传东西）
+- 分页封装：前端使用mixins封装分页，分页方法调用mixins即可 
+- 用户管理：系统管理员分配用户角色和角色权限。
+- 角色管理：创建权限控制的主要对象，可以给角色分配不同api权限和菜单权限。
+- 菜单管理：实现用户动态菜单配置，实现不同角色不同菜单。
+- api管理：不同用户可调用的api接口的权限不同。
+- 富文本编辑器：MarkDown编辑器功能嵌入。
+- 条件搜索：增加条件搜索示例。
+- restful示例：可以参考用户管理模块中的示例API。 
+```
+前端文件参考: src\view\superAdmin\api\api.vue 
+后台文件参考: model\dnModel\api.go 
+```
+- 多点登录限制：需要在`config.toml`中把`system`中的`UseMultipoint`修改为true
+- 分片长传：提供文件分片上传和大文件分片上传功能示例。
+- 表单生成器：表单生成器借助 [@form-generator](https://github.com/JakHuang/form-generator)。
+- 代码生成器：后台基础逻辑以及简单curd的代码生成器。 
 
-## 6. Scheduled Tasks
+## 6. 计划任务
 
-- [ ] Import, export to Excel
-- [ ] Echart chart support
-- [ ] Workflow, task handover function development
-- [ ] Separate front-end usage mode and data simulation
-- [ ] User multi-role
-- [ ] Self-written api batch import permission assignment list
-- [ ] Automatic import of generated files
+- [ ] 导入，导出Excel
+- [ ] Echart图表支持
+- [ ] 工作流，任务交接功能开发
+- [ ] 单独前端使用模式以及数据模拟
+- [ ] 用户多角色
+- [ ] 自写api批量导入权限分配列表
+- [ ] 生成文件自动导入
 
-## 7. knowledge base
-
-## 7.1 Team blog
+## 7. 知识库 
+## 7.1 团队博客
 
 > https://www.yuque.com/flipped-aurora
 >
-> There are front-end framework instructional videos inside. 
->
-> If you think the project is helpful to you, you can add my personal WeChat: shouzi_1994, welcome your valuable needs。
+>内有前端框架教学视频。如果觉得项目对您有所帮助可以添加我的个人微信:shouzi_1994，欢迎您提出宝贵的需求。
 
-## 7.2 Teaching video
+## 7.2 教学视频
 
-（1）Golang basic instructional video recording...
+（1）环境搭建
+> Bilibili：https://www.bilibili.com/video/BV1Fg4y187Bw/ (v1.0版本视频，v2.0操作相同目录不同)
+
+（2）模板使用
+> Bilibili：https://www.bilibili.com/video/BV16K4y1r7BD/ (v1.0版本视频，v2.0操作相同目录不同)
+
+（3）2.0目录以及开发体验
+> Bilibili：https://www.bilibili.com/video/BV1aV411d7Gm#reply2831798461
+
+（4）golang基础教学视频录制中...
 > https://space.bilibili.com/322210472/channel/detail?cid=108884
 
-## 8. Contact information
-
-### 8.1 Technology Group
-
+## 8. 联系方式
+### 8.1 技术群
 | QQ群 |
 |  :---:  |
 | <img src="./docs/gf-vue-admin开源项目交流群.jpg" width="180"/> |
 
-### QQ exchange group：1040044540
+### QQ交流群：1040044540
 
-### WeChat exchange group: add WeChat account SliverHorn, note "join gf-vue-admin exchange group"
+### 微信交流群：添加微信号SliverHorn，备注"加入gf-vue-admin交流群"
 
-### 8.2 Project team members
+### 8.2 项目组成员
 
 | 蒋 | 尹 | 严 | 杜 | 印 | 宋 | 赖 | 卢 |
 |  :---:  |  :---: | :---: | :---:  |  :---: | :---: | :---: | :---: |
@@ -214,10 +218,10 @@ go build
 | [@SliverHorn](https://github.com/SliverHorn)  | 社区管理员 | 赖 |
 | [@LLemonGreen](https://github.com/orgs/flipped-aurora/people/LLemonGreen) | 文档编纂员 | 卢 |
 
-## 9. Donate
+## 9. 捐赠
 
-If you find this project useful, you can buy author a glass of juice 🍹 [here](http://doc.henrongyi.top/more/coffee.html)
+如果你觉得这个项目对你有帮助，你可以请作者喝饮料 :tropical_drink:
 
-## 10. Commercial considerations
+## 10. 商用注意事项
 
-If you use this project for commercial purposes, please comply with the Apache2.0 agreement and retain the author's technical support statement.
+如果您将此项目用于商业用途，请遵守Apache2.0协议并保留作者技术支持声明。
