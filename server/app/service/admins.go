@@ -6,8 +6,6 @@ import (
 	"server/app/model/admins"
 	"server/library/utils"
 
-	"github.com/gogf/gf/database/gdb"
-
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -34,12 +32,15 @@ func ChangePassword(change *request.ChangePassword) (err error) {
 // GetAdminList 分页获取用户列表
 func GetAdminList(info *request.PageInfo) (list interface{}, total int, err error) {
 	adminList := ([]*admins.AdminHasOneAuthority)(nil)
-	adminDb := g.DB("default").Table("admins").Safe()
+	db := g.DB("default").Table("admins").Safe()
+	authorityDb := g.DB("default").Table("authorities").Safe()
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	total, err = adminDb.Count()
-	err = adminDb.Limit(limit).Offset(offset).ScanList(&adminList, "Admin")
-	err = adminDb.Where("authority_id", gdb.ListItemValues(adminList, "Admin", "AuthorityId")).ScanList(&adminList, "Authority", "Admin", "authority_id:AuthorityId")
+	total, err = db.Count()
+	err = db.Limit(limit).Offset(offset).ScanList(&adminList, "Admin")
+	for _, v := range adminList {
+		err = authorityDb.Where(g.Map{"authority_id": v.AuthorityId}).Struct(&v.Authority)
+	}
 	return adminList, total, err
 }
 

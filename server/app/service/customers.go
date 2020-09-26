@@ -4,8 +4,6 @@ import (
 	"server/app/api/request"
 	"server/app/model/customers"
 
-	"github.com/gogf/gf/database/gdb"
-
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -71,6 +69,8 @@ func GetCustomersList(info *request.GetCustomerList) (list interface{}, total in
 	adminDb := g.DB("default").Table("admins").Safe()
 	total, err = db.Count()
 	err = db.Limit(limit).Offset(offset).Structs(&datalist)
-	err = adminDb.Where("id", gdb.ListItemValues(datalist, "Customers", "SysUserId")).ScanList(&datalist, "Admin", "Customers", "id:Id")
+	for _, v := range datalist {
+		err = adminDb.Where(g.Map{"authority_id": info.SysUserAuthorityId}).Struct(&v.Admin)
+	}
 	return datalist, total, err
 }
