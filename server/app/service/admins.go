@@ -48,8 +48,9 @@ func GetAdminList(info *request.PageInfo) (list interface{}, total int, err erro
 func FindAdmin(adminUUID string) (admin *admins.AdminHasOneAuthority, err error) {
 	admin = (*admins.AdminHasOneAuthority)(nil)
 	db := g.DB("default").Table("admins").Safe()
+	authorityDb := g.DB("authorities").Table("admins").Safe()
 	err = db.Where(g.Map{"uuid": adminUUID}).Struct(&admin)
-	err = db.Struct(&admin.Authority, g.Map{"authority_id": admin.AuthorityId})
+	err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Struct(&admin.Authority)
 	return admin, err
 }
 

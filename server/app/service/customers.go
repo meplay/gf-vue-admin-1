@@ -3,7 +3,8 @@ package service
 import (
 	"server/app/api/request"
 	"server/app/model/customers"
-	"server/library/global"
+
+	"github.com/gogf/gf/database/gdb"
 
 	"github.com/gogf/gf/frame/g"
 )
@@ -51,27 +52,25 @@ func UpdateCustomers(update *request.UpdateCustomer) (err error) {
 
 // FindCustomers Gets a single Customers based on id
 // FindCustomers 根据id获取单条Customers
-func FindCustomers(find *request.FindById) (data *customers.Customers, err error) {
-	data = (*customers.Customers)(nil)
-	db := g.DB(global.Db).Table("customers").Safe()
-	adminDb := g.DB(global.Db).Table("admins").Safe()
+func FindCustomers(find *request.FindById) (data *customers.CustomerHasOneAdmin, err error) {
+	data = (*customers.CustomerHasOneAdmin)(nil)
+	db := g.DB("default").Table("customers").Safe()
+	adminDb := g.DB("default").Table("admins").Safe()
 	err = db.Where(g.Map{"id": find.Id}).Struct(&data)
-	err = adminDb.Where(g.Map{"authority_id": data.SysUserAuthorityId}).Struct(&data.SysUser)
+	err = adminDb.Where(g.Map{"id": data.SysUserId}).Struct(&data.Admin)
 	return
 }
 
 // GetCustomersList Page out the Customers list
 // GetCustomersList 分页获取Customers列表
 func GetCustomersList(info *request.GetCustomerList) (list interface{}, total int, err error) {
-	datalist := ([]*customers.Customers)(nil)
+	datalist := ([]*customers.CustomerHasOneAdmin)(nil)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
-	db := g.DB(global.Db).Table("customers").Safe()
-	adminDb := g.DB(global.Db).Table("admins").Safe()
+	db := g.DB("default").Table("customers").Safe()
+	adminDb := g.DB("default").Table("admins").Safe()
 	total, err = db.Count()
 	err = db.Limit(limit).Offset(offset).Structs(&datalist)
-	for _, v := range datalist {
-		err = adminDb.Where(g.Map{"authority_id": info.SysUserAuthorityId}).Struct(&v.SysUser)
-	}
+	err = adminDb.Where("id", gdb.ListItemValues(datalist, "Customers", "SysUserId")).ScanList(&datalist, "Admin", "Customers", "id:Id")
 	return datalist, total, err
 }
