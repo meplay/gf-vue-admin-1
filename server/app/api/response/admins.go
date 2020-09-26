@@ -6,9 +6,9 @@ import (
 
 // AdminLogin response Structure
 type AdminLogin struct {
-	User      *admins.Admin `json:"user"`
-	Token     string        `json:"token"`
-	ExpiresAt int64         `json:"expiresAt"`
+	User      *admins.AdminHasOneAuthority `json:"user"`
+	Token     string                       `json:"token"`
+	ExpiresAt int64                        `json:"expiresAt"`
 }
 
 // AdminResponse response Structure

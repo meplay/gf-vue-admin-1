@@ -18,12 +18,12 @@ var Store = base64Captcha.DefaultMemStore
 func AdminLogin(l *request.AdminLogin) (data *admins.Admin, err error) {
 	admin := (*admins.Admin)(nil) // 用法解释 https://goframe.org/database/gdb/chaining/select#tip4
 	adminDb := g.DB("default").Table("admins").Safe()
-	authorityDb := g.DB("default").Table("authorities").Safe()
+	//authorityDb := g.DB("default").Table("authorities").Safe()
 	if err = adminDb.Where(g.Map{"username": l.Username}).Scan(&admin); err != nil {
 		return admin, errors.New("用户不存在")
 	}
 	if utils.CompareHashAndPassword(admin.Password, l.Password) { // 检查密码是否正确
-		err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Scan(&admin.Authority)
+		//err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Scan(&admin.Authority)
 		return admin, err
 	}
 	return admin, errors.New("密码错误")

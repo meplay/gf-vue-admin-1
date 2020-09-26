@@ -31,7 +31,7 @@ func DeleteFile(d *request.DeleteFile) error {
 // GetFileList Paging fetch data
 // GetFileList 分页获取数据
 func GetFileList(info *request.PageInfo) (list interface{}, total int, err error) {
-	var fileList []*files.Entity
+	fileList := ([]*files.Files)(nil)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := g.DB("default").Table("files").Safe()

@@ -18,6 +18,8 @@
     Db = "default"
     UseMultipoint = false
     Env = "public" # Change to "develop" to skip authentication for development mode
+    # local:本地,qiniu:七牛云存储,minio:minio存储
+    OssType = "local"
 
 # 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
 [qiniu]

@@ -94,7 +94,7 @@ func Unauthorized(r *ghttp.Request, code int, message string) {
 // LoginResponse is used to define customized login-successful callback function.
 // LoginResponse 用于定义自定义的登录成功回调函数
 func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
-	admin := (*admins.Admin)(nil)
+	admin := (*admins.AdminHasOneAuthority)(nil)
 	if err := gconv.Struct(r.GetParam("admin"), &admin); err != nil {
 		global.FailWithMessage(r, "登录失败")
 		r.Exit()
@@ -135,8 +135,11 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 		global.FailWithMessage(r, "Token不正确,更新失败")
 		r.Exit()
 	}
-	var claims = gconv.Map(Token.Claims)
-	var admin *admins.Admin
+	var (
+		claims   = gconv.Map(Token.Claims)
+		redisJwt string
+		admin    *admins.AdminHasOneAuthority
+	)
 	admin, err = service.FindAdmin(gconv.String(claims["admin_uuid"]))
 	if err != nil {
 		global.FailWithMessage(r, "刷新Token失败")
@@ -146,8 +149,7 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 		global.OkDetailed(r, response.AdminLogin{User: admin, Token: token, ExpiresAt: expire.Unix() * 1000}, "登录成功!")
 		r.Exit()
 	}
-	redisJwt, err := service.GetRedisJWT(admin.Uuid)
-	if err != nil {
+	if redisJwt, err = service.GetRedisJWT(admin.Uuid); err != nil {
 		global.FailWithMessage(r, "刷新Token失败")
 		r.Exit()
 	}

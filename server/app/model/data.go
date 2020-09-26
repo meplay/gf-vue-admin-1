@@ -154,6 +154,23 @@ func DataApis() (err error) {
 		{"id": 55, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getTables", "description": "获取数据库表", "api_group": "autoCode", "method": "GET"},
 		{"id": 56, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getDB", "description": "获取所有数据库", "api_group": "autoCode", "method": "GET"},
 		{"id": 57, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getColume", "description": "获取所选table的所有字段", "api_group": "autoCode", "method": "GET"},
+		{"id": 58, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/user/setUserInfo", "description": "设置用户信息", "api_group": "user", "method": "PUT"},
+	}).Batch(10).Insert()
+	if err != nil {
+		return tx.Rollback()
+	}
+	return tx.Commit()
+}
+
+func DataFiles() (err error) {
+	var tx *gdb.TX
+	if tx, err = g.DB(global.Db).Begin(); err != nil {
+		panic(err)
+	}
+	db := g.DB(global.Db).Table("files").Safe()
+	_, err = db.Data(g.List{
+		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "name": "10.png", "url": "http://qmplusimg.henrongyi.top/gvalogo.png", "tag": "png", "key": "158787308910.png"},
+		{"id": 2, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "name": "logo.png", "url": "http://qmplusimg.henrongyi.top/1576554439myAvatar.png", "tag": "png", "key": "1587973709logo.png"},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()
@@ -252,6 +269,7 @@ func DataCasbinRule() (err error) {
 		{"ptype": "p", "v0": "888", "v1": "/user/getUserList", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/user/setUserAuthority", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/user/deleteUser", "v2": "DELETE"},
+		{"ptype": "p", "v0": "888", "v1": "/user/setUserInfo", "v2": "PUT"},
 		{"ptype": "p", "v0": "888", "v1": "/fileUploadAndDownload/upload", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/fileUploadAndDownload/getFileList", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/fileUploadAndDownload/deleteFile", "v2": "POST"},

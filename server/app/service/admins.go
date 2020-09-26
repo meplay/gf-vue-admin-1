@@ -7,6 +7,8 @@ import (
 	"server/library/global"
 	"server/library/utils"
 
+	"github.com/gogf/gf/database/gdb"
+
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -42,27 +44,23 @@ func UploadHeaderImg(userUuid string, filePath string) (adminInfo *admins.Entity
 // GetAdminList Paging gets the list of users
 // GetAdminList 分页获取用户列表
 func GetAdminList(info *request.PageInfo) (list interface{}, total int, err error) {
-	var adminList []*admins.Admin
+	adminList := ([]*admins.AdminHasOneAuthority)(nil)
 	adminDb := g.DB(global.Db).Table("admins").Safe()
-	authorityDb := g.DB(global.Db).Table("authorities").Safe()
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	total, err = adminDb.Count()
-	err = adminDb.Limit(limit).Offset(offset).Structs(&adminList)
-	for _, v := range adminList {
-		err = authorityDb.Where(g.Map{"authority_id": v.AuthorityId}).Struct(&v.Authority)
-	}
+	err = adminDb.Limit(limit).Offset(offset).ScanList(&adminList, "Admin")
+	err = adminDb.Where("authority_id", gdb.ListItemValues(adminList, "Admin", "AuthorityId")).ScanList(&adminList, "Authority", "Admin", "authority_id:AuthorityId")
 	return adminList, total, err
 }
 
 // FindAdmin Used to refresh token and return admin information according to uuid
 // FindAdmin 用于刷新token,根据uuid返回admin信息
-func FindAdmin(adminUUID string) (admin *admins.Admin, err error) {
-	admin = (*admins.Admin)(nil)
+func FindAdmin(adminUUID string) (admin *admins.AdminHasOneAuthority, err error) {
+	admin = (*admins.AdminHasOneAuthority)(nil)
 	db := g.DB(global.Db).Table("admins").Safe()
-	authorityDb := g.DB(global.Db).Table("authorities").Safe()
 	err = db.Where(g.Map{"uuid": adminUUID}).Struct(&admin)
-	err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Struct(&admin.Authority)
+	err = db.Struct(&admin.Authority, g.Map{"authority_id": admin.AuthorityId})
 	return admin, err
 }
 
@@ -78,4 +76,12 @@ func SetUserAuthority(set *request.SetAdminAuthority) (err error) {
 func DeleteAdmin(delete *request.DeleteById) (err error) {
 	_, err = admins.Delete(g.Map{"id": delete.Id})
 	return err
+}
+
+// SetAdminInfo Set admin information
+// SetAdminInfo 设置管理员信息
+func SetAdminInfo(set *request.SetAdminInfo) (admin *admins.AdminHasOneAuthority, err error) {
+	_, err = admins.Update(g.Map{"header_img": set.HeaderImg}, g.Map{"uuid": set.Uuid})
+	admin, err = FindAdmin(set.Uuid)
+	return admin, err
 }
