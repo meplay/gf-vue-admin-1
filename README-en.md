@@ -23,7 +23,7 @@ This is English documentation
 
 ### 1.1 Project Introduction
 
-[Online preview](http://sliverhorn.com/)
+[Online preview](http://gf.sliverhorn.com/)
 
 > Gf-vue-admin is a full-stack back-end management system based on vue and GoFrame. It integrates jwt authentication, dynamic routing, dynamic menu, casbin authentication, form generator, code generator and other functions, providing multiple 
 >
