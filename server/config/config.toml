@@ -1,133 +1,142 @@
 # HTTP Server
 [server]
-    Address          = ":8888"
-    ServerRoot       = ""
-    ServerAgent      = ""
-    IndexFiles       = []
-    AccessLogEnabled = true
-    ErrorLogEnabled  = true
-    PProfEnabled     = false
-    LogPath          = "./logs/server"
-    SessionIdName    = ""
-    SessionPath      = ""
-    SessionMaxAge    = ""
-    DumpRouterMap    = true
+Address = ":8888"
+ServerRoot = ""
+ServerAgent = ""
+IndexFiles = []
+AccessLogEnabled = true
+ErrorLogEnabled = true
+PProfEnabled = false
+LogPath = "./logs/server"
+SessionIdName = ""
+SessionPath = ""
+SessionMaxAge = ""
+DumpRouterMap = true
 
 # system configuration
 [system]
-    Db = "default"
-    UseMultipoint = false
-    Env = "public" # Change to "develop" to skip authentication for development mode
-    # local:本地,qiniu:七牛云存储,minio:minio存储
-    OssType = "local"
+Db = "default"
+UseMultipoint = false
+Env = "public" # Change to "develop" to skip authentication for development mode
+# local:本地,qiniu:七牛云存储,minio:minio存储
+OssType = "local"
 
 # 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
 [qiniu]
-    AccessKey   = "iZ0I7mMMnlD1Wge4T33z-AN_Lqd8J2--J3JFzniL"
-    SecretKey   = "yu2MMwC8aANrUav_m0mTWtd65SZUgH5ERK5tRI85"
-    Bucket      = "sliver-horn-blog"
-    ImgPath     = "http://blog.sliverhorn.com"
+AccessKey = "iZ0I7mMMnlD1Wge4T33z-AN_Lqd8J2--J3JFzniL"
+SecretKey = "yu2MMwC8aANrUav_m0mTWtd65SZUgH5ERK5tRI85"
+Bucket = "sliver-horn-blog"
+ImgPath = "http://blog.sliverhorn.com"
+
+[minio]
+Id = "minio"
+Path = "http://localhost:9000"
+Token = ""
+Bucket = "public"
+Secret = "minio1234"
+Endpoint = "localhost:9000"
+UseSsl = false
 
 # captcha configuration
 [captcha]
-    KeyLong     = 6
-    ImgWidth    = 240
-    ImgHeight   = 80
+KeyLong = 6
+ImgWidth = 240
+ImgHeight = 80
 
 # casbin configuration
 [casbin]
-    ModelPath =  "./public/rbac_model.conf"
+ModelPath = "./public/rbac_model.conf"
 
 # jwt configuration
 [jwt]
-    SigningKey  = "SliverHorn"
-    ExpiresAt = 1 # 3600000000000秒 == 1天 默认设置为1天
-    RefreshAt = 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
+SigningKey = "SliverHorn"
+ExpiresAt = 1 # 3600000000000秒 == 1天 默认设置为1天
+RefreshAt = 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
 
 # Logger
 [logger]
-    Path        = "./logs/log"
-    Level       = "all"
-    Stdout      = true
+Path = "./logs/log"
+Level = "all"
+Stdout = true
 
 # MySQL 配置
 [database]
-    # 默认启动Mysql配置
-    [database.default]
-    Host         = "127.0.0.1"
-    Port         = "3306"
-    User         = "root"
-    Pass         = "gdkid,,.."
-    Name         = "gf-vue-admin"
-    Type         = "mysql"
-    Debug        = true
-    Prefix       = ""
-    DryRun       = ""
-    Charset      = "utf8"
-    Weight       = ""
-    MaxIdle      = ""
-    MaxOpen      = ""
-    MaxLifetime  = ""
+# 默认启动Mysql配置
+[database.default]
+Host = "127.0.0.1"
+Port = "3306"
+User = "root"
+Pass = "gdkid,,.."
+Name = "gf-vue-admin"
+Type = "mysql"
+Debug = true
+Prefix = ""
+DryRun = ""
+Charset = "utf8"
+Weight = ""
+MaxIdle = ""
+MaxOpen = ""
+MaxLifetime = ""
 
-    # 开发环境Mysql配置
-    [database.development]
-    Host         = "127.0.0.1"
-    Port         = "3306"
-    User         = "root"
-    Pass         = "gdkid,,.."
-    Name         = "gf-vue-admin"
-    Type         = "mysql"
-    Debug        = true
-    Prefix       = ""
-    DryRun       = ""
-    Charset      = "utf8"
-    Weight       = ""
-    MaxIdle      = ""
-    MaxOpen      = ""
-    MaxLifetime  = ""
+# 开发环境Mysql配置
+[database.development]
+Host = "127.0.0.1"
+Port = "3306"
+User = "root"
+Pass = "gdkid,,.."
+Name = "gf-vue-admin"
+Type = "mysql"
+Debug = true
+Prefix = ""
+DryRun = ""
+Charset = "utf8"
+Weight = ""
+MaxIdle = ""
+MaxOpen = ""
+MaxLifetime = ""
 
-    # 生产环境Mysql配置
-    [database.production]
-    Host         = "127.0.0.1"
-    Port         = "3306"
-    User         = "root"
-    Pass         = "gdkid,,.."
-    Name         = "gf-vue-admin"
-    Type         = "mysql"
-    Debug        = true
-    Prefix       = ""
-    DryRun       = ""
-    Charset      = "utf8"
-    Weight       = ""
-    MaxIdle      = ""
-    MaxOpen      = ""
-    MaxLifetime  = ""
+# 生产环境Mysql配置
+[database.production]
+Host = "127.0.0.1"
+Port = "3306"
+User = "root"
+Pass = "gdkid,,.."
+Name = "gf-vue-admin"
+Type = "mysql"
+Debug = true
+Prefix = ""
+DryRun = ""
+Charset = "utf8"
+Weight = ""
+MaxIdle = ""
+MaxOpen = ""
+MaxLifetime = ""
 
-    # 测试环境Mysql配置
-    [database.test]
-    Host         = "127.0.0.1"
-    Port         = "3306"
-    User         = "root"
-    Pass         = "gdkid,,.."
-    Name         = "gf-vue-admin"
-    Type         = "mysql"
-    Debug        = true
-    Prefix       = ""
-    DryRun       = ""
-    Charset      = "utf8"
-    Weight       = ""
-    MaxIdle      = ""
-    MaxOpen      = ""
-    MaxLifetime  = ""
+# 测试环境Mysql配置
+[database.test]
+Host = "127.0.0.1"
+Port = "3306"
+User = "root"
+Pass = "gdkid,,.."
+Name = "gf-vue-admin"
+Type = "mysql"
+Debug = true
+Prefix = ""
+DryRun = ""
+Charset = "utf8"
+Weight = ""
+MaxIdle = ""
+MaxOpen = ""
+MaxLifetime = ""
 
-    # Database logger.
-    [database.logger]
-        Path   = "./logs/sql"
-        Level  = "all"
-        Stdout = true
+# Database logger.
+[database.logger]
+Path = "./logs/sql"
+Level = "all"
+Stdout = true
 
 # Redis 配置
 [redis]
-    # host:port[,db,pass?maxIdle=x&maxActive=x&idleTimeout=x&maxConnLifetime=x]
-    default = "127.0.0.1:6379,1,?idleTimeout=600"
-    cache   = "127.0.0.1:6379,2,?idleTimeout=600"
+# host:port[,db,pass?maxIdle=x&maxActive=x&idleTimeout=x&maxConnLifetime=x]
+default = "127.0.0.1:6379,1,?idleTimeout=600"
+cache = "127.0.0.1:6379,2,?idleTimeout=600"

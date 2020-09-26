@@ -38,6 +38,6 @@ type Customers struct {
 }
 
 type CustomerHasOneAdmin struct {
-	*Customers
-	Admin *admins.Admin `json:"sysUser"`
+	Customer *Customers
+	Admin    *admins.Admin `json:"sysUser"`
 }
