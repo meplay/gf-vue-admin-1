@@ -4,7 +4,6 @@ import (
 	"errors"
 	"server/app/api/request"
 	"server/app/model/admins"
-	"server/library/global"
 	"server/library/utils"
 
 	"github.com/gogf/gf/database/gdb"
@@ -31,21 +30,11 @@ func ChangePassword(change *request.ChangePassword) (err error) {
 	return errors.New("旧密码输入有误")
 }
 
-// UploadHeaderImg User uploads profile picture
-// UploadHeaderImg 用户上传头像
-func UploadHeaderImg(userUuid string, filePath string) (adminInfo *admins.Entity, err error) {
-	if _, err := admins.Update(g.Map{"header_img": filePath}, g.Map{"uuid": userUuid}); err != nil {
-		return adminInfo, errors.New("")
-	}
-	adminInfo, err = admins.FindOne(g.Map{"uuid": userUuid})
-	return adminInfo, err
-}
-
 // GetAdminList Paging gets the list of users
 // GetAdminList 分页获取用户列表
 func GetAdminList(info *request.PageInfo) (list interface{}, total int, err error) {
 	adminList := ([]*admins.AdminHasOneAuthority)(nil)
-	adminDb := g.DB(global.Db).Table("admins").Safe()
+	adminDb := g.DB("default").Table("admins").Safe()
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	total, err = adminDb.Count()
@@ -58,7 +47,7 @@ func GetAdminList(info *request.PageInfo) (list interface{}, total int, err erro
 // FindAdmin 用于刷新token,根据uuid返回admin信息
 func FindAdmin(adminUUID string) (admin *admins.AdminHasOneAuthority, err error) {
 	admin = (*admins.AdminHasOneAuthority)(nil)
-	db := g.DB(global.Db).Table("admins").Safe()
+	db := g.DB("default").Table("admins").Safe()
 	err = db.Where(g.Map{"uuid": adminUUID}).Struct(&admin)
 	err = db.Struct(&admin.Authority, g.Map{"authority_id": admin.AuthorityId})
 	return admin, err

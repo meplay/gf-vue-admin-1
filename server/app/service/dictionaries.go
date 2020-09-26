@@ -29,7 +29,7 @@ func CreateDictionary(create *request.CreateDictionary) (err error) {
 	if _, err = dictionaries.Insert(insert); err != nil {
 		return errors.New("创建Dictionary失败")
 	}
-	return
+	return err
 }
 
 // DeleteDictionary delete a Dictionary
@@ -39,7 +39,7 @@ func DeleteDictionary(delete *request.DeleteDictionary) (err error) {
 		return errors.New("删除Dictionary失败")
 	}
 	_, err = dictionary_details.Delete(g.Map{"dictionary_id": delete.Id})
-	return
+	return err
 }
 
 // UpdateDictionary update Dictionary
@@ -65,12 +65,11 @@ func UpdateDictionary(update *request.UpdateDictionary) (err error) {
 
 // FindDictionary Find a Dictionary with id
 // FindDictionary 用id查询Dictionary
-func FindDictionary(find *request.FindDictionary) (dictionary *dictionaries.Dictionaries, err error) {
-	dictionary = (*dictionaries.Dictionaries)(nil)
+func FindDictionary(find *request.FindDictionary) (dictionary *dictionaries.DictionaryHasManyDetails, err error) {
 	db := g.DB("default").Table("dictionaries").Safe()
-	dictionaryDetailsDb := g.DB("default").Table("dictionary_details").Safe()
+	detailDb := g.DB("default").Table("dictionary_details").Safe()
 	err = db.Where(g.Map{"id": find.Id}).Or(g.Map{"`type`": find.Type}).Struct(&dictionary)
-	err = dictionaryDetailsDb.Where(g.Map{"dictionary_id": dictionary.Id}).Structs(&dictionary.DictionaryDetails)
+	err = detailDb.Structs(&dictionary.DictionaryDetails, "dictionary_id", dictionary.Id)
 	return dictionary, err
 }
 
@@ -91,6 +90,6 @@ func GetDictionaryInfoList(info *request.DictionaryInfoList, condition g.Map) (l
 	}
 	db := g.DB("default").Table("dictionaries").Safe()
 	total, err = db.Where(condition).Count()
-	err = db.Limit(limit).Offset(offset).Where(condition).Scan(&dictionaryList)
+	err = db.Limit(limit).Offset(offset).Where(condition).Structs(&dictionaryList)
 	return dictionaryList, total, err
 }

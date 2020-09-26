@@ -12,14 +12,18 @@ import (
 
 // Entity is the golang structure for table dictionaries.
 type Dictionaries struct {
-	Id                uint                                    `orm:"id,primary" json:"ID"`        // 自增ID
-	CreateAt          *gtime.Time                             `orm:"create_at"  json:"CreatedAt"` // 创建时间
-	UpdateAt          *gtime.Time                             `orm:"update_at"  json:"UpdatedAt"` // 更新时间
-	DeleteAt          *gtime.Time                             `orm:"delete_at"  json:"DeletedAt"` // 删除时间
-	Name              string                                  `orm:"name"       json:"name"`      // 字典名（中）
-	Type              string                                  `orm:"type"       json:"type"`      // 字典名（英）
-	Status            bool                                    `orm:"status"     json:"status"`    // 状态
-	Desc              string                                  `orm:"desc"       json:"desc"`      // 描述
+	Id       uint        `orm:"id,primary" json:"ID"`        // 自增ID
+	CreateAt *gtime.Time `orm:"create_at"  json:"CreatedAt"` // 创建时间
+	UpdateAt *gtime.Time `orm:"update_at"  json:"UpdatedAt"` // 更新时间
+	DeleteAt *gtime.Time `orm:"delete_at"  json:"DeletedAt"` // 删除时间
+	Name     string      `orm:"name"       json:"name"`      // 字典名（中）
+	Type     string      `orm:"type"       json:"type"`      // 字典名（英）
+	Status   bool        `orm:"status"     json:"status"`    // 状态
+	Desc     string      `orm:"desc"       json:"desc"`      // 描述
+}
+
+type DictionaryHasManyDetails struct {
+	*Dictionaries
 	DictionaryDetails []*dictionary_details.DictionaryDetails `json:"sysDictionaryDetails"`
 }
 
