@@ -17,7 +17,6 @@ func InitializeRouters() {
 	InitDictionaryDetailRouter() // 初始化字典详情管理路由
 	InitCustomerRouter()         // 初始化客户路由
 	InitFileRouter()             // 初始化文件上传下载功能路由
-	// InitWorkflowRouter()         // 初始化工作流相关路由
-	// InitSystemRouter()           // 初始化system配置相关路由
+	InitSimpleUploadRouter()     // 初始化断点续传功能路由
 	g.Log().Info(g.I18n().Translate(`{#Prefix} {#router} {#register} {#success}`, "zh-CN"))
 }
