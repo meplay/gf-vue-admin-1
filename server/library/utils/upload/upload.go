@@ -1,0 +1,17 @@
+package upload
+
+import (
+	"fmt"
+	"mime/multipart"
+	"time"
+)
+
+type OSS interface {
+	Upload(file *multipart.FileHeader) (string, string, error)
+	DeleteFile(key string) error
+}
+
+func getObjectName(filename string) string {
+	folder := time.Now().Format("20060102")
+	return fmt.Sprintf("%s/%d%s", folder, time.Now().Unix(), filename) // 文件名格式 自己可以改 建议保证唯一性
+}

@@ -18,24 +18,8 @@ DumpRouterMap = true
 Db = "default"
 UseMultipoint = false
 Env = "public" # Change to "develop" to skip authentication for development mode
-# local:本地,qiniu:七牛云存储,minio:minio存储
+# local:本地,qiniu:七牛云存储,minio:minio存储,aliyun:阿里云存储
 OssType = "local"
-
-# 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
-[qiniu]
-AccessKey = "iZ0I7mMMnlD1Wge4T33z-AN_Lqd8J2--J3JFzniL"
-SecretKey = "yu2MMwC8aANrUav_m0mTWtd65SZUgH5ERK5tRI85"
-Bucket = "sliver-horn-blog"
-ImgPath = "http://blog.sliverhorn.com"
-
-[minio]
-Id = "minio"
-Path = "http://localhost:9000"
-Token = ""
-Bucket = "public"
-Secret = "minio1234"
-Endpoint = "localhost:9000"
-UseSsl = false
 
 # captcha configuration
 [captcha]
@@ -78,47 +62,13 @@ MaxIdle = ""
 MaxOpen = ""
 MaxLifetime = ""
 
-# 开发环境Mysql配置
-[database.development]
-Host = "127.0.0.1"
-Port = "3306"
-User = "root"
-Pass = "gdkid,,.."
-Name = "gf-vue-admin"
-Type = "mysql"
-Debug = true
-Prefix = ""
-DryRun = ""
-Charset = "utf8"
-Weight = ""
-MaxIdle = ""
-MaxOpen = ""
-MaxLifetime = ""
-
-# 生产环境Mysql配置
-[database.production]
-Host = "127.0.0.1"
-Port = "3306"
-User = "root"
-Pass = "gdkid,,.."
-Name = "gf-vue-admin"
-Type = "mysql"
-Debug = true
-Prefix = ""
-DryRun = ""
-Charset = "utf8"
-Weight = ""
-MaxIdle = ""
-MaxOpen = ""
-MaxLifetime = ""
-
 # 测试环境Mysql配置
 [database.test]
 Host = "127.0.0.1"
 Port = "3306"
 User = "root"
 Pass = "gdkid,,.."
-Name = "gf-vue-admin"
+Name = "gf-vue-admin-test"
 Type = "mysql"
 Debug = true
 Prefix = ""
@@ -140,3 +90,32 @@ Stdout = true
 # host:port[,db,pass?maxIdle=x&maxActive=x&idleTimeout=x&maxConnLifetime=x]
 default = "127.0.0.1:6379,1,?idleTimeout=600"
 cache = "127.0.0.1:6379,2,?idleTimeout=600"
+
+
+# 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
+[qiniu]
+Zone = "ZoneHuanan" # 地区机房
+Bucket = "sliver-horn-blog"
+ImgPath = "http://blog.sliverhorn.com"
+UseHTTPS = false # 是否使用https域名
+AccessKey = "iZ0I7mMMnlD1Wge4T33z-AN_Lqd8J2--J3JFzniL"
+SecretKey = "yu2MMwC8aANrUav_m0mTWtd65SZUgH5ERK5tRI85"
+UseCdnDomains = false # 上传是否使用CDN上传加速
+
+[minio]
+Id = "minio"
+Path = "http://localhost:9000"
+Token = ""
+Bucket = "public"
+UseSsl = false
+Secret = "minio1234"
+Endpoint = "localhost:9000"
+
+[aliyun]
+Path = "https://xxx.oss-cn-beijing.aliyuncs.com"
+Bucket = "xxx"
+ACLType = ""
+Endpoint = "https://oss-cn-beijing.aliyuncs.com"
+AccessKeyID = "xxxxxxx"
+SecretAccessKey = "xxxxxxx"
+StorageClassType = "Standard" # 存储桶存储类型
