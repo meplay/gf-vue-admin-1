@@ -9,9 +9,14 @@ import (
 var Config *config.Server
 
 func init() {
+	local()
 	minio()
 	qiniu()
 	aliyun()
+}
+
+func local() {
+	Config.Local.Path = g.Cfg().GetString("local.Path")
 }
 
 func minio() {

@@ -1,9 +1,22 @@
 package config
 
 type Server struct {
+	System System
+	Local  Local
 	Qiniu  Qiniu
 	Minio  Minio
 	AliYun AliYun
+}
+
+type System struct {
+	Db            string
+	Env           string
+	OssType       string // local:本地,qiniu:七牛云存储,minio:minio存储,aliyun:阿里云存储
+	UseMultipoint string
+}
+
+type Local struct {
+	Path string
 }
 
 type Qiniu struct {

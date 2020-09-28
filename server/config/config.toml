@@ -16,10 +16,9 @@ DumpRouterMap = true
 # system configuration
 [system]
 Db = "default"
-UseMultipoint = false
 Env = "public" # Change to "develop" to skip authentication for development mode
-# local:本地,qiniu:七牛云存储,minio:minio存储,aliyun:阿里云存储
 OssType = "local"
+UseMultipoint = false
 
 # captcha configuration
 [captcha]
@@ -91,6 +90,9 @@ Stdout = true
 default = "127.0.0.1:6379,1,?idleTimeout=600"
 cache = "127.0.0.1:6379,2,?idleTimeout=600"
 
+# 切换本地与七牛云上传，分配头像和文件路径
+[local]
+Path = "uploads/file"
 
 # 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
 [qiniu]
