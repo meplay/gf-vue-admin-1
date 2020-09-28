@@ -1,0 +1,30 @@
+[local]
+LocalPath = "local/files"
+
+# 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
+[qiniu]
+Zone = "ZoneHuanan" # 地区机房
+Bucket = "sliver-horn-blog"
+ImgPath = "http://blog.sliverhorn.com"
+UseHTTPS = false # 是否使用https域名
+AccessKey = "iZ0I7mMMnlD1Wge4T33z-AN_Lqd8J2--J3JFzniL"
+SecretKey = "yu2MMwC8aANrUav_m0mTWtd65SZUgH5ERK5tRI85"
+UseCdnDomains = false # 上传是否使用CDN上传加速
+
+[minio]
+Id = "minio"
+Path = "http://localhost:9000"
+Token = ""
+Bucket = "public"
+UseSsl = false
+Secret = "minio1234"
+Endpoint = "localhost:9000"
+
+[aliyun]
+Path = "https://xxx.oss-cn-beijing.aliyuncs.com"
+Bucket = "xxx"
+ACLType = ""
+Endpoint = "https://oss-cn-beijing.aliyuncs.com"
+AccessKeyID = "xxxxxxx"
+SecretAccessKey = "xxxxxxx"
+StorageClassType = "Standard" # 存储桶存储类型

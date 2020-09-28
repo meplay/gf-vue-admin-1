@@ -18,13 +18,13 @@ type UpdateBaseMenu struct {
 	Component  string       `r:"component" v:"required|length:1,1000#请输入前端文件路径|前端文件路径长度为:min到:max位"`
 	Sort       int          `r:"sort" v:"required|length:1,1000#请输入排序标记|排序标记长度为:min到:max位"`
 	Parameters []Parameters `r:"parameters"` // 地址栏携带参数
-	Meta       `r:"meta"`   // 附加属性
+	Meta       Meta         `r:"meta"`       // 附加属性
 }
 
 type Meta struct {
 	Title       string `r:"title" v:"required|length:1,1000#请输入菜单名|id长度为:min到:max位"`
 	Icon        string `r:"icon" v:"required|length:1,1000#请输入菜单图标|id长度为:min到:max位"`
-	KeepAlive   int    `r:"keepAlive" v:"required|length:1,1000#请输入是否缓存|是否缓存长度为:min到:max位"`
+	KeepAlive   bool   `r:"keepAlive" v:"required|length:1,1000#请输入是否缓存|是否缓存长度为:min到:max位"`
 	DefaultMenu bool   `r:"defaultMenu" v:"required|length:1,1000#请输入是否是基础路由(开发中)|是否是基础路由(开发中)长度为:min到:max位"`
 }
 

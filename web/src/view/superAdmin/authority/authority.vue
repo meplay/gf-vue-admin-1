@@ -4,12 +4,12 @@
       <el-button @click="addAuthority('0')" type="primary">新增角色</el-button>
     </div>
     <el-table
-        :data="tableData"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-        border
-        row-key="authorityId"
-        stripe
-        style="width: 100%"
+      :data="tableData"
+      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      border
+      row-key="authorityId"
+      stripe
+      style="width: 100%"
     >
       <el-table-column label="角色id" min-width="180" prop="authorityId"></el-table-column>
       <el-table-column label="角色名称" min-width="180" prop="authorityName"></el-table-column>
@@ -17,28 +17,28 @@
         <template slot-scope="scope">
           <el-button @click="opdendrawer(scope.row)" size="small" type="primary">设置权限</el-button>
           <el-button
-              @click="addAuthority(scope.row.authorityId)"
-              icon="el-icon-plus"
-              size="small"
-              type="primary"
+            @click="addAuthority(scope.row.authorityId)"
+            icon="el-icon-plus"
+            size="small"
+            type="primary"
           >新增子角色</el-button>
           <el-button
-              @click="copyAuthority(scope.row)"
-              icon="el-icon-copy-document"
-              size="small"
-              type="primary"
+            @click="copyAuthority(scope.row)"
+            icon="el-icon-copy-document"
+            size="small"
+            type="primary"
           >拷贝</el-button>
           <el-button
-              @click="editAuthority(scope.row)"
-              icon="el-icon-edit"
-              size="small"
-              type="primary"
+            @click="editAuthority(scope.row)"
+            icon="el-icon-edit"
+            size="small"
+            type="primary"
           >编辑</el-button>
           <el-button
-              @click="deleteAuth(scope.row)"
-              icon="el-icon-delete"
-              size="small"
-              type="danger"
+            @click="deleteAuth(scope.row)"
+            icon="el-icon-delete"
+            size="small"
+            type="danger"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -48,12 +48,12 @@
       <el-form :model="form" :rules="rules" ref="authorityForm">
         <el-form-item label="父级角色" prop="parentId">
           <el-cascader
-              :disabled="dialogType=='add'"
-              :options="AuthorityOption"
-              :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
-              :show-all-levels="false"
-              filterable
-              v-model="form.parentId"
+            :disabled="dialogType=='add'"
+            :options="AuthorityOption"
+            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
+            :show-all-levels="false"
+            filterable
+            v-model="form.parentId"
           ></el-cascader>
         </el-form-item>
         <el-form-item label="角色ID" prop="authorityId">
@@ -87,6 +87,7 @@
 
 <script>
 // 获取列表内容封装在mixins内部  getTableData方法 初始化已封装完成
+
 import {
   getAuthorityList,
   deleteAuthority,
@@ -94,9 +95,11 @@ import {
   updateAuthority,
   copyAuthority
 } from "@/api/authority";
+
 import Menus from "@/view/superAdmin/authority/components/menus";
 import Apis from "@/view/superAdmin/authority/components/apis";
 import Datas from "@/view/superAdmin/authority/components/datas";
+
 import infoList from "@/components/mixins/infoList";
 export default {
   name: "Authority",
@@ -104,10 +107,11 @@ export default {
   data() {
     var mustUint = (rule, value, callback) => {
       if (!(/^[0-9]*[1-9][0-9]*$/).test(value)){
-        return  callback(new Error("请输入正整数"));
-      }
+       return  callback(new Error("请输入正整数"));
+      } 
       return  callback()
     };
+
     return {
       AuthorityOption: [
         {
@@ -180,22 +184,22 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       })
-          .then(async () => {
-            const res = await deleteAuthority({ authorityId: row.authorityId });
-            if (res.code == 0) {
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
-              this.getTableData();
-            }
-          })
-          .catch(() => {
+        .then(async () => {
+          const res = await deleteAuthority({ authorityId: row.authorityId });
+          if (res.code == 0) {
             this.$message({
-              type: "info",
-              message: "已取消删除"
+              type: "success",
+              message: "删除成功!"
             });
+            this.getTableData();
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
           });
+        });
     },
     // 初始化表单
     initForm() {
@@ -215,6 +219,7 @@ export default {
       this.apiDialogFlag = false;
     },
     // 确定弹窗
+
     async enterDialog() {
       if (this.form.authorityId == "0") {
         this.$message({
@@ -227,30 +232,30 @@ export default {
         if (valid) {
           switch (this.dialogType) {
             case "add":
-            {
-              const res = await createAuthority(this.form);
-              if (res.code == 0) {
-                this.$message({
-                  type: "success",
-                  message: "添加成功!"
-                });
-                this.getTableData();
-                this.closeDialog();
+              {
+                const res = await createAuthority(this.form);
+                if (res.code == 0) {
+                  this.$message({
+                    type: "success",
+                    message: "添加成功!"
+                  });
+                  this.getTableData();
+                  this.closeDialog();
+                }
               }
-            }
               break;
             case "edit":
-            {
-              const res = await updateAuthority(this.form);
-              if (res.code == 0) {
-                this.$message({
-                  type: "success",
-                  message: "添加成功!"
-                });
-                this.getTableData();
-                this.closeDialog();
+              {
+                const res = await updateAuthority(this.form);
+                if (res.code == 0) {
+                  this.$message({
+                    type: "success",
+                    message: "添加成功!"
+                  });
+                  this.getTableData();
+                  this.closeDialog();
+                }
               }
-            }
               break;
             case "copy": {
               const data = {
@@ -277,6 +282,7 @@ export default {
               }
             }
           }
+
           this.initForm();
           this.dialogFormVisible = false;
         }
@@ -294,29 +300,29 @@ export default {
     setAuthorityOptions(AuthorityData, optionsData, disabled) {
       this.form.authorityId = String(this.form.authorityId);
       AuthorityData &&
-      AuthorityData.map(item => {
-        if (item.children && item.children.length) {
-          const option = {
-            authorityId: item.authorityId,
-            authorityName: item.authorityName,
-            disabled: disabled || item.authorityId == this.form.authorityId,
-            children: []
-          };
-          this.setAuthorityOptions(
+        AuthorityData.map(item => {
+          if (item.children && item.children.length) {
+            const option = {
+              authorityId: item.authorityId,
+              authorityName: item.authorityName,
+              disabled: disabled || item.authorityId == this.form.authorityId,
+              children: []
+            };
+            this.setAuthorityOptions(
               item.children,
               option.children,
               disabled || item.authorityId == this.form.authorityId
-          );
-          optionsData.push(option);
-        } else {
-          const option = {
-            authorityId: item.authorityId,
-            authorityName: item.authorityName,
-            disabled: disabled || item.authorityId == this.form.authorityId
-          };
-          optionsData.push(option);
-        }
-      });
+            );
+            optionsData.push(option);
+          } else {
+            const option = {
+              authorityId: item.authorityId,
+              authorityName: item.authorityName,
+              disabled: disabled || item.authorityId == this.form.authorityId
+            };
+            optionsData.push(option);
+          }
+        });
     },
     // 增加角色
     addAuthority(parentId) {
@@ -347,23 +353,23 @@ export default {
 </script>
 <style lang="scss">
 .authority {
-.el-input-number {
-  margin-left: 15px;
-span {
-  display: none;
-}
-}
-.button-box {
-  padding: 10px 20px;
-.el-button {
-  float: right;
-}
-}
+  .el-input-number {
+    margin-left: 15px;
+    span {
+      display: none;
+    }
+  }
+  .button-box {
+    padding: 10px 20px;
+    .el-button {
+      float: right;
+    }
+  }
 }
 .role-box {
-.el-tabs__content {
-  height: calc(100vh - 150px);
-  overflow: auto;
-}
+  .el-tabs__content {
+    height: calc(100vh - 150px);
+    overflow: auto;
+  }
 }
 </style>

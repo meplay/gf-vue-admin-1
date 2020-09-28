@@ -10,8 +10,8 @@
                 <a href="https://github.com/flipped-aurora/gf-vue-admin">
                   <img
                     class="org-img dom-center"
-                    src="@/assets/logo.png"
-                    alt="gin-vue-admin"
+                    src="https://github.com/flipped-aurora/gf-vue-admin/raw/master/docs/gf-vue-admin-logo.png"
+                    alt="gf-vue-admin"
                   />
                 </a>
               </el-col>

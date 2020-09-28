@@ -2,13 +2,10 @@ package v1
 
 import (
 	"fmt"
-	"mime/multipart"
 	"server/app/api/request"
 	"server/app/api/response"
-	"server/app/model/admins"
 	"server/app/service"
 	"server/library/global"
-	"server/library/utils"
 
 	"github.com/gogf/gf/frame/g"
 
@@ -32,32 +29,6 @@ func ChangePassword(r *ghttp.Request) {
 		r.Exit()
 	}
 	global.OkWithMessage(r, "修改成功")
-}
-
-// UploadHeaderImg User uploads profile picture
-// UploadHeaderImg 用户上传头像
-func UploadHeaderImg(r *ghttp.Request) {
-	var (
-		err      error
-		filePath string
-		header   *multipart.FileHeader
-		admin    *admins.Entity
-	)
-	claims := getAdminClaims(r)
-	userUuid := claims.AdminUuid
-	if _, header, err = r.Request.FormFile("headerImg"); err != nil {
-		global.FailWithMessage(r, fmt.Sprintf("上传文件失败，%v", err))
-	}
-	if filePath, _, err = utils.Upload(header); err != nil {
-		global.FailWithMessage(r, fmt.Sprintf("接收返回值失败，%v", err))
-	}
-	// 修改数据库后得到修改后的user并且返回供前端使用
-	admin, err = service.UploadHeaderImg(userUuid, filePath)
-	if err != nil {
-		global.FailWithMessage(r, fmt.Sprintf("修改数据库链接失败，%v", err))
-	} else {
-		global.OkDetailed(r, response.AdminResponse{Admin: admin}, "上传成功")
-	}
 }
 
 // GetAdminList Paging gets the list of users
@@ -103,6 +74,22 @@ func DeleteAdmin(r *ghttp.Request) {
 		global.FailWithMessage(r, fmt.Sprintf("删除成功, err:%v", err))
 	}
 	global.OkWithMessage(r, "删除成功")
+}
+
+// SetUserInfo Set user information
+// SetUserInfo 设置用户信息
+func SetAdminInfo(r *ghttp.Request) {
+	var set request.SetAdminInfo
+	if err := r.Parse(&set); err != nil {
+		global.FailWithMessage(r, err.Error())
+		r.Exit()
+	}
+	set.Uuid = getAdminClaims(r).AdminUuid
+	admin, err := service.SetAdminInfo(&set)
+	if err != nil {
+		global.FailWithMessage(r, fmt.Sprintf("设置头像失败, err:%v", err))
+	}
+	global.OkDetailed(r, g.Map{"userInfo": admin}, "设置头像成功")
 }
 
 // getAdminClaims 获取jwt里含有的管理员信息

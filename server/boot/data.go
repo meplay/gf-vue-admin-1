@@ -31,6 +31,7 @@ func InitializeDataTableAndData() {
 	}
 	// 初始化数据,并且数据插入是10条10条这样插入的,每个表插入数据都有加事务
 	err = model.DataApis()
+	err = model.DataFiles()
 	err = model.DataMenus()
 	err = model.DataAdmins()
 	err = model.DataCasbinRule()

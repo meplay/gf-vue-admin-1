@@ -154,6 +154,23 @@ func DataApis() (err error) {
 		{"id": 55, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getTables", "description": "获取数据库表", "api_group": "autoCode", "method": "GET"},
 		{"id": 56, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getDB", "description": "获取所有数据库", "api_group": "autoCode", "method": "GET"},
 		{"id": 57, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getColume", "description": "获取所选table的所有字段", "api_group": "autoCode", "method": "GET"},
+		{"id": 58, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/user/setUserInfo", "description": "设置用户信息", "api_group": "user", "method": "PUT"},
+	}).Batch(10).Insert()
+	if err != nil {
+		return tx.Rollback()
+	}
+	return tx.Commit()
+}
+
+func DataFiles() (err error) {
+	var tx *gdb.TX
+	if tx, err = g.DB(global.Db).Begin(); err != nil {
+		panic(err)
+	}
+	db := g.DB(global.Db).Table("files").Safe()
+	_, err = db.Data(g.List{
+		{"id": 1, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "name": "10.png", "url": "http://qmplusimg.henrongyi.top/gvalogo.png", "tag": "png", "key": "158787308910.png"},
+		{"id": 2, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "name": "logo.png", "url": "http://qmplusimg.henrongyi.top/1576554439myAvatar.png", "tag": "png", "key": "1587973709logo.png"},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()
@@ -187,12 +204,13 @@ func DataMenus() (err error) {
 		{"id": 17, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "systemTools", "path": "systemTools", "hidden": 0, "component": "view/systemTools/index.vue", "title": "系统工具", "icon": "s-cooperation", "sort": 5, "keep_alive": 0, "default_menu": 0},
 		{"id": 18, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "autoCode", "path": "autoCode", "hidden": 0, "component": "view/systemTools/autoCode/index.vue", "title": "代码生成器", "icon": "cpu", "sort": 1, "keep_alive": 1, "default_menu": 0},
 		{"id": 19, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "formCreate", "path": "formCreate", "hidden": 0, "component": "view/systemTools/formCreate/index.vue", "title": "表单生成器", "icon": "magic-stick", "sort": 2, "keep_alive": 1, "default_menu": 0},
-		//{"id": 20, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "system", "path": "system", "hidden": 0, "component": "view/systemTools/system/system.vue", "title": "系统配置", "icon": "s-operation", "sort": 3, "keep_alive": 0, "default_menu": 0},
+		{"id": 20, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 17, "name": "system", "path": "system", "hidden": 0, "component": "view/systemTools/system/system.vue", "title": "系统配置", "icon": "s-operation", "sort": 3, "keep_alive": 0, "default_menu": 0},
 		{"id": 21, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 0, "name": "iconList", "path": "iconList", "hidden": 0, "component": "view/iconList/index.vue", "title": "图标集合", "icon": "star-on", "sort": 2, "keep_alive": 0, "default_menu": 0},
 		{"id": 22, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionary", "path": "dictionary", "hidden": 0, "component": "view/superAdmin/dictionary/sysDictionary.vue", "title": "字典管理", "icon": "notebook-2", "sort": 5, "keep_alive": 0, "default_menu": 0},
 		{"id": 23, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "dictionaryDetail", "path": "dictionaryDetail/:id", "hidden": 1, "component": "view/superAdmin/dictionary/sysDictionaryDetail.vue", "title": "字典详情", "icon": "s-order", "sort": 1, "keep_alive": 0, "default_menu": 0},
 		{"id": 24, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "operation", "path": "operation", "hidden": 0, "component": "view/superAdmin/operation/sysOperationRecord.vue", "title": "操作历史", "icon": "time", "sort": 6, "keep_alive": 0, "default_menu": 0},
-		//{"id": 25, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "simpleUploader", "path": "simpleUploader", "hidden": 0, "component": "view/example/simpleUploader/simpleUploader", "title": "断点续传（插件版）", "icon": "upload", "sort": 6, "keep_alive": 0, "default_menu": 0},
+		{"id": 25, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 3, "name": "https://www.gin-vue-admin.com", "path": "https://www.gin-vue-admin.com", "hidden": 0, "component": "/", "title": "官方网站", "icon": "s-home", "sort": 1, "keep_alive": 0, "default_menu": 0},
+		{"id": 26, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "menu_level": 0, "parent_id": 9, "name": "simpleUploader", "path": "simpleUploader", "hidden": 0, "component": "view/example/simpleUploader/simpleUploader", "title": "断点续传（插件版）", "icon": "upload", "sort": 6, "keep_alive": 0, "default_menu": 0},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()
@@ -252,6 +270,7 @@ func DataCasbinRule() (err error) {
 		{"ptype": "p", "v0": "888", "v1": "/user/getUserList", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/user/setUserAuthority", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/user/deleteUser", "v2": "DELETE"},
+		{"ptype": "p", "v0": "888", "v1": "/user/setUserInfo", "v2": "PUT"},
 		{"ptype": "p", "v0": "888", "v1": "/fileUploadAndDownload/upload", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/fileUploadAndDownload/getFileList", "v2": "POST"},
 		{"ptype": "p", "v0": "888", "v1": "/fileUploadAndDownload/deleteFile", "v2": "POST"},

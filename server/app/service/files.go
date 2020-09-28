@@ -2,36 +2,59 @@ package service
 
 import (
 	"errors"
+	"mime/multipart"
 	"server/app/api/request"
 	"server/app/model/breakpoint_chucks"
 	"server/app/model/breakpoint_files"
 	"server/app/model/files"
 	"server/library/utils"
+	"server/library/utils/upload"
+	"strings"
 
 	"github.com/gogf/gf/frame/g"
 )
 
-// UploadFile Create file upload records
-// UploadFile 创建文件上传记录
-func UploadFile(file *files.Entity) (err error) {
+// CreateFile Create file upload records
+// CreateFile 创建文件上传记录
+func CreateFile(file *files.Entity) (err error) {
 	_, err = files.Insert(file)
 	return err
+}
+
+// FindFile Find file record
+// FindFile 查找文件记录
+func FindFile(key string) (file *files.Files, err error) {
+	file = (*files.Files)(nil)
+	db := g.DB("default").Table("files").Safe()
+	err = db.Where(g.Map{"key": key}).Struct(&file)
+	return file, err
+}
+
+// FindFile Find file record By Id
+// FindFile 根据Id查找文件记录
+func FindFileById(find *request.DeleteFile) (file *files.Files, err error) {
+	file = (*files.Files)(nil)
+	db := g.DB("default").Table("files").Safe()
+	err = db.Where(g.Map{"id": find.Id}).Struct(&file)
+	return file, err
 }
 
 // DeleteFile Delete file records
 // DeleteFile 删除文件记录
 func DeleteFile(d *request.DeleteFile) error {
+	fileFromDb, err := FindFileById(d)
+	err = upload.Oss.DeleteFile(fileFromDb.Key)
 	if _, err := files.FindOne(g.Map{"id": d.Id}); err != nil {
 		return errors.New("文件记录不存在,删除失败")
 	}
-	_, err := files.Delete(g.Map{"id": d.Id})
+	_, err = files.Delete(g.Map{"id": d.Id})
 	return err
 }
 
 // GetFileList Paging fetch data
 // GetFileList 分页获取数据
 func GetFileList(info *request.PageInfo) (list interface{}, total int, err error) {
-	var fileList []*files.Entity
+	fileList := ([]*files.Files)(nil)
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	db := g.DB("default").Table("files").Safe()
@@ -81,4 +104,26 @@ func DeleteFileChunk(fileMd5 string, fileName string, filePath string) (err erro
 	files, err = breakpoint_files.FindOne(g.Map{"file_md5": fileMd5})
 	_, err = breakpoint_chucks.Delete(g.Map{"exa_file_id": files.ChunkId})
 	return err
+}
+
+// UploadFile 根据配置文件进行文件上传
+func UploadFile(header *multipart.FileHeader, noSave string) (file *files.Files, err error) {
+	p, key, uploadErr := upload.Oss.Upload(header)
+	if uploadErr != nil {
+		panic(err)
+	}
+	if noSave == "0" {
+		s := strings.Split(header.Filename, ".")
+		f := &files.Entity{
+			Url:  p,
+			Name: header.Filename,
+			Tag:  s[len(s)-1],
+			Key:  key,
+		}
+		if err := CreateFile(f); err != nil {
+			return nil, err
+		}
+		return FindFile(f.Key)
+	}
+	return
 }

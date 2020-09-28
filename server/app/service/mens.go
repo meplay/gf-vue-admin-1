@@ -171,15 +171,15 @@ func DeleteBaseMenu(delete *request.GetById) (err error) {
 func UpdateBaseMenu(update *request.UpdateBaseMenu) (err error) {
 	condition := g.Map{"id": update.Id}
 	updateDate := g.Map{
-		"keep_alive":   update.KeepAlive,
-		"default_menu": update.DefaultMenu,
+		"keep_alive":   update.Meta.KeepAlive,
+		"default_menu": update.Meta.DefaultMenu,
 		"parent_id":    update.ParentId,
 		"path":         update.Path,
 		"name":         update.Name,
 		"hidden":       utils.BoolToInt(update.Hidden),
 		"component":    update.Component,
-		"title":        update.Title,
-		"icon":         update.Icon,
+		"title":        update.Meta.Title,
+		"icon":         update.Meta.Icon,
 		"sort":         update.Sort,
 	}
 	if menus.RecordNotFound(g.Map{"name": update.Name}) {
@@ -199,12 +199,12 @@ func UpdateBaseMenu(update *request.UpdateBaseMenu) (err error) {
 // GetBaseMenuById 返回当前选中menu
 func GetBaseMenuById(idInfo *request.GetById) (menu *model.BaseMenu, err error) {
 	menu = (*model.BaseMenu)(nil)
-	db := g.DB(global.Db).Table("menus").Safe()
-	parametersDb := g.DB(global.Db).Table("parameters").Safe()
+	db := g.DB("default").Table("menus").Safe()
+	parametersDb := g.DB("default").Table("parameters").Safe()
+	err = db.Where(g.Map{"id": idInfo.Id}).Struct(&menu)
 	if parameters.RecordNotFound(g.Map{"base_menu_id": idInfo.Id}) {
 		return menu, err
 	}
-	err = db.Where(g.Map{"id": idInfo.Id}).Struct(&menu)
 	err = parametersDb.Where(g.Map{"base_menu_id": idInfo.Id}).Struct(&menu.Parameters)
 	return menu, err
 }

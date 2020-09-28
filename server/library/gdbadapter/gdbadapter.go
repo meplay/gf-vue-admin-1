@@ -142,29 +142,13 @@ func (a *Adapter) close() error {
 	return nil
 }
 
-// hasTable determine whether the table name exists in the database.
-// hasTable 确定数据库中是否存在表名。
-func (a *Adapter) hasTable(name string) (bool, error) {
-	tables, err := a.db.Tables()
-	if err != nil {
-		return false, err
-	}
-	for _, table := range tables {
-		if table == name {
-			return true, nil
-		}
-	}
-	return false, nil
-}
-
 // createTable Create a data table
 // createTable 创建数据表
 func (a *Adapter) createTable() error {
-	hasTable, err := a.hasTable(a.tableName)
-	if hasTable {
+	if exists, _ := a.db.HasTable(a.tableName); exists {
 		return nil
 	}
-	_, err = a.db.Exec(fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (ptype VARCHAR(10), v0 VARCHAR(256), v1 VARCHAR(256), v2 VARCHAR(256), v3 VARCHAR(256), v4 VARCHAR(256), v5 VARCHAR(256))", a.tableName))
+	_, err := a.db.Exec(fmt.Sprintf("CREATE TABLE IF NOT EXISTS %s (ptype VARCHAR(10), v0 VARCHAR(256), v1 VARCHAR(256), v2 VARCHAR(256), v3 VARCHAR(256), v4 VARCHAR(256), v5 VARCHAR(256))", a.tableName))
 	return err
 }
 

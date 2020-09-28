@@ -13,3 +13,9 @@ type SetAdminAuthority struct {
 	Uuid        string `p:"uuid" v:"required|length:36,36#请输入管理员UUID|管理员UUID长度为:min到:max位"`
 	AuthorityId string `p:"authority_id" v:"required|length:1, 100#请输入角色ID|角色ID长度为:min到:max位"`
 }
+
+// SetAdminInfo request Structure
+type SetAdminInfo struct {
+	Uuid      string
+	HeaderImg string `p:"headerImg" v:"required|length:1, 100#请输入头像链接|头像链接长度为:min到:max位"`
+}

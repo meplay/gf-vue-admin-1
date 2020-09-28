@@ -27,13 +27,17 @@ func (m *arModel) RecordNotFound(where ...interface{}) bool {
 
 // Custom Model
 type Customers struct {
-	Id                 uint          `orm:"id,primary" json:"ID"`                            // 自增ID
-	CreateAt           *gtime.Time   `orm:"create_at" json:"CreatedAt"`                      // 创建时间
-	UpdateAt           *gtime.Time   `orm:"update_at" json:"UpdatedAt"`                      // 更新时间
-	DeleteAt           *gtime.Time   `orm:"delete_at" json:"DeletedAt"`                      // 删除时间
-	CustomerName       string        `orm:"customer_name" json:"customerName"`               // 客户名
-	CustomerPhoneData  string        `orm:"customer_phone_data" json:"customerPhoneData"`    // 客户电话
-	SysUserId          int           `orm:"sys_user_id" json:"sysUserId"`                    // 负责员工id
-	SysUserAuthorityId string        `orm:"sys_user_authority_id" json:"sysUserAuthorityID"` // 负责员工角色
-	SysUser            *admins.Admin `json:"sysUser"`
+	Id                 uint        `orm:"id,primary" json:"ID"`                            // 自增ID
+	CreateAt           *gtime.Time `orm:"create_at" json:"CreatedAt"`                      // 创建时间
+	UpdateAt           *gtime.Time `orm:"update_at" json:"UpdatedAt"`                      // 更新时间
+	DeleteAt           *gtime.Time `orm:"delete_at" json:"DeletedAt"`                      // 删除时间
+	CustomerName       string      `orm:"customer_name" json:"customerName"`               // 客户名
+	CustomerPhoneData  string      `orm:"customer_phone_data" json:"customerPhoneData"`    // 客户电话
+	SysUserId          int         `orm:"sys_user_id" json:"sysUserId"`                    // 负责员工id
+	SysUserAuthorityId string      `orm:"sys_user_authority_id" json:"sysUserAuthorityID"` // 负责员工角色
+}
+
+type CustomerHasOneAdmin struct {
+	*Customers
+	Admin *admins.Admin `json:"sysUser"`
 }

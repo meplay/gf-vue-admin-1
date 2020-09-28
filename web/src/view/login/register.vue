@@ -68,7 +68,7 @@
           <a href="https://www.yuque.com/flipped-aurora/"
             ><img src="@/assets/yuque.png" class="link-icon"
           /></a>
-          <a href="https://github.com/flipped-aurora/gin-vue-admin"
+          <a href="https://github.com/flipped-aurora/gfvue-admin"
             ><img src="@/assets/github.png" class="link-icon"
           /></a>
           <a href="https://space.bilibili.com/322210472"
