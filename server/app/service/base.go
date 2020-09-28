@@ -15,13 +15,14 @@ var Store = base64Captcha.DefaultMemStore
 
 // AdminLogin Administrator login
 // AdminLogin 管理员登录
-func AdminLogin(l *request.AdminLogin) (data *admins.Admin, err error) {
-	admin := (*admins.Admin)(nil) // 用法解释 https://goframe.org/database/gdb/chaining/select#tip4
+func AdminLogin(l *request.AdminLogin) (data *admins.AdminHasOneAuthority, err error) {
+	admin := (*admins.AdminHasOneAuthority)(nil) // 用法解释 https://goframe.org/database/gdb/chaining/select#tip4
 	adminDb := g.DB("default").Table("admins").Safe()
-	//authorityDb := g.DB("default").Table("authorities").Safe()
+	authorityDb := g.DB("default").Table("authorities").Safe()
 	if err = adminDb.Where(g.Map{"username": l.Username}).Scan(&admin); err != nil {
 		return admin, errors.New("用户不存在")
 	}
+	err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Struct(&admin.Authority)
 	if utils.CompareHashAndPassword(admin.Password, l.Password) { // 检查密码是否正确
 		//err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Scan(&admin.Authority)
 		return admin, err
