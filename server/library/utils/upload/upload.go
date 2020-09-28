@@ -3,8 +3,9 @@ package upload
 import (
 	"fmt"
 	"mime/multipart"
-	"server/library/global"
 	"time"
+
+	"github.com/gogf/gf/frame/g"
 )
 
 var Oss OSS
@@ -19,8 +20,8 @@ func getObjectName(filename string) string {
 	return fmt.Sprintf("%s/%d%s", folder, time.Now().Unix(), filename) // 文件名格式 自己可以改 建议保证唯一性
 }
 
-func InitUpload() {
-	switch global.Config.System.OssType {
+func init() {
+	switch g.Cfg().GetString("system.OssType") {
 	case "local":
 		Oss = &Local{}
 	case "qiniu":

@@ -4,31 +4,48 @@ import (
 	"errors"
 	"fmt"
 	"mime/multipart"
-	"server/library/global"
 
 	"github.com/gogf/gf/frame/g"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
 
+var (
+	aPath             string
+	aBucket           string
+	aEndpoint         string
+	aAccessKeyID      string
+	aSecretAccessKey  string
+	aStorageClassType string
+)
+
+func init() {
+	aPath = g.Cfg("oss").GetString("aliyun.Path")
+	aBucket = g.Cfg("oss").GetString("aliyun.Bucket")
+	aEndpoint = g.Cfg("oss").GetString("aliyun.Endpoint")
+	aAccessKeyID = g.Cfg("oss").GetString("aliyun.AccessKeyID")
+	aSecretAccessKey = g.Cfg("oss").GetString("aliyun.SecretAccessKey")
+	aStorageClassType = g.Cfg("oss").GetString("aliyun.StorageClassType")
+}
+
 type AliYun struct{}
 
 func (*AliYun) Upload(file *multipart.FileHeader) (string, string, error) {
 	var storageType oss.Option
-	client, newErr := oss.New(global.Config.AliYun.Endpoint, global.Config.AliYun.AccessKeyID, global.Config.AliYun.SecretAccessKey, oss.Timeout(10, 120))
+	client, newErr := oss.New(aEndpoint, aAccessKeyID, aSecretAccessKey, oss.Timeout(10, 120))
 	if newErr != nil {
 		g.Log().Errorf("err:%v", newErr)
 		return "", "", errors.New("function oss.New() Filed, err:" + newErr.Error())
 	}
 
 	// 获取存储空间。
-	bucket, bucketErr := client.Bucket(global.Config.AliYun.Bucket)
+	bucket, bucketErr := client.Bucket(aBucket)
 	if bucketErr != nil {
 		g.Log().Errorf("err:%v", bucketErr)
 		return "", "", errors.New("function client.Bucket() Filed, err:" + bucketErr.Error())
 	}
 
-	switch global.Config.AliYun.StorageClassType { // 根据配置文件进行指定存储类型
+	switch aStorageClassType { // 根据配置文件进行指定存储类型
 	case "Standard": // 指定存储类型为标准存储，缺省也为标准存储。
 		storageType = oss.ObjectStorageClass(oss.StorageStandard)
 	case "IA": // 指定存储类型为很少访问存储
@@ -62,18 +79,18 @@ func (*AliYun) Upload(file *multipart.FileHeader) (string, string, error) {
 		return "", "", errors.New("function bucket.PutObject() Filed, err:" + putErr.Error())
 	}
 
-	return global.Config.AliYun.Path + "/" + objectName, objectName, nil
+	return aPath + "/" + objectName, objectName, nil
 }
 
 func (*AliYun) DeleteFile(key string) error {
-	client, newErr := oss.New(global.Config.AliYun.Endpoint, global.Config.AliYun.AccessKeyID, global.Config.AliYun.SecretAccessKey, oss.Timeout(10, 120))
+	client, newErr := oss.New(aEndpoint, aAccessKeyID, aSecretAccessKey, oss.Timeout(10, 120))
 	if newErr != nil {
 		g.Log().Errorf("err:%v", newErr)
 		return errors.New("function oss.New() Filed, err:" + newErr.Error())
 	}
 
 	// 获取存储空间。
-	bucket, err := client.Bucket(global.Config.AliYun.Bucket)
+	bucket, err := client.Bucket(aBucket)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return err

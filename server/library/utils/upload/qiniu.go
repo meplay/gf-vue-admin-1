@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"mime/multipart"
-	"server/library/global"
 	"time"
 
 	"github.com/gogf/gf/frame/g"
@@ -13,14 +12,34 @@ import (
 	"github.com/qiniu/api.v7/v7/storage"
 )
 
+var (
+	qZone          string
+	qBucket        string
+	qImgPath       string
+	qUseHTTPS      bool
+	qAccessKey     string
+	qSecretKey     string
+	qUseCdnDomains bool
+)
+
+func init() {
+	qZone = g.Cfg("oss").GetString("qiniu.Zone")
+	qBucket = g.Cfg("oss").GetString("qiniu.Bucket")
+	qImgPath = g.Cfg("oss").GetString("qiniu.ImgPath")
+	qUseHTTPS = g.Cfg("oss").GetBool("qiniu.UseHTTPS")
+	qAccessKey = g.Cfg("oss").GetString("qiniu.AccessKey")
+	qSecretKey = g.Cfg("oss").GetString("qiniu.SecretKey")
+	qUseCdnDomains = g.Cfg("oss").GetBool("qiniu.UseCdnDomains")
+}
+
 type Qiniu struct{}
 
 // 接收两个参数 一个文件流 一个 bucket 你的七牛云标准空间的名字
 func (*Qiniu) Upload(file *multipart.FileHeader) (string, string, error) {
-	putPolicy := storage.PutPolicy{Scope: global.Config.Qiniu.Bucket}
-	mac := qbox.NewMac(global.Config.Qiniu.AccessKey, global.Config.Qiniu.SecretKey)
+	putPolicy := storage.PutPolicy{Scope: qBucket}
+	mac := qbox.NewMac(qAccessKey, qSecretKey)
 	upToken := putPolicy.UploadToken(mac)
-	cfg := config()
+	cfg := qiniuConfig()
 	formUploader := storage.NewFormUploader(cfg)
 	ret := storage.PutRet{}
 	putExtra := storage.PutExtra{Params: map[string]string{"x:name": "github logo"}}
@@ -36,14 +55,14 @@ func (*Qiniu) Upload(file *multipart.FileHeader) (string, string, error) {
 		g.Log().Errorf("err:%v", putErr)
 		return "", "", errors.New("function formUploader.Put() Filed, err:" + putErr.Error())
 	}
-	return global.Config.Qiniu.ImgPath + "/" + ret.Key, ret.Key, nil
+	return qImgPath + "/" + ret.Key, ret.Key, nil
 }
 
 func (*Qiniu) DeleteFile(key string) error {
-	mac := qbox.NewMac(global.Config.Qiniu.AccessKey, global.Config.Qiniu.SecretKey)
-	cfg := config()
+	mac := qbox.NewMac(qAccessKey, qSecretKey)
+	cfg := qiniuConfig()
 	bucketManager := storage.NewBucketManager(mac, cfg)
-	deleteErr := bucketManager.Delete(global.Config.Qiniu.AccessKey, key)
+	deleteErr := bucketManager.Delete(qAccessKey, key)
 	if deleteErr != nil {
 		g.Log().Errorf("err:%v", deleteErr)
 		return errors.New("function file.Open() Filed, err:" + deleteErr.Error())
@@ -52,9 +71,9 @@ func (*Qiniu) DeleteFile(key string) error {
 }
 
 // config 根据配置文件进行返回七牛云的配置
-func config() *storage.Config {
-	cfg := storage.Config{UseHTTPS: global.Config.Qiniu.UseHTTPS, UseCdnDomains: global.Config.Qiniu.UseCdnDomains}
-	switch global.Config.Qiniu.Zone { // 根据配置文件进行初始化空间对应的机房
+func qiniuConfig() *storage.Config {
+	cfg := storage.Config{UseHTTPS: qUseHTTPS, UseCdnDomains: qUseCdnDomains}
+	switch qZone { // 根据配置文件进行初始化空间对应的机房
 	case "ZoneHuadong":
 		cfg.Zone = &storage.ZoneHuadong
 	case "ZoneHuabei":
