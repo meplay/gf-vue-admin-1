@@ -9,9 +9,8 @@ import (
 
 // InitSimpleUploadRouter 注册断点续传路由
 func InitSimpleUploadRouter() {
-	SimpleUploadRouter := g.Server().Group("simple_upload").Middleware(
+	SimpleUploadRouter := g.Server().Group("simpleUploader").Middleware(
 		middleware.JwtAuth,
-		middleware.CasbinMiddleware,
 	)
 	{
 		SimpleUploadRouter.POST("upload", v1.CreateSimpleUpload) // 上传功能

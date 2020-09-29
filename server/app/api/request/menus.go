@@ -29,9 +29,9 @@ type Meta struct {
 }
 
 type Parameters struct {
-	Type  string `r:"type"  v:"-"` // 地址栏携带参数为params还是query
-	Key   string `r:"key"   v:"-"` // 地址栏携带参数的key
-	Value string `r:"value" v:"-"` // 地址栏携带参数的值
+	Type  string `r:"type" ` // 地址栏携带参数为params还是query
+	Key   string `r:"key"  ` // 地址栏携带参数的key
+	Value string `r:"value"` // 地址栏携带参数的值
 }
 
 type CreateBaseMenu struct {
@@ -42,7 +42,7 @@ type CreateBaseMenu struct {
 	Component  string       `r:"component" v:"required|length:1,1000#请输入前端文件路径|前端文件路径长度为:min到:max位"`
 	Sort       int          `r:"sort" v:"required|length:1,1000#请输入排序标记|排序标记长度为:min到:max位"`
 	Parameters []Parameters `r:"parameters"` // 地址栏携带参数
-	Meta       `r:"meta"`   // 附加属性
+	Meta       Meta         `r:"meta"`       // 附加属性
 }
 
 // Get role by id structure

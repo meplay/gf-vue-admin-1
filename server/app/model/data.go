@@ -59,6 +59,10 @@ func TableAuthorities() (err error) {
 	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `authorities`;\nCREATE TABLE `authorities` (\n  `authority_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',\n  `authority_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色名',\n  `parent_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '父角色ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  PRIMARY KEY (`authority_id`) USING BTREE,\n  UNIQUE KEY `authority_id` (`authority_id`) USING BTREE,\n  KEY `idx_sys_authorities_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
 	return
 }
+func TableSimpleUpload() (err error) {
+	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `authorities`;\nCREATE TABLE `authorities` (\n  `authority_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',\n  `authority_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色名',\n  `parent_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '父角色ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  PRIMARY KEY (`authority_id`) USING BTREE,\n  UNIQUE KEY `authority_id` (`authority_id`) USING BTREE,\n  KEY `idx_sys_authorities_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
+	return
+}
 
 func TableDictionaries() (err error) {
 	_, err = g.DB(global.Db).Exec("DROP TABLE IF EXISTS `dictionaries`;\nCREATE TABLE `dictionaries` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',\n  `create_at` datetime DEFAULT NULL COMMENT '创建时间',\n  `update_at` datetime DEFAULT NULL COMMENT '更新时间',\n  `delete_at` datetime DEFAULT NULL COMMENT '删除时间',\n  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '字典名（中）',\n  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '字典名（英）',\n  `status` tinyint(1) DEFAULT NULL COMMENT '状态',\n  `desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '描述',\n  PRIMARY KEY (`id`) USING BTREE,\n  KEY `idx_sys_dictionaries_deleted_at` (`delete_at`) USING BTREE\n) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;")
@@ -155,6 +159,9 @@ func DataApis() (err error) {
 		{"id": 56, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getDB", "description": "获取所有数据库", "api_group": "autoCode", "method": "GET"},
 		{"id": 57, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/autoCode/getColume", "description": "获取所选table的所有字段", "api_group": "autoCode", "method": "GET"},
 		{"id": 58, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/user/setUserInfo", "description": "设置用户信息", "api_group": "user", "method": "PUT"},
+		{"id": 59, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/simpleUploader/upload", "description": "插件版分片上传", "api_group": "simpleUploader", "method": "POST"},
+		{"id": 60, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/simpleUploader/checkFileMd5", "description": "文件完整度验证", "api_group": "simpleUploader", "method": "GET"},
+		{"id": 61, "create_at": gtime.Now(), "update_at": gtime.Now(), "delete_at": nil, "path": "/simpleUploader/mergeFileMd5", "description": "上传完成合并文件", "api_group": "simpleUploader", "method": "GET"},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()
@@ -305,6 +312,9 @@ func DataCasbinRule() (err error) {
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/findSysOperationRecord", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/getSysOperationRecordList", "v2": "GET"},
 		{"ptype": "p", "v0": "888", "v1": "/sysOperationRecord/deleteSysOperationRecordByIds", "v2": "DELETE"},
+		{"ptype": "p", "v0": "888", "v1": "/simpleUploader/upload", "v2": "POST"},
+		{"ptype": "p", "v0": "888", "v1": "/simpleUploader/checkFileMd5", "v2": "GET"},
+		{"ptype": "p", "v0": "888", "v1": "/simpleUploader/mergeFileMd5", "v2": "GET"},
 	}).Batch(100).Insert()
 	if err != nil {
 		return tx.Rollback()
@@ -375,12 +385,13 @@ func DataAuthorityMenus() (err error) {
 		{"authority_id": "888", "menu_id": "17"},
 		{"authority_id": "888", "menu_id": "18"},
 		{"authority_id": "888", "menu_id": "19"},
-		//{"authority_id": "888", "menu_id": "20"},
+		{"authority_id": "888", "menu_id": "20"},
 		{"authority_id": "888", "menu_id": "21"},
 		{"authority_id": "888", "menu_id": "22"},
 		{"authority_id": "888", "menu_id": "23"},
 		{"authority_id": "888", "menu_id": "24"},
-		//{"authority_id": "888", "menu_id": "25"},
+		{"authority_id": "888", "menu_id": "25"},
+		{"authority_id": "888", "menu_id": "26"},
 	}).Batch(10).Insert()
 	if err != nil {
 		return tx.Rollback()

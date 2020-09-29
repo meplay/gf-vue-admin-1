@@ -17,7 +17,7 @@ func TestFindCustomers(t *testing.T) {
 	db := g.DB("default").Table("customers").Safe()
 	adminDb := g.DB("default").Table("admins").Safe()
 	err = db.Where(g.Map{"id": 1}).Struct(&data)
-	err = adminDb.Where(g.Map{"id": data.Customer.Id}).Struct(&data.Admin)
+	err = adminDb.Where(g.Map{"id": data.Id}).Struct(&data.Admin)
 	if err != nil {
 		panic(err)
 	}

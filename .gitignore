@@ -10,9 +10,9 @@ node_modules
 .env.*.local
 
 # Log folder
-server/logs/log/
-server/logs/server/
-server/logs/sql/
+server/chunk
+server/finish
+server/logs
 dump.rdb
 server/dump.rdb
 

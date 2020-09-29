@@ -1,7 +1,10 @@
 package service
 
 import (
+	"errors"
+	"io"
 	"io/ioutil"
+	"mime/multipart"
 	"os"
 	"server/app/api/request"
 	"server/app/model/simple_upload"
@@ -84,4 +87,27 @@ func MergeFileMd5(md5 string, fileName string) (err error) {
 	}
 	err = os.RemoveAll(dir) //清除切片
 	return tx.Commit()
+}
+
+func Upload(file *multipart.FileHeader, chunkPath string) error {
+	f, openError := file.Open() // 读取文件
+	if openError != nil {
+		g.Log().Errorf("err:%v", openError)
+		return errors.New("function file.Open() Filed, err:" + openError.Error())
+	}
+	defer f.Close() // 创建文件 defer 关闭
+
+	out, createErr := os.Create(chunkPath)
+	if createErr != nil {
+		g.Log().Errorf("err:%v", createErr)
+		return errors.New("function file.Open() Filed, err:" + createErr.Error())
+	}
+	defer out.Close() // 创建文件 defer 关闭
+
+	_, copyErr := io.Copy(out, f) // 传输（拷贝）文件
+	if copyErr != nil {
+		g.Log().Errorf("err:%v", copyErr)
+		return errors.New("function io.Copy() Filed, err:" + copyErr.Error())
+	}
+	return nil
 }

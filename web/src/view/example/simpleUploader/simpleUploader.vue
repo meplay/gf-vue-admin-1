@@ -51,8 +51,8 @@ export default {
         simultaneousUploads: 5,
         chunkSize: 2 * 1024 * 1024,
         headers: {
-          "x-token": this.token,
-          "x-user-id": this.userInfo.ID
+          'Authorization': "Bearer " + this.token,
+          'x-user-id': this.userInfo.ID,
         },
         checkChunkUploadedByResponse(chunk) {
           if (isUploaded) {

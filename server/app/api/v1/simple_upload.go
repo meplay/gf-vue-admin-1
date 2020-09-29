@@ -16,27 +16,25 @@ import (
 // CreateSimpleUpload 断点续传插件版示例
 func CreateSimpleUpload(r *ghttp.Request) {
 	var chunk request.CreateSimpleUpload
-	file := r.GetUploadFiles("file")
+	_, header, err := r.Request.FormFile("file")
 	chunk.Filename = r.PostFormValue("filename")
 	chunk.ChunkNumber = r.PostFormValue("chunkNumber")
 	chunk.CurrentChunkSize = r.PostFormValue("currentChunkSize")
 	chunk.Identifier = r.PostFormValue("identifier")
 	chunk.TotalSize = r.PostFormValue("totalSize")
 	chunk.TotalChunks = r.PostFormValue("totalChunks")
+	fmt.Println("Identifier", chunk.Identifier)
 	var chunkDir = "./chunk/" + chunk.Identifier + "/"
 	hasDir, _ := utils.PathExists(chunkDir)
 	if !hasDir {
 		_ = utils.CreateDir(chunkDir)
 	}
 	chunkPath := chunkDir + chunk.Filename + chunk.ChunkNumber
-
-	_, saveErr := file.Save(chunkPath)
-	if saveErr != nil {
-		global.FailWithMessage(r, fmt.Sprintf("切片创建失败，%v", saveErr.Error()))
-		return
+	if header != nil {
+		err = service.Upload(header, chunkPath)
 	}
 	chunk.CurrentChunkPath = chunkPath
-	err := service.SaveChunk(&chunk)
+	err = service.SaveChunk(&chunk)
 	if err != nil {
 		global.FailWithMessage(r, fmt.Sprintf("切片创建失败，%v", err.Error()))
 		return

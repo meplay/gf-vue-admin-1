@@ -136,19 +136,21 @@ func CreateBaseMenu(create *request.CreateBaseMenu) (err error) {
 		Hidden:    utils.BoolToInt(create.Hidden),
 		Component: create.Component,
 		Sort:      create.Sort,
-		Title:     create.Title,
-		Icon:      create.Icon,
+		Title:     create.Meta.Title,
+		Icon:      create.Meta.Icon,
 	}
 	_, err = menus.Insert(insert)
 	if menu, err = menus.FindOne(g.Map{"name": create.Name}); err != nil {
 		return err
 	}
-	var inserts g.List
-	for _, v := range create.Parameters {
-		value := g.Map{"base_menu_id": int(menu.Id), "value": v.Value, "key": v.Key, "type": v.Type}
-		inserts = append(inserts, value)
+	if len(create.Parameters) != 0 {
+		var inserts g.List
+		for _, v := range create.Parameters {
+			value := g.Map{"base_menu_id": int(menu.Id), "value": v.Value, "key": v.Key, "type": v.Type}
+			inserts = append(inserts, value)
+		}
+		_, err = parameters.Insert(inserts)
 	}
-	_, err = parameters.Insert(inserts)
 	return err
 }
 

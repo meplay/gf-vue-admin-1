@@ -19,6 +19,7 @@ func InitializeDataTableAndData() {
 	err = model.TableOperations()
 	err = model.TableParameters()
 	err = model.TableAuthorities()
+	err = model.TableSimpleUpload()
 	err = model.TableDictionaries()
 	err = model.TableAuthorityMenu()
 	err = model.TableBreakpointFiles()
