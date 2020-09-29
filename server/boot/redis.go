@@ -6,7 +6,7 @@ import (
 )
 
 func InitializeRedis() {
-	if g.Cfg().GetBool("system.UseMultipoint") {
+	if g.Cfg("system").GetBool("system.UseMultipoint") {
 		conn, err := g.Redis().Do("PING")
 		if err != nil {
 			g.Log().Error(err)

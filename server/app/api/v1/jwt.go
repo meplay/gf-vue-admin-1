@@ -28,9 +28,9 @@ var (
 // rewrite this function to customized your own JWT settings.
 // 重写此函数以自定义您自己的JWT设置。
 func init() {
-	signingKey := g.Cfg().GetString("jwt.SigningKey")
-	Timeout := g.Cfg().GetDuration("jwt.ExpiresAt") * time.Hour * 24
-	MaxRefresh := g.Cfg().GetDuration("jwt.RefreshAt") * time.Hour * 24
+	signingKey := g.Cfg("jwt").GetString("jwt.SigningKey")
+	Timeout := g.Cfg("jwt").GetDuration("jwt.ExpiresAt") * time.Hour * 24
+	MaxRefresh := g.Cfg("jwt").GetDuration("jwt.RefreshAt") * time.Hour * 24
 	authMiddleware, err := jwt.New(&jwt.GfJWTMiddleware{
 		Realm:           signingKey,
 		Key:             []byte(signingKey),

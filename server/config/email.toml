@@ -1,0 +1,8 @@
+[email]
+From = 'xxx@163.com'
+Nickname = 'test'
+Secret = 'xxx'
+To = 'xxx@qq.com'
+Host = 'smtp.163.com'
+Port = 465
+IsSsl = true

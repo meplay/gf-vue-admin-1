@@ -1,0 +1,7 @@
+# system configuration
+[system]
+Db = "default"
+Env = "public" # Change to "develop" to skip authentication for development mode
+OssType = "local"
+ErrorToEmail = false
+UseMultipoint = false

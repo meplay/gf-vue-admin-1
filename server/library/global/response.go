@@ -10,7 +10,7 @@ const (
 	SUCCESS = 0
 )
 
-var Db = g.Cfg().GetString("system.Db")
+var Db = g.Cfg("system").GetString("system.Db")
 
 // 数据返回通用JSON数据结构
 type JsonResponse struct {

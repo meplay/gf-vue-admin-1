@@ -55,6 +55,17 @@ func FindAdmin(adminUUID string) (admin *admins.AdminHasOneAuthority, err error)
 	return admin, err
 }
 
+// FindAdmin Used to refresh token and return admin information according to uuid
+// FindAdmin 用于刷新token,根据uuid返回admin信息
+func FindAdminById(Id int) (admin *admins.AdminHasOneAuthority, err error) {
+	admin = (*admins.AdminHasOneAuthority)(nil)
+	db := g.DB("default").Table("admins").Safe()
+	authorityDb := g.DB("authorities").Table("admins").Safe()
+	err = db.Where(g.Map{"id": Id}).Struct(&admin)
+	err = authorityDb.Where(g.Map{"authority_id": admin.AuthorityId}).Struct(&admin.Authority)
+	return admin, err
+}
+
 // SetUserAuthority Set user permissions
 // SetUserAuthority 设置用户权限
 func SetUserAuthority(set *request.SetAdminAuthority) (err error) {

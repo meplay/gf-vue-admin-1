@@ -56,7 +56,10 @@ func AdminRegister(r *request.AdminRegister) (err error) {
 // Captcha Verification code generation
 // Captcha 验证码生成
 func Captcha() (id string, b64s string, err error) {
-	driver := base64Captcha.NewDriverDigit(g.Cfg().GetInt("captcha.ImgHeight"), g.Cfg().GetInt("captcha.ImgWidth"), g.Cfg().GetInt("captcha.KeyLong"), 0.7, 80) // 字符,公式,验证码配置, 生成默认数字的driver
+	imgHeight := g.Cfg("captcha").GetInt("captcha.ImgHeight")
+	imgWidth := g.Cfg("captcha").GetInt("captcha.ImgWidth")
+	keyLong := g.Cfg("captcha").GetInt("captcha.KeyLong")
+	driver := base64Captcha.NewDriverDigit(imgHeight, imgWidth, keyLong, 0.7, 80) // 字符,公式,验证码配置, 生成默认数字的driver
 	cp := base64Captcha.NewCaptcha(driver, Store)
 	id, b64s, err = cp.Generate()
 	return id, b64s, err

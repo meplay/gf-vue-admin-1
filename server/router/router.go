@@ -9,6 +9,7 @@ func InitializeRouters() {
 	InitFileRouter()             // 初始化文件上传下载功能路由
 	InitMenuRouter()             // 初始化menu路由
 	InitBaseRouter()             // 初始化基础功能路由 不做鉴权
+	InitEmailRouter()            // 初始化邮件相关路由
 	InitAdminsRouter()           // 初始化用户路由
 	InitCasbinRouter()           // 初始化权限相关路由
 	InitCustomerRouter()         // 初始化客户路由

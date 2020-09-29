@@ -71,7 +71,7 @@ func Casbin() *casbin.Enforcer {
 	if err != nil {
 		panic(err)
 	}
-	e, _ := casbin.NewEnforcer(g.Cfg().GetString("casbin.ModelPath"), a)
+	e, _ := casbin.NewEnforcer(g.Cfg("casbin").GetString("casbin.ModelPath"), a)
 	e.AddFunction("ParamsMatch", ParamsMatchFunc)
 	_ = e.LoadPolicy()
 	return e

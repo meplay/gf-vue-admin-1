@@ -21,7 +21,7 @@ func getObjectName(filename string) string {
 }
 
 func init() {
-	switch g.Cfg().GetString("system.OssType") {
+	switch g.Cfg("system").GetString("system.OssType") {
 	case "local":
 		Oss = &Local{}
 	case "qiniu":
