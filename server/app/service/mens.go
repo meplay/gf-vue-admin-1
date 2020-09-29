@@ -19,7 +19,7 @@ import (
 func getMenuTreeMap(authorityId string) (treeMap map[string][]*model.AuthorityMenu, err error) {
 	authorityMenus := ([]*model.AuthorityMenu)(nil)
 	treeMap = make(map[string][]*model.AuthorityMenu)
-	err = g.DB("default").Table("menus m").Safe().RightJoin("authority_menu a", "m.id=a.menu_id").Where(g.Map{"authority_id": authorityId}).Structs(&authorityMenus)
+	err = g.DB("default").Table("menus m").Safe().RightJoin("authority_menu a", "m.id=a.menu_id").Where(g.Map{"authority_id": authorityId}).Order(`sort`).Structs(&authorityMenus)
 	for _, v := range authorityMenus {
 		treeMap[v.ParentId] = append(treeMap[v.ParentId], v)
 	}
@@ -159,7 +159,7 @@ func CreateBaseMenu(create *request.CreateBaseMenu) (err error) {
 func DeleteBaseMenu(delete *request.GetById) (err error) {
 	db := g.DB(global.Db).Table("authority_menu").Safe()
 	parametersDb := g.DB(global.Db).Table("parameters").Safe()
-	if menus.RecordNotFound(g.Map{"parent_id": delete.Id}) {
+	if !menus.RecordNotFound(g.Map{"parent_id": delete.Id}) {
 		return errors.New("此菜单存在子菜单不可删除")
 	}
 	_, err = menus.Delete(g.Map{"id": delete.Id})
