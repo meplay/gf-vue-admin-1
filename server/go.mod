@@ -5,7 +5,6 @@ require (
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/casbin/casbin v1.9.1
 	github.com/casbin/casbin/v2 v2.11.0
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gogf/gf v1.13.7
 	github.com/gogf/gf-jwt v1.1.0
 	github.com/gogf/guuid v1.0.0

@@ -30,7 +30,7 @@ func send(to []string, subject string, body string) error {
 	nickname := g.Cfg("email").GetString("email.Nickname")
 	secret := g.Cfg("email").GetString("email.Secret")
 	host := g.Cfg("email").GetString("email.Host")
-	port := g.Cfg("email").GetString("email.Port")
+	port := g.Cfg("email").GetInt("email.Port")
 	isSSL := g.Cfg("email").GetBool("email.IsSSL")
 
 	auth := smtp.PlainAuth("", from, secret, host)

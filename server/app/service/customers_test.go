@@ -29,10 +29,10 @@ func TestGetCustomersList(t *testing.T) {
 	datalist := ([]*customers.CustomerHasOneAdmin)(nil)
 	db := g.DB("default").Table("customers").Safe()
 	adminDb := g.DB("default").Table("admins").Safe()
-	err = db.ScanList(&datalist, "Customer")
+	err = db.ScanList(&datalist, "Customers")
 	err = adminDb.
-		Where("id", gdb.ListItemValues(datalist, "Customer", "SysUserId")).
-		ScanList(&datalist, "Admin", "Customer", "id:Id")
+		Where("id", gdb.ListItemValues(datalist, "Customers", "SysUserId")).
+		ScanList(&datalist, "Admin", "Customers", "id:Id")
 	if err != nil {
 		panic(err)
 	}

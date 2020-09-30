@@ -1,5 +1,5 @@
 # jwt configuration
 [jwt]
-SigningKey = "SliverHorn"
 ExpiresAt = 1 # 3600000000000秒 == 1天 默认设置为1天
 RefreshAt = 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
+SigningKey = "SliverHorn"

@@ -1,16 +1,9 @@
 # HTTP Server
 [server]
 Address = ":8888"
-ServerRoot = ""
-ServerAgent = ""
-IndexFiles = []
 AccessLogEnabled = true
 ErrorLogEnabled = true
-PProfEnabled = false
 LogPath = "./logs/server"
-SessionIdName = ""
-SessionPath = ""
-SessionMaxAge = ""
 DumpRouterMap = true
 
 # Logger
@@ -29,6 +22,7 @@ User = "root"
 Pass = "gdkid,,.."
 Name = "gf-vue-admin"
 Type = "mysql"
+Role = ""
 Debug = true
 Prefix = ""
 DryRun = ""
@@ -63,6 +57,5 @@ Stdout = true
 
 # Redis 配置
 [redis]
-# host:port[,db,pass?maxIdle=x&maxActive=x&idleTimeout=x&maxConnLifetime=x]
 default = "127.0.0.1:6379,1,?idleTimeout=600"
 cache = "127.0.0.1:6379,2,?idleTimeout=600"
