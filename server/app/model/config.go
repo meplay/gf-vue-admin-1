@@ -2,8 +2,6 @@ package model
 
 import (
 	"time"
-
-	"github.com/gogf/gf/net/ghttp"
 )
 
 type ServerConfig struct {
@@ -67,7 +65,6 @@ type Server struct {
 }
 
 type System struct {
-	ghttp.ServerConfig
 	Db            string `json:"db"`
 	Env           string `json:"env"`
 	OssType       string `json:"oss_type"`

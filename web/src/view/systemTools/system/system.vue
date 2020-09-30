@@ -1,7 +1,7 @@
 <template>
   <div class="system">
     <el-form :model="config" label-width="100px" ref="form" class="system">
-
+      <h1>仅支持查看服务器的配置文件,不支持修改与重启服务器</h1>
       <!-- jwt签名 start -->
       <h2>jwt签名</h2>
       <el-form-item label="jwt签名">
@@ -211,9 +211,54 @@
       <!-- Captcha end -->
 
       <!-- Database start -->
+      <h2>Database</h2>
+      <el-form-item label="Host">
+        <el-input v-model="config.database.host"></el-input>
+      </el-form-item>
+      <el-form-item label="Port">
+        <el-input v-model="config.database.user"></el-input>
+      </el-form-item>
+      <el-form-item label="User">
+        <el-input v-model="config.database.pass"></el-input>
+      </el-form-item>
+      <el-form-item label="Type">
+        <el-input v-model="config.database.type"></el-input>
+      </el-form-item>
+      <el-form-item label="Role">
+        <el-input v-model="config.database.role"></el-input>
+      </el-form-item>
+      <el-form-item label="Debug">
+        <el-checkbox v-model="config.database.debug"></el-checkbox>
+      </el-form-item>
+      <el-form-item label="Prefix">
+        <el-input v-model="config.database.prefix"></el-input>
+      </el-form-item>
+      <el-form-item label="DryRun">
+        <el-checkbox v-model="config.database.dry_run"></el-checkbox>
+      </el-form-item>
+      <el-form-item label="Weight">
+        <el-input v-model.number="config.database.weight"></el-input>
+      </el-form-item>
+      <el-form-item label="Charset">
+        <el-input v-model="config.database.charset"></el-input>
+      </el-form-item>
+      <el-form-item label="LinkInfo">
+        <el-input v-model="config.database.link_info"></el-input>
+      </el-form-item>
+      <el-form-item label="MaxIdleConnCount">
+        <el-input v-model.number="config.database.max_idle_conn_count"></el-input>
+      </el-form-item>
+      <el-form-item label="MaxOpenConnCount">
+        <el-input v-model.number="config.database.max_open_conn_count"></el-input>
+      </el-form-item>
+      <el-form-item label="MaxConnLifetime">
+        <el-input v-model="config.database.max_conn_lifetime"></el-input>
+      </el-form-item>
+
       <!-- Database end -->
 
       <!-- DatabaseLogger start -->
+      <h2>DatabaseLogger</h2>
       <el-form-item label="Path">
         <el-input v-model="config.database_logger.path"></el-input>
       </el-form-item>
@@ -225,10 +270,10 @@
       </el-form-item>
       <!-- DatabaseLogger end -->
 
-      <el-form-item>
-        <el-button @click="update" type="primary">立即更新</el-button>
-        <el-button @click="reload" type="primary">重启服务（开发中）</el-button>
-      </el-form-item>
+<!--      <el-form-item>-->
+<!--        <el-button @click="update" type="primary">立即更新</el-button>-->
+<!--        <el-button @click="reload" type="primary">重启服务（开发中）</el-button>-->
+<!--      </el-form-item>-->
     </el-form>
   </div>
 </template>
