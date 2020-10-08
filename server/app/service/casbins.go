@@ -17,6 +17,7 @@ import (
 // UpdateCasbin 更新casbin权限
 func UpdateCasbin(authorityId string, casbinInfos []request.CasbinInfo) error {
 	ClearCasbin(0, authorityId)
+	var rules [][]string
 	for _, v := range casbinInfos {
 		cm := model.CasbinModel{
 			Ptype:       "p",
@@ -24,10 +25,12 @@ func UpdateCasbin(authorityId string, casbinInfos []request.CasbinInfo) error {
 			Path:        v.Path,
 			Method:      v.Method,
 		}
-		addFlag := AddCasbin(cm)
-		if addFlag == false {
-			return errors.New("存在相同api,添加失败,请联系管理员")
-		}
+		rules = append(rules, []string{cm.AuthorityId, cm.Path, cm.Method})
+	}
+	e := Casbin()
+	success, _ := e.AddPolicies(rules)
+	if success == false {
+		return errors.New("存在相同api,添加失败,请联系管理员")
 	}
 	return nil
 }

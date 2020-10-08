@@ -269,14 +269,53 @@ func (a *Adapter) AddPolicy(sec string, ptype string, rule []string) error {
 // RemovePolicy removes a policy rule from the storage.
 // RemovePolicy 从存储中删除策略规则。
 func (a *Adapter) RemovePolicy(sec string, ptype string, rule []string) error {
+	tx, err := a.db.Begin()
+	if err != nil {
+		fmt.Println("开启事务操作失败")
+		panic(err)
+	}
 	line := savePolicyLine(ptype, rule)
-	err := rawDelete(a, line)
-	return err
+	return a.rawDelete(tx, line)
+}
+
+func (a *Adapter) AddPolicies(sec string, ptype string, rules [][]string) error {
+	tx, err := a.db.Begin()
+	if err != nil {
+		fmt.Println("开启事务操作失败")
+		panic(err)
+	}
+	for _, rule := range rules {
+		line := savePolicyLine(ptype, rule)
+		if _, err := tx.Table(a.tableName).Data(&line).Insert(); err != nil {
+			return err
+		}
+	}
+	return tx.Commit()
+}
+
+func (a *Adapter) RemovePolicies(sec string, ptype string, rules [][]string) error {
+	tx, err := a.db.Begin()
+	if err != nil {
+		fmt.Println("开启事务操作失败")
+		panic(err)
+	}
+	for _, rule := range rules {
+		line := savePolicyLine(ptype, rule)
+		if err := a.rawDelete(tx, line); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // RemoveFilteredPolicy removes policy rules that match the filter from the storage.
 // RemoveFilteredPolicy 从存储中删除与筛选器匹配的策略规则。
 func (a *Adapter) RemoveFilteredPolicy(sec string, ptype string, fieldIndex int, fieldValues ...string) error {
+	tx, err := a.db.Begin()
+	if err != nil {
+		fmt.Println("开启事务操作失败")
+		panic(err)
+	}
 	line := CasbinRule{}
 
 	line.PType = ptype
@@ -298,12 +337,11 @@ func (a *Adapter) RemoveFilteredPolicy(sec string, ptype string, fieldIndex int,
 	if fieldIndex <= 5 && 5 < fieldIndex+len(fieldValues) {
 		line.V5 = fieldValues[5-fieldIndex]
 	}
-	err := rawDelete(a, line)
-	return err
+	return a.rawDelete(tx, line)
 }
 
-func rawDelete(a *Adapter, line CasbinRule) error {
-	db := a.db.Table(a.tableName).Safe()
+func (a *Adapter) rawDelete(tx *gdb.TX, line CasbinRule) error {
+	db := tx.Table(a.tableName).Safe()
 	condition := gdb.Map{"ptype": line.PType}
 	if line.V0 != "" {
 		condition["v0"] = line.V0
@@ -324,6 +362,8 @@ func rawDelete(a *Adapter, line CasbinRule) error {
 		condition["v5"] = line.V5
 	}
 
-	_, err := db.Delete(condition)
-	return err
+	if _, err := db.Delete(condition); err != nil {
+		return tx.Rollback()
+	}
+	return tx.Commit()
 }
