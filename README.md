@@ -122,22 +122,9 @@ go build
 
 ### 4.3 目录结构
 
-```
-    ├─server  	     （后端文件夹）
-    └─web            （前端文件）
-        ├─public        （发布模板）
-        └─src           （源码包）
-            ├─api       （向后台发送ajax的封装层）
-            ├─assets	（静态文件）
-            ├─components（组件）
-            ├─router	（前端路由）
-            ├─store     （vuex 状态管理仓）
-            ├─style     （通用样式文件）
-            ├─utils     （前端工具库）
-            └─view      （前端页面）
-```
+[前端请看此目录](https://sliverhorn.github.io/gf-vue-admin-doc/Manual/directory/#server)
 
-[后端请看此目录](server/db/后端目录结构.md)
+[后端请看此目录](https://sliverhorn.github.io/gf-vue-admin-doc/Manual/directory/#server)
 
 ## 5. 主要功能
 
