@@ -33,7 +33,7 @@ func GetRedisJWT(userUUID string) (string, error) {
 // SetRedisJWT set jwt into the Redis
 // SetRedisJWT 保存jwt到Redis
 func SetRedisJWT(userUUID string, jwt string) (err error) {
-	_, err = g.Redis().Do("SETEX", userUUID, g.Cfg().GetUint("jwt.ExpiresAt")*3600000000000, jwt)
+	_, err = g.Redis().Do("SETEX", userUUID, g.Cfg("jwt").GetUint("jwt.ExpiresAt")*3600000000000, jwt)
 	return err
 }
 

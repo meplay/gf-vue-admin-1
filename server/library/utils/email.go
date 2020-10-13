@@ -18,7 +18,7 @@ func EmailTest(subject string, body string) error {
 
 // ErrorToEmail Error 发送邮件
 func ErrorToEmail(subject string, body string) error {
-	to := strings.Split(g.Cfg().GetString("email.To"), ",")
+	to := strings.Split(g.Cfg("email").GetString("email.To"), ",")
 	if to[len(to)-1] == "" { // 判断切片的最后一个元素是否为空,为空则移除
 		to = to[:len(to)-1]
 	}

@@ -99,7 +99,7 @@ func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 		global.FailWithMessage(r, "登录失败")
 		r.Exit()
 	}
-	if !g.Cfg().GetBool("system.UseMultipoint") {
+	if !g.Cfg("system").GetBool("system.UseMultipoint") {
 		global.OkDetailed(r, response.AdminLogin{User: admin, Token: token, ExpiresAt: expire.Unix() * 1000}, "登录成功!")
 		r.Exit()
 	}
@@ -145,7 +145,7 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 		global.FailWithMessage(r, "刷新Token失败")
 		r.Exit()
 	}
-	if !g.Cfg().GetBool("system.UseMultipoint") {
+	if !g.Cfg("system").GetBool("system.UseMultipoint") {
 		global.OkDetailed(r, response.AdminLogin{User: admin, Token: token, ExpiresAt: expire.Unix() * 1000}, "登录成功!")
 		r.Exit()
 	}
