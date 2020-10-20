@@ -20,35 +20,6 @@ cat>"${filename}"<<EOF
     SessionMaxAge    = ""
     DumpRouterMap    = true
 
-# system configuration
-[system]
-    Db = "default"
-    UseMultipoint = true
-    Env = "public" # Change to "develop" to skip authentication for development mode
-
-# 请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址
-[qiniu]
-    AccessKey   = ""
-    SecretKey   = ""
-    Bucket      = ""
-    ImgPath     = ""
-
-# captcha configuration
-[captcha]
-    KeyLong     = 6
-    ImgWidth    = 240
-    ImgHeight   = 80
-
-# casbin configuration
-[casbin]
-    ModelPath =  "./public/rbac_model.conf"
-
-# jwt configuration
-[jwt]
-    SigningKey  = "SliverHorn"
-    ExpiresAt = 1 # 3600000000000秒 == 1天 默认设置为1天
-    RefreshAt = 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
-
 # Logger
 [logger]
     Path        = "./logs/log"

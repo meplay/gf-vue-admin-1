@@ -14,7 +14,7 @@ services:
     container_name: gf-vue-admin-web
     restart: always
     ports:
-      - '8000:8000'
+      - '8080:8080'
     depends_on:
       - server
     command: [ 'nginx-debug', '-g', 'daemon off;' ]

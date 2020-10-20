@@ -21,6 +21,7 @@ WORKDIR gf-vue-admin/
 # copy server
 COPY --from=server /go/src/gf-vue-admin/server ./
 COPY --from=server /go/src/gf-vue-admin/i18n ./i18n
+COPY --from=server /go/src/gf-vue-admin/local ./local
 COPY --from=server /go/src/gf-vue-admin/public ./public
 COPY --from=server /go/src/gf-vue-admin/config ./config
 COPY --from=server /go/src/gf-vue-admin/template ./template
