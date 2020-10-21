@@ -320,9 +320,9 @@ export default {
         const tbHump = toHump(this.dbform.tableName);
         this.form.structName = toUpperCase(tbHump);
         this.form.tableName = this.dbform.tableName;
-        this.form.packageName = tbHump;
-        this.form.abbreviation = tbHump;
-        this.form.description = tbHump + "表";
+        this.form.packageName = this.dbform.tableName;
+        this.form.abbreviation = this.dbform.tableName;
+        this.form.description = this.dbform.tableName + "表";
         this.form.autoCreateApiToSql = true;
         this.form.fields = [];
         res.data.columes &&

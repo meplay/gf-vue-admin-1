@@ -51,8 +51,8 @@ func CreateTemp(autoCode model.AutoCodeStruct) (err error) {
 			dataList[index].autoCodePath = autoPath + "readme.txt"
 			continue
 		}
-		//为了让table文件夹名变为autoCode.PackageName
-		if trimBase == "fe/table.vue.tpl" {
+
+		if trimBase == "fe/table.vue.tpl" || trimBase == "fe/api.vue.tpl" { // 为了让table/api文件夹名变为autoCode.PackageName
 			if lastSeparator := strings.LastIndex(trimBase, "/"); lastSeparator != -1 {
 				origFileName := strings.TrimSuffix(trimBase[lastSeparator+1:], ".tpl")
 				firstDot := strings.Index(origFileName, ".")
@@ -62,22 +62,8 @@ func CreateTemp(autoCode model.AutoCodeStruct) (err error) {
 					continue
 				}
 			}
-
 		}
-		//// 让api文件也进入到fe/autoCode.PackageName/下
-		//// TODO 此处可以更优雅点，我只先改成这样了
-		if trimBase == "fe/api.vue.tpl" {
-			if lastSeparator := strings.LastIndex(trimBase, "/"); lastSeparator != -1 {
-				origFileName := strings.TrimSuffix(trimBase[lastSeparator+1:], ".tpl")
-				firstDot := strings.Index(origFileName, ".")
-				if firstDot != -1 {
-					dataList[index].autoCodePath = autoPath + trimBase[:lastSeparator] + "/" + autoCode.TableName + "/" + autoCode.PackageName + "/" + autoCode.PackageName + origFileName[firstDot:]
-					needMkdir = append(needMkdir, autoPath+trimBase[:lastSeparator]+"/"+autoCode.TableName+"/"+autoCode.PackageName)
-					continue
-				}
-			}
 
-		}
 		if trimBase == "te/model.go.tpl" || trimBase == "te/model_entity.go.tpl" || trimBase == "te/model_model.go.tpl" {
 			if lastSeparator := strings.LastIndex(trimBase, "/"); lastSeparator != -1 {
 				origFileName := strings.TrimSuffix(trimBase[lastSeparator+1:], ".tpl")
