@@ -193,3 +193,7 @@ If you find this project useful, you can buy author a glass of juice 🍹 [here]
 ## 10. Commercial considerations
 
 If you use this project for commercial purposes, please comply with the Apache2.0 agreement and retain the author's technical support statement.
+
+## 11. Thanks
+
+<a href="https://www.jetbrains.com/?from=gf-vue-admin"><img src="https://www.jetbrains.com/company/brand/img/logo5.svg" width="100" alt="JetBrains"/></a>

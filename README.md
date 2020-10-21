@@ -199,3 +199,7 @@ go build
 ## 10. 商用注意事项
 
 如果您将此项目用于商业用途，请遵守Apache2.0协议并保留作者技术支持声明。
+
+## 11. 感谢
+
+<a href="https://www.jetbrains.com/?from=gf-vue-admin"><img src="https://www.jetbrains.com/company/brand/img/logo5.svg" width="100" alt="JetBrains"/></a>
