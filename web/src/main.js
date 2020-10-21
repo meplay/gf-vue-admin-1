@@ -66,7 +66,7 @@ Vue.prototype.$echarts = echarts;
 
 console.log(`
        欢迎使用 Gf-Vue-Admin
-       当前版本:V1.1.0
+       当前版本:V1.1.2
        默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
        默认前端文件运行地址:http://127.0.0.1:8080
 `)
