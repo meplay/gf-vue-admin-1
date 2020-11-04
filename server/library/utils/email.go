@@ -31,7 +31,7 @@ func send(to []string, subject string, body string) error {
 	secret := g.Cfg("email").GetString("email.Secret")
 	host := g.Cfg("email").GetString("email.Host")
 	port := g.Cfg("email").GetInt("email.Port")
-	isSSL := g.Cfg("email").GetBool("email.IsSSL")
+	isSSL := g.Cfg("email").GetBool("email.IsSsl")
 
 	auth := smtp.PlainAuth("", from, secret, host)
 	e := email.NewEmail()
