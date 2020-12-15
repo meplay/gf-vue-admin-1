@@ -3,6 +3,7 @@ package boot
 import (
 	"fmt"
 	"server/app/middleware"
+	"server/library/utils"
 	"server/router"
 	"time"
 
@@ -17,6 +18,7 @@ func InitializeRunServer() {
 	s.SetMaxHeaderBytes(1 << 20)
 	s.SetIndexFolder(true)
 	if g.Cfg("system").GetString("system.OssType") == "local" {
+		_ = utils.CreateDir(g.Cfg("oss").GetString("local.LocalPath"))
 		s.AddStaticPath("/"+g.Cfg("oss").GetString("local.LocalPath"), g.Cfg("oss").GetString("local.LocalPath"))
 	}
 	s.AddStaticPath("/form-generator", "public/page")
