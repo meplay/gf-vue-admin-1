@@ -1,3 +1,7 @@
+# 公告
+各位gf-vue-admin的使用者， 本项目今年会完成升级架构，也会跟着goframe的版本节奏，由面向对象的写法切换到面向接口的写法
+各位敬请期待！
+
 <div align=center>
 <img src="./docs/gf-vue-admin-logo.png" width=300" height="300" />
 </div>
