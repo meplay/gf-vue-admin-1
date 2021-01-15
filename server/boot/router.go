@@ -17,6 +17,6 @@ func (r *routers) Init(server *ghttp.Server) {
 	//var private = g.Server().Group("").Middleware(middleware.JwtAuth, middleware.CasbinMiddleware)
 	var private = server.Group("")
 	{ // 需要Jwt鉴权, casbin鉴权
-		router.NewAdminRouter(private)
+		router.NewAdminRouter(private).Init()
 	}
 }

@@ -28,5 +28,6 @@ func InitializeRunServer() {
 	当前版本:V1.1.2
 	默认前端文件运行地址:http://127.0.0.1:8080
 	`)
+	server.SetPort(8888)
 	server.Run()
 }

@@ -21,12 +21,10 @@ const (
 type empty struct{}
 type Handler struct{}
 
-type GoFrameHandlerFunc func(r *ghttp.Request)
-
 type handler func(r *ghttp.Request) *Response
 
-func (h *Handler) Handler() func(handler handler) GoFrameHandlerFunc {
-	return func(handler handler) GoFrameHandlerFunc {
+func (h *Handler) Handler() func(handler handler) func(r *ghttp.Request) {
+	return func(handler handler) func(r *ghttp.Request) {
 		return func(r *ghttp.Request) {
 			var response = handler(r)
 			if response.Data == nil {

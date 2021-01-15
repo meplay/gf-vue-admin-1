@@ -16,7 +16,7 @@ func NewAdminRouter(router *ghttp.RouterGroup) *AdminRouter {
 }
 
 func (a *AdminRouter) Init() {
-	var admin = a.router.Group("user")
+	var admin = a.router.Group("/user")
 	{
 		admin.PUT("setUserInfo", a.response.Handler()(api.Admin.Update))             // 设置用户信息
 		admin.POST("getUserList", a.response.Handler()(api.Admin.GetAdminList))      // 分页获取用户列表
