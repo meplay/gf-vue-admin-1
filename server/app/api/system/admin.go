@@ -23,8 +23,7 @@ type admin struct{}
 func (a *admin) ChangePassword(r *ghttp.Request) *response.Response {
 	var info request.ChangePassword
 	if err := r.Parse(&info); err != nil {
-		//global.FailWithMessage(r, err.Error())
-		r.Exit()
+		return &response.Response{Error: err, MessageCode: response.ErrorChangePassword}
 	}
 	info.Uuid = internal.Info.GetUserUuid(r)
 	if err := service.Admin.ChangePassword(&info); err != nil {
@@ -107,8 +106,7 @@ func (a *admin) Delete(r *ghttp.Request) *response.Response {
 func (a *admin) Update(r *ghttp.Request) *response.Response {
 	var info request.UpdateAdmin
 	if err := r.Parse(&info); err != nil {
-		//global.FailWithMessage(r, err.Error())
-		r.Exit()
+		return &response.Response{Error: err, MessageCode: response.ErrorSetAdminInfo}
 	}
 	info.Uuid = internal.Info.GetUserUuid(r)
 	if data, err := service.Admin.SetAdminInfo(&info); err != nil {
