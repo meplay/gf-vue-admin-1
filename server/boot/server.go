@@ -3,6 +3,7 @@ package boot
 import (
 	"fmt"
 	"gf-vue-admin/library/utils"
+	"gf-vue-admin/router"
 	"time"
 
 	"github.com/gogf/gf/frame/g"
@@ -19,8 +20,7 @@ func InitializeRunServer() {
 		server.AddStaticPath("/"+g.Cfg("oss").GetString("local.LocalPath"), g.Cfg("oss").GetString("local.LocalPath"))
 	}
 	server.AddStaticPath("/form-generator", "public/page")
-	//router.InitializeRouters()
-	Routers.Init(server)
+	router.Routers.Init(server)
 	fmt.Printf(`
 	欢迎使用 Gf-Vue-Admin
 	当前版本:V1.1.2

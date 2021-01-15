@@ -1,7 +1,6 @@
-package boot
+package router
 
 import (
-	"gf-vue-admin/router"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -12,11 +11,11 @@ type routers struct{}
 func (r *routers) Init(server *ghttp.Server) {
 	var public = server.Group("")
 	{
-		router.NewBaseGroup(public).Init()
+		NewBaseGroup(public).Init()
 	}
 	//var private = g.Server().Group("").Middleware(middleware.JwtAuth, middleware.CasbinMiddleware)
 	var private = server.Group("")
 	{ // 需要Jwt鉴权, casbin鉴权
-		router.NewAdminGroup(private).Init()
+		NewAdminGroup(private).Init()
 	}
 }
