@@ -2,7 +2,6 @@ package boot
 
 import (
 	"fmt"
-	"gf-vue-admin/app/middleware"
 	"gf-vue-admin/library/utils"
 	"time"
 
@@ -11,7 +10,6 @@ import (
 
 func InitializeRunServer() {
 	var server = g.Server()
-	server.Use(middleware.Error)
 	server.SetReadTimeout(10 * time.Second)
 	server.SetWriteTimeout(10 * time.Second)
 	server.SetMaxHeaderBytes(1 << 20)

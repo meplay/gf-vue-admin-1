@@ -5,7 +5,6 @@ import (
 	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	"gf-vue-admin/app/service/system"
-	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -24,7 +23,7 @@ type admin struct{}
 func (a *admin) ChangePassword(r *ghttp.Request) *response.Response {
 	var info request.ChangePassword
 	if err := r.Parse(&info); err != nil {
-		global.FailWithMessage(r, err.Error())
+		//global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
 	info.Uuid = internal.Info.GetUserUuid(r)
@@ -42,7 +41,7 @@ func (a *admin) ChangePassword(r *ghttp.Request) *response.Response {
 // @Param data body request.PageInfo true "页码, 每页大小"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /user/getUserList [post]
-func (a *admin) GetAdminList(r *ghttp.Request) *response.Response {
+func (a *admin) GetList(r *ghttp.Request) *response.Response {
 	var info request.PageInfo
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
@@ -108,7 +107,7 @@ func (a *admin) Delete(r *ghttp.Request) *response.Response {
 func (a *admin) Update(r *ghttp.Request) *response.Response {
 	var info request.UpdateAdmin
 	if err := r.Parse(&info); err != nil {
-		global.FailWithMessage(r, err.Error())
+		//global.FailWithMessage(r, err.Error())
 		r.Exit()
 	}
 	info.Uuid = internal.Info.GetUserUuid(r)

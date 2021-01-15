@@ -10,13 +10,13 @@ var Routers = new(routers)
 type routers struct{}
 
 func (r *routers) Init(server *ghttp.Server) {
-	//var public = server.Group("")
-	//{
-	//
-	//}
+	var public = server.Group("")
+	{
+		router.NewBaseGroup(public).Init()
+	}
 	//var private = g.Server().Group("").Middleware(middleware.JwtAuth, middleware.CasbinMiddleware)
 	var private = server.Group("")
 	{ // 需要Jwt鉴权, casbin鉴权
-		router.NewAdminRouter(private).Init()
+		router.NewAdminGroup(private).Init()
 	}
 }
