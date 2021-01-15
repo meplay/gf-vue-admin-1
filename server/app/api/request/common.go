@@ -25,3 +25,13 @@ type DeleteById struct {
 type DeleteByIds struct {
 	Ids []int `p:"ids" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
 }
+
+type GetByUuid struct {
+	Uuid string `p:"uuid"`
+}
+
+func (p *PageInfo) Paginate() (limit, offset int) {
+	limit = p.PageSize
+	offset = p.PageSize * (p.Page - 1)
+	return limit, offset
+}
