@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"server/library/global"
+	"gf-vue-admin/library/global"
 
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"

@@ -1,13 +1,13 @@
 package api
 
 import (
+	"gf-vue-admin/app/api/internal"
+	"gf-vue-admin/app/api/request"
+	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/app/service/system"
+	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
-	"server/app/api/internal"
-	"server/app/api/request"
-	"server/app/api/response"
-	"server/app/service/system"
-	"server/library/global"
 )
 
 var Admin = new(admin)

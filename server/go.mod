@@ -1,4 +1,4 @@
-module server
+module gf-vue-admin
 
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.4+incompatible

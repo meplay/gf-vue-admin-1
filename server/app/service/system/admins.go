@@ -1,11 +1,11 @@
 package service
 
 import (
+	"gf-vue-admin/app/api/request"
+	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/app/model/system"
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
-	"server/app/api/request"
-	"server/app/api/response"
-	"server/app/model/system"
 )
 
 var Admin = &admin{db: g.DB().Table("admins").Safe()}
@@ -16,7 +16,7 @@ type admin struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 修改管理员密码
-func (a *admin) ChangePassword(info *request.ChangePassword)  error {
+func (a *admin) ChangePassword(info *request.ChangePassword) error {
 	var entity = (*model.Admin)(nil)
 	if err := a.db.Where("username", info.Username).Struct(&entity); err != nil {
 		return response.ErrorUserNoExist

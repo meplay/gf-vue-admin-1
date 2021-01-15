@@ -1,8 +1,8 @@
 package boot
 
 import (
+	"gf-vue-admin/router"
 	"github.com/gogf/gf/net/ghttp"
-	"server/router"
 )
 
 var Routers = new(routers)

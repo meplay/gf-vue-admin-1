@@ -1,6 +1,6 @@
 package response
 
-import "server/app/api/request"
+import "gf-vue-admin/app/api/request"
 
 type PolicyPath struct {
 	Paths []request.CasbinInfo `json:"paths"`

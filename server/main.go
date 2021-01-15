@@ -1,7 +1,7 @@
 package main
 
 import (
-	"server/boot"
+	"gf-vue-admin/boot"
 )
 
 func main() {

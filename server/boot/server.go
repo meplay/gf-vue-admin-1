@@ -2,8 +2,8 @@ package boot
 
 import (
 	"fmt"
-	"server/app/middleware"
-	"server/library/utils"
+	"gf-vue-admin/app/middleware"
+	"gf-vue-admin/library/utils"
 	"time"
 
 	"github.com/gogf/gf/frame/g"

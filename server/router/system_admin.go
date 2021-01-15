@@ -1,9 +1,9 @@
 package router
 
 import (
+	"gf-vue-admin/app/api/response"
+	api "gf-vue-admin/app/api/system"
 	"github.com/gogf/gf/net/ghttp"
-	"server/app/api/response"
-	api "server/app/api/system"
 )
 
 type AdminRouter struct {
