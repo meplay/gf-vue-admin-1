@@ -64,15 +64,15 @@ func (a *admin) FindAdminById(info *request.GetById) (admin *model.Admin, err er
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 设置用户权限
-func (a *admin) SetUserAuthority(set *request.SetAuthority) error {
-	var _, err = a.db.Update(g.Map{"authority_id": set.AuthorityId}, g.Map{"uuid": set.Uuid})
+func (a *admin) SetUserAuthority(info *request.SetAuthority) error {
+	var _, err = a.db.Update(g.Map{"authority_id": info.AuthorityId}, g.Map{"uuid": info.Uuid})
 	return err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 删除管理员
-func (a *admin) Delete(delete *request.GetById) (err error) {
-	_, err = a.db.Delete(g.Map{"id": delete.Id})
+func (a *admin) Delete(info *request.GetById) (err error) {
+	_, err = a.db.Delete(g.Map{"id": info.Id})
 	return err
 }
 

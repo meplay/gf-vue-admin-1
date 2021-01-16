@@ -13,6 +13,11 @@ func (r *routers) Init(server *ghttp.Server) {
 	{
 		NewBaseGroup(public).Init()
 	}
+	//gfToken := &gtoken.GfToken{
+	//	LoginPath:       "/login",
+	//	LoginBeforeFunc: loginFunc,
+	//	LogoutPath:      "/user/logout",
+	//}
 	//var private = g.Server().Group("").Middleware(middleware.JwtAuth, middleware.CasbinMiddleware)
 	var private = server.Group("")
 	{ // 需要Jwt鉴权, casbin鉴权
