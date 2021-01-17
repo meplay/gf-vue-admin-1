@@ -17,9 +17,9 @@ func (b *base) Login() {
 }
 
 func (b *base) Captcha() (result *response.Captcha, err error) {
-	result = (*response.Captcha)(nil)
+	var data  response.Captcha
 	var driver = base64Captcha.NewDriverDigit(global.Config.Captcha.ImageHeight, global.Config.Captcha.ImageWidth, global.Config.Captcha.KeyLong, 0.7, 80) // 字符,公式,验证码配置, 生成默认数字的driver
-	cp := base64Captcha.NewCaptcha(driver, Store)
-	result.Id, result.Path, err = cp.Generate()
-	return result, err
+	var captcha = base64Captcha.NewCaptcha(driver, Store)
+	data.Id, data.Path, err = captcha.Generate()
+	return &data, err
 }

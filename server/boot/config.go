@@ -81,8 +81,8 @@ func InitConfig() {
 
 	// Captcha
 	c.Captcha.KeyLong = g.Cfg("captcha").GetInt("captcha.KeyLong")
-	c.Captcha.ImageWidth = g.Cfg("captcha").GetInt("captcha.ImgWidth")
-	c.Captcha.ImageHeight = g.Cfg("captcha").GetInt("captcha.ImgHeight")
+	c.Captcha.ImageWidth = g.Cfg("captcha").GetInt("captcha.ImageWidth")
+	c.Captcha.ImageHeight = g.Cfg("captcha").GetInt("captcha.ImageHeight")
 
 	// Database
 	c.Database.Host = g.Cfg().GetString("database.default.Host")
