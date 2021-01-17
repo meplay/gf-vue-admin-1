@@ -10,7 +10,7 @@ var Base = new(base)
 
 type base struct{}
 
-// @Tags Base
+// @Tags SystemBase
 // @Summary 生成验证码
 // @Security ApiKeyAuth
 // @accept application/json

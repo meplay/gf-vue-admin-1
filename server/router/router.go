@@ -17,5 +17,6 @@ func (r *routers) Init(server *ghttp.Server) {
 	var private = server.Group("")
 	{ // 需要Jwt鉴权, casbin鉴权
 		NewAdminGroup(private).Init()
+		NewJwtBlacklistGroup(private).Init()
 	}
 }

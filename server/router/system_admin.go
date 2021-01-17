@@ -11,7 +11,7 @@ type Admin struct {
 	response *response.Handler
 }
 
-func NewAdminGroup(router *ghttp.RouterGroup) *Admin {
+func NewAdminGroup(router *ghttp.RouterGroup) Router {
 	return &Admin{router: router, response: &response.Handler{}}
 }
 

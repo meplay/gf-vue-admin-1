@@ -11,7 +11,7 @@ type Base struct {
 	response *response.Handler
 }
 
-func NewBaseGroup(router *ghttp.RouterGroup) *Base {
+func NewBaseGroup(router *ghttp.RouterGroup) Router {
 	return &Base{router: router, response: &response.Handler{}}
 }
 
