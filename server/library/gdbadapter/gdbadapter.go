@@ -3,7 +3,6 @@ package gdbadapter
 import (
 	"fmt"
 	"runtime"
-	"server/library/global"
 
 	"github.com/gogf/gf/database/gdb"
 
@@ -69,8 +68,8 @@ func NewAdapter(driverName string, dataSourceName string) (*Adapter, error) {
 func NewAdapterByConfig() (a *Adapter, err error) {
 	a = &Adapter{}
 	a.tableName = "casbin_rule"
-	a.db, err = gdb.New(global.Db)
-	if err := a.createTable(); err != nil {
+	a.db, err = gdb.New("default")
+	if err = a.createTable(); err != nil {
 		return a, err
 	}
 	// Call the destructor when the object is released.

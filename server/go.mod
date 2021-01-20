@@ -3,12 +3,8 @@ module gf-vue-admin
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.4+incompatible
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
-	github.com/casbin/casbin v1.9.1 // indirect
 	github.com/casbin/casbin/v2 v2.11.0
-	github.com/goflyfox/gtoken v1.4.1 // indirect
 	github.com/gogf/gf v1.15.1
-	github.com/gogf/gf-jwt v1.1.0 // indirect
-	github.com/gogf/guuid v1.0.0 // indirect
 	github.com/gookit/color v1.3.6
 	github.com/jordan-wright/email v0.0.0-20200917010138-e1c00e156980
 	github.com/minio/minio-go/v7 v7.0.5
