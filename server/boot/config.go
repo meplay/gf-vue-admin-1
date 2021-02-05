@@ -6,9 +6,13 @@ import (
 	"github.com/gogf/gf/frame/g"
 )
 
-func InitConfig() {
-	var c config.Config
+var Config = new(_config)
 
+type _config struct {
+	config.Config
+}
+
+func (c *_config) Initialize() {
 	// Jwt
 	c.Jwt.ExpiresAt = g.Cfg("jwt").GetInt("jwt.ExpiresAt")
 	c.Jwt.RefreshAt = g.Cfg("jwt").GetInt("jwt.RefreshAt")
@@ -106,5 +110,5 @@ func InitConfig() {
 	c.DatabaseLogger.Path = g.Cfg().GetString("database.logger.Path")
 	c.DatabaseLogger.Level = g.Cfg().GetString("database.logger.Level")
 	c.DatabaseLogger.Stdout = g.Cfg().GetBool("database.logger.Stdout")
-	global.Config = &c
+	global.Config = &c.Config
 }

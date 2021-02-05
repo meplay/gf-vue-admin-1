@@ -9,7 +9,11 @@ import (
 	"github.com/gogf/gf/frame/g"
 )
 
-func InitializeRunServer() {
+var Server = new(_server)
+
+type _server struct{}
+
+func (s *_server) Initialize() {
 	var server = g.Server()
 	server.SetReadTimeout(10 * time.Second)
 	server.SetWriteTimeout(10 * time.Second)
@@ -20,7 +24,7 @@ func InitializeRunServer() {
 		server.AddStaticPath("/"+g.Cfg("oss").GetString("local.LocalPath"), g.Cfg("oss").GetString("local.LocalPath"))
 	}
 	server.AddStaticPath("/form-generator", "public/page")
-	router.Routers.Init(server)
+	router.Routers.Init()
 	fmt.Printf(`
 	欢迎使用 Gf-Vue-Admin
 	当前版本:V1.1.2
