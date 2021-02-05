@@ -3,6 +3,7 @@ package router
 import (
 	"gf-vue-admin/app/api/response"
 	api "gf-vue-admin/app/api/system"
+	"gf-vue-admin/interfaces"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -11,7 +12,7 @@ type Base struct {
 	response *response.Handler
 }
 
-func NewBaseGroup(router *ghttp.RouterGroup) Router {
+func NewBaseGroup(router *ghttp.RouterGroup) interfaces.Router {
 	return &Base{router: router, response: &response.Handler{}}
 }
 

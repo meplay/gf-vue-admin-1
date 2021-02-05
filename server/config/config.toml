@@ -17,29 +17,12 @@ Stdout = true
 # 默认启动Mysql配置
 [database.default]
 Host = "127.0.0.1"
-Port = "3306"
+Port = "13307"
 User = "root"
 Pass = "gdkid,,.."
-Name = "sliver"
+Name = "gf-vue-admin"
 Type = "mysql"
 Role = ""
-Debug = true
-Prefix = ""
-DryRun = ""
-Charset = "utf8"
-Weight = ""
-MaxIdle = ""
-MaxOpen = ""
-MaxLifetime = ""
-
-# 测试环境Mysql配置
-[database.test]
-Host = "127.0.0.1"
-Port = "3306"
-User = "root"
-Pass = "gdkid,,.."
-Name = "gf-vue-admin-test"
-Type = "mysql"
 Debug = true
 Prefix = ""
 DryRun = ""

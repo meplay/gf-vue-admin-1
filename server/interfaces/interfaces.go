@@ -1,4 +1,4 @@
-package router
+package interfaces
 
 type Router interface {
 	Init()
