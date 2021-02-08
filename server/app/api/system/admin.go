@@ -49,12 +49,12 @@ func (a *admin) GetList(r *ghttp.Request) *response.Response {
 	if err != nil {
 		return &response.Response{MessageCode: response.ErrorGetList, Error: err}
 	}
-	return &response.Response{MessageCode: response.SuccessGetList, Error: err, Data: response.PageResult{
+	return &response.Response{Data: response.PageResult{
 		List:     list,
 		Total:    total,
 		Page:     info.Page,
 		PageSize: info.PageSize,
-	}}
+	}, MessageCode: response.SuccessGetList, }
 }
 
 // @Tags SystemAdmin
@@ -71,7 +71,7 @@ func (a *admin) SetAuthority(r *ghttp.Request) *response.Response {
 		return &response.Response{Error: err, MessageCode: response.ErrorSetAuthority}
 	}
 	if err := service.Admin.SetUserAuthority(&info); err != nil {
-		return &response.Response{MessageCode: response.ErrorSetAuthority, Error: err}
+		return &response.Response{Error: err, MessageCode: response.ErrorSetAuthority}
 	}
 	return &response.Response{MessageCode: response.SuccessSetAuthority}
 }
@@ -110,8 +110,8 @@ func (a *admin) Update(r *ghttp.Request) *response.Response {
 	}
 	info.Uuid = internal.Info.GetUserUuid(r)
 	if data, err := service.Admin.SetAdminInfo(&info); err != nil {
-		return &response.Response{MessageCode: response.ErrorSetAdminInfo, Error: err}
+		return &response.Response{Error: err, MessageCode: response.ErrorSetAdminInfo}
 	} else {
-		return &response.Response{MessageCode: response.SuccessSetAdminInfo, Data: g.Map{"userInfo": data}}
+		return &response.Response{Data: g.Map{"userInfo": data}, MessageCode: response.SuccessSetAdminInfo}
 	}
 }
