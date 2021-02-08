@@ -1,0 +1,34 @@
+# jwt configuration
+jwt:
+  expires-at: 1 # 3600000000000秒 == 1天 默认设置为1天
+  refresh-at: 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
+  signing-key: "SliverHorn"
+
+# email configuration
+email:
+  to: 'xxx@qq.com'
+  port: 465
+  from: 'xxx@163.com'
+  host: 'smtp.163.com'
+  is-ssl: true
+  secret: 'xxx'
+  nickname: 'test'
+
+# casbin configuration
+casbin:
+  model-path: './public/rbac_model.conf'
+
+# system configuration
+system:
+  env: "public" # Change to "develop" to skip authentication for development mode
+  oss-type: "local"
+  error-to-email: false
+  use-multipoint: false
+
+# captcha configuration
+captcha:
+  key-long: 6
+  image-width: 240
+  image-height: 80
+  captcha-in-redis: false
+

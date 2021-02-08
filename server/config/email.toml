@@ -1,8 +1,0 @@
-[email]
-To = 'xxx@qq.com'
-Port = 465
-Host = 'smtp.163.com'
-From = 'xxx@163.com'
-IsSsl = true
-Secret = 'xxx'
-Nickname = 'test'

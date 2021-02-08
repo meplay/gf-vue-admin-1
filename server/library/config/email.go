@@ -1,11 +1,11 @@
 package config
 
 type Email struct {
-	To       string `json:"to"`
-	Port     int    `json:"port"`
-	From     string `json:"from"`
-	Host     string `json:"host"`
-	IsSsl    bool   `json:"is_ssl"`
-	Secret   string `json:"secret"`
-	Nickname string `json:"nickname"`
+	To       string `mapstructure:"to" json:"to" yaml:"to"`
+	Port     int    `mapstructure:"port" json:"port" yaml:"port"`
+	From     string `mapstructure:"from" json:"from" yaml:"from"`
+	Host     string `mapstructure:"host" json:"host" yaml:"host"`
+	IsSsl    bool   `mapstructure:"is-ssl" json:"isSsl" yaml:"is-ssl"`
+	Secret   string `mapstructure:"secret" json:"secret" yaml:"secret"`
+	Nickname string `mapstructure:"nickname" json:"nickname" yaml:"nickname"`
 }

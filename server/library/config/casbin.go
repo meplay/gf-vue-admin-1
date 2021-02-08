@@ -1,5 +1,5 @@
 package config
 
 type Casbin struct {
-	ModelPath string `json:"model_path"`
+	ModelPath string `mapstructure:"model-path" json:"modelPath" yaml:"model-path"`
 }

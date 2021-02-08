@@ -1,7 +1,7 @@
 package config
 
 type Jwt struct {
-	ExpiresAt  int    `json:"expires_at"`
-	RefreshAt  int    `json:"refresh_at"`
-	SigningKey string `json:"signing_key"`
+	ExpiresAt  int    `mapstructure:"expires-at" json:"expiresAt" yaml:"expires-at"`
+	RefreshAt  int    `mapstructure:"refresh-at" json:"refreshAt" yaml:"refresh-at"`
+	SigningKey string `mapstructure:"signing-key" json:"signingKey" yaml:"signing-key"`
 }
