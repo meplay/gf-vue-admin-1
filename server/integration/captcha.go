@@ -1,6 +1,7 @@
 package integration
 
 import (
+	"context"
 	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 	"github.com/mojocn/base64Captcha"
@@ -19,19 +20,19 @@ func NewRedisStore() base64Captcha.Store {
 }
 
 func (r *_redis) Set(id string, value string) {
-	if err := global.Redis.Set(r.PrefixKey+id, value, r.Expiration).Err(); err != nil {
+	if err := global.Redis.Set(context.Background(), r.PrefixKey+id, value, r.Expiration).Err(); err != nil {
 		g.Log().Error("设置验证码数据到redis失败!", err)
 	}
 }
 
 func (r *_redis) Get(id string, clear bool) string {
 	var key = r.PrefixKey + id
-	if value, err := global.Redis.Get(key).Result(); err != nil {
+	if value, err := global.Redis.Get(context.Background(), key).Result(); err != nil {
 		g.Log().Error("从redis获取验证码数据失败!", err)
 		return value
 	} else {
 		if clear {
-			if err := global.Redis.Del(key).Err(); err != nil {
+			if err := global.Redis.Del(context.Background(), key).Err(); err != nil {
 				g.Log().Error("清空redis中验证码数据失败!", err)
 				return ""
 			}

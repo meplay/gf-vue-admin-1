@@ -2,6 +2,7 @@ package boot
 
 import (
 	"fmt"
+	"gf-vue-admin/library/global"
 	"gf-vue-admin/library/utils"
 	"gf-vue-admin/router"
 	"time"
@@ -19,7 +20,7 @@ func (s *_server) Initialize() {
 	server.SetWriteTimeout(10 * time.Second)
 	server.SetMaxHeaderBytes(1 << 20)
 	server.SetIndexFolder(true)
-	if g.Cfg("system").GetString("system.OssType") == "local" {
+	if global.Config.System.OssType == "local" {
 		_ = utils.CreateDir(g.Cfg("oss").GetString("local.LocalPath"))
 		server.AddStaticPath("/"+g.Cfg("oss").GetString("local.LocalPath"), g.Cfg("oss").GetString("local.LocalPath"))
 	}

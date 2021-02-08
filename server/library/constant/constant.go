@@ -2,7 +2,7 @@ package constant
 
 const (
 	ConfigEnv      = "GVA_CONFIG"
-	ConfigFile     = "config.yaml"
+	ConfigFile     = "config/config.yaml"
 	SerializerGob  = "gob"
 	SerializerJson = "json"
 
