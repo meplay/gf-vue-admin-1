@@ -41,10 +41,10 @@ var Message = map[Code]string{
 
 	ErrorAdd:          "添加失败!",
 	ErrorFirst:        "获取一条数据失败!",
-	ErrorCreate:       "创建失败!",
-	ErrorUpdate:       "更新失败!",
-	ErrorGetList:      "获取列表数据失败!",
+	ErrorCreated:       "创建失败!",
+	ErrorUpdated:       "更新失败!",
 	ErrorDeleted:      "删除失败!",
+	ErrorGetList:      "获取列表数据失败!",
 	ErrorOperation:    "操作失败!",
 	ErrorBatchDeleted: "批量删除失败!",
 

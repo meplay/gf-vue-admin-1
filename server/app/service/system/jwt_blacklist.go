@@ -1,12 +1,14 @@
 package service
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	model "gf-vue-admin/app/model/system"
+	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
-	"github.com/gogf/gf/util/gconv"
+	"time"
 )
 
 var JwtBlacklist = &blacklist{db: g.DB().Table("jwt_blacklist").Safe()}
@@ -26,26 +28,18 @@ func (b *blacklist) JwtToBlacklist(jwt string) error {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 判断JWT是否在jwt黑名单
 func (b *blacklist) IsBlacklist(jwt string) bool {
-	if errors.Is(b.db.Where("jwt = ?", jwt).Struct(&model.JwtBlacklist{}), sql.ErrNoRows) {
-		return false
-	}
-	return true
+	return !errors.Is(b.db.Where("jwt = ?", jwt).Struct(&model.JwtBlacklist{}), sql.ErrNoRows)
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取用户在Redis的token
-func (b *blacklist) GetRedisJWT(userUUID string) (string, error) {
-	conn := g.Redis().Conn()
-	defer func() {
-		conn.Close()
-	}()
-	r, err := conn.Do("GET", userUUID)
-	return gconv.String(r), err
+func (b *blacklist) GetRedisJWT(uuid string) (string, error) {
+	return global.Redis.Get(context.Background(), uuid).Result()
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 保存jwt到Redis
-func (b *blacklist) SetRedisJWT(userUUID string, jwt string) error {
-	_, err := g.Redis().Do("SETEX", userUUID, g.Cfg("jwt").GetUint("jwt.ExpiresAt")*3600000000000, jwt)
-	return err
+func (b *blacklist) SetRedisJWT(uuid string, jwt string) error {
+	timer := time.Duration(global.Config.Jwt.ExpiresAt) * time.Second
+	return global.Redis.Set(context.Background(), uuid, jwt, timer).Err()
 }

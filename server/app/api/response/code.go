@@ -43,10 +43,10 @@ const (
 
 	ErrorAdd
 	ErrorFirst
-	ErrorCreate
-	ErrorUpdate
-	ErrorGetList
+	ErrorCreated
+	ErrorUpdated
 	ErrorDeleted
+	ErrorGetList
 	ErrorOperation
 	ErrorBatchDeleted
 

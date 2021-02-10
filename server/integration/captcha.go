@@ -32,7 +32,7 @@ func (r *_redis) Get(id string, clear bool) string {
 		return value
 	} else {
 		if clear {
-			if err := global.Redis.Del(context.Background(), key).Err(); err != nil {
+			if err = global.Redis.Del(context.Background(), key).Err(); err != nil {
 				g.Log().Error("清空redis中验证码数据失败!", err)
 				return ""
 			}

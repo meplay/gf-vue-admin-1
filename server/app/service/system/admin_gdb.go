@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	"gf-vue-admin/app/model/system"
@@ -81,4 +82,15 @@ func (a *admin) Delete(info *request.GetById) (err error) {
 func (a *admin) SetAdminInfo(info *request.UpdateAdmin) (admin *model.Admin, err error) {
 	_, err = a.db.Update(g.Map{"avatar": info.Avatar}, g.Map{"uuid": info.Uuid})
 	return a.FindAdmin(&request.GetByUuid{Uuid: info.Uuid})
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 设置管理员信息
+func (a *admin) Login(info *request.AdminLogin) (result *model.Admin, err error) {
+	var entity model.Admin
+	if err = a.db.Where(g.Map{"username": info.Username}).Scan(&entity); err != nil {
+		return &entity, response.ErrorUserNoExist
+
+	}
+	return &entity, errors.New("密码错误")
 }
