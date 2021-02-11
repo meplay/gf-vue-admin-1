@@ -1,21 +1,22 @@
 package model
 
 import (
-	"github.com/gogf/gf/os/gtime"
+	"gf-vue-admin/library/global"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type Admin struct {
-	Id          uint        `orm:"id,primary"   json:"ID"`          // 自增ID
-	CreateAt    *gtime.Time `orm:"create_at"    json:"CreatedAt"`   // 创建时间
-	UpdateAt    *gtime.Time `orm:"update_at"    json:"UpdatedAt"`   // 更新时间
-	DeleteAt    *gtime.Time `orm:"delete_at"    json:"DeletedAt"`   // 删除时间
-	Uuid        string      `orm:"uuid"         json:"uuid"`        // 用户唯一标识UUID
-	Avatar      string      `orm:"avatar"       json:"headerImg"`   // 用户头像
-	Nickname    string      `orm:"nickname"     json:"nickName"`    // 用户昵称
-	Username    string      `orm:"username"     json:"userName"`    // 用户名
-	Password    string      `orm:"password"     json:"-"`           // 用户登录密码
-	AuthorityId string      `orm:"authority_id" json:"authorityId"` // 用户角色ID
+	global.Model
+	Uuid        string `orm:"uuid" json:"uuid" gorm:"comment:用户UUID"`
+	Avatar      string `orm:"avatar" json:"headerImg" gorm:"default:http://qmplusimg.henrongyi.top/head.png;comment:用户头像"`
+	Nickname    string `orm:"nickname" json:"nickName" gorm:"comment:用户登录名"`
+	Username    string `orm:"username" json:"userName" gorm:"default:系统用户;comment:用户昵称" `
+	Password    string `orm:"password" json:"-" gorm:"comment:用户登录密码"`
+	AuthorityId string `orm:"authority_id" json:"authorityId" gorm:"default:888;comment:用户角色ID"`
+}
+
+func (a *Admin) TableName() string {
+	return "admins"
 }
 
 //@author: SliverHorn

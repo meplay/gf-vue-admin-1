@@ -20,6 +20,7 @@ require (
 	go.uber.org/zap v1.10.0
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e // indirect
+	gorm.io/gorm v1.20.12
 )
 
 go 1.11
