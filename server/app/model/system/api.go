@@ -9,3 +9,7 @@ type Api struct {
 	ApiGroup    string `json:"apiGroup" gorm:"comment:api组"`
 	Description string `json:"description" gorm:"comment:api中文描述"`
 }
+
+func (a *Api) TableName() string {
+	return "apis"
+}

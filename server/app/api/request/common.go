@@ -1,5 +1,7 @@
 package request
 
+import "github.com/gogf/gf/frame/g"
+
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: Paging common input parameter structure
 type PageInfo struct {
@@ -11,6 +13,10 @@ type PageInfo struct {
 //@description: Get by id structure
 type GetById struct {
 	Id int `p:"id" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
+}
+
+func (i *GetById) Condition() g.Map {
+	return g.Map{"id": i.Id}
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

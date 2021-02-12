@@ -2,6 +2,7 @@ package request
 
 import (
 	model "gf-vue-admin/app/model/system"
+	"github.com/gogf/gf/frame/g"
 )
 
 type BaseApi struct {
@@ -38,11 +39,33 @@ func (u *UpdateApi) Update() *model.Api {
 	}
 }
 
+type DeleteApi struct {
+	GetById
+	BaseApi
+}
+
 // api分页条件查询及排序结构体
-type GetApiList struct {
+type SearchApi struct {
 	Path        string `p:"path"`
 	Description string `p:"description"`
 	ApiGroup    string `p:"apiGroup"`
 	Method      string `p:"method"`
 	PageInfo
+}
+
+func (s *SearchApi) Search() g.Map {
+	var condition = g.Map{}
+	if s.Path != "" {
+		condition["path like ?"] = "%" + s.Path + "%"
+	}
+	if s.Description != "" {
+		condition["description like ?"] = "%" + s.Description + "%"
+	}
+	if s.Method != "" {
+		condition["method"] = s.Method
+	}
+	if s.ApiGroup != "" {
+		condition["api_group"] = s.ApiGroup
+	}
+	return condition
 }

@@ -2,7 +2,7 @@ package constant
 
 const (
 	ConfigEnv      = "GVA_CONFIG"
-	ConfigFile     = "config/config.yaml"
+	ConfigFile     = "config/viper.yaml"
 	SerializerGob  = "gob"
 	SerializerJson = "json"
 
