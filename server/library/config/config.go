@@ -8,4 +8,6 @@ type Config struct {
 	Casbin  Casbin  `mapstructure:"casbin" json:"casbin" yaml:"casbin"`
 	System  System  `mapstructure:"system" json:"system" yaml:"system"`
 	Captcha Captcha `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
+
+	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 }

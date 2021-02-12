@@ -27,6 +27,7 @@ casbin:
 # system configuration
 system:
   env: "public" # Change to "develop" to skip authentication for development mode
+  db-type: "mysql" # mysql/
   oss-type: "local"
   error-to-email: false
   use-multipoint: false

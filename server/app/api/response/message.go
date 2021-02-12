@@ -9,10 +9,10 @@ var Message = map[Code]string{
 
 	SuccessAdd:          "添加成功!",
 	SuccessFirst:        "获取一条数据成功!",
-	SuccessCreate:       "创建成功!",
-	SuccessUpdate:       "更新成功!",
-	SuccessGetList:      "获取列表数据成功!",
+	SuccessCreated:       "创建成功!",
+	SuccessUpdated:       "更新成功!",
 	SuccessDeleted:      "删除成功!",
+	SuccessGetList:      "获取列表数据成功!",
 	SuccessOperation:    "操作成功!",
 	SuccessBatchDeleted: "批量删除成功!",
 
