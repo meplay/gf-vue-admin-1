@@ -21,7 +21,7 @@ type CreateDictionaryDetail struct {
 
 func (c *CreateDictionaryDetail) Create() *model.DictionaryDetail {
 	return &model.DictionaryDetail{
-		Label:        "",
+		Label:        c.Label,
 		Status:       c.Status,
 		Value:        c.Value,
 		Sort:         c.Sort,
