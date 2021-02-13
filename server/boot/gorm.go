@@ -7,7 +7,6 @@ import (
 	"gf-vue-admin/library/config"
 	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
-	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
@@ -75,11 +74,13 @@ func (m *_mysql) AutoMigrateTables() {
 	m.err = m.db.AutoMigrate(
 		new(system.Api),
 		new(system.Admin),
+		new(system.Dictionary),
 		new(system.JwtBlacklist),
+		new(system.DictionaryDetail),
 	)
 	if m.err != nil {
 		g.Log().Error(`注册表失败!`, g.Map{"err": m.err})
 		os.Exit(0)
 	}
-	zap.L().Info(`注册表成功!`)
+	g.Log().Info(`注册表成功!`)
 }

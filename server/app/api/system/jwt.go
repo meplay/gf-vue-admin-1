@@ -158,6 +158,6 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 		return nil, nil
 	} else {
 		r.SetParam("admin", data) // 设置参数保存到请求中
-		return g.Map{"admin_uuid": data.Uuid, "admin_id": data.Id, "admin_nickname": data.Nickname, "admin_authority_id": data.AuthorityId}, nil
+		return g.Map{"admin_uuid": data.Uuid, "admin_id": data.ID, "admin_nickname": data.Nickname, "admin_authority_id": data.AuthorityId}, nil
 	}
 }
