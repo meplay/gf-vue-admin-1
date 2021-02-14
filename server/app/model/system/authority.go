@@ -24,3 +24,12 @@ func (a *Authority) TableName() string {
 	return "authorities"
 }
 
+type DataAuthority struct {
+	AuthorityId   string `orm:"authority_id" gorm:"comment:角色id"`
+	DataAuthority string `orm:"data_authority" gorm:"comment:资源id"`
+}
+
+func (d *DataAuthority) TableName() string {
+	return "data_authorities"
+}
+
