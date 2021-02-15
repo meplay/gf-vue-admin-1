@@ -7,15 +7,15 @@ import (
 
 var Authority = new(authority)
 
-func init() {
+func (a *authority) Data() {
 	entities := make([]model.Authority, 0, 1)
-	if err := g.DB().Table(entities[0].TableName()).Structs(&entities); err != nil {
+	if err := g.DB().Table(Authority._authority.TableName()).Structs(&entities); err != nil {
 		g.Log().Error("获取全部 Authority 失败!", g.Map{"err": err})
 	} else {
 		_map := make(map[string][]model.Authority, len(entities))
 		for _, entity := range entities {
 			Authority.authorityMap[entity.AuthorityId] = entity
-			if entity.ParentId != "0" || &entity != nil {
+			if entity.ParentId != "0" {
 				if value, ok := _map[entity.ParentId]; ok {
 					value = append(value, entity)
 					_map[entity.ParentId] = value
@@ -31,6 +31,7 @@ func init() {
 }
 
 type authority struct {
+	_authority     model.Authority
 	authorityMap   map[string]model.Authority
 	authoritiesMap map[string][]model.Authority
 }
@@ -38,8 +39,9 @@ type authority struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 查询资源角色
 func (a *authority) GetDataAuthority(id string) (result *[]model.Authority) {
+	a.Data()
 	var entities = make([]model.DataAuthority, 0, 10)
-	if err := g.DB().Table(entities[0].TableName()).Where(g.Map{"authority_id": id}).Struct(&entities); err != nil {
+	if err := g.DB().Table(a._authority.TableName()).Where(g.Map{"authority_id": id}).Struct(&entities); err != nil {
 		g.Log().Error("查询角色的资源角色失败!", g.Map{"err": err})
 		return nil
 	}
@@ -51,10 +53,10 @@ func (a *authority) GetDataAuthority(id string) (result *[]model.Authority) {
 	return &authorities
 }
 
-
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 查询子角色
 func (a *authority) FindChildren(authority *model.Authority) {
+	a.Data()
 	authority.Children = a.authoritiesMap[authority.AuthorityId]
 	if len(authority.Children) > 0 {
 		for i := range authority.Children {

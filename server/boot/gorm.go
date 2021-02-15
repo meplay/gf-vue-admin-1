@@ -74,12 +74,12 @@ func (m *_mysql) AutoMigrateTables() {
 	m.err = m.db.AutoMigrate(
 		new(system.Api),
 		new(system.Admin),
-		new(system.BaseMenu),
+		new(system.Menu),
 		new(system.Authority),
 		new(system.Dictionary),
 		new(system.JwtBlacklist),
 		new(system.DictionaryDetail),
-		new(system.BaseMenuParameter),
+		new(system.MenuParameter),
 	)
 	if m.err != nil {
 		g.Log().Error(`注册表失败!`, g.Map{"err": m.err})

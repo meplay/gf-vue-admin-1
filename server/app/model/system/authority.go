@@ -15,9 +15,9 @@ type Authority struct {
 	AuthorityName string `json:"authorityName" gorm:"comment:角色名"`
 	DefaultRouter string `json:"defaultRouter" gorm:"comment:默认菜单;default:dashboard"`
 
-	Children      []Authority `json:"children" gorm:"-"`
-	BaseMenus     []BaseMenu  `json:"menus" gorm:"many2many:authorities_menus;foreignKey:AuthorityId;joinForeignKey:AuthorityId;References:ID;JoinReferences:BaseMenuID"`
-	DataAuthority []Authority `json:"dataAuthorityId" gorm:"many2many:data_authorities;foreignKey:AuthorityId;joinForeignKey:AuthorityId;References:AuthorityId;JoinReferences:DataAuthority"`
+	Menus         []Menu      `orm:"-" json:"menus" gorm:"many2many:authorities_menus;foreignKey:AuthorityId;joinForeignKey:AuthorityId;References:ID;JoinReferences:MenuID"`
+	Children      []Authority `orm:"-" json:"children" gorm:"-"`
+	DataAuthority []Authority `orm:"-" json:"dataAuthorityId" gorm:"many2many:data_authorities;foreignKey:AuthorityId;joinForeignKey:AuthorityId;References:AuthorityId;JoinReferences:DataAuthority"`
 }
 
 func (a *Authority) TableName() string {
@@ -32,4 +32,3 @@ type DataAuthority struct {
 func (d *DataAuthority) TableName() string {
 	return "data_authorities"
 }
-

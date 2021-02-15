@@ -33,6 +33,7 @@ yarn-error.log*
 go.sum
 /server/local/
 /server/log/
+/server/app/service/system/log/
 /server/latest_log
 
 *.iml

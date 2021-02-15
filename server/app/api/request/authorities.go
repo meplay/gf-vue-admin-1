@@ -21,7 +21,7 @@ func (c *CreateAuthority) Create() *model.Authority {
 		ParentId:      c.ParentId,
 		AuthorityId:   c.AuthorityId,
 		AuthorityName: c.AuthorityName,
-		DefaultRouter: "",
+		DefaultRouter: c.DefaultRouter,
 	}
 }
 

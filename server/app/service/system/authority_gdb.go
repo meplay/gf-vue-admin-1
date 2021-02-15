@@ -41,8 +41,8 @@ func (a *authority) Copy(info *request.CopyAuthority) error {
 	//}
 	//for _, v := range *a.menus {
 	//	id, _ := strconv.Atoi(v.MenuId)
-	//	v.BaseMenu.ID = uint(id)
-	//	a.baseMenu = append(a.baseMenu, v.BaseMenu)
+	//	v.Menu.ID = uint(id)
+	//	a.baseMenu = append(a.baseMenu, v.Menu)
 	//}
 	//info.Authority.BaseMenus = a.baseMenu
 	//err = global.Db.Create(&info.Authority).Error
@@ -93,8 +93,7 @@ func (a *authority) GetList(info *request.PageInfo) (list interface{}, total int
 	err = db.Limit(limit).Offset(offset).Where(g.Map{"parent_id": "0"}).Structs(&authorities)
 	if len(authorities) > 0 {
 		for i, b := range authorities {
-			data := internal.Authority.GetDataAuthority(b.AuthorityId)
-			authorities[i].DataAuthority = *data
+			authorities[i].DataAuthority = *internal.Authority.GetDataAuthority(b.AuthorityId)
 			internal.Authority.FindChildren(&authorities[i])
 		}
 	}
@@ -104,12 +103,16 @@ func (a *authority) GetList(info *request.PageInfo) (list interface{}, total int
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 设置角色资源权限
 func (a *authority) SetDataAuthority(info *request.SetDataAuthority) error {
-	entity := make([]model.DataAuthority, 0, 1)
-	err := g.DB().Table(entity[0].TableName()).Where(g.Map{"authority_id": info.AuthorityId}).Struct(&entity)
-	// todo Data 数据写库
-	//var err = global.Db.Preload("DataAuthorityId").First(&entity, "authority_id = ?", info.AuthorityId).Error
-	//err = global.Db.Model(&entity).Association("DataAuthority").Replace(&info.DataAuthorityId)
-	return err
+	if _, err := g.DB().Table(a._authority.TableName()).Delete(g.Map{"authority_id": info.AuthorityId}); err != nil {
+		return err
+	}
+	for _, d := range info.DataAuthorityId {
+		entity := &model.DataAuthority{AuthorityId: info.AuthorityId, DataAuthority: d.AuthorityId}
+		if _, err := g.DB().Table(entity.TableName()).Insert(entity); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -128,7 +131,6 @@ func (a *authority) SetMenuAuthority(info *model.Authority) error {
 //@description: 获取所有角色信息
 func (a *authority) First(info *request.GetAuthorityId) (result *model.Authority, err error) {
 	var entity model.Authority
-	data := internal.Authority.GetDataAuthority(info.AuthorityId)
-	entity.DataAuthority = *data
+	entity.DataAuthority = *internal.Authority.GetDataAuthority(info.AuthorityId)
 	return &entity, err
 }
