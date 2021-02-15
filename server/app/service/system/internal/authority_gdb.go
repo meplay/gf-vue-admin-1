@@ -7,7 +7,7 @@ import (
 
 var Authority = new(authority)
 
-func (a *authority) Data() {
+func (a *authority) Init() {
 	entities := make([]model.Authority, 0, 1)
 	if err := g.DB().Table(Authority._authority.TableName()).Structs(&entities); err != nil {
 		g.Log().Error("获取全部 Authority 失败!", g.Map{"err": err})
@@ -39,7 +39,7 @@ type authority struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 查询资源角色
 func (a *authority) GetDataAuthority(id string) (result *[]model.Authority) {
-	a.Data()
+	a.Init()
 	var entities = make([]model.DataAuthority, 0, 10)
 	if err := g.DB().Table(a._authority.TableName()).Where(g.Map{"authority_id": id}).Struct(&entities); err != nil {
 		g.Log().Error("查询角色的资源角色失败!", g.Map{"err": err})
@@ -56,7 +56,7 @@ func (a *authority) GetDataAuthority(id string) (result *[]model.Authority) {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 查询子角色
 func (a *authority) FindChildren(authority *model.Authority) {
-	a.Data()
+	a.Init()
 	authority.Children = a.authoritiesMap[authority.AuthorityId]
 	if len(authority.Children) > 0 {
 		for i := range authority.Children {

@@ -32,3 +32,13 @@ type DataAuthority struct {
 func (d *DataAuthority) TableName() string {
 	return "data_authorities"
 }
+
+type AuthoritiesMenus struct {
+	MenuId      uint
+	AuthorityId string
+}
+
+func (a *AuthoritiesMenus) TableName() string {
+	return "authorities_menus"
+}
+

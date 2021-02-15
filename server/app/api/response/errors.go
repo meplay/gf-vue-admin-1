@@ -34,11 +34,11 @@ var (
 	TokenMalformed   = errors.New(`这不是一个有效的令牌! `)
 	TokenNotValidYet = errors.New(`令牌尚未激活! `)
 
-	// BaseMenu
-	ErrorUpdate             = errors.New(`更新失败`)
-	ErrorHasChildrenMenu    = errors.New(`此菜单存在子菜单不可删除`)
-	ErrorCreateParameters   = errors.New(`创建menu的Parameters失败`)
-	ErrorUpdateBaseMenuName = errors.New(`存在相同name, 修改失败`)
+	// Menu
+	ErrorUpdateMenu       = errors.New(`更新失败`)
+	ErrorUpdateMenuName   = errors.New(`存在相同name, 修改失败`)
+	ErrorHasChildrenMenu  = errors.New(`此菜单存在子菜单不可删除`)
+	ErrorCreateParameters = errors.New(`创建menu的Parameters失败`)
 
 	// Casbin
 	ErrorAddPolicies = errors.New(`存在相同api, 添加失败, 请联系管理员`)
