@@ -8,11 +8,13 @@ import (
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/app/service/system/internal"
 	"github.com/gogf/gf/frame/g"
+	"strconv"
 )
 
 var Authority = new(authority)
 
 type authority struct {
+	_menu      model.Menu
 	_authority model.Authority
 }
 
@@ -35,22 +37,29 @@ func (a *authority) Copy(info *request.CopyAuthority) error {
 		g.Log().Error(response.ErrorSameAuthorityId, g.Map{"authority_id": info.Authority.AuthorityId})
 		return response.ErrorSameAuthorityId
 	}
-	//info.Authority.Children = []model.Authority{}
-	//if a.menus, err = a.authority.GetMenuAuthority(&request.GetAuthorityId{AuthorityId: info.OldAuthorityId}); err != nil {
-	//	return nil, errors.New("GetMenuAuthority Failed! err: " + err.Error())
-	//}
-	//for _, v := range *a.menus {
-	//	id, _ := strconv.Atoi(v.MenuId)
-	//	v.Menu.ID = uint(id)
-	//	a.baseMenu = append(a.baseMenu, v.Menu)
-	//}
-	//info.Authority.BaseMenus = a.baseMenu
-	//err = global.Db.Create(&info.Authority).Error
-	//
-	//var paths = a.casbin.GetPolicyPathByAuthorityId(info.OldAuthorityId)
-	//if err = a.casbin.Update(info.Authority.AuthorityId, paths); err != nil {
-	//	_ = a.Delete(&request.DeleteAuthority{GetAuthorityId: request.GetAuthorityId{AuthorityId: info.Authority.AuthorityId}})
-	//}
+	info.Authority.Children = []model.Authority{}
+
+	if menus, err := AuthorityMenu.GetMenuAuthority(&request.GetAuthorityId{AuthorityId: info.OldAuthorityId}); err != nil {
+		return err
+	} else {
+		_menus := make([]model.Menu, 0, len(*menus))
+		for _, v := range *menus {
+			id, _ := strconv.Atoi(v.MenuId)
+			v.Menu.ID = uint(id)
+			_menus = append(_menus, v.Menu)
+		}
+		info.Authority.Menus = _menus
+	}
+	if _, err := g.DB().Table(a._authority.TableName()).Insert(&info.Authority); err != nil {
+		return err
+	}
+	if _, err := g.DB().Table(a._menu.TableName()).Insert(&info.Authority.Menus); err != nil {
+		return err
+	}
+	var paths = Casbin.GetPolicyPathByAuthorityId(info.OldAuthorityId)
+	if err := Casbin.Update(info.Authority.AuthorityId, paths); err != nil {
+		_ = a.Delete(&request.GetAuthorityId{AuthorityId: info.Authority.AuthorityId})
+	}
 	return nil
 }
 
@@ -122,6 +131,7 @@ func (a *authority) SetMenuAuthority(info *model.Authority) error {
 	if err := g.DB().Table(a._authority.TableName()).Where(g.Map{"authority_id": info.AuthorityId}).Struct(&entity); err != nil {
 		return err
 	}
+	entity.Menus = info.Menus
 	return internal.Authority.ReplaceMenu(&entity)
 }
 

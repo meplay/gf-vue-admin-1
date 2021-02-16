@@ -47,14 +47,14 @@ func (a *api) Update(info *request.UpdateApi) error {
 		return response.ErrorSameApi
 	}
 	_, err := g.DB().Table(a._api.TableName()).Data(info.Update()).Update(info.Condition())
-	//err = Casbin.UpdateCasbinApi(old.Path, info.Path, old.Method, info.Method)
+	err = Casbin.UpdateApi(old.Path, info.Path, old.Method, info.Method)
 	return err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 删除基础Api
 func (a *api) Delete(info *request.DeleteApi) error {
-	//Casbin.ClearCasbin(1, info.Path, info.Method)
+	Casbin.ClearCasbin(1, info.Path, info.Method)
 	_, err := g.DB().Table(a._api.TableName()).Delete(info.Condition())
 	return err
 }

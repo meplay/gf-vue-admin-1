@@ -36,7 +36,7 @@ func (c *_casbin) Update(authorityId string, casbinInfos []request.CasbinInfo) e
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: API更新随动
-func (c *_casbin) UpdateCasbinApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
+func (c *_casbin) UpdateApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
 	_, err := g.DB().Table(c._casbin.TableName()).Update(g.Map{"v1": newPath, "v2": newMethod}, g.Map{"v1": oldPath, "v2": oldMethod})
 	return err
 }
@@ -47,10 +47,7 @@ func (c *_casbin) GetPolicyPathByAuthorityId(authorityId string) (pathMaps []req
 	var e = c.Casbin()
 	list := e.GetFilteredPolicy(0, authorityId)
 	for _, v := range list {
-		pathMaps = append(pathMaps, request.CasbinInfo{
-			Path:   v[1],
-			Method: v[2],
-		})
+		pathMaps = append(pathMaps, request.CasbinInfo{Path: v[1], Method: v[2]})
 	}
 	return pathMaps
 }
