@@ -56,7 +56,7 @@ func (a *authority) Copy(info *request.CopyAuthority) error {
 	if _, err := g.DB().Table(a._menu.TableName()).Insert(&info.Authority.Menus); err != nil {
 		return err
 	}
-	var paths = Casbin.GetPolicyPathByAuthorityId(info.OldAuthorityId)
+	var paths = Casbin.GetPolicyPath(info.OldAuthorityId)
 	if err := Casbin.Update(info.Authority.AuthorityId, paths); err != nil {
 		_ = a.Delete(&request.GetAuthorityId{AuthorityId: info.Authority.AuthorityId})
 	}
@@ -88,7 +88,6 @@ func (a *authority) Delete(info *request.GetAuthorityId) error {
 	if _, err := g.DB().Table(a._authority.TableName()).Delete(info.Condition()); err != nil {
 		return err
 	}
-	//var err = db.Unscoped().Delete(&entity).Error
 	if len(entity.Menus) > 0 {
 		var _a model.AuthoritiesMenus
 		if _, err := g.DB().Table(_a.TableName()).Delete(&entity.Menus); err != nil{
