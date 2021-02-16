@@ -11,10 +11,10 @@ const (
 
 	SuccessAdd
 	SuccessFirst
-	SuccessCreate
-	SuccessUpdate
-	SuccessGetList
+	SuccessCreated
 	SuccessDeleted
+	SuccessUpdated
+	SuccessGetList
 	SuccessOperation
 	SuccessBatchDeleted
 
@@ -43,10 +43,10 @@ const (
 
 	ErrorAdd
 	ErrorFirst
-	ErrorCreate
-	ErrorUpdate
-	ErrorGetList
+	ErrorCreated
+	ErrorUpdated
 	ErrorDeleted
+	ErrorGetList
 	ErrorOperation
 	ErrorBatchDeleted
 

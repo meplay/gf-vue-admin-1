@@ -1,5 +1,0 @@
-# captcha configuration
-[captcha]
-KeyLong = 6
-ImgWidth = 240
-ImgHeight = 80

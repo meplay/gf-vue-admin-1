@@ -1,42 +1,54 @@
 package request
 
 import (
-	"server/app/model"
+	model "gf-vue-admin/app/model/system"
+	"github.com/gogf/gf/frame/g"
 )
 
-type CreateAuthority struct {
+type BaseAuthority struct {
+	ParentId      string `p:"parent_id" v:"required|length:1,1000#请输入角色父id|角色父id长度为:min到:max位"`
 	AuthorityId   string `p:"authority_id" v:"required|length:1,1000#请输入角色id|角色id长度为:min到:max位"`
 	AuthorityName string `p:"authority_name" v:"required|length:1,1000#请输入角色名字|角色名字长度为:min到:max位"`
-	ParentId      string `p:"parent_id" v:"required|length:1,1000#请输入角色父id|角色父id长度为:min到:max位"`
+	DefaultRouter string `p:"defaultRouter" v:"required|length:1,1000#请输入默认路由|默认路由长度为:min到:max位"`
+}
+
+type CreateAuthority struct {
+	BaseAuthority
+}
+
+func (c *CreateAuthority) Create() *model.Authority {
+	return &model.Authority{
+		ParentId:      c.ParentId,
+		AuthorityId:   c.AuthorityId,
+		AuthorityName: c.AuthorityName,
+		DefaultRouter: c.DefaultRouter,
+	}
+}
+
+type CopyAuthority struct {
+	Authority      model.Authority `json:"authority"`
+	OldAuthorityId string          `json:"oldAuthorityId"`
 }
 
 type UpdateAuthority struct {
-	AuthorityId   string `p:"authority_id" v:"required|length:1,1000#请输入角色id|角色id长度为:min到:max位"`
-	AuthorityName string `p:"authority_name" v:"required|length:1,1000#请输入角色名字|角色名字长度为:min到:max位"`
-	ParentId      string `p:"authority_id" v:"required|length:1,1000#请输入角色父id|角色父id长度为:min到:max位"`
+	BaseAuthority
 }
 
-type DeleteAuthority struct {
-	AuthorityId string `p:"authorityId" v:"required|length:1,1000#请输入角色id|角色id长度为:min到:max位"`
-}
-type Authorities struct {
-	AuthorityId   string           `r:"authorityId"  orm:"authority_id,primary" json:"authority_id"`    // 角色ID
-	AuthorityName string           `r:"authorityName" orm:"authority_name"       json:"authority_name"` // 角色名
-	ParentId      string           `r:"parentId" orm:"parent_id"            json:"parent_id"`
-	BaseMenu      []model.BaseMenu `json:"menus"`
-}
-
-type AuthorityCopy struct {
-	Authority      Authorities `json:"authority"`
-	OldAuthorityId string      `r:"oldAuthorityId" json:"oldAuthorityId"`
-}
-
-type SetDataAuthority struct {
-	AuthorityId   string         `r:"authorityId" v:"required|length:1,1000#请输入角色id|角色id长度为:min到:max位"`
-	DataAuthority []*Authorities `r:"dataAuthorityId" json:"dataAuthorityId"`
+func (u *UpdateAuthority) Update() g.Map {
+	return g.Map{"parent_id": u.ParentId, "authority_name": u.AuthorityName, "default_router": u.DefaultRouter}
 }
 
 type Authority struct {
 	AuthorityId   string `r:"authorityId" v:"required|length:1,1000#请输入角色id|角色id长度为:min到:max位"`
 	AuthorityName string `r:"authorityName" v:"required|length:1,1000#请输入角色名|角色名长度为:min到:max位"`
+}
+
+type SetDataAuthority struct {
+	BaseAuthority
+	DataAuthorityId []model.Authority `json:"dataAuthorityId" gorm:"many2many:sys_data_authority_id"`
+}
+
+type SetMenuAuthority struct {
+	BaseAuthority
+	DataAuthorityId []model.Authority `json:"dataAuthorityId" gorm:"many2many:sys_data_authority_id"`
 }
