@@ -21,6 +21,14 @@ type menu struct {
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 添加基础路由
+func (m *menu) Create(menu model.Menu) error {
+	_, err := g.DB().Table(m._menu.TableName()).Insert(&menu)
+	return err
+}
+
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 返回当前选中menu
 func (m *menu) First(info *request.GetById) (menu *model.Menu, err error) {
 	var entity model.Menu
@@ -69,10 +77,31 @@ func (m *menu) Update(info *request.UpdateBaseMenu) error {
 			return err
 		}
 		for _, parameter := range info.Parameters {
-			if _, err :=tx.Table(m._menusParameters.TableName()).Data(g.Map{"menu_id": info.ID, "parameter_id": parameter.ID}).Insert(); err != nil {
+			if _, err := tx.Table(m._menusParameters.TableName()).Data(g.Map{"menu_id": info.ID, "parameter_id": parameter.ID}).Insert(); err != nil {
 				return response.ErrorCreateParameters
 			}
 		}
 		return nil
 	})
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 获取路由分页
+func (m *menu) GetList() (list interface{}, total int64, err error) {
+	var menus []model.Menu
+	var treeMap = internal.Menu.GetTreeMap()
+	menus = treeMap["0"]
+	for i := 0; i < len(menus); i++ {
+		internal.Menu.GetChildrenList(&menus[i], treeMap)
+	}
+	return menus, total, err
+}
+
+func (m *menu) GetTree() *[]model.Menu {
+	tree := internal.Menu.GetTreeMap()
+	menus := tree["0"]
+	for i := 0; i < len(menus); i++ {
+		internal.Menu.GetChildrenList(&menus[i], tree)
+	}
+	return &menus
 }
