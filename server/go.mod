@@ -7,7 +7,7 @@ require (
 	github.com/casbin/casbin/v2 v2.11.0
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/go-redis/redis/v8 v8.5.0
-	github.com/gogf/gf v1.15.1
+	github.com/gogf/gf v1.15.3
 	github.com/gogf/gf-jwt v1.1.2
 	github.com/gogf/swagger v1.2.0
 	github.com/gookit/color v1.3.6

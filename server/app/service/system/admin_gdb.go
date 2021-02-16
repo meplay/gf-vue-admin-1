@@ -72,7 +72,7 @@ func (a *admin) SetUserAuthority(info *request.SetAuthority) error {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 删除管理员
 func (a *admin) Delete(info *request.GetById) error {
-	_, err := g.DB().Table(a._admin.TableName()).Delete(g.Map{"id": info.Id})
+	_, err := g.DB().Table(a._admin.TableName()).Delete(info.Condition())
 	return err
 }
 

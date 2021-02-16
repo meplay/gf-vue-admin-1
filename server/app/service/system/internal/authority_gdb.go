@@ -43,7 +43,7 @@ type authority struct {
 //@description: 查询资源角色
 func (a *authority) GetDataAuthority(id string) (result *[]model.Authority) {
 	a.Init()
-	var entities = make([]model.DataAuthority, 0, 10)
+	var entities = make([]model.DataAuthorities, 0, 10)
 	if err := g.DB().Table(a._authority.TableName()).Where(g.Map{"authority_id": id}).Struct(&entities); err != nil {
 		g.Log().Error("查询角色的资源角色失败!", g.Map{"err": err})
 		return nil

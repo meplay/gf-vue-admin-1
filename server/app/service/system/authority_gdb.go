@@ -74,21 +74,34 @@ func (a *authority) Update(info *request.UpdateAuthority) error {
 //@description: 删除角色
 func (a *authority) Delete(info *request.GetAuthorityId) error {
 	var entity model.Authority
-	if !errors.Is(g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity), sql.ErrNoRows) {
-		return response.ErrorUseAuthority
-	}
 	if !errors.Is(g.DB().Table(a._authority.TableName()).Where("parent_id = ?", info.AuthorityId).Struct(&entity), sql.ErrNoRows) {
 		return response.ErrorHasSonAuthority
 	}
-	//var db = global.Db.Preload("BaseMenus").Preload("DataAuthority").Where("authority_id = ?", info.AuthorityId).First(&entity)
+	if !errors.Is(g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity), sql.ErrNoRows) {
+		return response.ErrorUseAuthority
+	}
+	if err := g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity); err != nil {
+		return err
+	}
+	entity.Menus = *internal.Authority.GetMenus(entity.AuthorityId)
+	entity.DataAuthority = *internal.Authority.GetDataAuthority(entity.AuthorityId)
+	if _, err := g.DB().Table(a._authority.TableName()).Delete(info.Condition()); err != nil {
+		return err
+	}
 	//var err = db.Unscoped().Delete(&entity).Error
-	//if len(entity.BaseMenus) > 0 {
-	//	err = global.Db.Model(&entity).Association("BaseMenus").Delete(&entity.BaseMenus)
-	//}
-	//if len(entity.DataAuthority) > 0 {
-	//	err = global.Db.Model(&entity).Association("DataAuthority").Delete(&entity.DataAuthority)
-	//}
-	//a.casbin.ClearCasbin(0, info.AuthorityId)
+	if len(entity.Menus) > 0 {
+		var _a model.AuthoritiesMenus
+		if _, err := g.DB().Table(_a.TableName()).Delete(&entity.Menus); err != nil{
+			return err
+		}
+	}
+	if len(entity.DataAuthority) > 0 {
+		var _d model.DataAuthorities
+		if _, err := g.DB().Table(_d.TableName()).Delete(&entity.DataAuthority); err != nil{
+			return err
+		}
+	}
+	Casbin.ClearCasbin(0, info.AuthorityId)
 	return nil
 }
 
@@ -116,7 +129,7 @@ func (a *authority) SetDataAuthority(info *request.SetDataAuthority) error {
 		return err
 	}
 	for _, d := range info.DataAuthorityId {
-		entity := &model.DataAuthority{AuthorityId: info.AuthorityId, DataAuthority: d.AuthorityId}
+		entity := &model.DataAuthorities{AuthorityId: info.AuthorityId, DataAuthority: d.AuthorityId}
 		if _, err := g.DB().Table(entity.TableName()).Insert(entity); err != nil {
 			return err
 		}
