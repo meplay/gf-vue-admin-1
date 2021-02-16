@@ -118,13 +118,11 @@ func (a *authority) SetDataAuthority(info *request.SetDataAuthority) error {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 菜单与角色绑定
 func (a *authority) SetMenuAuthority(info *model.Authority) error {
-	var entity model.DataAuthority
-	err := g.DB().Table(a._authority.TableName()).Where(g.Map{"authority_id": info.AuthorityId}).Struct(&entity)
-	// todo menu 与 authority 数据联动
-	//var err = global.Db.Preload("BaseMenus").First(&entity, " = ?", info.AuthorityId).Error
-	////err = global.Db.Model(&entity).Association("menus").Replace(&entity.menus)
-	//err = global.Db.Model(&model.Authority{}).Association("BaseMenus").Replace(&info.BaseMenus)
-	return err
+	var entity model.Authority
+	if err := g.DB().Table(a._authority.TableName()).Where(g.Map{"authority_id": info.AuthorityId}).Struct(&entity); err != nil {
+		return err
+	}
+	return internal.Authority.ReplaceMenu(&entity)
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
