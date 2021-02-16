@@ -6,3 +6,8 @@ type Casbin struct {
 	Method      string `json:"method" gorm:"column:v2"`
 	AuthorityId string `json:"rolename" gorm:"column:v0"`
 }
+
+func (c *Casbin) TableName() string {
+	return "casbin_rule"
+}
+
