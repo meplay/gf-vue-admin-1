@@ -24,8 +24,8 @@ import (
 // initdbCmd represents the initdb command
 var initdbCmd = &cobra.Command{
 	Use:   "initdb",
-	Short: "gin-vue-admin初始化数据",
-	Long:  `gin-vue-admin初始化数据适配数据库情况: 1. mysql完美适配, 2. postgresql未适配, 3. sqlite未适配, 4. sqlserver未适配`,
+	Short: "gf-vue-admin初始化数据",
+	Long:  `gf-vue-admin初始化数据适配数据库情况: 1. mysql完美适配, 2. postgresql未适配, 3. sqlite未适配, 4. sqlserver未适配`,
 	Run: func(cmd *cobra.Command, args []string) {
 		frame, _ := cmd.Flags().GetString("frame")
 		path, _ := cmd.Flags().GetString("path")

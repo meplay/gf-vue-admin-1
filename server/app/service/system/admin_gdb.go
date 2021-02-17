@@ -1,10 +1,10 @@
 package service
 
 import (
-	"errors"
 	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	"gf-vue-admin/app/model/system"
+	"gf-vue-admin/app/service/system/internal"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -90,5 +90,9 @@ func (a *admin) Login(info *request.AdminLogin) (result *model.Admin, err error)
 	if err = g.DB().Table(a._admin.TableName()).Where(g.Map{"username": info.Username}).Scan(&entity); err != nil {
 		return &entity, response.ErrorUserNoExist
 	}
-	return &entity, errors.New("密码错误")
+	entity.Authority = *internal.Authority.First(entity.AuthorityId)
+	if !entity.CompareHashAndPassword(info.Password) {
+		return &entity, response.ErrorWrongPassword
+	}
+	return &entity, nil
 }

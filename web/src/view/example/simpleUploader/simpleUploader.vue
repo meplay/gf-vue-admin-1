@@ -1,13 +1,13 @@
 <template>
   <uploader
-      :options="options"
-      :file-status-text="statusText"
-      :autoStart="false"
-      @file-added="fileAdded"
-      @file-progress="onFileProgress"
-      @file-success="onFileSuccess"
-      @file-error="onFileError"
-      class="uploader-example"
+    :options="options"
+    :file-status-text="statusText"
+    :autoStart="false"
+    @file-added="fileAdded"
+    @file-progress="onFileProgress"
+    @file-success="onFileSuccess"
+    @file-error="onFileError"
+    class="uploader-example"
   >
     <uploader-unsupport></uploader-unsupport>
     <uploader-drop>
@@ -21,16 +21,15 @@
 <script>
 var notUploadedChunks = []; // 已经上传过的文件chunkNumber数组
 var isUploaded = false; // 文件已经上传成功了
-import {mapGetters} from "vuex";
-import {checkFileMd5, mergeFileMd5} from "@/api/simpleUploader";
+import { mapGetters } from "vuex";
+import { checkFileMd5,mergeFileMd5 } from "@/api/simpleUploader";
 import SparkMD5 from "spark-md5";
-
 const path = process.env.VUE_APP_BASE_API;
 export default {
   name: "simpleUploader",
-  data() {
-    return {
-      md5: ""
+  data(){
+    return{
+      md5:""
     }
   },
   computed: {
@@ -51,20 +50,20 @@ export default {
         simultaneousUploads: 5,
         chunkSize: 2 * 1024 * 1024,
         headers: {
-          'Authorization': "Bearer " + this.token,
-          'x-user-id': this.userInfo.ID,
+          "x-token": this.token,
+          "x-user-id": this.userInfo.ID
         },
         checkChunkUploadedByResponse(chunk) {
           if (isUploaded) {
             return true; // return true 会忽略当前文件，不会再发送给后台
           } else {
-            // 根据已经上传过的切片来进行忽略
-            return (
+              // 根据已经上传过的切片来进行忽略
+              return (
                 notUploadedChunks &&
                 notUploadedChunks.some(
-                    item => item.chunkNumber == chunk.offset + 1
+                  item => item.chunkNumber == chunk.offset + 1
                 )
-            );
+              );
           }
         }
       };
@@ -87,10 +86,10 @@ export default {
       file.pause();
 
       fileReader.readAsArrayBuffer(file.file);
-      fileReader.onload = async function (e) {
+      fileReader.onload = async function(e) {
         if (file.size != e.target.result.byteLength) {
           this.error(
-              "Browser reported success but could not read the file until the end."
+            "Browser reported success but could not read the file until the end."
           );
           return false;
         }
@@ -98,7 +97,7 @@ export default {
 
         file.uniqueIdentifier = md5;
         if (md5 != "") {
-          const res = await checkFileMd5({md5: md5});
+          const res = await checkFileMd5({ md5: md5 });
           if (res.code == 0) {
             if (res.data.isDone) {
               // 上传成功过
@@ -112,28 +111,27 @@ export default {
             } else {
               isUploaded = false;
               notUploadedChunks = res.data.chunks;
-              if (notUploadedChunks.length) {
+              if(notUploadedChunks.length){
                 file.resume();
               }
             }
           }
         }
 
-
+        
       };
-      fileReader.onerror = function () {
+      fileReader.onerror = function() {
         this.error(
-            "generater md5 时FileReader异步读取文件出错了，FileReader onerror was triggered, maybe the browser aborted due to high memory usage."
+          "generater md5 时FileReader异步读取文件出错了，FileReader onerror was triggered, maybe the browser aborted due to high memory usage."
         );
         return false;
       };
     },
     // 上传进度
-    onFileProgress() {
-    },
+    onFileProgress() {},
     // 上传成功
     async onFileSuccess(rootFile, file) {
-      await mergeFileMd5({md5: file.uniqueIdentifier, fileName: file.name})
+      await mergeFileMd5({md5:file.uniqueIdentifier,fileName:file.name})
     },
     onFileError(rootFile, file, response) {
       this.$message({
@@ -149,15 +147,13 @@ export default {
 .uploader-example {
   width: 880px;
   padding: 15px;
-  margin: 40px auto 0;
+  margin: 115px 15px 20px;
   font-size: 12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
-
 .uploader-example .uploader-btn {
   margin-right: 4px;
 }
-
 .uploader-example .uploader-list {
   max-height: 440px;
   overflow: auto;

@@ -7,12 +7,13 @@ import (
 
 type Admin struct {
 	global.Model
-	Uuid        string `orm:"uuid" json:"uuid" gorm:"comment:用户UUID"`
-	Avatar      string `orm:"avatar" json:"headerImg" gorm:"default:http://qmplusimg.henrongyi.top/head.png;comment:用户头像"`
-	Nickname    string `orm:"nickname" json:"nickName" gorm:"comment:用户登录名"`
-	Username    string `orm:"username" json:"userName" gorm:"default:系统用户;comment:用户昵称" `
-	Password    string `orm:"password" json:"-" gorm:"comment:用户登录密码"`
-	AuthorityId string `orm:"authority_id" json:"authorityId" gorm:"default:888;comment:用户角色ID"`
+	Uuid        string    `orm:"uuid" json:"uuid" gorm:"comment:用户UUID"`
+	Avatar      string    `orm:"avatar" json:"headerImg" gorm:"default:http://qmplusimg.henrongyi.top/head.png;comment:用户头像"`
+	Nickname    string    `orm:"nickname" json:"nickName" gorm:"comment:用户登录名"`
+	Username    string    `orm:"username" json:"userName" gorm:"default:系统用户;comment:用户昵称" `
+	Password    string    `orm:"password" json:"-" gorm:"comment:用户登录密码"`
+	AuthorityId string    `orm:"authority_id" json:"authorityId" gorm:"default:888;comment:用户角色ID"`
+	Authority   Authority `orm:"-" json:"authority" gorm:"foreignKey:AuthorityId;references:AuthorityId;comment:用户角色"`
 }
 
 func (a *Admin) TableName() string {

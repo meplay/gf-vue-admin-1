@@ -9,6 +9,7 @@
 <script>
 import MenuItem from './menuItem'
 import AsyncSubmenu from './asyncSubmenu'
+
 export default {
   name: 'AsideComponent',
   computed: {

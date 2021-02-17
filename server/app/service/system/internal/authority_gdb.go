@@ -12,21 +12,21 @@ func (a *authority) Init() {
 	if err := g.DB().Table(Authority._authority.TableName()).Structs(&entities); err != nil {
 		g.Log().Error("获取全部 Authority 失败!", g.Map{"err": err})
 	} else {
-		_map := make(map[string][]model.Authority, len(entities))
+		Authority.authorityMap = make(map[string]model.Authority, len(entities))
+		Authority.authoritiesMap = make(map[string][]model.Authority, len(entities))
 		for _, entity := range entities {
 			Authority.authorityMap[entity.AuthorityId] = entity
 			if entity.ParentId != "0" {
-				if value, ok := _map[entity.ParentId]; ok {
+				if value, ok := Authority.authoritiesMap[entity.ParentId]; ok {
 					value = append(value, entity)
-					_map[entity.ParentId] = value
+					Authority.authoritiesMap[entity.ParentId] = value
 				} else {
 					var a1 = make([]model.Authority, 0, 1)
 					a1 = append(a1, entity)
-					_map[entity.ParentId] = a1
+					Authority.authoritiesMap[entity.ParentId] = a1
 				}
 			}
 		}
-		Authority.authoritiesMap = _map
 	}
 }
 
@@ -37,6 +37,14 @@ type authority struct {
 
 	authorityMap   map[string]model.Authority
 	authoritiesMap map[string][]model.Authority
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 查询资源角色
+func (a *authority) First(id string) *model.Authority {
+	a.Init()
+	entity :=  a.authorityMap[id]
+	return &entity
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

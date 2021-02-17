@@ -5,11 +5,11 @@ import (
 	"github.com/gogf/gf/frame/g"
 )
 
-type UpdateBaseMenu struct {
+type UpdateMenu struct {
 	model.Menu
 }
 
-func (u *UpdateBaseMenu) Update() g.Map {
+func (u *UpdateMenu) Update() g.Map {
 	return g.Map{
 		"keep_alive":   u.KeepAlive,
 		"default_menu": u.DefaultMenu,

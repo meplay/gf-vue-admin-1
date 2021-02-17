@@ -13,7 +13,7 @@
     >
       <el-table-column label="角色id" min-width="180" prop="authorityId"></el-table-column>
       <el-table-column label="角色名称" min-width="180" prop="authorityName"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="470">
+      <el-table-column fixed="right" label="操作" width="460">
         <template slot-scope="scope">
           <el-button @click="opdendrawer(scope.row)" size="small" type="primary">设置权限</el-button>
           <el-button
@@ -100,16 +100,16 @@ import Menus from "@/view/superAdmin/authority/components/menus";
 import Apis from "@/view/superAdmin/authority/components/apis";
 import Datas from "@/view/superAdmin/authority/components/datas";
 
-import infoList from "@/components/mixins/infoList";
+import infoList from "@/mixins/infoList";
 export default {
   name: "Authority",
   mixins: [infoList],
   data() {
     var mustUint = (rule, value, callback) => {
-      if (!(/^[0-9]*[1-9][0-9]*$/).test(value)){
-       return  callback(new Error("请输入正整数"));
-      } 
-      return  callback()
+      if (!/^[0-9]*[1-9][0-9]*$/.test(value)) {
+        return callback(new Error("请输入正整数"));
+      }
+      return callback();
     };
 
     return {
@@ -136,7 +136,7 @@ export default {
       rules: {
         authorityId: [
           { required: true, message: "请输入角色ID", trigger: "blur" },
-          {validator: mustUint, trigger: 'blur'  }
+          { validator: mustUint, trigger: "blur" }
         ],
         authorityName: [
           { required: true, message: "请输入角色名", trigger: "blur" }
@@ -191,6 +191,9 @@ export default {
               type: "success",
               message: "删除成功!"
             });
+            if (this.tableData.length == 1) {
+              this.page--;
+            }
             this.getTableData();
           }
         })

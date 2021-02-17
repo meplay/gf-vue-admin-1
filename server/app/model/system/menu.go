@@ -32,10 +32,10 @@ type Meta struct {
 
 type MenuParameter struct {
 	global.Model
-	Key    string `json:"key" gorm:"comment:地址栏携带参数的key"`
-	Type   string `json:"type" gorm:"comment:地址栏携带参数为params还是query"`
-	Value  string `json:"value" gorm:"comment:地址栏携带参数的值"`
-	MenuID uint   `json:"base_menu_id" gorm:"comment:menu的id"`
+	Key    string `orm:"key" json:"key" gorm:"comment:地址栏携带参数的key"`
+	Type   string `orm:"type" json:"type" gorm:"comment:地址栏携带参数为params还是query"`
+	Value  string `orm:"value" json:"value" gorm:"comment:地址栏携带参数的值"`
+	MenuID uint   `orm:"menu_id" json:"menuId" gorm:"comment:menu的id"`
 }
 
 func (b *MenuParameter) TableName() string {

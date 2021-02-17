@@ -9,27 +9,8 @@ Vue.use(ElementUI);
 // 引入封装的router
 import router from '@/router/index'
 
-// canvas背景插件
-import vueParticleLine from 'vue-particle-line'
-import 'vue-particle-line/dist/vue-particle-line.css'
-Vue.use(vueParticleLine)
-
 // time line css
 import '../node_modules/timeline-vuejs/dist/timeline-vuejs.css'
-
-// 富文本插件
-import VueQuillEditor from 'vue-quill-editor'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-
-Vue.use(VueQuillEditor)
-
-// markdown插件
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
-
-Vue.use(mavonEditor)
 
 import '@/permission'
 import { store } from '@/store/index'
@@ -47,14 +28,14 @@ Vue.use(APlayer, {
 });
 
 
-import {auth} from '@/directive/auth'
+import { auth } from '@/directive/auth'
 // 按钮权限指令
 auth(Vue)
 
 import uploader from 'vue-simple-uploader'
 Vue.use(uploader)
 
-new Vue({
+export default new Vue({
     render: h => h(App),
     router,
     store
@@ -65,8 +46,10 @@ import echarts from 'echarts'
 Vue.prototype.$echarts = echarts;
 
 console.log(`
-       欢迎使用 Gf-Vue-Admin
-       当前版本:V1.1.2
+       欢迎使用 Gin-Vue-Admin
+       当前版本:V2.3.9
+       加群方式:微信：shouzi_1994 QQ群：622360840
        默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
        默认前端文件运行地址:http://127.0.0.1:8080
+       如果项目让您获得了收益，希望您能请团队喝杯可乐:https://www.gin-vue-admin.com/docs/coffee
 `)

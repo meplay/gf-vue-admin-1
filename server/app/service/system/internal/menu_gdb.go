@@ -19,8 +19,8 @@ type menu struct {
 //@description: 获取菜单的Parameters
 func (m *menu) GetMenusParameters(id uint) *[]model.MenuParameter {
 	entities := make([]model.MenusParameters, 0, 10)
-	if err := g.DB().Table(m._menusParameters.TableName()).Where(g.Map{"base_menu_id": id}).Structs(&entities); err != nil {
-		g.Log().Error("获取 menus_parameters 表数据失败!", g.Map{"base_menu_id": id})
+	if err := g.DB().Table(m._menusParameters.TableName()).Where(g.Map{"menu_id": id}).Structs(&entities); err != nil {
+		g.Log().Error("获取 menus_parameters 表数据失败!", g.Map{"menu_id": id})
 		return nil
 	}
 	parameters := make([]model.MenuParameter, 0, len(entities))

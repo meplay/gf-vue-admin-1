@@ -10,10 +10,10 @@ type Authority struct {
 	UpdatedAt time.Time      `orm:"updated_at" json:"UpdatedAt"`
 	DeletedAt gorm.DeletedAt `orm:"deleted_at" json:"-" gorm:"index"`
 
-	ParentId      string `json:"parentId" gorm:"comment:父角色ID"`
-	AuthorityId   string `json:"authorityId" gorm:"not null;unique;primary_key;comment:角色ID;size:90"`
-	AuthorityName string `json:"authorityName" gorm:"comment:角色名"`
-	DefaultRouter string `json:"defaultRouter" gorm:"comment:默认菜单;default:dashboard"`
+	ParentId      string `orm:"parent_id" json:"parentId" gorm:"comment:父角色ID"`
+	AuthorityId   string `orm:"authority_id" json:"authorityId" gorm:"not null;unique;primary_key;comment:角色ID;size:90"`
+	AuthorityName string `orm:"authority_name" json:"authorityName" gorm:"comment:角色名"`
+	DefaultRouter string `orm:"default_router" json:"defaultRouter" gorm:"comment:默认菜单;default:dashboard"`
 
 	Menus         []Menu      `orm:"-" json:"menus" gorm:"many2many:authorities_menus;foreignKey:AuthorityId;joinForeignKey:AuthorityId;References:ID;JoinReferences:MenuID"`
 	Children      []Authority `orm:"-" json:"children" gorm:"-"`

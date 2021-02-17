@@ -6,29 +6,27 @@ import (
 	"errors"
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/library/global"
-	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"time"
 )
 
-var JwtBlacklist = &blacklist{db: g.DB().Table("jwt_blacklist").Safe()}
+var JwtBlacklist = new(blacklist)
 
 type blacklist struct {
-	db *gdb.Model
+	_blacklist model.JwtBlacklist
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 拉黑jwt
 func (b *blacklist) JwtToBlacklist(jwt string) error {
-	var entity = model.JwtBlacklist{Jwt: jwt}
-	_, err := b.db.Data(&entity).Insert()
+	_, err := g.DB().Table(b._blacklist.TableName()).Data(&model.JwtBlacklist{Jwt: jwt}).Insert()
 	return err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 判断JWT是否在jwt黑名单
 func (b *blacklist) IsBlacklist(jwt string) bool {
-	return !errors.Is(b.db.Where("jwt = ?", jwt).Struct(&model.JwtBlacklist{}), sql.ErrNoRows)
+	return !errors.Is(g.DB().Table(b._blacklist.TableName()).Where("jwt = ?", jwt).Struct(&model.JwtBlacklist{}), sql.ErrNoRows)
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -42,4 +40,17 @@ func (b *blacklist) GetRedisJWT(uuid string) (string, error) {
 func (b *blacklist) SetRedisJWT(uuid string, jwt string) error {
 	timer := time.Duration(global.Config.Jwt.ExpiresAt) * time.Second
 	return global.Redis.Set(context.Background(), uuid, jwt, timer).Err()
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 鉴权jwt
+func (b *blacklist) ValidatorRedisToken(userUUID string, oldToken string) bool {
+	if jwt, err := b.GetRedisJWT(userUUID); err != nil {
+		return false
+	} else {
+		if jwt != oldToken {
+			return false
+		}
+		return true
+	}
 }

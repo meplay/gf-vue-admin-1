@@ -13,20 +13,15 @@ import (
 	"time"
 )
 
-var GoFrameJwt = new(_jwt)
-
-type _jwt struct {
-	err             error
-	GfJWTMiddleware *jwt.GfJWTMiddleware
-}
+var GfJWTMiddleware *jwt.GfJWTMiddleware
 
 func init() {
-	GoFrameJwt.GfJWTMiddleware, GoFrameJwt.err = jwt.New(&jwt.GfJWTMiddleware{
+	GfJWTMiddleware, _ = jwt.New(&jwt.GfJWTMiddleware{
 		Realm:           global.Config.Jwt.SigningKey,
 		Key:             []byte(global.Config.Jwt.SigningKey),
 		Timeout:         time.Duration(global.Config.Jwt.ExpiresAt) * time.Hour * 24,
 		MaxRefresh:      time.Duration(global.Config.Jwt.RefreshAt) * time.Hour * 24,
-		IdentityKey:     "id",
+		IdentityKey:     "admin_id",
 		TokenLookup:     "header:Authorization, query:token, cookie:jwt",
 		TokenHeadName:   "Bearer",
 		TimeFunc:        time.Now,
@@ -54,7 +49,7 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 //@description: 设置JWT的身份。
 func IdentityHandler(r *ghttp.Request) interface{} {
 	claims := jwt.ExtractClaims(r)
-	return claims["id"]
+	return  claims[GfJWTMiddleware.IdentityKey]
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -69,6 +64,7 @@ func Unauthorized(r *ghttp.Request, code int, message string) {
 func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 	claims := r.GetParam("admin")
 	data, ok := claims.(*model.Admin)
+	r.SetParam("claims", data) // 设置参数保存到请求中
 	if !ok {
 		_ = r.Response.WriteJson(&response.Response{Code: 7, Message: "登录失败!"})
 		r.Exit()
@@ -153,7 +149,7 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 		return nil, errors.New("验证码错误! ")
 	}
 	if data, err := service.Admin.Login(&info); err != nil {
-		_ = r.Response.WriteJson(&response.Response{Code: 7, Message: err.Error()})
+		_ = r.Response.WriteJson(&response.Response{Code: 7, Error: err})
 		r.ExitAll()
 		return nil, nil
 	} else {

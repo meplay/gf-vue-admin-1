@@ -22,7 +22,7 @@ type menu struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 添加基础路由
-func (m *menu) Create(menu model.Menu) error {
+func (m *menu) Create(menu *model.Menu) error {
 	_, err := g.DB().Table(m._menu.TableName()).Insert(&menu)
 	return err
 }
@@ -56,7 +56,7 @@ func (m *menu) Delete(info *request.GetById) error {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 更新路由
-func (m *menu) Update(info *request.UpdateBaseMenu) error {
+func (m *menu) Update(info *request.UpdateMenu) error {
 	return g.DB().Transaction(func(tx *gdb.TX) error {
 		var entity model.Menu
 		if err := tx.Table(m._menu.TableName()).WherePri(info.ID).Struct(&entity); err != nil {
@@ -87,7 +87,7 @@ func (m *menu) Update(info *request.UpdateBaseMenu) error {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取路由分页
-func (m *menu) GetList() (list interface{}, total int64, err error) {
+func (m *menu) GetList() (list interface{}, total int, err error) {
 	var menus []model.Menu
 	var treeMap = internal.Menu.GetTreeMap()
 	menus = treeMap["0"]

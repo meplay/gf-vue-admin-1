@@ -1,6 +1,6 @@
 # HTTP Server
 [server]
-    Address = ":8889"
+    Address = ":8888"
     AccessLogEnabled = true
     ErrorLogEnabled = true
     LogPath = "./logs/server"

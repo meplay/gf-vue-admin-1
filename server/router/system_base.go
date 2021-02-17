@@ -20,5 +20,6 @@ func (b *Base) Init() {
 	var base =  b.router.Group("/base")
 	{
 		base.POST("captcha", b.response.Handler()(api.Base.Captcha))
+		base.POST("login", api.GfJWTMiddleware.LoginHandler)     // 登录
 	}
 }

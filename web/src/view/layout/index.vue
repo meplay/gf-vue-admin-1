@@ -16,23 +16,30 @@
             :style="{width: `calc(100% - ${isMobile?'0px':isCollapse?'54px':'220px'})`}"
             class="topfix"
           >
+          <el-row>
+            <!-- :xs="8" :sm="6" :md="4" :lg="3" :xl="1" -->
             <el-header class="header-cont">
-              <div @click="totalCollapse" class="menu-total">
-                <i class="el-icon-s-unfold" v-if="isCollapse"></i>
-                <i class="el-icon-s-fold" v-else></i>
-              </div>
-              <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item
-                  :key="item.path"
-                  v-for="item in matched.slice(1,matched.length)"
-                >{{item.meta.title}}</el-breadcrumb-item>
-              </el-breadcrumb>
-              <div class="fl-right right-box">
+               <el-col :xs="2" :lg="1" :md="1" :sm="1" :xl="1">
+                  <div @click="totalCollapse" class="menu-total">
+                    <i class="el-icon-s-unfold" v-if="isCollapse"></i>
+                    <i class="el-icon-s-fold" v-else></i>
+                  </div>
+                </el-col>
+              <el-col :xs="10" :lg="14" :md='14' :sm="9" :xl="14">
+                 <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
+                  <el-breadcrumb-item
+                    :key="item.path"
+                    v-for="item in matched.slice(1,matched.length)"
+                  >{{item.meta.title}}</el-breadcrumb-item>
+                </el-breadcrumb>
+              </el-col>
+               <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
+                 <div class="fl-right right-box">
                 <Search />
-                <Screenfull class="screenfull"></Screenfull>
+                <Screenfull class="screenfull" :style="{cursor:'pointer'}"></Screenfull>
                 <el-dropdown>
                   <span class="header-avatar">
-                    欢迎您，<CustomPic/>
+                   <CustomPic/>
                     <span style="margin-left: 5px">{{userInfo.nickName}}</span>
                     <i class="el-icon-arrow-down"></i>
                   </span>
@@ -43,13 +50,15 @@
                         <el-badge is-dot />
                       </span>
                     </el-dropdown-item>
-                    <el-dropdown-item @click.native="showPassword=true" icon="el-icon-s-custom">修改密码</el-dropdown-item>
                     <el-dropdown-item @click.native="toPerson" icon="el-icon-s-custom">个人信息</el-dropdown-item>
                     <el-dropdown-item @click.native="LoginOut" icon="el-icon-table-lamp">登 出</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
+               </el-col>
+
             </el-header>
+          </el-row>
             <!-- 当前面包屑用路由自动生成可根据需求修改 -->
             <!--
             :to="{ path: item.path }" 暂时注释不用-->
@@ -58,32 +67,16 @@
         </transition>
         <transition mode="out-in" name="el-fade-in-linear">
           <keep-alive>
-            <router-view class="admin-box" v-if="$route.meta.keepAlive"></router-view>
+            <router-view v-loading="loadingFlag"  element-loading-text="正在加载中" class="admin-box" v-if="$route.meta.keepAlive && reloadFlag"></router-view>
           </keep-alive>
         </transition>
         <transition mode="out-in" name="el-fade-in-linear">
-          <router-view class="admin-box" v-if="!$route.meta.keepAlive"></router-view>
+          <router-view v-loading="loadingFlag"  element-loading-text="正在加载中" class="admin-box" v-if="!$route.meta.keepAlive && reloadFlag"></router-view>
         </transition>
        <BottomInfo />
       </el-main>
     </el-container>
-    <el-dialog :visible.sync="showPassword" @close="clearPassword" title="修改密码" width="360px">
-      <el-form :model="pwdModify" :rules="rules" label-width="80px" ref="modifyPwdForm">
-        <el-form-item :minlength="6" label="原密码" prop="password">
-          <el-input show-password v-model="pwdModify.password"></el-input>
-        </el-form-item>
-        <el-form-item :minlength="6" label="新密码" prop="newPassword">
-          <el-input show-password v-model="pwdModify.newPassword"></el-input>
-        </el-form-item>
-        <el-form-item :minlength="6" label="确认密码" prop="confirmPassword">
-          <el-input show-password v-model="pwdModify.confirmPassword"></el-input>
-        </el-form-item>
-      </el-form>
-      <div class="dialog-footer" slot="footer">
-        <el-button @click="showPassword=false">取 消</el-button>
-        <el-button @click="savePassword" type="primary">确 定</el-button>
-      </div>
-    </el-dialog>
+   
   </el-container>
 </template>
 
@@ -94,7 +87,6 @@ import Screenfull from '@/view/layout/screenfull'
 import Search from '@/view/layout/search/search'
 import BottomInfo from '@/view/layout/bottomInfo/bottomInfo'
 import { mapGetters, mapActions } from 'vuex'
-import { changePassword } from '@/api/user'
 import CustomPic from '@/components/customPic'
 export default {
   name: 'Layout',
@@ -105,32 +97,8 @@ export default {
       isSider: true,
       isMobile: false,
       isShadowBg: false,
-      showPassword: false,
-      pwdModify: {},
-      rules: {
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '最少6个字符', trigger: 'blur' }
-        ],
-        newPassword: [
-          { required: true, message: '请输入新密码', trigger: 'blur' },
-          { min: 6, message: '最少6个字符', trigger: 'blur' }
-        ],
-        confirmPassword: [
-          { required: true, message: '请输入确认密码', trigger: 'blur' },
-          { min: 6, message: '最少6个字符', trigger: 'blur' },
-          {
-            validator: (rule, value, callback) => {
-              if (value !== this.pwdModify.newPassword) {
-                callback(new Error('两次密码不一致'))
-              } else {
-                callback()
-              }
-            },
-            trigger: 'blur'
-          }
-        ]
-      },
+      loadingFlag:false,
+      reloadFlag:true,
       value: ''
     }
   },
@@ -144,6 +112,12 @@ export default {
   },
   methods: {
     ...mapActions('user', ['LoginOut']),
+    reload(){
+      this.reloadFlag = false
+      this.$nextTick(()=>{
+        this.reloadFlag = true
+      })
+    },
     totalCollapse() {
       this.isCollapse = !this.isCollapse
       this.isSider = !this.isCollapse
@@ -158,30 +132,6 @@ export default {
       this.isSider = !!this.isCollapse
       this.totalCollapse()
     },
-    savePassword() {
-      this.$refs.modifyPwdForm.validate(valid => {
-        if (valid) {
-          changePassword({
-            username: this.userInfo.userName,
-            password: this.pwdModify.password,
-            newPassword: this.pwdModify.newPassword
-          }).then(() => {
-            this.$message.success('修改密码成功！')
-            this.showPassword = false
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    clearPassword() {
-      this.pwdModify = {
-        password: '',
-        newPassword: '',
-        confirmPassword: ''
-      }
-      this.$refs.modifyPwdForm.clearValidate()
-    }
   },
   computed: {
     ...mapGetters('user', ['userInfo']),
@@ -209,6 +159,13 @@ export default {
     }
     this.$bus.emit('collapse', this.isCollapse)
     this.$bus.emit('mobile', this.isMobile)
+    this.$bus.on("reload",this.reload)
+    this.$bus.on("showLoading",()=>{
+      this.loadingFlag = true
+    })
+    this.$bus.on("closeLoading",()=>{
+      this.loadingFlag = false
+    })
     window.onresize = () => {
       return (() => {
         let screenWidth = document.body.clientWidth
@@ -232,153 +189,154 @@ export default {
   }
 }
 </script>
-
 <style lang="scss">
-$headerHigh: 52px;
-$mainHight: 100vh;
-.dropdown-group {
-  min-width: 100px;
-}
-.topfix {
-  position: fixed;
-  top: 0;
-  box-sizing: border-box;
-  z-index: 999;
-}
-.admin-box {
-  min-height: calc(100vh - 240px);
-  background-color: rgb(255, 255, 255);
-  margin-top: 100px;
-}
-.el-scrollbar__wrap {
-  padding-bottom: 17px;
-}
-.layout-cont {
-  .right-box {
-    text-align: center;
-    vertical-align: middle;
-    img {
-      vertical-align: middle;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-  }
+@import '@/style/mobile.scss';
 
-  .header-cont {
-    height: $headerHigh !important;
-    background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    line-height: $headerHigh;
-  }
-  .main-cont {
-    .breadcrumb {
-      line-height: 48px;
-      display: inline-block;
-      padding: 0 24px;
-      // padding: 6px;
-      // border-bottom: 1px solid #eee;
-    }
+// $headerHigh: 52px;
+// $mainHight: 100vh;
+// .dropdown-group {
+//   min-width: 100px;
+// }
+// .topfix {
+//   position: fixed;
+//   top: 0;
+//   box-sizing: border-box;
+//   z-index: 999;
+// }
+// .admin-box {
+//   min-height: calc(100vh - 240px);
+//   background-color: rgb(255, 255, 255);
+//   margin-top: 100px;
+// }
+// .el-scrollbar__wrap {
+//   padding-bottom: 17px;
+// }
+// .layout-cont {
+//   .right-box {
+//     text-align: center;
+//     vertical-align: middle;
+//     img {
+//       vertical-align: middle;
+//       border: 1px solid #ccc;
+//       border-radius: 6px;
+//     }
+//   }
 
-    &.el-main {
-      overflow: auto;
-      background: #fff;
-      // padding: 0px 10px;
-      // background: #fff;
-    }
-    height: $mainHight !important;
-    overflow: visible;
-    position: relative;
-    .menu-total {
-      // z-index: 5;
-      // position: absolute;
-      // top: 10px;
-      // right: -35px;
-      margin-left: -10px;
-      float: left;
-      margin-top: 10px;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      font-size: 30px;
-      // border: 0 solid #ffffff;
-      // border-radius: 50%;
-      // background: #fff;
-    }
-    .aside {
-      overflow: auto;
-      // background: #fff;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-    .el-menu-vertical {
-      height: calc(100vh - 64px) !important;
-      visibility: auto;
-      &:not(.el-menu--collapse) {
-        width: 220px;
-      }
-    }
-    .el-menu--collapse {
-      width: 54px;
-      li {
-        .el-tooltip,
-        .el-submenu__title {
-          padding: 0px 15px !important;
-        }
-      }
-    }
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    &.main-left {
-      width: auto !important;
-    }
-    &.main-right {
-      .admin-title {
-        float: left;
-        font-size: 16px;
-        vertical-align: middle;
-        margin-left: 20px;
-        img {
-          vertical-align: middle;
-        }
-        &.collapse {
-          width: 53px;
-        }
-      }
-    }
-  }
-}
-.tilte {
-  background: #001529;
-  min-height: 64px;
-  line-height: 64px;
-  background: #002140;
-  text-align: center;
-  .logoimg {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    background: #fff;
-    border-radius: 50%;
-    padding: 3px;
-  }
-  .tit-text {
-    display: inline-block;
-    color: #fff;
-    font-weight: 600;
-    font-size: 20px;
-    vertical-align: middle;
-  }
-}
+//   .header-cont {
+//     height: $headerHigh !important;
+//     background: #fff;
+//     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+//     line-height: $headerHigh;
+//   }
+//   .main-cont {
+//     .breadcrumb {
+//       line-height: 48px;
+//       display: inline-block;
+//       padding: 0 24px;
+//       // padding: 6px;
+//       // border-bottom: 1px solid #eee;
+//     }
+
+//     &.el-main {
+//       overflow: auto;
+//       background: #fff;
+//       // padding: 0px 10px;
+//       // background: #fff;
+//     }
+//     height: $mainHight !important;
+//     overflow: visible;
+//     position: relative;
+//     .menu-total {
+//       // z-index: 5;
+//       // position: absolute;
+//       // top: 10px;
+//       // right: -35px;
+//       margin-left: -10px;
+//       float: left;
+//       margin-top: 10px;
+//       width: 30px;
+//       height: 30px;
+//       line-height: 30px;
+//       font-size: 30px;
+//       // border: 0 solid #ffffff;
+//       // border-radius: 50%;
+//       // background: #fff;
+//     }
+//     .aside {
+//       overflow: auto;
+//       // background: #fff;
+//       &::-webkit-scrollbar {
+//         display: none;
+//       }
+//     }
+//     .el-menu-vertical {
+//       height: calc(100vh - 64px) !important;
+//       visibility: auto;
+//       &:not(.el-menu--collapse) {
+//         width: 220px;
+//       }
+//     }
+//     .el-menu--collapse {
+//       width: 54px;
+//       li {
+//         .el-tooltip,
+//         .el-submenu__title {
+//           padding: 0px 15px !important;
+//         }
+//       }
+//     }
+//     &::-webkit-scrollbar {
+//       display: none;
+//     }
+//     &.main-left {
+//       width: auto !important;
+//     }
+//     &.main-right {
+//       .admin-title {
+//         float: left;
+//         font-size: 16px;
+//         vertical-align: middle;
+//         margin-left: 20px;
+//         img {
+//           vertical-align: middle;
+//         }
+//         &.collapse {
+//           width: 53px;
+//         }
+//       }
+//     }
+//   }
+// }
+// .tilte {
+//   background: #001529;
+//   min-height: 64px;
+//   line-height: 64px;
+//   background: #002140;
+//   text-align: center;
+//   .logoimg {
+//     width: 30px;
+//     height: 30px;
+//     vertical-align: middle;
+//     background: #fff;
+//     border-radius: 50%;
+//     padding: 3px;
+//   }
+//   .tit-text {
+//     display: inline-block;
+//     color: #fff;
+//     font-weight: 600;
+//     font-size: 20px;
+//     vertical-align: middle;
+//   }
+// }
 
 
-.screenfull {
-  display: inline-block;
-}
-.header-avatar{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
+// .screenfull {
+//   display: inline-block;
+// }
+// .header-avatar{
+// 	display: flex;
+// 	justify-content: center;
+// 	align-items: center;
+// }
 </style>

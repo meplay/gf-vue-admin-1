@@ -14,10 +14,11 @@ func (r *routers) Init() {
 		NewBaseGroup(public).Init()
 	}
 	//var private = g.Server().Group("").Middleware(middleware.JwtAuth, middleware.CasbinMiddleware)
-	var private = g.Server().Group("")
+	var private = g.Server().Group("").Middleware(JwtAuth)
 	{ // 需要Jwt鉴权, casbin鉴权
 		NewApiRouter(private).Init()
 		NewAdminGroup(private).Init()
+		NewMenuRouter(private).Init()
 		NewCasbinRouter(private).Init()
 		NewAuthorityRouter(private).Init()
 		NewDictionaryRouter(private).Init()
