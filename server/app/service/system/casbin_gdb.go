@@ -20,11 +20,11 @@ type _casbin struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 更新casbin权限
-func (c *_casbin) Update(authorityId string, casbinInfos []request.CasbinInfo) error {
-	c.ClearCasbin(0, authorityId)
-	rules := make([][]string, 0, len(casbinInfos))
-	for _, v := range casbinInfos {
-		entity := model.Casbin{PType: "p", AuthorityId: authorityId, Path: v.Path, Method: v.Method}
+func (c *_casbin) Update(info *request.UpdateCasbin) error {
+	c.ClearCasbin(0, info.AuthorityId)
+	rules := make([][]string, 0, len(info.CasbinInfos))
+	for _, v := range info.CasbinInfos {
+		entity := model.Casbin{PType: "p", AuthorityId: info.AuthorityId, Path: v.Path, Method: v.Method}
 		rules = append(rules, []string{entity.AuthorityId, entity.Path, entity.Method})
 	}
 	e := c.Casbin()

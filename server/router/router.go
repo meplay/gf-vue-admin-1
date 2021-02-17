@@ -18,6 +18,7 @@ func (r *routers) Init() {
 	{ // 需要Jwt鉴权, casbin鉴权
 		NewApiRouter(private).Init()
 		NewAdminGroup(private).Init()
+		NewCasbinRouter(private).Init()
 		NewAuthorityRouter(private).Init()
 		NewJwtBlacklistGroup(private).Init()
 	}
