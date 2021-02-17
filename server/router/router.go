@@ -20,6 +20,8 @@ func (r *routers) Init() {
 		NewAdminGroup(private).Init()
 		NewCasbinRouter(private).Init()
 		NewAuthorityRouter(private).Init()
+		NewDictionaryRouter(private).Init()
 		NewJwtBlacklistGroup(private).Init()
+		NewDictionaryDetailRouter(private).Init()
 	}
 }

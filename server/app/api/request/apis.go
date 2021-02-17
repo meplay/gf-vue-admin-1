@@ -40,8 +40,8 @@ func (u *UpdateApi) Update() *model.Api {
 }
 
 type DeleteApi struct {
-	Path        string `p:"path" v:"path@required|length:1,100#请输入api路径|api路径长度为:min到:max位"`
-	Method      string `p:"method" v:"method@required|length:1,100#请输入api请求方法|api请求方法长度为:min到:max位"`
+	Path   string `p:"path" v:"path@required|length:1,100#请输入api路径|api路径长度为:min到:max位"`
+	Method string `p:"method" v:"method@required|length:1,100#请输入api请求方法|api请求方法长度为:min到:max位"`
 	GetById
 }
 
@@ -55,7 +55,7 @@ type SearchApi struct {
 }
 
 func (s *SearchApi) Search() g.Map {
-	var condition = g.Map{}
+	condition := make(g.Map, 4)
 	if s.Path != "" {
 		condition["path like ?"] = "%" + s.Path + "%"
 	}
