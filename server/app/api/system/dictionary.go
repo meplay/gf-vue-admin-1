@@ -75,7 +75,7 @@ func (d *dictionary) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetGormID true "Dictionary模型"
+// @Param data body request.GetById true "Dictionary模型"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /sysDictionary/deleteDictionary [delete]
 func (d *dictionary) Delete(r *ghttp.Request) *response.Response {

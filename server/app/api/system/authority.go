@@ -76,7 +76,7 @@ func (a *authority) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.DeleteAuthority true "删除角色"
+// @Param data body request.GetAuthorityId true "删除角色"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /authority/deleteAuthority [post]
 func (a *authority) Delete(r *ghttp.Request) *response.Response {

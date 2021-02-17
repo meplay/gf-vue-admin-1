@@ -36,7 +36,7 @@ func (d *detail) Create(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetGormID true "用id查询DictionaryDetail"
+// @Param data body request.GetById true "用id查询DictionaryDetail"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取一条数据成功!"}"
 // @Router /sysDictionaryDetail/findSysDictionaryDetail [get]
 func (d *detail) First(r *ghttp.Request) *response.Response {
@@ -75,7 +75,7 @@ func (d *detail) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetGormID true "ID"
+// @Param data body request.GetById true "ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /sysDictionaryDetail/deleteSysDictionaryDetail [delete]
 func (d *detail) Delete(r *ghttp.Request) *response.Response {
