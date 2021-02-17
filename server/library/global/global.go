@@ -12,6 +12,7 @@ import (
 )
 
 var (
+	Db     *gorm.DB
 	Viper  *viper.Viper
 	Redis  *redis.Client
 	Config config.Config

@@ -59,12 +59,14 @@ func (m *_mysql) Initialize() {
 		g.Log().Error(`Gorm连接MySQL异常!`, g.Map{"err": m.err})
 		os.Exit(0)
 	} else {
-		m.AutoMigrateTables()
 		if m.sql, m.err = m.db.DB(); m.err != nil {
 			g.Log().Error(`DatabaseSql对象获取异常!`, g.Map{"err": m.err})
+		} else {
+			global.Db = m.db
+			m.AutoMigrateTables()
+			m.sql.SetMaxIdleConns(global.Config.Mysql.GetMaxIdleConnes())
+			m.sql.SetMaxOpenConns(global.Config.Mysql.GetMaxOpenConnes())
 		}
-		m.sql.SetMaxIdleConns(global.Config.Mysql.GetMaxIdleConnes())
-		m.sql.SetMaxOpenConns(global.Config.Mysql.GetMaxOpenConnes())
 	}
 }
 
