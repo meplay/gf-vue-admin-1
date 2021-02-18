@@ -53,7 +53,11 @@ func (s *SearchDictionaryDetail) Search() g.Map {
 		condition["`label` like ?"] = "%" + s.Label + "%"
 	}
 	if s.Status != nil {
-		condition["`status`"] = s.Status
+		if *s.Status == true {
+			condition["`status`"] = 1
+		} else {
+			condition["`status`"] = 2
+		}
 	}
 	if s.Value != 0 {
 		condition["`value`"] = s.Value

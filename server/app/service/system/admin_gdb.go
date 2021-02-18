@@ -42,6 +42,9 @@ func (a *admin) GetAdminList(info *request.PageInfo) (list interface{}, total in
 	limit, offset := info.Paginate()
 	total, err = db.Count()
 	err = db.Limit(limit).Offset(offset).Structs(&admins)
+	for i, entity := range admins {
+		admins[i].Authority = *internal.Authority.First(entity.AuthorityId)
+	}
 	return admins, total, err
 }
 

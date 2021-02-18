@@ -64,7 +64,11 @@ func (s *SearchDictionary) Search() g.Map {
 		condition["`type` like ?"] = "%" + s.Type + "%"
 	}
 	if s.Status != nil {
-		condition["`status` = ?"] = s.Status
+		if *s.Status == true {
+			condition["`status`"] = 1
+		} else {
+			condition["`status`"] = 2
+		}
 	}
 	if s.Desc != "" {
 		condition["`desc` like ?"] = "%" + s.Desc + "%"
