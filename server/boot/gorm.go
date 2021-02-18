@@ -32,7 +32,7 @@ func init() {
 		Password:      g.Cfg().GetString("database.default.Pass"),
 		MaxIdleConnes: 10,
 		MaxOpenConnes: 10,
-		LogMode:       true,
+		LogMode:       false,
 		LogZap:        "",
 	}
 }

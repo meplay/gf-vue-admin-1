@@ -44,8 +44,8 @@ func (c *_casbin) UpdateApi(oldPath string, newPath string, oldMethod string, ne
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取权限列表
 func (c *_casbin) GetPolicyPath(authorityId string) (pathMaps []request.CasbinInfo) {
-	var e = c.Casbin()
-	list := e.GetFilteredPolicy(0, authorityId)
+	enforcer := c.Casbin()
+	list := enforcer.GetFilteredPolicy(0, authorityId)
 	for _, v := range list {
 		pathMaps = append(pathMaps, request.CasbinInfo{Path: v[1], Method: v[2]})
 	}

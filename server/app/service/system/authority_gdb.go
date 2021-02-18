@@ -114,7 +114,9 @@ func (a *authority) GetList(info *request.PageInfo) (list interface{}, total int
 	err = db.Limit(limit).Offset(offset).Where(g.Map{"parent_id": "0"}).Structs(&authorities)
 	if len(authorities) > 0 {
 		for i, b := range authorities {
-			authorities[i].DataAuthority = *internal.Authority.GetDataAuthority(b.AuthorityId)
+			if data := internal.Authority.GetDataAuthority(b.AuthorityId); data != nil {
+				authorities[i].DataAuthority = *data
+			}
 			internal.Authority.FindChildren(&authorities[i])
 		}
 	}

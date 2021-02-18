@@ -68,7 +68,7 @@ func (a *api) GetList(info *request.SearchApi) (list interface{}, total int, err
 	limit, offset := info.Paginate()
 	total, err = db.Where(condition).Count()
 	err = db.Limit(limit).Offset(offset).Where(condition).Structs(&apis)
-	return list, total, err
+	return apis, total, err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

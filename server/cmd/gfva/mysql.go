@@ -4,7 +4,6 @@ import (
 	"fmt"
 	system "gf-vue-admin/app/model/system"
 	data "gf-vue-admin/cmd/information/system"
-	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
 	"github.com/gookit/color"
 	"gorm.io/driver/mysql"
@@ -56,7 +55,7 @@ func (m *_mysql) Init() {
 //@description: gorm 同步模型 生成mysql表
 func (m *_mysql) AutoMigrateTables() {
 	if !global.Db.Migrator().HasTable("casbin_rule") {
-		m.err = global.Db.Migrator().CreateTable(&gdbadapter.CasbinRule{})
+		m.err = global.Db.Migrator().CreateTable(&system.Casbin{})
 	}
 	m.err = m.db.AutoMigrate(
 		new(system.Api),

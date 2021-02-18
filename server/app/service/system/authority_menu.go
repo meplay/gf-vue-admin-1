@@ -40,6 +40,6 @@ func (a *authorityMenu) AddMenuAuthority(info *request.AddMenuAuthority) error {
 //@description: 查看当前角色树
 func (a *authorityMenu) GetMenuAuthority(info *request.GetAuthorityId) (menus *[]model.AuthorityMenu, err error) {
 	entities := make([]model.AuthorityMenu, 0, 10)
-	err = g.DB().Table(a._authorityMenu.TableName()).Where(info.Condition()).Order("sort").Struct(entities)
+	err = g.DB().Table(a._authorityMenu.TableName()).Where(info.Condition()).Order("sort").Structs(&entities)
 	return &entities, err
 }

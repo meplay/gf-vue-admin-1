@@ -36,11 +36,11 @@ func (casbin *casbin) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.UpdateCasbin true "权限id, 权限模型列表"
+// @Param data body request.GetAuthorityId true "权限id, 权限模型列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /casbin/getPolicyPathByAuthorityId [post]
 func (casbin *casbin) GetPolicyPathByAuthorityId(r *ghttp.Request) *response.Response {
-	var info request.UpdateCasbin
+	var info request.GetAuthorityId
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
 	}
