@@ -85,13 +85,16 @@ func (a *authority) Delete(info *request.GetAuthorityId) error {
 	if !errors.Is(g.DB().Table(a._authority.TableName()).Where("parent_id = ?", info.AuthorityId).Struct(&entity), sql.ErrNoRows) {
 		return response.ErrorHasSonAuthority
 	}
-	if !errors.Is(g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity), sql.ErrNoRows) {
+	var user model.Admin
+	if !errors.Is(g.DB().Table(user.TableName()).Where(info.Condition()).Struct(&user), sql.ErrNoRows) {
 		return response.ErrorUseAuthority
 	}
 	if err := g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity); err != nil {
 		return err
 	}
-	entity.Menus = *internal.Authority.GetMenus(entity.AuthorityId)
+	if menus := internal.Authority.GetMenus(entity.AuthorityId); menus != nil {
+		entity.Menus = *menus
+	}
 	entity.DataAuthority = *internal.Authority.GetDataAuthority(entity.AuthorityId)
 	if _, err := g.DB().Table(a._authority.TableName()).Delete(info.Condition()); err != nil {
 		return err
