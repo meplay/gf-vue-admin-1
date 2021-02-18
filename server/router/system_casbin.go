@@ -20,6 +20,6 @@ func (casbin *CasbinRouter) Init() {
 	var router = casbin.router.Group("/casbin")
 	{
 		router.POST("updateCasbin", casbin.response.Handler()(api.Casbin.Update))
-		router.POST("getPolicyPathByAuthorityId", casbin.response.Handler()(api.Casbin.GetPolicyPathByAuthorityId))
+		router.POST("getPolicyPathByAuthorityId", casbin.response.Handler()(api.Casbin.GetPolicyPath))
 	}
 }

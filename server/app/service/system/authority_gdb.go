@@ -14,8 +14,9 @@ import (
 var Authority = new(authority)
 
 type authority struct {
-	_menu      model.Menu
-	_authority model.Authority
+	_menu             model.Menu
+	_authority        model.Authority
+	_authoritiesMenus model.AuthoritiesMenus
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -53,8 +54,15 @@ func (a *authority) Copy(info *request.CopyAuthority) error {
 	if _, err := g.DB().Table(a._authority.TableName()).Insert(&info.Authority); err != nil {
 		return err
 	}
-	if _, err := g.DB().Table(a._menu.TableName()).Insert(&info.Authority.Menus); err != nil {
-		return err
+	if len(info.Authority.Menus) > 0 {
+		for _, m := range info.Authority.Menus {
+			if _, err := g.DB().Table(a._authoritiesMenus.TableName()).Insert(&model.AuthoritiesMenus{
+				MenuId:      m.ID,
+				AuthorityId: info.Authority.AuthorityId,
+			}); err != nil {
+				return err
+			}
+		}
 	}
 	var paths = Casbin.GetPolicyPath(info.OldAuthorityId)
 	if err := Casbin.Update(&request.UpdateCasbin{AuthorityId: info.Authority.AuthorityId, CasbinInfos: paths}); err != nil {

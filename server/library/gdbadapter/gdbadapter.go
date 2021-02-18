@@ -20,6 +20,10 @@ type CasbinRule struct {
 	V5    string `orm:"v5" json:"v5"`
 }
 
+func (c *CasbinRule) TableName() string {
+	return "casbin_rule"
+}
+
 // Adapter represents the gdb adapter for policy storage.
 // Adapter 代表用于策略存储的gdb适配器。
 type Adapter struct {

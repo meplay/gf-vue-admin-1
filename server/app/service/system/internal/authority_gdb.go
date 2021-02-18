@@ -100,10 +100,11 @@ func (a *authority) GetMenus(id string) *[]model.Menu {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 删除原有menu树
 func (a *authority) ReplaceMenu(info *model.Authority) error {
-	menus := *a.GetMenus(info.AuthorityId)
-	for _, m := range menus {
-		if _, err := g.DB().Table(a._authoritiesMenus.TableName()).Delete(g.Map{"menu_id": m.ID}); err != nil {
-			g.Log().Error("删除 authorities_menus 表数据失败!", g.Map{"menu_id": m.ID})
+	if menus := a.GetMenus(info.AuthorityId); menus != nil {
+		for _, m := range *menus {
+			if _, err := g.DB().Table(a._authoritiesMenus.TableName()).Delete(g.Map{"menu_id": m.ID}); err != nil {
+				g.Log().Error("删除 authorities_menus 表数据失败!", g.Map{"menu_id": m.ID})
+			}
 		}
 	}
 	for _, m := range info.Menus {

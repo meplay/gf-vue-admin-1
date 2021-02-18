@@ -39,7 +39,7 @@ func (casbin *casbin) Update(r *ghttp.Request) *response.Response {
 // @Param data body request.GetAuthorityId true "权限id, 权限模型列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /casbin/getPolicyPathByAuthorityId [post]
-func (casbin *casbin) GetPolicyPathByAuthorityId(r *ghttp.Request) *response.Response {
+func (casbin *casbin) GetPolicyPath(r *ghttp.Request) *response.Response {
 	var info request.GetAuthorityId
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
