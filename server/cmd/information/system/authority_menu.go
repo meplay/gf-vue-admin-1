@@ -1,7 +1,6 @@
 package information
 
 import (
-	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/library/global"
 	"github.com/gookit/color"
 )
@@ -13,7 +12,7 @@ type authorityMenu struct{}
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: authority_menu 视图数据初始化
 func (a *authorityMenu) Init() error {
-	if global.Db.Model(&model.AuthorityMenu{}).Find(&[]model.AuthorityMenu{}).RowsAffected > 0 {
+	if global.Db.Raw("select * from authority_menu").RowsAffected > 0 {
 		color.Danger.Println("\n[Mysql] --> authority_menu 视图已存在!")
 		return nil
 	}
