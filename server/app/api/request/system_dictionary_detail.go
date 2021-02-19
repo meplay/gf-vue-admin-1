@@ -48,7 +48,7 @@ type SearchDictionaryDetail struct {
 }
 
 func (s *SearchDictionaryDetail) Search() g.Map {
-	var condition = make(g.Map, 4)
+	condition := make(g.Map, 4)
 	if s.Label != "" {
 		condition["`label` like ?"] = "%" + s.Label + "%"
 	}

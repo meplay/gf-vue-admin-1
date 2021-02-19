@@ -34,7 +34,7 @@ func (m *menu) GetBaseMenuTree(r *ghttp.Request) *response.Response {
 // @Router /menu/addBaseMenu [post]
 func (m *menu) Create(r *ghttp.Request) *response.Response {
 	var info model.Menu
-		if err := r.Parse(&info); err != nil {
+	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorAdd}
 	}
 	if err := service.Menu.Create(&info); err != nil {
@@ -53,7 +53,7 @@ func (m *menu) Create(r *ghttp.Request) *response.Response {
 // @Router /menu/deleteBaseMenu [post]
 func (m *menu) Delete(r *ghttp.Request) *response.Response {
 	var info request.GetById
-		if err := r.Parse(&info); err != nil {
+	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
 	if err := service.Menu.Delete(&info); err != nil {
@@ -73,7 +73,7 @@ func (m *menu) Delete(r *ghttp.Request) *response.Response {
 // @Router /menu/updateBaseMenu [post]
 func (m *menu) Update(r *ghttp.Request) *response.Response {
 	var info request.UpdateMenu
-		if err := r.Parse(&info); err != nil {
+	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
 	}
 	if err := service.Menu.Update(&info); err != nil {
@@ -93,7 +93,7 @@ func (m *menu) Update(r *ghttp.Request) *response.Response {
 // @Router /menu/getBaseMenuById [post]
 func (m *menu) First(r *ghttp.Request) *response.Response {
 	var info request.GetById
-		if err := r.Parse(&info); err != nil {
+	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
 	}
 	if data, err := service.Menu.First(&info); err != nil {
@@ -113,7 +113,7 @@ func (m *menu) First(r *ghttp.Request) *response.Response {
 // @Router /menu/getMenuList [post]
 func (m *menu) GetList(r *ghttp.Request) *response.Response {
 	var info request.PageInfo
-		if err := r.Parse(&info); err != nil {
+	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
 	}
 	if list, total, err := service.Menu.GetList(); err != nil {

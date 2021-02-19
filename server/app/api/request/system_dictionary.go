@@ -18,7 +18,6 @@ type CreateDictionary struct {
 
 func (c *CreateDictionary) Create() *model.Dictionary {
 	return &model.Dictionary{
-		//Model:             global.Model{CreatedAt: time.Now(), UpdatedAt: time.Now()},
 		Name:              c.Name,
 		Type:              c.Type,
 		Status:            c.Status,
@@ -56,7 +55,7 @@ type SearchDictionary struct {
 }
 
 func (s *SearchDictionary) Search() g.Map {
-	var condition = g.Map{}
+	condition := g.Map{}
 	if s.Name != "" {
 		condition["`name` like ?"] = "%" + s.Name + "%"
 	}

@@ -19,10 +19,12 @@ func (r *routers) Init() {
 		NewApiRouter(private).Init()
 		NewAdminGroup(private).Init()
 		NewMenuRouter(private).Init()
+		NewConfigRouter(private).Init()
 		NewCasbinRouter(private).Init()
 		NewAuthorityRouter(private).Init()
 		NewDictionaryRouter(private).Init()
 		NewJwtBlacklistGroup(private).Init()
+		NewOperationRecordRouter(private).Init()
 		NewDictionaryDetailRouter(private).Init()
 	}
 }

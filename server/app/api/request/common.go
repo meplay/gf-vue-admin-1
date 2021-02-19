@@ -20,6 +20,16 @@ func (i *GetById) Condition() g.Map {
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: Get by ids structure
+type GetByIds struct {
+	Ids []int `p:"ids" v:"required|length:1,1000#请输入ids|ids长度为:min到:max位"`
+}
+
+func (i *GetByIds) Condition() g.Map {
+	return g.Map{"id IN (?)": g.Slice{i.Ids}}
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: Delete by id structure
 type DeleteByIds struct {
 	Ids []int `p:"ids" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
