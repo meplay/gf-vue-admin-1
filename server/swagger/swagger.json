@@ -1,8 +1,13 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is a Gf-vue-admin Server",
+        "title": "Gf-vue-admin Swagger Docs",
+        "contact": {},
+        "license": {},
+        "version": "1.0.0"
     },
+    "basePath": "/",
     "paths": {
         "/api/createApi": {
             "post": {
@@ -500,7 +505,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UpdateCasbin"
+                            "$ref": "#/definitions/request.GetAuthorityId"
                         }
                     }
                 ],
@@ -1273,6 +1278,255 @@
                 }
             }
         },
+        "/sysOperationRecord/createSysOperationRecord": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "创建OperationRecord",
+                "parameters": [
+                    {
+                        "description": "创建OperationRecord",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateOperationRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"创建成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/deleteSysOperationRecord": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "删除OperationRecord",
+                "parameters": [
+                    {
+                        "description": "OperationRecord模型",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetById"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"删除成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/deleteSysOperationRecordByIds": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "批量删除OperationRecord",
+                "parameters": [
+                    {
+                        "description": "批量删除OperationRecord",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetByIds"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"批量删除成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/findSysOperationRecord": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "用id查询OperationRecord",
+                "parameters": [
+                    {
+                        "description": "主键ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetById"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"查询成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/getSysOperationRecordList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "分页获取OperationRecord列表",
+                "parameters": [
+                    {
+                        "description": "页码, 每页大小, 搜索条件",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SearchOperationRecord"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/system/getSystemConfig": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemConfig"
+                ],
+                "summary": "获取配置文件内容",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/system/setSystemConfig": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemConfig"
+                ],
+                "summary": "设置配置文件内容",
+                "parameters": [
+                    {
+                        "description": "设置配置文件内容",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/config.Config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"设置成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/changePassword": {
             "put": {
                 "security": [
@@ -1424,6 +1678,281 @@
         }
     },
     "definitions": {
+        "config.Aliyun": {
+            "type": "object",
+            "properties": {
+                "access_key_id": {
+                    "type": "string"
+                },
+                "acl_type": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "secret_access_key": {
+                    "type": "string"
+                },
+                "storage_class_type": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Captcha": {
+            "type": "object",
+            "properties": {
+                "captcha_in_redis": {
+                    "type": "boolean"
+                },
+                "imageHeight": {
+                    "type": "integer"
+                },
+                "imageWidth": {
+                    "type": "integer"
+                },
+                "keyLong": {
+                    "type": "integer"
+                }
+            }
+        },
+        "config.Casbin": {
+            "type": "object",
+            "properties": {
+                "modelPath": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Config": {
+            "type": "object",
+            "properties": {
+                "captcha": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Captcha"
+                },
+                "casbin": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Casbin"
+                },
+                "email": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Email"
+                },
+                "jwt": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Jwt"
+                },
+                "mysql": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Mysql"
+                },
+                "oss": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Oss"
+                },
+                "redis": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Redis"
+                },
+                "system": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.System"
+                }
+            }
+        },
+        "config.Email": {
+            "type": "object",
+            "properties": {
+                "from": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "isSsl": {
+                    "type": "boolean"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "secret": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Jwt": {
+            "type": "object",
+            "properties": {
+                "expiresAt": {
+                    "type": "integer"
+                },
+                "refreshAt": {
+                    "type": "integer"
+                },
+                "signingKey": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Local": {
+            "type": "object",
+            "properties": {
+                "local_path": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Minio": {
+            "type": "object",
+            "properties": {
+                "bucket": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "secret": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "use_ssl": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "config.Mysql": {
+            "type": "object",
+            "properties": {
+                "config": {
+                    "type": "string"
+                },
+                "dbname": {
+                    "type": "string"
+                },
+                "logMode": {
+                    "type": "boolean"
+                },
+                "logZap": {
+                    "type": "string"
+                },
+                "maxIdleConnes": {
+                    "type": "integer"
+                },
+                "maxOpenConnes": {
+                    "type": "integer"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Oss": {
+            "type": "object",
+            "properties": {
+                "aliyun": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Aliyun"
+                },
+                "local": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Local"
+                },
+                "minio": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Minio"
+                },
+                "qiniu": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Qiniu"
+                }
+            }
+        },
+        "config.Qiniu": {
+            "type": "object",
+            "properties": {
+                "access_key": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "img_path": {
+                    "type": "string"
+                },
+                "secret_key": {
+                    "type": "string"
+                },
+                "use_cdn_domains": {
+                    "type": "boolean"
+                },
+                "use_https": {
+                    "type": "boolean"
+                },
+                "zone": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Redis": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "db": {
+                    "type": "integer"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.System": {
+            "type": "object",
+            "properties": {
+                "UseMultipoint": {
+                    "type": "boolean"
+                },
+                "dbType": {
+                    "type": "string"
+                },
+                "env": {
+                    "type": "string"
+                },
+                "errorToEmail": {
+                    "type": "boolean"
+                },
+                "ossType": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Authority": {
             "type": "object",
             "properties": {
@@ -1539,11 +2068,11 @@
                 "UpdatedAt": {
                     "type": "string"
                 },
-                "base_menu_id": {
-                    "type": "integer"
-                },
                 "key": {
                     "type": "string"
+                },
+                "menuId": {
+                    "type": "integer"
                 },
                 "type": {
                     "type": "string"
@@ -1599,6 +2128,7 @@
             "type": "object",
             "properties": {
                 "authority": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Authority"
                 },
                 "oldAuthorityId": {
@@ -1682,6 +2212,41 @@
                 }
             }
         },
+        "request.CreateOperationRecord": {
+            "type": "object",
+            "properties": {
+                "agent": {
+                    "type": "string"
+                },
+                "errorMessage": {
+                    "type": "string"
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "latency": {
+                    "type": "string"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "request": {
+                    "type": "string"
+                },
+                "response": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.DeleteApi": {
             "type": "object",
             "properties": {
@@ -1721,6 +2286,17 @@
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "request.GetByIds": {
+            "type": "object",
+            "properties": {
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },
@@ -1808,6 +2384,26 @@
                 },
                 "value": {
                     "description": "字典值",
+                    "type": "integer"
+                }
+            }
+        },
+        "request.SearchOperationRecord": {
+            "type": "object",
+            "properties": {
+                "method": {
+                    "type": "string"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "type": "integer"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "status": {
                     "type": "integer"
                 }
             }
@@ -2020,6 +2616,13 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

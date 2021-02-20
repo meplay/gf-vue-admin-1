@@ -36,7 +36,7 @@ func (o *operation) Create(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetGormID true "主键ID"
+// @Param data body request.GetById true "主键ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
 // @Router /sysOperationRecord/findSysOperationRecord [get]
 func (o *operation) First(r *ghttp.Request) *response.Response {
@@ -56,7 +56,7 @@ func (o *operation) First(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetGormID true "OperationRecord模型"
+// @Param data body request.GetById true "OperationRecord模型"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /sysOperationRecord/deleteSysOperationRecord [delete]
 func (o *operation) Delete(r *ghttp.Request) *response.Response {

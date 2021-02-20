@@ -26,7 +26,7 @@ func (*_config) GetConfig(r *ghttp.Request) *response.Response {
 // @Summary 设置配置文件内容
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body config.Server true "设置配置文件内容"
+// @Param data body config.Config true "设置配置文件内容"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
 // @Router /system/setSystemConfig [post]
 func (*_config) SetConfig(r *ghttp.Request) *response.Response {
