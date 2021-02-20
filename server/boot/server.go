@@ -26,6 +26,7 @@ func (s *_server) Initialize() {
 		server.AddStaticPath("/"+g.Cfg("oss").GetString("local.LocalPath"), g.Cfg("oss").GetString("local.LocalPath"))
 	}
 	server.AddStaticPath("/form-generator", "public/page")
+	server.Use(router.Error, router.CORS)
 	router.Routers.Init()
 	fmt.Printf(`
 	欢迎使用 GoFrame-Vue-Admin

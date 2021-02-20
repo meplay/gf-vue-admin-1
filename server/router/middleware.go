@@ -4,6 +4,7 @@ import (
 	"gf-vue-admin/app/api/response"
 	api "gf-vue-admin/app/api/system"
 	service "gf-vue-admin/app/service/system"
+	"gf-vue-admin/library/global"
 	jwt "github.com/gogf/gf-jwt"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
@@ -59,4 +60,24 @@ func JwtAuth(r *ghttp.Request) {
 	}
 
 	r.Middleware.Next()
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 拦截器
+func CasbinRbac(r *ghttp.Request) {
+	// 获取请求的URI
+	obj := r.Request.URL.RequestURI()
+	// 获取请求方法
+	act := r.Request.Method
+	// 获取用户的角色
+	sub := r.GetParam("admin_authority_id")
+	e := service.Casbin.Casbin()
+	// 判断策略中是否存在
+	success, _ := e.Enforce(sub, obj, act)
+	if global.Config.System.Env == "develop" || success {
+		r.Middleware.Next()
+	} else {
+		_ = r.Response.WriteJson(&response.Response{Code: 7, Data: g.Map{}, Message: "权限不足"})
+		r.ExitAll()
+	}
 }
