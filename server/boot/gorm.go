@@ -2,6 +2,7 @@ package boot
 
 import (
 	"database/sql"
+	extra "gf-vue-admin/app/model/extra"
 	system "gf-vue-admin/app/model/system"
 	"gf-vue-admin/boot/internal"
 	"gf-vue-admin/library/config"
@@ -82,6 +83,11 @@ func (m *_mysql) AutoMigrateTables() {
 		new(system.JwtBlacklist),
 		new(system.DictionaryDetail),
 		new(system.MenuParameter),
+
+		new(extra.File),
+		new(extra.SimpleUploader),
+		new(extra.BreakpointContinue),
+		new(extra.BreakpointContinueChunk),
 	)
 	if m.err != nil {
 		g.Log().Error(`注册表失败!`, g.Map{"err": m.err})

@@ -31,7 +31,7 @@ yarn-error.log*
 *.sw?
 
 go.sum
-/server/local/
+/server/uploads/file/
 /server/log/
 /server/app/service/system/log/
 /server/latest_log

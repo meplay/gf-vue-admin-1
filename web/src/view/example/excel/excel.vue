@@ -4,7 +4,7 @@
       :action="`${path}/fileUploadAndDownload/upload`"
       :before-remove="beforeRemove"
       :file-list="fileList"
-      :headers="{'x-token':token}"
+      :headers="{ 'Authorization': 'Bearer ' + token }"
       :limit="10"
       :on-exceed="handleExceed"
       :on-preview="handlePreview"

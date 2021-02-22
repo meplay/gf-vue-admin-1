@@ -13,7 +13,7 @@
     <el-upload
       class="image-uploader"
       :action="`${path}/fileUploadAndDownload/upload`"
-      :headers="{ 'x-token': token }"
+      :headers="{ 'Authorization': 'Bearer ' + token }"
       :show-file-list="false"
       :on-success="handleImageSuccess"
       :before-upload="beforeImageUpload"

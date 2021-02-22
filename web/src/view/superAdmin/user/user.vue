@@ -17,12 +17,12 @@
       <el-table-column label="用户角色" min-width="150">
         <template slot-scope="scope">
           <el-cascader
-            @change="changeAuthority(scope.row)"
-            v-model="scope.row.authority.authorityId"
-            :options="authOptions"
-            :show-all-levels="false"
-            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
-            filterable
+              @change="changeAuthority(scope.row)"
+              v-model="scope.row.authority.authorityId"
+              :options="authOptions"
+              :show-all-levels="false"
+              :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
+              filterable
           ></el-cascader>
         </template>
       </el-table-column>
@@ -40,14 +40,14 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      :current-page="page"
-      :page-size="pageSize"
-      :page-sizes="[10, 30, 50, 100]"
-      :style="{float:'right',padding:'20px'}"
-      :total="total"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-      layout="total, sizes, prev, pager, next, jumper"
+        :current-page="page"
+        :page-size="pageSize"
+        :page-sizes="[10, 30, 50, 100]"
+        :style="{float:'right',padding:'20px'}"
+        :total="total"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        layout="total, sizes, prev, pager, next, jumper"
     ></el-pagination>
 
     <el-dialog :visible.sync="addUserDialog" custom-class="user-dialog" title="新增用户">
@@ -69,11 +69,11 @@
         </el-form-item>
         <el-form-item label="用户角色" label-width="80px" prop="authorityId">
           <el-cascader
-            v-model="userInfo.authorityId"
-            :options="authOptions"
-            :show-all-levels="false"
-            :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
-            filterable
+              v-model="userInfo.authorityId"
+              :options="authOptions"
+              :show-all-levels="false"
+              :props="{ checkStrictly: true,label:'authorityName',value:'authorityId',disabled:'disabled',emitPath:false}"
+              filterable
           ></el-cascader>
         </el-form-item>
       </el-form>
@@ -149,23 +149,23 @@ export default {
     },
     setAuthorityOptions(AuthorityData, optionsData) {
       AuthorityData &&
-        AuthorityData.map(item => {
-          if (item.children && item.children.length) {
-            const option = {
-              authorityId: item.authorityId,
-              authorityName: item.authorityName,
-              children: []
-            };
-            this.setAuthorityOptions(item.children, option.children);
-            optionsData.push(option);
-          } else {
-            const option = {
-              authorityId: item.authorityId,
-              authorityName: item.authorityName
-            };
-            optionsData.push(option);
-          }
-        });
+      AuthorityData.map(item => {
+        if (item.children && item.children.length) {
+          const option = {
+            authorityId: item.authorityId,
+            authorityName: item.authorityName,
+            children: []
+          };
+          this.setAuthorityOptions(item.children, option.children);
+          optionsData.push(option);
+        } else {
+          const option = {
+            authorityId: item.authorityId,
+            authorityName: item.authorityName
+          };
+          optionsData.push(option);
+        }
+      });
     },
     async deleteUser(row) {
       const res = await deleteUser({ id: row.ID });
@@ -214,16 +214,14 @@ export default {
 };
 </script>
 <style lang="scss">
-
 .button-box {
   padding: 10px 20px;
-  .el-button {
-    float: right;
-  }
+.el-button {
+  float: right;
 }
-
+}
 .user-dialog {
-  .header-img-box {
+.header-img-box {
   width: 200px;
   height: 200px;
   border: 1px dashed #ccc;
@@ -232,23 +230,23 @@ export default {
   line-height: 200px;
   cursor: pointer;
 }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409eff;
-  }
-  .avatar-uploader-icon {
-    border: 1px dashed #d9d9d9 !important;
-    border-radius: 6px;
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  border: 1px dashed #d9d9d9 !important;
+  border-radius: 6px;
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 }
 </style>

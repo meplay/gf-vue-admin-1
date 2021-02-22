@@ -6,7 +6,7 @@
           <el-upload
             :action="`${path}/fileUploadAndDownload/upload`"
             :before-upload="checkFile"
-            :headers="{ 'x-token': token }"
+            :headers="{ 'Authorization': 'Bearer ' + token }"
             :on-error="uploadError"
             :on-success="uploadSuccess"
             :show-file-list="false"
