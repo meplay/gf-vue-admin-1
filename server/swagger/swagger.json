@@ -557,6 +557,115 @@
                 }
             }
         },
+        "/fileUploadAndDownload/deleteFile": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraFile"
+                ],
+                "summary": "删除文件",
+                "parameters": [
+                    {
+                        "description": "传入文件里面id即可",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetById"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"删除成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/fileUploadAndDownload/getFileList": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraFile"
+                ],
+                "summary": "分页文件列表",
+                "parameters": [
+                    {
+                        "description": "页码, 每页大小",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.PageInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/fileUploadAndDownload/upload": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraFile"
+                ],
+                "summary": "上传文件示例",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "上传文件示例",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"上传成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/jwt/jsonInBlacklist": {
             "post": {
                 "security": [
@@ -1732,6 +1841,10 @@
         "config.Config": {
             "type": "object",
             "properties": {
+                "aliyun": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Aliyun"
+                },
                 "captcha": {
                     "type": "object",
                     "$ref": "#/definitions/config.Captcha"
@@ -1748,13 +1861,22 @@
                     "type": "object",
                     "$ref": "#/definitions/config.Jwt"
                 },
+                "local": {
+                    "description": "Oss",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Local"
+                },
+                "minio": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Minio"
+                },
                 "mysql": {
                     "type": "object",
                     "$ref": "#/definitions/config.Mysql"
                 },
-                "oss": {
+                "qiniu": {
                     "type": "object",
-                    "$ref": "#/definitions/config.Oss"
+                    "$ref": "#/definitions/config.Qiniu"
                 },
                 "redis": {
                     "type": "object",
@@ -1809,7 +1931,7 @@
         "config.Local": {
             "type": "object",
             "properties": {
-                "local_path": {
+                "path": {
                     "type": "string"
                 }
             }
@@ -1869,27 +1991,6 @@
                 },
                 "username": {
                     "type": "string"
-                }
-            }
-        },
-        "config.Oss": {
-            "type": "object",
-            "properties": {
-                "aliyun": {
-                    "type": "object",
-                    "$ref": "#/definitions/config.Aliyun"
-                },
-                "local": {
-                    "type": "object",
-                    "$ref": "#/definitions/config.Local"
-                },
-                "minio": {
-                    "type": "object",
-                    "$ref": "#/definitions/config.Minio"
-                },
-                "qiniu": {
-                    "type": "object",
-                    "$ref": "#/definitions/config.Qiniu"
                 }
             }
         },
