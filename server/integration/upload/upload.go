@@ -14,12 +14,12 @@ func Oss() interfaces.Oss {
 		return Qiniu
 	case "minio":
 		if err := Minio.init(); err != nil {
-			g.Log().Error("function Minio.init() Filed!", g.Map{"err": err})
+			g.Log().Error("function Minio.init() Failed!", g.Map{"err": err})
 		}
 		return Minio
 	case "aliyun":
 		if err := AliYun.init(); err != nil {
-			g.Log().Error("function AliYun.init() Filed!", g.Map{"err": err})
+			g.Log().Error("function AliYun.init() Failed!", g.Map{"err": err})
 		}
 		return AliYun
 	default:

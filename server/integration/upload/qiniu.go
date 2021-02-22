@@ -23,6 +23,7 @@ type _qiniu struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 上传文件到七牛云
 func (q *_qiniu) Upload(file *multipart.FileHeader) (path string, key string, err error) {
+
 	putPolicy := storage.PutPolicy{Scope: global.Config.Qiniu.Bucket}
 	mac := qbox.NewMac(global.Config.Qiniu.AccessKey, global.Config.Qiniu.SecretKey)
 	upToken := putPolicy.UploadToken(mac)
@@ -31,14 +32,17 @@ func (q *_qiniu) Upload(file *multipart.FileHeader) (path string, key string, er
 	putExtra := storage.PutExtra{Params: map[string]string{"x:name": "github logo"}}
 
 	if q._file, q.err = file.Open(); q.err != nil {
-		g.Log().Error("function file.Open() Filed!", g.Map{"err": q.err})
+		g.Log().Error("function file.Open() Failed!", g.Map{"err": q.err})
 		return path, key, q.err
 	}
+
 	fileKey := fmt.Sprintf("%d%s", time.Now().Unix(), file.Filename) // 文件名格式 自己可以改 建议保证唯一性
+
 	if q.err = formUploader.Put(context.Background(), &ret, upToken, fileKey, q._file, file.Size, &putExtra); q.err != nil {
-		g.Log().Error("function formUploader.Put() Filed!", g.Map{"err": q.err})
+		g.Log().Error("function formUploader.Put() Failed!", g.Map{"err": q.err})
 		return path, key, err
 	}
+
 	return global.Config.Qiniu.ImgPath + "/" + ret.Key, ret.Key, nil
 }
 
