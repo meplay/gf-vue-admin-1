@@ -1,5 +1,7 @@
 module gf-vue-admin
 
+go 1.14
+
 require (
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.4+incompatible
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
@@ -24,5 +26,3 @@ require (
 	gorm.io/driver/mysql v1.0.4
 	gorm.io/gorm v1.20.12
 )
-
-go 1.11
