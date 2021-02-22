@@ -9,3 +9,8 @@ type File struct {
 	Key  string `json:"key" gorm:"comment:编号"`
 	Name string `json:"name" gorm:"comment:文件名"`
 }
+
+func (f *File) TableName() string {
+	return "files"
+}
+

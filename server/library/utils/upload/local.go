@@ -19,9 +19,11 @@ func init() {
 	localPath = g.Cfg("oss").GetString("local.LocalPath")
 }
 
-type Local struct{}
+var Local = new(local)
 
-func (l Local) Upload(file *multipart.FileHeader) (string, string, error) {
+type local struct{}
+
+func (l *local) Upload(file *multipart.FileHeader) (string, string, error) {
 	// 读取文件后缀
 	ext := path.Ext(file.Filename)
 	// 读取文件名并加密
@@ -60,7 +62,7 @@ func (l Local) Upload(file *multipart.FileHeader) (string, string, error) {
 	return p, filename, nil
 }
 
-func (l Local) DeleteFile(key string) error {
+func (l *local) Delete(key string) error {
 	p := localPath + "/" + key
 	if strings.Contains(p, localPath) {
 		if err := os.Remove(p); err != nil {

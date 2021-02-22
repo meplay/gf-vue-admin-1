@@ -73,7 +73,7 @@ func (*Minio) Upload(file *multipart.FileHeader) (string, string, error) {
 }
 
 // DeleteFile 删除文件
-func (*Minio) DeleteFile(key string) error {
+func (*Minio) Delete(key string) error {
 	var client *minio.Client
 	client, newErr := minio.New(mEndpoint, &minio.Options{Creds: credentials.NewStaticV4(mId, mSecret, mToken), Secure: mUseSSL}) // Initialize minio client object.
 	if newErr != nil {

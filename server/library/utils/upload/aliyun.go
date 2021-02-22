@@ -82,7 +82,7 @@ func (*AliYun) Upload(file *multipart.FileHeader) (string, string, error) {
 	return aPath + "/" + objectName, objectName, nil
 }
 
-func (*AliYun) DeleteFile(key string) error {
+func (*AliYun) Delete(key string) error {
 	client, newErr := oss.New(aEndpoint, aAccessKeyID, aSecretAccessKey, oss.Timeout(10, 120))
 	if newErr != nil {
 		g.Log().Errorf("err:%v", newErr)

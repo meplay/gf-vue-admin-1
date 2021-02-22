@@ -58,7 +58,7 @@ func (*Qiniu) Upload(file *multipart.FileHeader) (string, string, error) {
 	return qImgPath + "/" + ret.Key, ret.Key, nil
 }
 
-func (*Qiniu) DeleteFile(key string) error {
+func (*Qiniu) Delete(key string) error {
 	mac := qbox.NewMac(qAccessKey, qSecretKey)
 	cfg := qiniuConfig()
 	bucketManager := storage.NewBucketManager(mac, cfg)

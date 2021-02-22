@@ -12,7 +12,7 @@ var Oss OSS
 
 type OSS interface {
 	Upload(file *multipart.FileHeader) (string, string, error)
-	DeleteFile(key string) error
+	Delete(key string) error
 }
 
 func getObjectName(filename string) string {
@@ -23,7 +23,7 @@ func getObjectName(filename string) string {
 func init() {
 	switch g.Cfg("system").GetString("system.OssType") {
 	case "local":
-		Oss = &Local{}
+		Oss = Local
 	case "qiniu":
 		Oss = &Qiniu{}
 	case "minio":
@@ -31,6 +31,6 @@ func init() {
 	case "aliyun":
 		Oss = &AliYun{}
 	default:
-		Oss = &Local{}
+		Oss = Local
 	}
 }
