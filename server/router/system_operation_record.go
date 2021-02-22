@@ -3,6 +3,7 @@ package router
 import (
 	"gf-vue-admin/app/api/response"
 	api "gf-vue-admin/app/api/system"
+	"gf-vue-admin/interfaces"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -11,7 +12,7 @@ type OperationRecordRouter struct {
 	response *response.Handler
 }
 
-func NewOperationRecordRouter(router *ghttp.RouterGroup) *OperationRecordRouter {
+func NewOperationRecordRouter(router *ghttp.RouterGroup) interfaces.Router {
 	return &OperationRecordRouter{router: router, response: &response.Handler{}}
 }
 

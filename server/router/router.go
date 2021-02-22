@@ -25,5 +25,7 @@ func (r *routers) Init() {
 		NewJwtBlacklistGroup(private).Init()
 		NewOperationRecordRouter(private).Init()
 		NewDictionaryDetailRouter(private).Init()
+
+		NewFileRouter(private).Init()
 	}
 }
