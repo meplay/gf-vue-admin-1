@@ -25,11 +25,11 @@ func (g *_gorm) Initialize() {
 
 func init() {
 	global.Config.Mysql = config.Mysql{
-		Path:          g.Cfg().GetString("database.default.Host") + ":" + g.Cfg().GetString("database.default.Port"),
+		Path:          g.Cfg().GetString("database.default.host") + ":" + g.Cfg().GetString("database.default.port"),
 		Config:        "charset=utf8mb4&parseTime=True&loc=Local",
-		Dbname:        g.Cfg().GetString("database.default.Name"),
-		Username:      g.Cfg().GetString("database.default.User"),
-		Password:      g.Cfg().GetString("database.default.Pass"),
+		Dbname:        g.Cfg().GetString("database.default.name"),
+		Username:      g.Cfg().GetString("database.default.user"),
+		Password:      g.Cfg().GetString("database.default.pass"),
 		MaxIdleConnes: 10,
 		MaxOpenConnes: 10,
 		LogMode:       false,

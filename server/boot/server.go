@@ -22,8 +22,8 @@ func (s *_server) Initialize() {
 	server.SetMaxHeaderBytes(1 << 20)
 	server.SetIndexFolder(true)
 	if global.Config.System.OssType == "local" {
-		_ = utils.CreateDir(g.Cfg("oss").GetString("local.LocalPath"))
-		server.AddStaticPath("/"+g.Cfg("oss").GetString("local.LocalPath"), g.Cfg("oss").GetString("local.LocalPath"))
+		_ = utils.Directory.BatchCreate(global.Config.Local.Path)
+		server.AddStaticPath("/"+global.Config.Local.Path, global.Config.Local.Path)
 	}
 	server.AddStaticPath("/form-generator", "public/page")
 	server.Use(router.Error, router.CORS)

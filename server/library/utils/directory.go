@@ -6,13 +6,13 @@ import (
 	"github.com/gogf/gf/frame/g"
 )
 
-// @title    PathExists
-// @description   文件目录是否存在
-// @auth                     （2020/04/05  20:22）
-// @param     path            string
-// @return    err             error
+var Directory = new(_directory)
 
-func PathExists(path string) (bool, error) {
+type _directory struct{}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 文件目录是否存在
+func (d *_directory) PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
 		return true, nil
@@ -23,25 +23,20 @@ func PathExists(path string) (bool, error) {
 	return false, err
 }
 
-// @title    createDir
-// @description   批量创建文件夹
-// @auth                     （2020/04/05  20:22）
-// @param     dirs            string
-// @return    err             error
-
-func CreateDir(dirs ...string) (err error) {
-	for _, v := range dirs {
-		exist, err := PathExists(v)
-		if err != nil {
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 批量创建文件夹
+func (d *_directory) BatchCreate(directories ...string) error {
+	for _, directory := range directories {
+		if exist, err := d.PathExists(directory); err != nil {
 			return err
-		}
-		if !exist {
-			g.Log().Debug("create directory ", v)
-			err = os.MkdirAll(v, os.ModePerm)
-			if err != nil {
-				g.Log().Error("create directory", v, " error:", err)
+		} else {
+			if !exist {
+				if err = os.MkdirAll(directory, os.ModePerm); err != nil {
+					g.Log().Info("Function os.MkdirAll Failed!", g.Map{"err": err})
+				}
 			}
 		}
 	}
-	return err
+	g.Log().Info("Batch Create Succeed!", g.Map{"directory": directories})
+	return nil
 }

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"gf-vue-admin/app/api/request"
 	model "gf-vue-admin/app/model/extra"
-	"gf-vue-admin/library/utils/upload"
+	"gf-vue-admin/integration/upload"
 	"github.com/gogf/gf/frame/g"
 	"mime/multipart"
 	"strings"
@@ -38,7 +38,7 @@ func (f *file) Delete(info *request.GetById) error {
 	if result, err := f.First(info); err != nil {
 		return err
 	} else {
-		if err = upload.Oss.Delete(result.Key); err != nil {
+		if err = upload.Oss().Delete(result.Key); err != nil {
 			return errors.New("文件删除失败")
 		}
 		_, err = g.DB().Table(f._file.TableName()).Delete(info.Condition())
@@ -60,7 +60,7 @@ func (f *file) GetList(info *request.PageInfo) (list *[]model.File, total int, e
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 根据配置文件判断是文件上传到本地或者七牛云
 func (f *file) UploadFile(header *multipart.FileHeader, noSave string) (file *model.File, err error) {
-	if filePath, key, uploadErr := upload.Oss.Upload(header); uploadErr != nil {
+	if filePath, key, uploadErr := upload.Oss().Upload(header); uploadErr != nil {
 		return nil, uploadErr
 	} else {
 		s := strings.Split(header.Filename, ".")

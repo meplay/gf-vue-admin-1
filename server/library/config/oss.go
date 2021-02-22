@@ -1,14 +1,7 @@
 package config
 
-type Oss struct {
-	Local  Local  `json:"local"`
-	Qiniu  Qiniu  `json:"qiniu"`
-	Minio  Minio  `json:"minio"`
-	Aliyun Aliyun `json:"aliyun"`
-}
-
 type Local struct {
-	LocalPath string `json:"local_path"`
+	Path string `mapstructure:"path" json:"path" yaml:"path"`
 }
 
 type Qiniu struct {

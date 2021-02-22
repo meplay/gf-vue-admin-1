@@ -2,7 +2,7 @@
 jwt:
   expires-at: 1 # 3600000000000秒 == 1天 默认设置为1天
   refresh-at: 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
-  signing-key: "SliverHorn"
+  signing-key: 'SliverHorn'
 
 # redis configuration
 redis:
@@ -26,9 +26,9 @@ casbin:
 
 # system configuration
 system:
-  env: "public" # Change to "develop" to skip authentication for development mode
-  db-type: "mysql" # mysql/
-  oss-type: "local"
+  env: 'public' # Change to 'develop' to skip authentication for development mode
+  db-type: 'mysql'
+  oss-type: 'local'
   error-to-email: false
   use-multipoint: false
 
@@ -39,3 +39,36 @@ captcha:
   image-height: 80
   captcha-in-redis: false
 
+# local configuration
+local:
+  path: 'uploads/file'
+
+# qiniu configuration (请自行七牛申请对应的 公钥 私钥 bucket 域名地址)
+qiniu:
+  zone: 'ZoneHuaDong' # 配置请看server/integration/upload/internal/qiniu.go
+  bucket: ''
+  img-path: ''
+  use-https: false
+  access-key: ''
+  secret-key: ''
+  use-cdn-domains: false
+
+# minio configuration
+minio:
+  id: 'minio'
+  Path: 'http://localhost:9000'
+  Token: ''
+  Bucket: 'public'
+  UseSsl: false
+  Secret: 'minio'
+  Endpoint: 'localhost:9000'
+
+# aliyun configuration
+aliyun:
+  Path: 'https://xxx.oss-cn-beijing.aliyuncs.com'
+  Bucket: ''
+  ACLType: ''
+  Endpoint: 'https://oss-cn-beijing.aliyuncs.com'
+  AccessKeyID: ''
+  SecretAccessKey: ''
+  StorageClassType: 'Standard' # 配置请看server/integration/upload/internal/aliyun.go

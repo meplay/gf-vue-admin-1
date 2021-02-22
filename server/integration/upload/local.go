@@ -15,10 +15,6 @@ import (
 
 var localPath string
 
-func init() {
-	localPath = g.Cfg("oss").GetString("local.LocalPath")
-}
-
 var Local = new(local)
 
 type local struct{}

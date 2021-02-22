@@ -1,0 +1,41 @@
+# HTTP Server
+server:
+  address: ':8889'
+  log-path: './logs/server'
+  dump-router-map: true
+  access-log-enabled: true
+  error-log-enabled: true
+
+# Logger
+logger:
+  path: './logs/log'
+  level: 'all'
+  stdout: true
+
+# database 配置
+database:
+  default: # 默认启动Mysql配置
+    host: '127.0.0.1'
+    port: '13307'
+    user: 'root'
+    pass: 'gdkid,,..'
+    name: 'gf-vue-admin'
+    type: 'mysql'
+    role: ''
+    debug: true
+    pre-fix: ''
+    dry-run: ''
+    charset: 'utf8mb4'
+    weight: ''
+    max-idle: ''
+    max-open: ''
+    max-lifetime: ''
+  logger: # Database logger.
+    path: './logs/sql'
+    level: 'all'
+    stdout: true
+
+# Redis 配置
+redis:
+  default: '127.0.0.1:6379,1,?idleTimeout=600'
+  cache: '127.0.0.1:6379,2,?idleTimeout=600'
