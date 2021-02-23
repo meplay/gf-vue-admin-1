@@ -7,4 +7,5 @@ const (
 	SerializerJson = "json"
 
 	BasePath = "./template"
+	AutoPath = "generate/"
 )
