@@ -7,16 +7,16 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type Admin struct {
+type AdminRouter struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
 }
 
 func NewAdminGroup(router *ghttp.RouterGroup) interfaces.Router {
-	return &Admin{router: router, response: &response.Handler{}}
+	return &AdminRouter{router: router, response: &response.Handler{}}
 }
 
-func (a *Admin) Init() {
+func (a *AdminRouter) Init() {
 	var admin = a.router.Group("/user")
 	{
 		admin.POST("register", a.response.Handler()(api.Admin.Register))             // 新增用户
