@@ -96,7 +96,7 @@ func (a *authority) Delete(info *request.GetAuthorityId) error {
 		entity.Menus = *menus
 	}
 	entity.DataAuthority = *internal.Authority.GetDataAuthority(entity.AuthorityId)
-	if _, err := g.DB().Table(a._authority.TableName()).Delete(info.Condition()); err != nil {
+	if _, err := g.DB().Table(a._authority.TableName()).Unscoped().Delete(info.Condition()); err != nil {
 		return err
 	}
 	if len(entity.Menus) > 0 {

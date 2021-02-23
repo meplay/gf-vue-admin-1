@@ -10,7 +10,7 @@ import service from '@/utils/request'
 // @Router /{{.Abbreviation}}/create{{.StructName}} [post]
 export const create{{.StructName}} = (data) => {
      return service({
-         url: "/{{.Abbreviation}}/create{{.StructName}}",
+         url: "/{{.Abbreviation}}/create",
          method: 'post',
          data
      })
@@ -27,7 +27,7 @@ export const create{{.StructName}} = (data) => {
 // @Router /{{.Abbreviation}}/delete{{.StructName}} [delete]
  export const delete{{.StructName}} = (data) => {
      return service({
-         url: "/{{.Abbreviation}}/delete{{.StructName}}",
+         url: "/{{.Abbreviation}}/delete",
          method: 'delete',
          data
      })
@@ -43,7 +43,7 @@ export const create{{.StructName}} = (data) => {
 // @Router /{{.Abbreviation}}/delete{{.StructName}} [delete]
  export const delete{{.StructName}}ByIds = (data) => {
      return service({
-         url: "/{{.Abbreviation}}/delete{{.StructName}}ByIds",
+         url: "/{{.Abbreviation}}/deletes",
          method: 'delete',
          data
      })
@@ -59,7 +59,7 @@ export const create{{.StructName}} = (data) => {
 // @Router /{{.Abbreviation}}/update{{.StructName}} [put]
  export const update{{.StructName}} = (data) => {
      return service({
-         url: "/{{.Abbreviation}}/update{{.StructName}}",
+         url: "/{{.Abbreviation}}/update",
          method: 'put',
          data
      })
@@ -76,7 +76,7 @@ export const create{{.StructName}} = (data) => {
 // @Router /{{.Abbreviation}}/find{{.StructName}} [get]
  export const find{{.StructName}} = (params) => {
      return service({
-         url: "/{{.Abbreviation}}/find{{.StructName}}",
+         url: "/{{.Abbreviation}}/first",
          method: 'get',
          params
      })
@@ -93,7 +93,7 @@ export const create{{.StructName}} = (data) => {
 // @Router /{{.Abbreviation}}/get{{.StructName}}List [get]
  export const get{{.StructName}}List = (params) => {
      return service({
-         url: "/{{.Abbreviation}}/get{{.StructName}}List",
+         url: "/{{.Abbreviation}}/getList",
          method: 'get',
          params
      })
