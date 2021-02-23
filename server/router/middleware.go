@@ -51,7 +51,7 @@ func JwtAuth(r *ghttp.Request) {
 		var claims = gconv.Map(_jwt.Claims)
 		r.SetParam("claims", _jwt.Claims)
 		r.SetParam("admin_authority_id", claims["admin_authority_id"])
-		if g.Cfg("system").GetBool("system.UseMultipoint") {
+		if global.Config.System.UseMultipoint {
 			if !service.JwtBlacklist.ValidatorRedisToken(gconv.String(claims["admin_uuid"]), token) {
 				_ = r.Response.WriteJson(&response.Response{Code: 7, Data: g.Map{"reload": true}, Message: "Token鉴权失败!"})
 				r.Exit()
