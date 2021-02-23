@@ -14,6 +14,23 @@ var Admin = new(admin)
 type admin struct{}
 
 // @Tags SystemAdmin
+// @Summary 用户注册账号
+// @Produce  application/json
+// @Param data body request.Register true "用户名, 昵称, 密码, 角色ID"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
+// @Router /user/register [post]
+func (a *admin) Register(r *ghttp.Request) *response.Response {
+	var info request.Register
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorAdminRegister}
+	}
+	if err := service.Admin.Register(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorAdminRegister}
+	}
+	return &response.Response{MessageCode: response.SuccessAdminRegister}
+}
+
+// @Tags SystemAdmin
 // @Summary 用户修改密码
 // @Security ApiKeyAuth
 // @Produce  application/json

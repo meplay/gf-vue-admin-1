@@ -1,6 +1,8 @@
 package service
 
 import (
+	"database/sql"
+	"errors"
 	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	"gf-vue-admin/app/model/system"
@@ -12,6 +14,21 @@ var Admin = new(admin)
 
 type admin struct {
 	_admin model.Admin
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 注册逻辑代码
+func (a *admin) Register(info *request.Register) error {
+	var entity model.Admin
+	if !errors.Is(g.DB().Table(a._admin.TableName()).Where(g.Map{"username": info.Username}).Struct(&entity), sql.ErrNoRows) {
+		return response.ErrorUsernameRegistered
+	}
+	user := info.Create()
+	if err := user.EncryptedPassword(); err != nil {
+		return response.ErrorEncryptedPassword
+	}
+	_, err := g.DB().Table(a._admin.TableName()).Data(user).Insert()
+	return err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

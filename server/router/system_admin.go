@@ -19,6 +19,7 @@ func NewAdminGroup(router *ghttp.RouterGroup) interfaces.Router {
 func (a *Admin) Init() {
 	var admin = a.router.Group("/user")
 	{
+		admin.POST("register", a.response.Handler()(api.Admin.Register))             // 新增用户
 		admin.PUT("setUserInfo", a.response.Handler()(api.Admin.Update))             // 设置用户信息
 		admin.DELETE("deleteUser", a.response.Handler()(api.Admin.Delete))           // 删除用户
 		admin.POST("getUserList", a.response.Handler()(api.Admin.GetList))           // 分页获取用户列表
