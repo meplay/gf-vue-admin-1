@@ -1,13 +1,13 @@
 BINARY="gf-vue-admin"
-GVA = "gfva"
+GFVA = "gfva"
 
 all: check gfva run
 
 gfva:
 	go env -w GO111MODULE=on
 	go env -w GOPROXY=https://goproxy.io,direct
-	go build -o ${GVA} cmd/main.go
-	@if [ -f ${GVA} ] ; then ./${GVA} initdb && rm ${GVA} ; fi
+	go build -o ${GFVA} cmd/main.go
+	@if [ -f ${GFVA} ] ; then ./${GFVA} initdb && rm ${GFVA} ; fi
 
 linux-build:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
@@ -27,7 +27,7 @@ check:
 
 clean:
 	@if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
-	@if [ -f ${GVA} ] ; then rm ${GVA} ; fi
+	@if [ -f ${GFVA} ] ; then rm ${GFVA} ; fi
 
 help:
 	@echo "make - 构建gfva终端工具并初始化数据,初始化数据后删除gfva终端工具,启动server项目"
