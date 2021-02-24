@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"gf-vue-admin/library/global"
-	"go.uber.org/zap"
+	"github.com/gogf/gf/frame/g"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/utils"
@@ -136,15 +136,15 @@ func (c *customLogger) Printf(message string, data ...interface{}) {
 	if global.Config.Mysql.LogZap != "" {
 		switch len(data) {
 		case 0:
-			zap.L().Info(message)
+			g.Log().Info(message)
 		case 1:
-			zap.L().Info("gorm", zap.Any("src", data[0]))
+			g.Log().Info("gorm", g.Map{"src": data[0]})
 		case 2:
-			zap.L().Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]))
+			g.Log().Info("gorm", g.Map{"src": data[0]}, g.Map{"duration": data[1]})
 		case 3:
-			zap.L().Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]))
+			g.Log().Info("gorm", g.Map{"src": data[0]}, g.Map{"duration": data[1]}, g.Map{"rows": data[2]})
 		case 4:
-			zap.L().Info("gorm", zap.Any("src", data[0]), zap.Any("duration", data[1]), zap.Any("rows", data[2]), zap.Any("sql", data[3]))
+			g.Log().Info("gorm", g.Map{"src": data[0]}, g.Map{"duration": data[1]}, g.Map{"rows": data[2]}, g.Map{"sql": data[3]})
 		}
 		return
 	}
