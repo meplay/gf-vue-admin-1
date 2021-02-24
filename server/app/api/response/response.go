@@ -48,6 +48,9 @@ func (h *Handler) Handler() func(handler handler) func(r *ghttp.Request) {
 				}
 			default:
 				if response.Code == 0 || response.Code == 7 {
+					if response.Error != nil {
+						response.Err = response.Error.Error()
+					}
 					_ = r.Response.WriteJson(response)
 					return
 				}

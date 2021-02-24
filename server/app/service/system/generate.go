@@ -110,8 +110,8 @@ func (s *generate) Preview(info *model.AutoCode) (result map[string]string, err 
 		return result, s.err
 	}
 
-	if err = utils.Directory.BatchCreate(s.directory...); err != nil { // 写入文件前，先创建文件夹
-		return result, err
+	if s.err = utils.Directory.BatchCreate(s.directory...); s.err != nil { // 写入文件前，先创建文件夹
+		return result, s.err
 	}
 
 	for _, value := range s.data {
@@ -120,17 +120,17 @@ func (s *generate) Preview(info *model.AutoCode) (result map[string]string, err 
 		}
 
 		if s.file, s.err = os.OpenFile(value.AutoCodePath, os.O_CREATE|os.O_WRONLY, 0755); s.err != nil {
-			return result, err
+			return result, s.err
 		}
 
 		if s.err = value.Template.Execute(s.file, info); s.err != nil {
-			return result, err
+			return result, s.err
 		}
 
 		_ = s.file.Close()
 
 		if s.file, s.err = os.OpenFile(value.AutoCodePath, os.O_CREATE|os.O_RDONLY, 0755); s.err != nil {
-			return result, err
+			return result, s.err
 		}
 
 		builder := strings.Builder{}
@@ -143,7 +143,7 @@ func (s *generate) Preview(info *model.AutoCode) (result map[string]string, err 
 		builder.WriteString("\n\n")
 
 		if s.content, s.err = ioutil.ReadAll(s.file); s.err != nil {
-			return result, err
+			return result, s.err
 		}
 
 		builder.Write(s.content)

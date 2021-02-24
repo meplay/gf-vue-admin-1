@@ -65,15 +65,23 @@ func (a *generate) GetColumns(r *ghttp.Request) *response.Response {
 }
 
 // @Tags SystemGenerate
-// @Summary 自动代码模板
+// @Summary 预览创建后的代码
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.AutoCode true "创建自动代码"
+// @Param data body model.AutoCodeStruct true "预览创建代码"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
-// @Router /autoCode/createTemp [post]
+// @Router /autoCode/preview [post]
 func (a *generate) Preview(r *ghttp.Request) *response.Response {
-	return &response.Response{}
+	var info model.AutoCode
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Code: 7, Error: err, Message: "预览代码失败!"}
+	}
+	if result, err := service.Generate.Preview(&info); err != nil {
+		return &response.Response{Code: 7, Error: err, Message: "预览代码失败!"}
+	} else {
+		return &response.Response{Code: 0, Data: g.Map{"autoCode": result}, Message: "预览成功"}
+	}
 }
 
 // @Tags SystemGenerate

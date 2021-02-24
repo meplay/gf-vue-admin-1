@@ -1,4 +1,4 @@
-const title = 'GIN-VUE-ADMIN'
+const title = 'GOFRAME-VUE-ADMIN'
 
 export default function getPageTitle(pageTitle) {
     if (pageTitle) {

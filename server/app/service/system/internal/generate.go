@@ -19,11 +19,11 @@ type generate struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取全部tpl文件
-func (g *generate) GetAllTemplateFile(path string, fileList []string) ([]string, error) {
+func (a *generate) GetAllTemplateFile(path string, fileList []string) ([]string, error) {
 	files, err := ioutil.ReadDir(path)
 	for _, file := range files {
 		if file.IsDir() {
-			if fileList, err = g.GetAllTemplateFile(path+"/"+file.Name(), fileList); err != nil {
+			if fileList, err = a.GetAllTemplateFile(path+"/"+file.Name(), fileList); err != nil {
 				return nil, err
 			}
 		} else {
@@ -37,10 +37,10 @@ func (g *generate) GetAllTemplateFile(path string, fileList []string) ([]string,
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取需要文件内容
-func (g *generate) GetNeedList(autoCode *model.AutoCode) (dataList []model.TemplateData, fileList []string, needMkdir []string, err error) {
+func (a *generate) GetNeedList(autoCode *model.AutoCode) (dataList []model.TemplateData, fileList []string, needMkdir []string, err error) {
 	var tplFileList []string
 	// 获取 basePath 文件夹下所有tpl文件
-	if tplFileList, err = g.GetAllTemplateFile(constant.BasePath, nil); err != nil {
+	if tplFileList, err = a.GetAllTemplateFile(constant.BasePath, nil); err != nil {
 		return dataList, fileList, needMkdir, err
 	}
 	dataList = make([]model.TemplateData, 0, len(tplFileList))
@@ -71,8 +71,7 @@ func (g *generate) GetNeedList(autoCode *model.AutoCode) (dataList []model.Templ
 			origFileName := strings.TrimSuffix(trimBase[lastSeparator+1:], ".tpl")
 			firstDot := strings.Index(origFileName, ".")
 			if firstDot != -1 {
-				dataList[index].AutoCodePath = filepath.Join(constant.AutoPath, trimBase[:lastSeparator], autoCode.PackageName,
-					origFileName[:firstDot], autoCode.PackageName+origFileName[firstDot:])
+				dataList[index].AutoCodePath = filepath.Join(constant.AutoPath, trimBase[:lastSeparator], autoCode.PackageName, origFileName[:firstDot], autoCode.PackageName+origFileName[firstDot:])
 			}
 		}
 
@@ -86,7 +85,7 @@ func (g *generate) GetNeedList(autoCode *model.AutoCode) (dataList []model.Templ
 	return dataList, fileList, needMkdir, err
 }
 
-func (g *generate) AddAutoMoveFile(data *model.TemplateData) {
+func (a *generate) AddAutoMoveFile(data *model.TemplateData) {
 	dir := filepath.Base(filepath.Dir(data.AutoCodePath))
 	base := filepath.Base(data.AutoCodePath)
 	fileSlice := strings.Split(data.AutoCodePath, string(os.PathSeparator))
@@ -121,29 +120,29 @@ func (g *generate) AddAutoMoveFile(data *model.TemplateData) {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 文件移动
-func (g *generate) FileMove(src string, dst string) error {
+func (a *generate) FileMove(src string, dst string) error {
 
 	if dst == "" {
-		return g.err
+		return a.err
 	}
 
-	if src, g.err = filepath.Abs(src); g.err != nil {
-		return g.err
+	if src, a.err = filepath.Abs(src); a.err != nil {
+		return a.err
 	}
 
-	if dst, g.err = filepath.Abs(dst); g.err != nil {
-		return g.err
+	if dst, a.err = filepath.Abs(dst); a.err != nil {
+		return a.err
 	}
 
 	dir := filepath.Dir(dst)
 
 redirect:
-	if _, g.err = os.Stat(dir); g.err != nil {
-		if g.err = os.MkdirAll(dir, 0755); g.err != nil {
-			return g.err
+	if _, a.err = os.Stat(dir); a.err != nil {
+		if a.err = os.MkdirAll(dir, 0755); a.err != nil {
+			return a.err
 		}
-		if !g.revoke {
-			g.revoke = true
+		if !a.revoke {
+			a.revoke = true
 			goto redirect
 		}
 	}

@@ -46,7 +46,7 @@ import echarts from 'echarts'
 Vue.prototype.$echarts = echarts;
 
 console.log(`
-       欢迎使用 Gin-Vue-Admin
+       欢迎使用 Gf-Vue-Admin
        当前版本:V2.3.9
        加群方式:微信：shouzi_1994 QQ群：622360840
        默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
