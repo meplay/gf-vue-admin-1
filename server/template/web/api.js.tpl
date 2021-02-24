@@ -7,7 +7,7 @@ import service from '@/utils/request'
 // @Produce application/json
 // @Param data body model.{{.StructName}} true "创建{{.StructName}}"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /{{.Abbreviation}}/create{{.StructName}} [post]
+// @Router /{{.Abbreviation}}/create [post]
 export const create{{.StructName}} = (data) => {
      return service({
          url: "/{{.Abbreviation}}/create",
@@ -24,7 +24,7 @@ export const create{{.StructName}} = (data) => {
 // @Produce application/json
 // @Param data body model.{{.StructName}} true "删除{{.StructName}}"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /{{.Abbreviation}}/delete{{.StructName}} [delete]
+// @Router /{{.Abbreviation}}/delete [delete]
  export const delete{{.StructName}} = (data) => {
      return service({
          url: "/{{.Abbreviation}}/delete",
@@ -40,7 +40,7 @@ export const create{{.StructName}} = (data) => {
 // @Produce application/json
 // @Param data body request.IdsReq true "批量删除{{.StructName}}"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /{{.Abbreviation}}/delete{{.StructName}} [delete]
+// @Router /{{.Abbreviation}}/delete [delete]
  export const delete{{.StructName}}ByIds = (data) => {
      return service({
          url: "/{{.Abbreviation}}/deletes",
@@ -56,7 +56,7 @@ export const create{{.StructName}} = (data) => {
 // @Produce application/json
 // @Param data body model.{{.StructName}} true "更新{{.StructName}}"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /{{.Abbreviation}}/update{{.StructName}} [put]
+// @Router /{{.Abbreviation}}/update [put]
  export const update{{.StructName}} = (data) => {
      return service({
          url: "/{{.Abbreviation}}/update",
@@ -73,7 +73,7 @@ export const create{{.StructName}} = (data) => {
 // @Produce application/json
 // @Param data body model.{{.StructName}} true "用id查询{{.StructName}}"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /{{.Abbreviation}}/find{{.StructName}} [get]
+// @Router /{{.Abbreviation}}/first [get]
  export const find{{.StructName}} = (params) => {
      return service({
          url: "/{{.Abbreviation}}/first",
@@ -90,7 +90,7 @@ export const create{{.StructName}} = (data) => {
 // @Produce application/json
 // @Param data body request.PageInfo true "分页获取{{.StructName}}列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /{{.Abbreviation}}/get{{.StructName}}List [get]
+// @Router /{{.Abbreviation}}/getList [get]
  export const get{{.StructName}}List = (params) => {
      return service({
          url: "/{{.Abbreviation}}/getList",

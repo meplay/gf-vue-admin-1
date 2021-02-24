@@ -3,6 +3,7 @@ package api
 import (
 	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/app/model"
 	"gf-vue-admin/app/service"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
@@ -48,6 +49,26 @@ func (a *{{.Abbreviation}}) First(r *ghttp.Request) *response.Response {
 		return &response.Response{Error: err, MessageCode: response.ErrorFirst}
 	} else {
 		return &response.Response{Data: g.Map{"resys{{.StructName}}": data}, MessageCode: response.SuccessFirst}
+	}
+}
+
+// @Tags {{.StructName}}
+// @Summary 更新{{.StructName}}
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body model.{{.StructName}} true "{{.Abbreviation}}模型"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
+// @Router /{{.Abbreviation}}/update [put]
+func (a *{{.Abbreviation}}) Update(r *ghttp.Request) *response.Response {
+	var info model.{{.StructName}}
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
+	}
+	if result, err := service.{{.StructName}}.Update(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
+	} else {
+        return &response.Response{Data: g.Map{"{{.Abbreviation}}": result}, MessageCode: response.SuccessUpdated}
 	}
 }
 

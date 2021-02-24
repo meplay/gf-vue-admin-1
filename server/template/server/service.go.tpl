@@ -14,8 +14,8 @@ type {{.Abbreviation}} struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 创建{{.StructName}}记录
-func (r *{{.Abbreviation}}) Create(info *model.{{.StructName}}) error {
-	_, err := g.DB().Table(r._{{.Abbreviation}}.TableName()).Insert(info)
+func (s *{{.Abbreviation}}) Create(info *model.{{.StructName}}) error {
+	_, err := g.DB().Table(s._{{.Abbreviation}}.TableName()).Insert(info)
 	return err
 }
 
@@ -25,6 +25,13 @@ func (s *{{.Abbreviation}}) First(info *request.GetById) (result *model.{{.Struc
 	var entity model.{{.StructName}}
 	err = g.DB().Table(s._{{.Abbreviation}}.TableName()).Where(info.Condition()).Struct(&entity)
 	return &entity, err
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 根据id更新{{.StructName}}记录
+func (s *{{.Abbreviation}}) Update(info *model.{{.StructName}}) (result *model.{{.StructName}}, err error) {
+    _, err = g.DB().Table(s._{{.Abbreviation}}.TableName()).Update(info, g.Map{"id": info.ID})
+	return info, err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

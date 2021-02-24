@@ -305,7 +305,7 @@ export default {
               });
             }
             const blob = new Blob([data]);
-            const fileName = "ginvueadmin.zip";
+            const fileName = "generate.zip";
             if ("download" in document.createElement("a")) {
               // 不是IE浏览器
               let url = window.URL.createObjectURL(blob);

@@ -10,7 +10,7 @@ type Search{{.StructName}} struct{
     PageInfo
 }
 
-func (s *Search{{.StructName}}) g.Map {
+func (s *Search{{.StructName}}) Search() g.Map {
 	condition := g.Map{}
 	{{- range .Fields}}
                 {{- if .FieldSearchType}}

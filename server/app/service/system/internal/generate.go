@@ -97,13 +97,13 @@ func (a *generate) AddAutoMoveFile(data *model.TemplateData) {
 		if strings.Contains(fileSlice[n-2], "router") {
 			data.AutoMoveFilePath = filepath.Join(dir, base)
 		} else if strings.Contains(fileSlice[n-2], "api") {
-			data.AutoMoveFilePath = filepath.Join(dir, "v1", base)
+			data.AutoMoveFilePath = filepath.Join("app", dir, base)
 		} else if strings.Contains(fileSlice[n-2], "service") {
-			data.AutoMoveFilePath = filepath.Join(dir, base)
+			data.AutoMoveFilePath = filepath.Join("app", dir, base)
 		} else if strings.Contains(fileSlice[n-2], "model") {
-			data.AutoMoveFilePath = filepath.Join(dir, base)
+			data.AutoMoveFilePath = filepath.Join("app", dir, base)
 		} else if strings.Contains(fileSlice[n-2], "request") {
-			data.AutoMoveFilePath = filepath.Join("model", dir, base)
+			data.AutoMoveFilePath = filepath.Join("app", "api", dir, base)
 		}
 	} else if strings.Contains(fileSlice[1], "web") {
 		if strings.Contains(fileSlice[n-1], "js") {

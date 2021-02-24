@@ -237,7 +237,7 @@ export default {
       const res = await find{{.StructName}}({ ID: row.ID });
       this.type = "update";
       if (res.code == 0) {
-        this.formData = res.data.re{{.Abbreviation}};
+        this.formData = res.data.{{.Abbreviation}};
         this.dialogFormVisible = true;
       }
     },
