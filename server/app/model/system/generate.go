@@ -1,6 +1,11 @@
 package model
 
-import "text/template"
+import (
+	"errors"
+	"text/template"
+)
+
+var ErrorAutoMove = errors.New("创建代码成功并移动文件成功")
 
 type AutoCode struct {
 	TableName          string  `p:"tableName" json:"tableName"`

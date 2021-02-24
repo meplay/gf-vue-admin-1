@@ -7,19 +7,19 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type Base struct {
+type base struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
 }
 
 func NewBaseGroup(router *ghttp.RouterGroup) interfaces.Router {
-	return &Base{router: router, response: &response.Handler{}}
+	return &base{router: router, response: &response.Handler{}}
 }
 
-func (b *Base) Init() {
-	var base =  b.router.Group("/base")
+func (b *base) Init() {
+	group :=  b.router.Group("/base")
 	{
-		base.POST("captcha", b.response.Handler()(api.Base.Captcha))
-		base.POST("login", api.GfJWTMiddleware.LoginHandler)     // 登录
+		group.POST("captcha", b.response.Handler()(api.Base.Captcha))
+		group.POST("login", api.GfJWTMiddleware.LoginHandler) // 登录
 	}
 }

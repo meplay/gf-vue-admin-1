@@ -7,22 +7,22 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type DictionaryDetailRouter struct {
+type detail struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
 }
 
 func NewDictionaryDetailRouter(router *ghttp.RouterGroup) interfaces.Router {
-	return &DictionaryDetailRouter{router: router, response: &response.Handler{}}
+	return &detail{router: router, response: &response.Handler{}}
 }
 
-func (d *DictionaryDetailRouter) Init() {
-	var detail = d.router.Group("/sysDictionaryDetail")
+func (d *detail) Init() {
+	group := d.router.Group("/sysDictionaryDetail")
 	{
-		detail.POST("createSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.Create))   // 新建DictionaryDetail
-		detail.GET("findSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.First))       // 根据ID获取DictionaryDetail
-		detail.PUT("updateSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.Update))    // 更新DictionaryDetail
-		detail.DELETE("deleteSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.Delete)) // 删除DictionaryDetail
-		detail.GET("getSysDictionaryDetailList", d.response.Handler()(api.DictionaryDetail.GetList))  // 获取DictionaryDetail列表
+		group.POST("createSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.Create))   // 新建DictionaryDetail
+		group.GET("findSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.First))       // 根据ID获取DictionaryDetail
+		group.PUT("updateSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.Update))    // 更新DictionaryDetail
+		group.DELETE("deleteSysDictionaryDetail", d.response.Handler()(api.DictionaryDetail.Delete)) // 删除DictionaryDetail
+		group.GET("getSysDictionaryDetailList", d.response.Handler()(api.DictionaryDetail.GetList))  // 获取DictionaryDetail列表
 	}
 }

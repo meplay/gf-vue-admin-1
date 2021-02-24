@@ -1,12 +1,14 @@
 package service
 
 import (
+	"database/sql"
 	"errors"
 	"gf-vue-admin/app/api/response"
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/app/service/system/internal"
 	"gf-vue-admin/library/constant"
 	"gf-vue-admin/library/utils"
+	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"io/ioutil"
 	"os"
@@ -29,7 +31,7 @@ type generate struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取所有的数据库名
-func (s *generate) GetDB() (result []*response.Dbs, err error) {
+func (s *generate) GetDbs() (result []*response.Dbs, err error) {
 	err = g.DB().GetStructs(&result, "SELECT SCHEMA_NAME AS `database` FROM INFORMATION_SCHEMA.SCHEMATA;")
 	return result, err
 }
@@ -43,7 +45,7 @@ func (s *generate) GetTables(db string) (result []response.Tables, err error) {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取指定数据库与指定表名的表字段
-func (s *generate) GetColumn(db string, table string) (result []*response.Columns, err error) {
+func (s *generate) GetColumns(db string, table string) (result []*response.Columns, err error) {
 	err = g.DB().GetStructs(&result, "SELECT COLUMN_NAME column_name,DATA_TYPE data_type,CASE DATA_TYPE WHEN 'longtext' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'varchar' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'double' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'decimal' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'int' THEN c.NUMERIC_PRECISION WHEN 'bigint' THEN c.NUMERIC_PRECISION ELSE '' END AS data_type_long,COLUMN_COMMENT colume_comment FROM INFORMATION_SCHEMA.COLUMNS c WHERE table_name = ? AND table_schema = ?", table, db)
 	return result, err
 }
@@ -87,7 +89,7 @@ func (s *generate) Create(info *model.AutoCode) error {
 			}
 		}
 
-		return errors.New("创建代码成功并移动文件成功")
+		return model.ErrorAutoMove
 	} else { // 打包
 
 		if err := utils.ZipFiles("./generate.zip", s.files, ".", "."); err != nil {
@@ -156,4 +158,25 @@ func (s *generate) Preview(info *model.AutoCode) (result map[string]string, err 
 	}()
 
 	return result, nil
+}
+
+func (s *generate) AutoCreateApis(info *model.AutoCode) error {
+	apis := []model.Api{
+		{Path: "/" + info.Abbreviation + "/" + "create", Method: "POST", ApiGroup: info.Abbreviation, Description: "新增" + info.Description},
+		{Path: "/" + info.Abbreviation + "/" + "first", Method: "GET", ApiGroup: info.Abbreviation, Description: "根据ID获取" + info.Description},
+		{Path: "/" + info.Abbreviation + "/" + "update", Method: "PUT", ApiGroup: info.Abbreviation, Description: "更新" + info.Description},
+		{Path: "/" + info.Abbreviation + "/" + "delete", Method: "DELETE", ApiGroup: info.Abbreviation, Description: "删除" + info.Description},
+		{Path: "/" + info.Abbreviation + "/" + "deletes", Method: "DELETE", ApiGroup: info.Abbreviation, Description: "批量删除" + info.Description},
+		{Path: "/" + info.Abbreviation + "/" + "getList", Method: "GET", ApiGroup: info.Abbreviation, Description: "获取" + info.Description + "列表"},
+	}
+	return g.DB().Transaction(func(tx *gdb.TX) error {
+		for _, v := range apis {
+			var entity model.Api
+			if errors.Is(tx.Table(entity.TableName()).Where(g.Map{"path": v.Path, "method": v.Method}).Struct(&entity), sql.ErrNoRows) {
+				_, err := tx.Table(entity.TableName()).Insert(&v)
+				return err
+			}
+		}
+		return nil
+	})
 }
