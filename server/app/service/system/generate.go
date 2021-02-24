@@ -160,6 +160,8 @@ func (s *generate) Preview(info *model.AutoCode) (result map[string]string, err 
 	return result, nil
 }
 
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 自动创建api数据
 func (s *generate) AutoCreateApis(info *model.AutoCode) error {
 	apis := []model.Api{
 		{Path: "/" + info.Abbreviation + "/" + "create", Method: "POST", ApiGroup: info.Abbreviation, Description: "新增" + info.Description},
@@ -173,8 +175,9 @@ func (s *generate) AutoCreateApis(info *model.AutoCode) error {
 		for _, v := range apis {
 			var entity model.Api
 			if errors.Is(tx.Table(entity.TableName()).Where(g.Map{"path": v.Path, "method": v.Method}).Struct(&entity), sql.ErrNoRows) {
-				_, err := tx.Table(entity.TableName()).Insert(&v)
-				return err
+				if _, err := tx.Table(entity.TableName()).Insert(&v); err != nil { // 遇到错误时回滚事务
+					return err
+				}
 			}
 		}
 		return nil
