@@ -55,9 +55,17 @@ func (c *_casbin) GetPolicyPath(authorityId string) (pathMaps []request.CasbinIn
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 清除匹配的权限
 func (c *_casbin) ClearCasbin(v int, p ...string) bool {
-	var e = c.Casbin()
+	e := c.Casbin()
 	success, _ := e.RemoveFilteredPolicy(v, p...)
 	return success
+}
+
+func (c *_casbin) Clear(path, method string) bool {
+	var rule model.Casbin
+	if _, err := g.DB().Table(rule.TableName()).Delete(g.Map{"v1": path, "v2": method}); err != nil {
+		return false
+	}
+	return true
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
