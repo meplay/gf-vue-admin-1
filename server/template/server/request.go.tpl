@@ -16,7 +16,7 @@ func (s *Search{{.StructName}}) Search() g.Map {
                 {{- if .FieldSearchType}}
                     {{- if eq .FieldType "string" }}
         if s.{{.FieldName}} != "" {
-            condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} {{.FieldSearchType}} ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }} + s.{{.FieldName}} + {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }}
+            condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- else if eq .FieldType "bool" }}
         if info.{{.FieldName}} != nil {
@@ -28,15 +28,15 @@ func (s *Search{{.StructName}}) Search() g.Map {
         }
                     {{- else if eq .FieldType "int" }}
         if info.{{.FieldName}} != 0 {
-            condition["`{{.ColumnName}}` {{.FieldSearchType}} ?"] = {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }} + s.{{.FieldName}} + {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }}
+            condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- else if eq .FieldType "float64" }}
         if info.{{.FieldName}} != 0 {
-            condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} {{.FieldSearchType}} ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }} + s.{{.FieldName}} + {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }}
+            condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- else if eq .FieldType "time.Time" }}
         if !info.{{.FieldName}}.IsZero() {
-            condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} {{.FieldSearchType}} ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }} + s.{{.FieldName}} + {{if eq .FieldSearchType "LIKE"}}"%"+{{ end }}
+            condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- end }}
             {{- end }}

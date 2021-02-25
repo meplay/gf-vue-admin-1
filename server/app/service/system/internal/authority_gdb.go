@@ -33,7 +33,7 @@ func (a *authority) Init() {
 type authority struct {
 	_menu             model.Menu
 	_authority        model.Authority
-	_dataAuthorities model.DataAuthorities
+	_dataAuthorities  model.DataAuthorities
 	_authoritiesMenus model.AuthoritiesMenus
 
 	authorityMap   map[string]model.Authority
@@ -44,7 +44,7 @@ type authority struct {
 //@description: 查询资源角色
 func (a *authority) First(id string) *model.Authority {
 	a.Init()
-	entity :=  a.authorityMap[id]
+	entity := a.authorityMap[id]
 	return &entity
 }
 
@@ -81,14 +81,14 @@ func (a *authority) FindChildren(authority *model.Authority) {
 //@description: 根据 authority_id 获取menu列表数据
 func (a *authority) GetMenus(id string) *[]model.Menu {
 	entities := make([]model.AuthoritiesMenus, 0, 10)
-	if err := g.DB().Table(a._authoritiesMenus.TableName()).Where(g.Map{"authority_id": id}).Struct(&entities); err != nil {
+	if err := g.DB().Table(a._authoritiesMenus.TableName()).Where(g.Map{"authority_id": id}).Structs(&entities); err != nil {
 		g.Log().Error("获取 authorities_menus 表数据失败!", g.Map{"authority_id": id})
 		return nil
 	}
 	menus := make([]model.Menu, 0, 10)
 	for _, entity := range entities {
 		var m1 model.Menu
-		if err := g.DB().Table(a._authority.TableName()).WherePri(entity.MenuId).Struct(&m1); err != nil {
+		if err := g.DB().Table(a._menu.TableName()).WherePri(entity.MenuId).Struct(&m1); err != nil {
 			return &menus
 		} else {
 			menus = append(menus, m1)
@@ -100,12 +100,9 @@ func (a *authority) GetMenus(id string) *[]model.Menu {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 删除原有menu树
 func (a *authority) ReplaceMenu(info *model.Authority) error {
-	if menus := a.GetMenus(info.AuthorityId); menus != nil {
-		for _, m := range *menus {
-			if _, err := g.DB().Table(a._authoritiesMenus.TableName()).Delete(g.Map{"menu_id": m.ID}); err != nil {
-				g.Log().Error("删除 authorities_menus 表数据失败!", g.Map{"menu_id": m.ID})
-			}
-		}
+	if _, err := g.DB().Table(a._authoritiesMenus.TableName()).Delete(g.Map{"authority_id": info.AuthorityId}); err != nil {
+		g.Log().Error("删除 authorities_menus 表数据失败!", g.Map{"authority_id": info.AuthorityId, "err": err})
+		return err
 	}
 	for _, m := range info.Menus {
 		if _, err := g.DB().Table(a._authoritiesMenus.TableName()).Insert(&model.AuthoritiesMenus{MenuId: m.ID, AuthorityId: info.AuthorityId}); err != nil {

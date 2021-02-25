@@ -34,8 +34,8 @@ func (d *DataAuthorities) TableName() string {
 }
 
 type AuthoritiesMenus struct {
-	MenuId      uint
-	AuthorityId string
+	MenuId      uint `orm:"menu_id"`
+	AuthorityId string `orm:"authority_id"`
 }
 
 func (a *AuthoritiesMenus) TableName() string {

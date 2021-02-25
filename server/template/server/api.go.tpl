@@ -48,7 +48,7 @@ func (a *{{.Abbreviation}}) First(r *ghttp.Request) *response.Response {
 	if data, err := service.{{.StructName}}.First(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorFirst}
 	} else {
-		return &response.Response{Data: g.Map{"resys{{.StructName}}": data}, MessageCode: response.SuccessFirst}
+		return &response.Response{Data: g.Map{"{{.Abbreviation}}": data}, MessageCode: response.SuccessFirst}
 	}
 }
 
