@@ -24,6 +24,6 @@ func (r *{{.Abbreviation}}) Init() {
 		group.PUT("update", r.response.Handler()(api.{{.StructName}}.Update))              // 更新{{.StructName}}
 		group.DELETE("delete", r.response.Handler()(api.{{.StructName}}.Delete))           // 删除{{.StructName}}
 		group.DELETE("deletes", r.response.Handler()(api.{{.StructName}}.Deletes))         // 批量删除{{.StructName}}
-		group.POST("getList", r.response.Handler()(api.{{.StructName}}.GetList))           // 获取{{.StructName}}列表
+		group.GET("getList", r.response.Handler()(api.{{.StructName}}.GetList))            // 获取{{.StructName}}列表
 	}
 }
