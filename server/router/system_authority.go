@@ -17,7 +17,7 @@ func NewAuthorityRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (a *authority) Init() {
-	group := a.router.Group("/authority")
+	group := a.router.Group("/authority").Middleware(Middleware.OperationRecord)
 	{
 		group.POST("createAuthority", a.response.Handler()(api.Authority.Create))            // 创建角色
 		group.POST("copyAuthority", a.response.Handler()(api.Authority.Copy))                // 拷贝角色

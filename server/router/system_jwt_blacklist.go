@@ -17,7 +17,7 @@ func NewJwtBlacklistRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (j *blacklist) Init() {
-	group := j.router.Group("/jwt")
+	group := j.router.Group("/jwt").Middleware(Middleware.OperationRecord)
 	{
 		group.POST("jsonInBlacklist", j.response.Handler()(api.JwtBlacklist.JwtToBlacklist)) // jwt加入黑名单
 	}

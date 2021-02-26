@@ -17,7 +17,7 @@ func NewCasbinRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (c *casbin) Init() {
-	group := c.router.Group("/casbin")
+	group := c.router.Group("/casbin").Middleware(Middleware.OperationRecord)
 	{
 		group.POST("updateCasbin", c.response.Handler()(api.Casbin.Update))
 		group.POST("getPolicyPathByAuthorityId", c.response.Handler()(api.Casbin.GetPolicyPath))

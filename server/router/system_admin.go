@@ -17,7 +17,7 @@ func NewAdminRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (a *admin) Init() {
-	group := a.router.Group("/user")
+	group := a.router.Group("/user").Middleware(Middleware.OperationRecord)
 	{
 		group.POST("register", a.response.Handler()(api.Admin.Register))             // 新增用户
 		group.PUT("setUserInfo", a.response.Handler()(api.Admin.Update))             // 设置用户信息

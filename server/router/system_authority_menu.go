@@ -17,7 +17,7 @@ func NewMenuRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (m *_menu) Init() {
-	group := m.router.Group("/menu")
+	group := m.router.Group("/menu").Middleware(Middleware.OperationRecord)
 	{
 		group.POST("addBaseMenu", m.response.Handler()(api.Menu.Create))                         // 新增菜单
 		group.POST("getBaseMenuById", m.response.Handler()(api.Menu.First))                      // 根据id获取菜单

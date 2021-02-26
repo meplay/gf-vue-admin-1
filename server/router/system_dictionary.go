@@ -17,7 +17,7 @@ func NewDictionaryRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (d *dictionary) Init() {
-	group := d.router.Group("/sysDictionary")
+	group := d.router.Group("/sysDictionary").Middleware(Middleware.OperationRecord)
 	{
 		group.POST("createSysDictionary", d.response.Handler()(api.Dictionary.Create))   // 新建Dictionary
 		group.GET("findSysDictionary", d.response.Handler()(api.Dictionary.First))       // 根据ID获取Dictionary
