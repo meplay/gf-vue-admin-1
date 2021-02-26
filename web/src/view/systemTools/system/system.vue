@@ -1,33 +1,21 @@
 <template>
   <div class="system">
-    <el-form :model="config" label-width="100px" ref="form" class="system">
+    <el-form :model="config" label-width="200px" ref="form" class="system">
       <!--  System start  -->
       <h2>系统配置</h2>
       <el-form-item label="环境值">
         <el-input v-model="config.system.env"></el-input>
       </el-form-item>
-      <el-form-item label="端口值">
-        <el-input v-model.number="config.system.addr"></el-input>
-      </el-form-item>
-      <el-form-item label="数据库类型">
-        <el-select v-model="config.system.dbType">
-          <el-option value="mysql"></el-option>
-          <el-option value="sqlite"></el-option>
-          <el-option value="sqlserver"></el-option>
-          <el-option value="postgresql"></el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item label="Oss类型">
         <el-select v-model="config.system.ossType">
           <el-option value="local"></el-option>
           <el-option value="qiniu"></el-option>
+          <el-option value="minio"></el-option>
+          <el-option value="aliyun"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="配置文件环境变量名">
-        <el-input v-model.number="config.system.configEnv"></el-input>
-      </el-form-item>
-      <el-form-item label="数据初始化">
-        <el-checkbox v-model="config.system.needInitData">开启</el-checkbox>
+      <el-form-item label="错误发送邮箱">
+        <el-checkbox v-model="config.system.errorToEmail">开启</el-checkbox>
       </el-form-item>
       <el-form-item label="多点登录拦截">
         <el-checkbox v-model="config.system.useMultipoint">开启</el-checkbox>
@@ -37,48 +25,19 @@
       <!--  JWT start  -->
       <h2>jwt签名</h2>
       <el-form-item label="jwt签名">
+        <el-input v-model.number="config.jwt.expiresAt"></el-input>
+        <el-input v-model.number="config.jwt.refreshAt"></el-input>
         <el-input v-model="config.jwt.signingKey"></el-input>
       </el-form-item>
       <!--  JWT end  -->
-
-      <!--  Zap start  -->
-      <h2>Zap日志配置</h2>
-      <el-form-item label="级别">
-        <el-input v-model.number="config.zap.level"></el-input>
-      </el-form-item>
-      <el-form-item label="输出">
-        <el-input v-model="config.zap.format"></el-input>
-      </el-form-item>
-      <el-form-item label="日志前缀">
-        <el-input v-model="config.zap.prefix"></el-input>
-      </el-form-item>
-      <el-form-item label="日志文件夹">
-        <el-input v-model="config.zap.director"></el-input>
-      </el-form-item>
-      <el-form-item label="软链接名称">
-        <el-input v-model="config.zap.linkName"></el-input>
-      </el-form-item>
-      <el-form-item label="编码级">
-        <el-input v-model="config.zap.encodeLevel"></el-input>
-      </el-form-item>
-      <el-form-item label="栈名">
-        <el-input v-model="config.zap.stacktraceKey"></el-input>
-      </el-form-item>
-      <el-form-item label="显示行">
-        <el-checkbox v-model="config.zap.showLine"></el-checkbox>
-      </el-form-item>
-      <el-form-item label="输出控制台">
-        <el-checkbox v-model="config.zap.logInConsole"></el-checkbox>
-      </el-form-item>
-      <!--  Zap end  -->
 
       <!--  Redis start  -->
       <h2>Redis admin数据库配置</h2>
       <el-form-item label="db">
         <el-input v-model="config.redis.db"></el-input>
       </el-form-item>
-      <el-form-item label="addr">
-        <el-input v-model="config.redis.addr"></el-input>
+      <el-form-item label="address">
+        <el-input v-model="config.redis.address"></el-input>
       </el-form-item>
       <el-form-item label="password">
         <el-input v-model="config.redis.password"></el-input>
@@ -122,109 +81,16 @@
       <el-form-item label="keyLong">
         <el-input v-model.number="config.captcha.keyLong"></el-input>
       </el-form-item>
-      <el-form-item label="imgWidth">
-        <el-input v-model.number="config.captcha.imgWidth"></el-input>
+      <el-form-item label="imageWidth">
+        <el-input v-model.number="config.captcha.imageWidth"></el-input>
       </el-form-item>
-      <el-form-item label="imgHeight">
-        <el-input v-model.number="config.captcha.imgHeight"></el-input>
+      <el-form-item label="imageHeight">
+        <el-input v-model.number="config.captcha.imageHeight"></el-input>
+      </el-form-item>
+      <el-form-item label="验证码存在redis">
+      <el-checkbox v-model="config.system.captchaInRedis">开启</el-checkbox>
       </el-form-item>
       <!--  Captcha end  -->
-
-      <!--  dbType start  -->
-      <template v-if="config.system.dbType == 'mysql'">
-        <h2>mysql admin数据库配置</h2>
-        <el-form-item label="username">
-          <el-input v-model="config.mysql.username"></el-input>
-        </el-form-item>
-        <el-form-item label="password">
-          <el-input v-model="config.mysql.password"></el-input>
-        </el-form-item>
-        <el-form-item label="path">
-          <el-input v-model="config.mysql.path"></el-input>
-        </el-form-item>
-        <el-form-item label="dbname">
-          <el-input v-model="config.mysql.dbname"></el-input>
-        </el-form-item>
-        <el-form-item label="maxIdleConns">
-          <el-input v-model.number="config.mysql.maxIdleConns"></el-input>
-        </el-form-item>
-        <el-form-item label="maxOpenConns">
-          <el-input v-model.number="config.mysql.maxOpenConns"></el-input>
-        </el-form-item>
-        <el-form-item label="logMode">
-          <el-checkbox v-model="config.mysql.logMode"></el-checkbox>
-        </el-form-item>
-      </template>
-      <template v-if="config.system.dbType == 'sqlite'">
-        <h2>sqlite admin数据库配置</h2>
-        <el-form-item label="path">
-          <el-input v-model="config.mysql.path"></el-input>
-        </el-form-item>
-        <el-form-item label="maxIdleConns">
-          <el-input v-model.number="config.mysql.maxIdleConns"></el-input>
-        </el-form-item>
-        <el-form-item label="maxOpenConns">
-          <el-input v-model.number="config.mysql.maxOpenConns"></el-input>
-        </el-form-item>
-        <el-form-item label="logger">
-          <el-checkbox v-model="config.mysql.logger"></el-checkbox>
-        </el-form-item>
-      </template>
-      <template v-if="config.system.dbType == 'sqlserver'">
-        <h2>sqlserver admin数据库配置</h2>
-        <el-form-item label="username">
-          <el-input v-model="config.sqlserver.username"></el-input>
-        </el-form-item>
-        <el-form-item label="password">
-          <el-input v-model="config.sqlserver.password"></el-input>
-        </el-form-item>
-        <el-form-item label="path">
-          <el-input v-model="config.sqlserver.path"></el-input>
-        </el-form-item>
-        <el-form-item label="dbname">
-          <el-input v-model="config.sqlserver.dbname"></el-input>
-        </el-form-item>
-        <el-form-item label="maxIdleConns">
-          <el-input v-model.number="config.sqlserver.maxIdleConns"></el-input>
-        </el-form-item>
-        <el-form-item label="maxOpenConns">
-          <el-input v-model.number="config.sqlserver.maxOpenConns"></el-input>
-        </el-form-item>
-        <el-form-item label="logger">
-          <el-checkbox v-model="config.sqlserver.logger"></el-checkbox>
-        </el-form-item>
-      </template>
-      <template v-if="config.system.dbType == 'postgresql'">
-        <h2>postgresql admin数据库配置</h2>
-        <el-form-item label="username">
-          <el-input v-model="config.mysql.username"></el-input>
-        </el-form-item>
-        <el-form-item label="password">
-          <el-input v-model="config.mysql.password"></el-input>
-        </el-form-item>
-        <el-form-item label="dbName">
-          <el-input v-model="config.mysql.dbName"></el-input>
-        </el-form-item>
-        <el-form-item label="port">
-          <el-input v-model="config.mysql.port"></el-input>
-        </el-form-item>
-        <el-form-item label="config">
-          <el-input v-model="config.mysql.config"></el-input>
-        </el-form-item>
-        <el-form-item label="maxIdleConns">
-          <el-input v-model.number="config.mysql.maxIdleConns"></el-input>
-        </el-form-item>
-        <el-form-item label="maxOpenConns">
-          <el-input v-model.number="config.mysql.maxOpenConns"></el-input>
-        </el-form-item>
-        <el-form-item label="logger">
-          <el-checkbox v-model="config.mysql.logger"></el-checkbox>
-        </el-form-item>
-        <el-form-item label="prefer-simple-protocol">
-          <el-checkbox v-model="config.mysql.preferSimpleProtocol"></el-checkbox>
-        </el-form-item>
-      </template>
-      <!--  dbType end  -->
 
       <!--  ossType start  -->
       <template v-if="config.system.ossType == 'local'">
@@ -245,7 +111,7 @@
           <el-input v-model="config.qiniu.imgPath"></el-input>
         </el-form-item>
         <el-form-item label="是否使用https">
-          <el-checkbox v-model="config.qiniu.imgPath">开启</el-checkbox>
+          <el-checkbox v-model="config.qiniu.useHttps">开启</el-checkbox>
         </el-form-item>
         <el-form-item label="accessKey">
           <el-input v-model="config.qiniu.accessKey"></el-input>
@@ -255,6 +121,54 @@
         </el-form-item>
         <el-form-item label="上传是否使用CDN上传加速">
           <el-checkbox v-model="config.qiniu.useCdnDomains">开启</el-checkbox>
+        </el-form-item>
+      </template>
+      <template v-if="config.system.ossType == 'minio'">
+        <h2>minio上传配置</h2>
+        <el-form-item label="存储区域">
+          <el-input v-model="config.minio.id"></el-input>
+        </el-form-item>
+        <el-form-item label="path">
+          <el-input v-model="config.minio.path"></el-input>
+        </el-form-item>
+        <el-form-item label="token">
+          <el-input v-model="config.minio.token"></el-input>
+        </el-form-item>
+        <el-form-item label="空间名称">
+          <el-input v-model="config.minio.bucket"></el-input>
+        </el-form-item>
+        <el-form-item label="上传是否使用Ssl">
+          <el-checkbox v-model="config.minio.useSsl">开启</el-checkbox>
+        </el-form-item>
+        <el-form-item label="secret">
+          <el-input v-model="config.minio.secret"></el-input>
+        </el-form-item>
+        <el-form-item label="endpoint">
+          <el-input v-model="config.minio.endpoint"></el-input>
+        </el-form-item>
+      </template>
+      <template v-if="config.system.ossType == 'aliyun'">
+        <h2>aliyun上传配置</h2>
+        <el-form-item label="path">
+          <el-input v-model="config.aliyun.path"></el-input>
+        </el-form-item>
+        <el-form-item label="空间名称">
+          <el-input v-model="config.aliyun.bucket"></el-input>
+        </el-form-item>
+        <el-form-item label="acl-type">
+          <el-input v-model="config.aliyun.aclType"></el-input>
+        </el-form-item>
+        <el-form-item label="endpoint">
+          <el-input v-model="config.aliyun.endpoint"></el-input>
+        </el-form-item>
+        <el-form-item label="access-key-id">
+          <el-input v-model="config.aliyun.accessKeyId"></el-input>
+        </el-form-item>
+        <el-form-item label="secret-access-key">
+          <el-input v-model="config.aliyun.secretAccessKey"></el-input>
+        </el-form-item>
+        <el-form-item label="storage-class-type">
+          <el-input v-model="config.aliyun.storageClassType"></el-input>
         </el-form-item>
       </template>
       <!--  ossType end  -->
@@ -278,13 +192,12 @@ export default {
         system: {},
         jwt: {},
         casbin: {},
-        mysql: {},
-        sqlite: {},
         redis: {},
-        qiniu: {},
-        captcha: {},
-        zap: {},
         local: {},
+        qiniu: {},
+        minio: {},
+        aliyun: {},
+        captcha: {},
         email: {}
       }
     };
