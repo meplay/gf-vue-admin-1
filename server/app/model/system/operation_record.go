@@ -2,7 +2,6 @@ package model
 
 import (
 	"gf-vue-admin/library/global"
-	"time"
 )
 
 type OperationRecord struct {
@@ -17,13 +16,11 @@ type OperationRecord struct {
 
 	Status int `json:"status" form:"status" gorm:"column:status;comment:请求状态"`
 	UserID int `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`
+	Latency int64 `json:"latency" form:"latency" gorm:"column:latency;comment:延迟"`
 
-	Latency time.Duration `json:"latency" form:"latency" gorm:"column:latency;comment:延迟"`
-
-	Admin Admin `json:"user" gorm:"foreignkey:ID;references:UserID"`
+	Admin Admin `orm:"-" json:"user" gorm:"foreignkey:ID;references:UserID"`
 }
 
 func (o *OperationRecord) TableName() string {
 	return "operation_record"
 }
-

@@ -17,7 +17,7 @@ func NewOperationRecordRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (o *operation) Init() {
-	group := o.router.Group("/sysOperationRecord").Middleware(Middleware.OperationRecord)
+	group := o.router.Group("/sysOperationRecord")
 	{
 		group.POST("createSysOperationRecord", o.response.Handler()(api.OperationRecord.Create))         // 新建SysOperationRecord
 		group.GET("findSysOperationRecord", o.response.Handler()(api.OperationRecord.First))             // 根据ID获取SysOperationRecord

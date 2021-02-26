@@ -81,8 +81,9 @@ func (m *_mysql) AutoMigrateTables() {
 		new(system.Authority),
 		new(system.Dictionary),
 		new(system.JwtBlacklist),
-		new(system.DictionaryDetail),
 		new(system.MenuParameter),
+		new(system.OperationRecord),
+		new(system.DictionaryDetail),
 
 		new(extra.File),
 		new(extra.SimpleUploader),

@@ -134,7 +134,7 @@ func (m *middleware) OperationRecord(r *ghttp.Request) {
 	}
 
 	record.Status = r.Response.Status
-	record.Latency = latency
+	record.Latency = latency.Microseconds()
 	record.Response = string(r.Response.Buffer())
 
 	if err := service.OperationRecord.Create(&record); err != nil {

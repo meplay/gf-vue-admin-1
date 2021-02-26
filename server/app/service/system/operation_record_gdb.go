@@ -9,6 +9,7 @@ import (
 var OperationRecord = new(record)
 
 type record struct {
+	_admin  model.Admin
 	_record model.OperationRecord
 }
 
@@ -50,5 +51,8 @@ func (r *record) GetList(info *request.SearchOperationRecord) (list interface{},
 	limit, offset := info.Paginate()
 	total, err = db.Where(condition).Count()
 	err = db.Limit(limit).Offset(offset).Where(condition).Structs(&records)
+	for i, operation := range records {
+		err = g.DB().Table(r._admin.TableName()).WherePri(operation.UserID).Struct(&records[i].Admin)
+	}
 	return records, total, err
 }
