@@ -23,7 +23,7 @@ type menu struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 添加基础路由
 func (m *menu) Create(menu *model.Menu) error {
-	_, err := g.DB().Table(m._menu.TableName()).Insert(&menu)
+	_, err := g.DB().Table(m._menu.TableName()).Insert(menu)
 	return err
 }
 
@@ -73,7 +73,7 @@ func (m *menu) Update(info *request.UpdateMenu) error {
 		if _, err := tx.Table(m._menu.TableName()).Data(info.Update()).Insert(); err != nil {
 			return response.ErrorUpdateMenu
 		}
-		if _, err := tx.Table(m._menusParameters.TableName()).Delete(g.Map{"menu_id": info.ID}); err != nil {
+		if _, err := tx.Table(m._menusParameters.TableName()).Unscoped().Delete(g.Map{"menu_id": info.ID}); err != nil {
 			return err
 		}
 		for _, parameter := range info.Parameters {

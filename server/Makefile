@@ -21,6 +21,9 @@ mac-build:
 run:
 	@go run main.go
 
+swagger:
+	@gf swagger
+
 check:
 	go fmt ./
 	go vet ./

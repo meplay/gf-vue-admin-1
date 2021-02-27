@@ -54,8 +54,8 @@ func (a *api) Update(info *request.UpdateApi) error {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 删除基础Api
 func (a *api) Delete(info *request.DeleteApi) error {
-	Casbin.ClearCasbin(1, info.Path, info.Method)
 	_, err := g.DB().Table(a._api.TableName()).Delete(info.Condition())
+	Casbin.Clear(info.Path, info.Method)
 	return err
 }
 

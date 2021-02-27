@@ -345,7 +345,7 @@ func (a *Adapter) RemoveFilteredPolicy(sec string, ptype string, fieldIndex int,
 
 func (a *Adapter) rawDelete(tx *gdb.TX, line CasbinRule) error {
 	db := tx.Table(a.tableName).Safe()
-	condition := gdb.Map{"ptype": line.PType}
+	condition := gdb.Map{"p_type": line.PType}
 	if line.V0 != "" {
 		condition["v0"] = line.V0
 	}

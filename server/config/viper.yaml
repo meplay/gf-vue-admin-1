@@ -56,19 +56,19 @@ qiniu:
 # minio configuration
 minio:
   id: 'minio'
-  Path: 'http://localhost:9000'
-  Token: ''
-  Bucket: 'public'
-  UseSsl: false
-  Secret: 'minio'
-  Endpoint: 'localhost:9000'
+  path: 'http://localhost:9000'
+  token: ''
+  bucket: 'public'
+  use-ssl: false
+  secret: 'minio'
+  endpoint: 'localhost:9000'
 
 # aliyun configuration
 aliyun:
-  Path: 'https://xxx.oss-cn-beijing.aliyuncs.com'
-  Bucket: ''
-  ACLType: ''
-  Endpoint: 'https://oss-cn-beijing.aliyuncs.com'
-  AccessKeyID: ''
-  SecretAccessKey: ''
-  StorageClassType: 'Standard' # 配置请看server/integration/upload/internal/aliyun.go
+  path: 'https://xxx.oss-cn-beijing.aliyuncs.com'
+  bucket: ''
+  acl-type: ''
+  endpoint: 'https://oss-cn-beijing.aliyuncs.com'
+  access-key-id: ''
+  secret-access-key: ''
+  storage-class-type: 'Standard' # 配置请看server/integration/upload/internal/aliyun.go

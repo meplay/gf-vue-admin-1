@@ -26,6 +26,7 @@ func (d *dictionary) Create(info *request.CreateDictionary) error {
 func (d *dictionary) First(info *request.FirstDictionary) (result *model.Dictionary, err error) {
 	var entity model.Dictionary
 	err = g.DB().Table(d._dictionary.TableName()).Where("id", info.Id).Or("type", info.Type).Struct(&entity)
+	err = g.DB().Table(d._detail.TableName()).Where(g.Map{"dictionary_id": entity.ID}).Structs(&entity.DictionaryDetails)
 	return &entity, err
 }
 

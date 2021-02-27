@@ -3,7 +3,6 @@ package request
 import (
 	model "gf-vue-admin/app/model/system"
 	"github.com/gogf/gf/frame/g"
-	"time"
 )
 
 type BaseOperationRecord struct {
@@ -15,9 +14,9 @@ type BaseOperationRecord struct {
 	Response     string `p:"response"      v:"required | length:1, 20#请输入响应Body|响应Body长度为:min到max"`
 	ErrorMessage string `p:"error_message" v:"required | length:1, 20#请输入报错信息|报错信息长度为:min到max"`
 
-	Status       int    `p:"status"        v:"required | length:1, 20#请输入状态|状态长度为:min到max"`
-	UserID       int    `p:"user_id"       v:"required | length:1, 20#请输入用户id|用户id长度为:min到max"`
-	Latency      time.Duration  `p:"latency"       v:"required | length:1, 20#请输入延迟|延迟长度为:min到max"`
+	Status  int   `p:"status"        v:"required | length:1, 20#请输入状态|状态长度为:min到max"`
+	UserID  int   `p:"user_id"       v:"required | length:1, 20#请输入用户id|用户id长度为:min到max"`
+	Latency int64 `p:"latency"       v:"required | length:1, 20#请输入延迟|延迟长度为:min到max"`
 }
 
 type CreateOperationRecord struct {

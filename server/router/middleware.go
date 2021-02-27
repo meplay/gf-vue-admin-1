@@ -1,15 +1,30 @@
 package router
 
 import (
+	"bytes"
+	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	api "gf-vue-admin/app/api/system"
+	model "gf-vue-admin/app/model/system"
 	service "gf-vue-admin/app/service/system"
 	"gf-vue-admin/library/global"
 	jwt "github.com/gogf/gf-jwt"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
+	"io/ioutil"
+	"strconv"
+	"time"
 )
+
+var Middleware = new(middleware)
+
+type middleware struct {
+	id     int
+	err    error
+	body   []byte
+	result *model.Admin
+}
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 允许接口跨域请求
@@ -51,7 +66,7 @@ func JwtAuth(r *ghttp.Request) {
 		var claims = gconv.Map(_jwt.Claims)
 		r.SetParam("claims", _jwt.Claims)
 		r.SetParam("admin_authority_id", claims["admin_authority_id"])
-		if g.Cfg("system").GetBool("system.UseMultipoint") {
+		if global.Config.System.UseMultipoint {
 			if !service.JwtBlacklist.ValidatorRedisToken(gconv.String(claims["admin_uuid"]), token) {
 				_ = r.Response.WriteJson(&response.Response{Code: 7, Data: g.Map{"reload": true}, Message: "Token鉴权失败!"})
 				r.Exit()
@@ -80,4 +95,50 @@ func CasbinRbac(r *ghttp.Request) {
 		_ = r.Response.WriteJson(&response.Response{Code: 7, Data: g.Map{}, Message: "权限不足"})
 		r.ExitAll()
 	}
+}
+
+func (m *middleware) OperationRecord(r *ghttp.Request) {
+	// Request
+
+	if m.body, m.err = ioutil.ReadAll(r.Request.Body); m.err != nil {
+		g.Log().Error(g.Map{"err": m.err})
+	}
+
+	r.Request.Body = ioutil.NopCloser(bytes.NewBuffer(m.body))
+
+	if token, err := api.GfJWTMiddleware.ParseToken(r); err != nil { // 优先从jwt获取用户信息
+		id, _ := strconv.Atoi(r.Request.Header.Get("x-user-id"))
+		if m.result, m.err = service.Admin.FindAdminById(&request.GetById{Id: id}); m.err != nil {
+			g.Log().Error(g.Map{"err": m.err})
+		}
+	} else {
+		claims := gconv.Map(token.Claims)
+		uuid := gconv.String(claims["admin_uuid"])
+		if m.result, m.err = service.Admin.FindAdmin(&request.GetByUuid{Uuid: uuid}); m.err != nil {
+			g.Log().Error(g.Map{"err": m.err})
+		}
+		m.id = int(m.result.ID)
+	}
+
+	record := request.CreateOperationRecord{BaseOperationRecord: request.BaseOperationRecord{Ip: r.GetClientIp(), Method: r.Request.Method, Path: r.Request.URL.Path, Agent: r.Request.UserAgent(), Request: string(m.body), UserID: m.id}}
+	now := time.Now()
+
+	r.Middleware.Next()
+
+	// Response
+
+	latency := time.Now().Sub(now)
+
+	if err := r.GetError(); err != nil {
+		record.ErrorMessage = err.Error()
+	}
+
+	record.Status = r.Response.Status
+	record.Latency = latency.Microseconds()
+	record.Response = string(r.Response.Buffer())
+
+	if err := service.OperationRecord.Create(&record); err != nil {
+		g.Log().Error("create operation record error:", g.Map{"err": err})
+	}
+
 }

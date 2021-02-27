@@ -9,6 +9,7 @@ import (
 var OperationRecord = new(record)
 
 type record struct {
+	_admin  model.Admin
 	_record model.OperationRecord
 }
 
@@ -44,11 +45,14 @@ func (r *record) Deletes(info *request.GetByIds) error {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 分页获取操作记录列表
 func (r *record) GetList(info *request.SearchOperationRecord) (list interface{}, total int, err error) {
-	var records []model.Dictionary
+	var records []model.OperationRecord
 	db := g.DB().Table(r._record.TableName()).Safe()
 	condition := info.Search()
 	limit, offset := info.Paginate()
 	total, err = db.Where(condition).Count()
 	err = db.Limit(limit).Offset(offset).Where(condition).Structs(&records)
+	for i, operation := range records {
+		err = g.DB().Table(r._admin.TableName()).WherePri(operation.UserID).Struct(&records[i].Admin)
+	}
 	return records, total, err
 }

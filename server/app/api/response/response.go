@@ -26,7 +26,7 @@ type handler func(r *ghttp.Request) *Response
 func (h *Handler) Handler() func(handler handler) func(r *ghttp.Request) {
 	return func(handler handler) func(r *ghttp.Request) {
 		return func(r *ghttp.Request) {
-			var response = handler(r)
+			response := handler(r)
 			if response.Data == nil {
 				response.Data = empty{}
 			}
@@ -45,6 +45,14 @@ func (h *Handler) Handler() func(handler handler) func(r *ghttp.Request) {
 				}
 				if err := r.Response.WriteJson(response); err != nil {
 					panic(err)
+				}
+			default:
+				if response.Code == 0 || response.Code == 7 {
+					if response.Error != nil {
+						response.Err = response.Error.Error()
+					}
+					_ = r.Response.WriteJson(response)
+					return
 				}
 			}
 		}

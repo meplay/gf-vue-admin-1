@@ -19,7 +19,7 @@ database:
     port: '13307'
     user: 'root'
     pass: 'gdkid,,..'
-    name: 'gf-vue-admin'
+    name: 'gf_vue_admin'
     type: 'mysql'
     role: ''
     debug: true

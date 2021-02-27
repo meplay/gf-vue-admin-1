@@ -5,31 +5,31 @@ type Local struct {
 }
 
 type Qiniu struct {
-	Zone          string `json:"zone"`
-	Bucket        string `json:"bucket"`
-	ImgPath       string `json:"img_path"`
-	UseHTTPS      bool   `json:"use_https"`
-	AccessKey     string `json:"access_key"`
-	SecretKey     string `json:"secret_key"`
-	UseCdnDomains bool   `json:"use_cdn_domains"`
+	Zone          string `mapstructure:"zone" json:"zone" yaml:"zone"`
+	Bucket        string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`
+	ImgPath       string `mapstructure:"img-path" json:"imgPath" yaml:"img-path"`
+	UseHTTPS      bool   `mapstructure:"use-https" json:"useHttps" yaml:"use-https"`
+	AccessKey     string `mapstructure:"access-key" json:"accessKey" yaml:"access-key"`
+	SecretKey     string `mapstructure:"secret-key" json:"secretKey" yaml:"secret-key"`
+	UseCdnDomains bool   `mapstructure:"use-cdn-domains" json:"useCdnDomains" yaml:"use-cdn-domains"`
 }
 
 type Minio struct {
-	Id       string `json:"id"`
-	Path     string `json:"path"`
-	Token    string `json:"token"`
-	Bucket   string `json:"bucket"`
-	UseSsl   bool   `json:"use_ssl"`
-	Secret   string `json:"secret"`
-	Endpoint string `json:"endpoint"`
+	Id       string `mapstructure:"id" json:"id" yaml:"id"`
+	Path     string `mapstructure:"path" json:"path" yaml:"path"`
+	Token    string `mapstructure:"token" json:"token" yaml:"token"`
+	Bucket   string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`
+	UseSsl   bool   `mapstructure:"use-ssl" json:"useSsl" yaml:"use-ssl"`
+	Secret   string `mapstructure:"secret" json:"secret" yaml:"secret"`
+	Endpoint string `mapstructure:"endpoint" json:"endpoint" yaml:"endpoint"`
 }
 
 type Aliyun struct {
-	Path             string `json:"path"`
-	Bucket           string `json:"bucket"`
-	ACLType          string `json:"acl_type"`
-	Endpoint         string `json:"endpoint"`
-	AccessKeyID      string `json:"access_key_id"`
-	SecretAccessKey  string `json:"secret_access_key"`
-	StorageClassType string `json:"storage_class_type"`
+	Path             string `mapstructure:"path" json:"path" yaml:"path"`
+	Bucket           string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`
+	AclType          string `mapstructure:"acl-type" json:"aclType" yaml:"acl-type"`
+	Endpoint         string `mapstructure:"endpoint" json:"endpoint" yaml:"endpoint"`
+	AccessKeyID      string `mapstructure:"access-key-id" json:"accessKeyId" yaml:"access-key-id"`
+	SecretAccessKey  string `mapstructure:"secret-access-key" json:"secretAccessKey" yaml:"secret-access-key"`
+	StorageClassType string `mapstructure:"storage-class-type" json:"storageClassType" yaml:"storage-class-type"`
 }

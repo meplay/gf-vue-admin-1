@@ -7,22 +7,22 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type DictionaryRouter struct {
+type dictionary struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
 }
 
 func NewDictionaryRouter(router *ghttp.RouterGroup) interfaces.Router {
-	return &DictionaryRouter{router: router, response: &response.Handler{}}
+	return &dictionary{router: router, response: &response.Handler{}}
 }
 
-func (d *DictionaryRouter) Init() {
-	var dictionary = d.router.Group("/sysDictionary")
+func (d *dictionary) Init() {
+	group := d.router.Group("/sysDictionary").Middleware(Middleware.OperationRecord)
 	{
-		dictionary.POST("createSysDictionary", d.response.Handler()(api.Dictionary.Create))   // 新建Dictionary
-		dictionary.GET("findSysDictionary", d.response.Handler()(api.Dictionary.First))       // 根据ID获取Dictionary
-		dictionary.PUT("updateSysDictionary", d.response.Handler()(api.Dictionary.Update))    // 更新Dictionary
-		dictionary.DELETE("deleteSysDictionary", d.response.Handler()(api.Dictionary.Delete)) // 删除Dictionary
-		dictionary.GET("getSysDictionaryList", d.response.Handler()(api.Dictionary.GetList))  // 获取Dictionary列表
+		group.POST("createSysDictionary", d.response.Handler()(api.Dictionary.Create))   // 新建Dictionary
+		group.GET("findSysDictionary", d.response.Handler()(api.Dictionary.First))       // 根据ID获取Dictionary
+		group.PUT("updateSysDictionary", d.response.Handler()(api.Dictionary.Update))    // 更新Dictionary
+		group.DELETE("deleteSysDictionary", d.response.Handler()(api.Dictionary.Delete)) // 删除Dictionary
+		group.GET("getSysDictionaryList", d.response.Handler()(api.Dictionary.GetList))  // 获取Dictionary列表
 	}
 }

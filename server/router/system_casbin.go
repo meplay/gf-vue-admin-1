@@ -7,19 +7,19 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type CasbinRouter struct {
+type casbin struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
 }
 
 func NewCasbinRouter(router *ghttp.RouterGroup) interfaces.Router {
-	return &CasbinRouter{router: router, response: &response.Handler{}}
+	return &casbin{router: router, response: &response.Handler{}}
 }
 
-func (casbin *CasbinRouter) Init() {
-	var router = casbin.router.Group("/casbin")
+func (c *casbin) Init() {
+	group := c.router.Group("/casbin").Middleware(Middleware.OperationRecord)
 	{
-		router.POST("updateCasbin", casbin.response.Handler()(api.Casbin.Update))
-		router.POST("getPolicyPathByAuthorityId", casbin.response.Handler()(api.Casbin.GetPolicyPath))
+		group.POST("updateCasbin", c.response.Handler()(api.Casbin.Update))
+		group.POST("getPolicyPathByAuthorityId", c.response.Handler()(api.Casbin.GetPolicyPath))
 	}
 }

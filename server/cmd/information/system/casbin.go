@@ -91,6 +91,7 @@ var carbines = []model.Casbin{
 	{PType: "p", AuthorityId: "888", Path: "/workflowProcess/getMyStated", Method: "GET"},
 	{PType: "p", AuthorityId: "888", Path: "/workflowProcess/getMyNeed", Method: "GET"},
 	{PType: "p", AuthorityId: "888", Path: "/workflowProcess/getWorkflowMoveByID", Method: "GET"},
+	{PType: "p", AuthorityId: "888", Path: "/autoCode/preview", Method: "POST"},
 	{PType: "p", AuthorityId: "8881", Path: "/base/login", Method: "POST"},
 	{PType: "p", AuthorityId: "8881", Path: "/user/register", Method: "POST"},
 	{PType: "p", AuthorityId: "8881", Path: "/api/createApi", Method: "POST"},

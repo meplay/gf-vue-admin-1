@@ -16,13 +16,14 @@ func (r *routers) Init() {
 	private := g.Server().Group("").Middleware(JwtAuth, CasbinRbac)
 	{ // 需要Jwt鉴权, casbin鉴权
 		NewApiRouter(private).Init()
-		NewAdminGroup(private).Init()
+		NewAdminRouter(private).Init()
 		NewMenuRouter(private).Init()
 		NewConfigRouter(private).Init()
 		NewCasbinRouter(private).Init()
+		NewGenerateRouter(private).Init()
 		NewAuthorityRouter(private).Init()
 		NewDictionaryRouter(private).Init()
-		NewJwtBlacklistGroup(private).Init()
+		NewJwtBlacklistRouter(private).Init()
 		NewOperationRecordRouter(private).Init()
 		NewDictionaryDetailRouter(private).Init()
 

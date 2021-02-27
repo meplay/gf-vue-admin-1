@@ -3,52 +3,47 @@ package utils
 import (
 	"crypto/tls"
 	"fmt"
+	"gf-vue-admin/library/global"
 	"net/smtp"
 	"strings"
-
-	"github.com/gogf/gf/frame/g"
 
 	"github.com/jordan-wright/email"
 )
 
-func EmailTest(subject string, body string) error {
-	to := strings.Split(g.Cfg("email").GetString("email.To"), ",")
-	return send(to, subject, body)
+var Email = new(_email)
+
+type _email struct {
+	_email *email.Email
 }
 
-// ErrorToEmail Error 发送邮件
-func ErrorToEmail(subject string, body string) error {
-	to := strings.Split(g.Cfg("email").GetString("email.To"), ",")
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 发送测试邮件
+func (e *_email) EmailTest(subject string, body string) error {
+	to := strings.Split(global.Config.Email.To, ",")
+	return e.send(to, subject, body)
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 发送邮件
+func (e *_email) ErrorToEmail(subject string, body string) error {
+	to := strings.Split(global.Config.Email.To, ",")
 	if to[len(to)-1] == "" { // 判断切片的最后一个元素是否为空,为空则移除
 		to = to[:len(to)-1]
 	}
-	return send(to, subject, body)
+	return e.send(to, subject, body)
 }
 
-func send(to []string, subject string, body string) error {
-	from := g.Cfg("email").GetString("email.From")
-	nickname := g.Cfg("email").GetString("email.Nickname")
-	secret := g.Cfg("email").GetString("email.Secret")
-	host := g.Cfg("email").GetString("email.Host")
-	port := g.Cfg("email").GetInt("email.Port")
-	isSSL := g.Cfg("email").GetBool("email.IsSsl")
-
-	auth := smtp.PlainAuth("", from, secret, host)
-	e := email.NewEmail()
-	if nickname != "" {
-		e.From = fmt.Sprintf("%s <%s>", nickname, from)
+func (e *_email) send(to []string, subject string, body string) error {
+	auth := smtp.PlainAuth("", global.Config.Email.From, global.Config.Email.Secret, global.Config.Email.Host)
+	e._email = email.NewEmail()
+	e._email.From = global.Config.Email.GetFrom()
+	e._email.To = to
+	e._email.Subject = subject
+	e._email.HTML = []byte(body)
+	hostAddr := fmt.Sprintf("%s:%d", global.Config.Email.Host, global.Config.Email.Port)
+	if global.Config.Email.IsSsl {
+		return e._email.SendWithTLS(hostAddr, auth, &tls.Config{ServerName: global.Config.Email.Host})
 	} else {
-		e.From = from
+		return e._email.Send(hostAddr, auth)
 	}
-	e.To = to
-	e.Subject = subject
-	e.HTML = []byte(body)
-	var err error
-	hostAddr := fmt.Sprintf("%s:%d", host, port)
-	if isSSL {
-		err = e.SendWithTLS(hostAddr, auth, &tls.Config{ServerName: host})
-	} else {
-		err = e.Send(hostAddr, auth)
-	}
-	return err
 }
