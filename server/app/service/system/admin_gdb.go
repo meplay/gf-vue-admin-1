@@ -60,7 +60,7 @@ func (a *admin) GetAdminList(info *request.PageInfo) (list interface{}, total in
 	total, err = db.Count()
 	err = db.Limit(limit).Offset(offset).Structs(&admins)
 	for i, entity := range admins {
-		admins[i].Authority = *internal.Authority.First(entity.AuthorityId)
+		admins[i].Authority = internal.Authority().First(entity.AuthorityId)
 	}
 	return admins, total, err
 }
@@ -110,7 +110,7 @@ func (a *admin) Login(info *request.AdminLogin) (result *model.Admin, err error)
 	if err = g.DB().Table(a._admin.TableName()).Where(g.Map{"username": info.Username}).Scan(&entity); err != nil {
 		return &entity, response.ErrorUserNoExist
 	}
-	entity.Authority = *internal.Authority.First(entity.AuthorityId)
+	entity.Authority = internal.Authority().First(entity.AuthorityId)
 	if !entity.CompareHashAndPassword(info.Password) {
 		return &entity, response.ErrorWrongPassword
 	}

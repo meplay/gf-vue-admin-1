@@ -33,7 +33,7 @@ func (a *authorityMenu) AddMenuAuthority(info *request.AddMenuAuthority) error {
 		return err
 	}
 	entity.Menus = info.Menus
-	return internal.Authority.ReplaceMenu(&entity)
+	return internal.Authority().ReplaceMenu(&entity)
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

@@ -61,7 +61,6 @@ func (m *menu) GetMenusParameters(id uint) *[]model.MenuParameter {
 }
 
 func (m *menu) GetAuthoritiesMenus(id uint) *[]model.Authority {
-	Authority.Init()
 	entities := make([]model.AuthoritiesMenus, 0, 10)
 	if err := g.DB().Table(m._menusParameters.TableName()).Where(g.Map{"menu_id": id}).Structs(&entities); err != nil {
 		g.Log().Error("获取 authorities_menus 表数据失败!", g.Map{"menu_id": id})
@@ -69,7 +68,7 @@ func (m *menu) GetAuthoritiesMenus(id uint) *[]model.Authority {
 	}
 	authorities := make([]model.Authority, 0, len(entities))
 	for _, entity := range entities {
-		authorities = append(authorities, Authority.authorityMap[entity.AuthorityId])
+		authorities = append(authorities, Authority().authorityMap[entity.AuthorityId])
 	}
 	return &authorities
 }

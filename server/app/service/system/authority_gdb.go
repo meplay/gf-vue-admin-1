@@ -31,12 +31,11 @@ func (a *authority) Create(info *request.CreateAuthority) error {
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取所有角色信息
+//@description: 根据角色id获取角色信息
 func (a *authority) First(info *request.GetAuthorityId) (result *model.Authority, err error) {
 	var entity model.Authority
-	if data := internal.Authority.GetDataAuthority(info.AuthorityId); data != nil {
-		entity.DataAuthority = *data
-	}
+	err = g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity)
+	entity.DataAuthority = internal.Authority().GetDataAuthority(info.AuthorityId)
 	return &entity, err
 }
 
@@ -102,10 +101,8 @@ func (a *authority) Delete(info *request.GetAuthorityId) error {
 	if err := g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity); err != nil {
 		return err
 	}
-	if menus := internal.Authority.GetMenus(entity.AuthorityId); menus != nil {
-		entity.Menus = *menus
-	}
-	entity.DataAuthority = *internal.Authority.GetDataAuthority(entity.AuthorityId)
+	entity.Menus = internal.Authority().GetMenus(entity.AuthorityId)
+	entity.DataAuthority = internal.Authority().GetDataAuthority(entity.AuthorityId)
 	if _, err := g.DB().Table(a._authority.TableName()).Unscoped().Delete(info.Condition()); err != nil {
 		return err
 	}
@@ -135,10 +132,8 @@ func (a *authority) GetList(info *request.PageInfo) (list interface{}, total int
 	err = db.Limit(limit).Offset(offset).Where(g.Map{"parent_id": "0"}).Structs(&authorities)
 	if len(authorities) > 0 {
 		for i, b := range authorities {
-			if data := internal.Authority.GetDataAuthority(b.AuthorityId); data != nil {
-				authorities[i].DataAuthority = *data
-			}
-			internal.Authority.FindChildren(&authorities[i])
+			authorities[i].DataAuthority = internal.Authority().GetDataAuthority(b.AuthorityId)
+			internal.Authority().FindChildren(&authorities[i])
 		}
 	}
 	return authorities, total, err
@@ -167,5 +162,5 @@ func (a *authority) SetMenuAuthority(info *model.Authority) error {
 		return err
 	}
 	entity.Menus = info.Menus
-	return internal.Authority.ReplaceMenu(&entity)
+	return internal.Authority().ReplaceMenu(&entity)
 }
