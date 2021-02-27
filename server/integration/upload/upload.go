@@ -13,15 +13,19 @@ func Oss() interfaces.Oss {
 	case "qiniu":
 		return Qiniu
 	case "minio":
-		if err := Minio.init(); err != nil {
+		if result, err := MinioInit(); err != nil {
 			g.Log().Error("function Minio.init() Failed!", g.Map{"err": err})
+			return nil
+		} else {
+			return result
 		}
-		return Minio
 	case "aliyun":
-		if err := AliYun.init(); err != nil {
+		if result, err := AliYunInit(); err != nil {
 			g.Log().Error("function AliYun.init() Failed!", g.Map{"err": err})
+			return nil
+		} else {
+			return result
 		}
-		return AliYun
 	default:
 		return Local
 	}

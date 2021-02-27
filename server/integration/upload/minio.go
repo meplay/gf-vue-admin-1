@@ -64,17 +64,14 @@ func (m *_minio) Delete(key string) error {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 初始化minio的Client对象
-func (m *_minio) init() error {
-
-	if m.client, m.err = minio.New(global.Config.Minio.Endpoint, &minio.Options{ // 初始化我的客户端对象。
+func MinioInit() (result *_minio, err error) {
+	var info _minio
+	info.ctx = context.Background()
+	if info.client, info.err = minio.New(global.Config.Minio.Endpoint, &minio.Options{ // 初始化我的客户端对象。
 		Creds:  credentials.NewStaticV4(global.Config.Minio.Id, global.Config.Minio.Secret, global.Config.Minio.Token),
 		Secure: global.Config.Minio.UseSsl,
-	},
-	); m.err != nil {
-		return m.err
+	}); info.err != nil {
+		return &info, info.err
 	}
-
-	m.ctx = context.Background()
-
-	return nil
+	return &info, nil
 }

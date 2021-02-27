@@ -60,14 +60,15 @@ func (a *aliyun) Delete(key string) error {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: Aliyun对象存储 初始化
-func (a *aliyun) init() error {
-	if a.client, a.err = oss.New(global.Config.Aliyun.Endpoint, global.Config.Aliyun.AccessKeyID, global.Config.Aliyun.SecretAccessKey, oss.Timeout(10, 120)); a.err != nil {
-		return a.err
+func AliYunInit() (result *aliyun, err error) {
+	var info aliyun
+	if info.client, info.err = oss.New(global.Config.Aliyun.Endpoint, global.Config.Aliyun.AccessKeyID, global.Config.Aliyun.SecretAccessKey, oss.Timeout(10, 120)); info.err != nil {
+		return nil, info.err
 	}
 
-	if a.bucket, a.err = a.client.Bucket(global.Config.Aliyun.Bucket); a.err != nil { // 获取存储空间。
-		return a.err
+	if info.bucket, info.err = info.client.Bucket(global.Config.Aliyun.Bucket); info.err != nil { // 获取存储空间。
+		return nil, info.err
 	}
 
-	return nil
+	return &info, nil
 }
