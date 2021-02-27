@@ -31,6 +31,16 @@ func (a *authority) Create(info *request.CreateAuthority) error {
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 获取所有角色信息
+func (a *authority) First(info *request.GetAuthorityId) (result *model.Authority, err error) {
+	var entity model.Authority
+	if data := internal.Authority.GetDataAuthority(info.AuthorityId); data != nil {
+		entity.DataAuthority = *data
+	}
+	return &entity, err
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 复制一个角色
 func (a *authority) Copy(info *request.CopyAuthority) error {
 	var entity model.Authority
@@ -158,12 +168,4 @@ func (a *authority) SetMenuAuthority(info *model.Authority) error {
 	}
 	entity.Menus = info.Menus
 	return internal.Authority.ReplaceMenu(&entity)
-}
-
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取所有角色信息
-func (a *authority) First(info *request.GetAuthorityId) (result *model.Authority, err error) {
-	var entity model.Authority
-	entity.DataAuthority = *internal.Authority.GetDataAuthority(info.AuthorityId)
-	return &entity, err
 }
