@@ -19,23 +19,23 @@ func (s *Search{{.StructName}}) Search() g.Map {
             condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- else if eq .FieldType "bool" }}
-        if info.{{.FieldName}} != nil {
+        if s.{{.FieldName}} != nil {
             if *s.{{.FieldName}} == true {
-                condition["`{{.FieldName}}`"] = 1
+                condition["`{{.ColumnName}}`"] = 1
             } else {
-                condition["`{{.FieldName}}`"] = 2
+                condition["`{{.ColumnName}}`"] = 2
             }
         }
                     {{- else if eq .FieldType "int" }}
-        if info.{{.FieldName}} != 0 {
+        if s.{{.FieldName}} != 0 {
             condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- else if eq .FieldType "float64" }}
-        if info.{{.FieldName}} != 0 {
+        if s.{{.FieldName}} != 0 {
             condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- else if eq .FieldType "time.Time" }}
-        if !info.{{.FieldName}}.IsZero() {
+        if !s.{{.FieldName}}.IsZero() {
             condition["`{{.ColumnName}}`{{if eq .FieldSearchType "LIKE"}} like ?{{ end }}"] = {{if eq .FieldSearchType "LIKE"}}"%" +{{ end }} s.{{.FieldName}} {{if eq .FieldSearchType "LIKE"}}+ "%"{{ end }}
         }
                     {{- end }}
