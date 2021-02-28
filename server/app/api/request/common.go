@@ -12,7 +12,7 @@ type PageInfo struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: Get by id structure
 type GetById struct {
-	Id int `p:"id" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
+	Id uint `p:"id" v:"required|length:1,1000#请输入id|id长度为:min到:max位"`
 }
 
 func (i *GetById) Condition() g.Map {

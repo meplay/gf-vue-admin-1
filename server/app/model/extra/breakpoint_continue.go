@@ -11,7 +11,11 @@ type BreakpointContinue struct {
 	FilePath   string
 	IsFinish   bool
 	ChunkTotal int
-	FileChunk  []BreakpointContinueChunk `gorm:"foreignKey:FileID"`
+	FileChunk  []BreakpointContinueChunk `orm:"-" gorm:"foreignKey:FileID"`
+}
+
+func (b *BreakpointContinue) TableName() string {
+	return "breakpoint_continue"
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -21,4 +25,8 @@ type BreakpointContinueChunk struct {
 	FileChunkPath   string
 	FileID          uint
 	FileChunkNumber int
+}
+
+func (b *BreakpointContinueChunk) TableName() string {
+	return "breakpoint_continue_chunks"
 }

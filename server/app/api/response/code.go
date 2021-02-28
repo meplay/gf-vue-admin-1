@@ -36,6 +36,12 @@ const (
 	// JwtBlackList
 	SuccessJwtBlackList
 
+	// BreakpointContinue
+	SuccessFind
+	SuccessFinish
+	SuccessCreateChunk
+	SuccessRemoveChunk
+
 	SuccessEnd
 
 	//失败
@@ -67,6 +73,13 @@ const (
 
 	// JwtBlackList
 	ErrorJwtBlackList
+
+	// BreakpointContinue
+	ErrorFind
+	ErrorFinish
+	ErrorFormFile
+	ErrorCreateChunk
+	ErrorRemoveChunk
 
 	ErrorEnd
 

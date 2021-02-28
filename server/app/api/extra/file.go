@@ -1,4 +1,4 @@
-package extra
+package api
 
 import (
 	"gf-vue-admin/app/api/request"
