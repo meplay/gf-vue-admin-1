@@ -32,5 +32,6 @@ func (r *routers) Init() {
 		system.NewDictionaryDetailRouter(private).Init()
 
 		extra.NewFileRouter(private).Init()
+		extra.NewExcelRouter(private).Init()
 	}
 }

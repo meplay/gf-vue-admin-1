@@ -3,6 +3,7 @@ module gf-vue-admin
 go 1.16
 
 require (
+	github.com/360EntSecGroup-Skylar/excelize/v2 v2.3.2
 	github.com/StackExchange/wmi v0.0.0-20210224194228-fe8f1750fd46 // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.4+incompatible
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
@@ -23,7 +24,7 @@ require (
 	github.com/shirou/gopsutil v3.21.1+incompatible
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/viper v1.7.1
-	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899
+	golang.org/x/crypto v0.0.0-20201012173705-84dcc777aaee
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e // indirect
 	gorm.io/driver/mysql v1.0.4
 	gorm.io/gorm v1.20.12
