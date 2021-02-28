@@ -4,6 +4,7 @@ import (
 	"gf-vue-admin/app/api/response"
 	api "gf-vue-admin/app/api/system"
 	"gf-vue-admin/interfaces"
+	"gf-vue-admin/router/internal"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -17,7 +18,7 @@ func NewAuthorityRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (a *authority) Init() {
-	group := a.router.Group("/authority").Middleware(Middleware.OperationRecord)
+	group := a.router.Group("/authority").Middleware(internal.Middleware.OperationRecord)
 	{
 		group.POST("createAuthority", a.response.Handler()(api.Authority.Create))            // 创建角色
 		group.POST("copyAuthority", a.response.Handler()(api.Authority.Copy))                // 拷贝角色

@@ -4,6 +4,7 @@ import (
 	"gf-vue-admin/app/api/response"
 	api "gf-vue-admin/app/api/system"
 	"gf-vue-admin/interfaces"
+	"gf-vue-admin/router/internal"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -17,7 +18,7 @@ func NewAdminRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (a *admin) Init() {
-	group := a.router.Group("/user").Middleware(Middleware.OperationRecord)
+	group := a.router.Group("/user").Middleware(internal.Middleware.OperationRecord)
 	{
 		group.POST("register", a.response.Handler()(api.Admin.Register))             // 新增用户
 		group.PUT("setUserInfo", a.response.Handler()(api.Admin.Update))             // 设置用户信息

@@ -18,7 +18,7 @@ type _email struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 发送测试邮件
-func (e *_email) EmailTest(subject string, body string) error {
+func (e *_email) Test(subject string, body string) error {
 	to := strings.Split(global.Config.Email.To, ",")
 	return e.send(to, subject, body)
 }

@@ -1,6 +1,9 @@
 package router
 
 import (
+	extra "gf-vue-admin/router/extra"
+	"gf-vue-admin/router/internal"
+	system "gf-vue-admin/router/system"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -10,23 +13,24 @@ type routers struct{}
 
 func (r *routers) Init() {
 	public := g.Server().Group("")
-	{
-		NewBaseGroup(public).Init()
+	{ // 无需鉴权中间件
+		system.NewBaseGroup(public).Init()
 	}
-	private := g.Server().Group("").Middleware(JwtAuth, CasbinRbac)
+	private := g.Server().Group("").Middleware(internal.Middleware.JwtAuth, internal.Middleware.CasbinRbac)
 	{ // 需要Jwt鉴权, casbin鉴权
-		NewApiRouter(private).Init()
-		NewAdminRouter(private).Init()
-		NewMenuRouter(private).Init()
-		NewConfigRouter(private).Init()
-		NewCasbinRouter(private).Init()
-		NewGenerateRouter(private).Init()
-		NewAuthorityRouter(private).Init()
-		NewDictionaryRouter(private).Init()
-		NewJwtBlacklistRouter(private).Init()
-		NewOperationRecordRouter(private).Init()
-		NewDictionaryDetailRouter(private).Init()
+		system.NewApiRouter(private).Init()
+		system.NewAdminRouter(private).Init()
+		system.NewMenuRouter(private).Init()
+		system.NewEmailRouter(private).Init()
+		system.NewConfigRouter(private).Init()
+		system.NewCasbinRouter(private).Init()
+		system.NewGenerateRouter(private).Init()
+		system.NewAuthorityRouter(private).Init()
+		system.NewDictionaryRouter(private).Init()
+		system.NewJwtBlacklistRouter(private).Init()
+		system.NewOperationRecordRouter(private).Init()
+		system.NewDictionaryDetailRouter(private).Init()
 
-		NewFileRouter(private).Init()
+		extra.NewFileRouter(private).Init()
 	}
 }

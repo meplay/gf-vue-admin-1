@@ -4,6 +4,7 @@ import (
 	"gf-vue-admin/app/api/response"
 	api "gf-vue-admin/app/api/system"
 	"gf-vue-admin/interfaces"
+	"gf-vue-admin/router/internal"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -17,7 +18,7 @@ func NewDictionaryRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (d *dictionary) Init() {
-	group := d.router.Group("/sysDictionary").Middleware(Middleware.OperationRecord)
+	group := d.router.Group("/sysDictionary").Middleware(internal.Middleware.OperationRecord)
 	{
 		group.POST("createSysDictionary", d.response.Handler()(api.Dictionary.Create))   // 新建Dictionary
 		group.GET("findSysDictionary", d.response.Handler()(api.Dictionary.First))       // 根据ID获取Dictionary

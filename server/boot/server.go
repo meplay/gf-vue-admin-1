@@ -1,6 +1,7 @@
 package boot
 
 import (
+	"gf-vue-admin/boot/internal"
 	"gf-vue-admin/library/global"
 	"gf-vue-admin/library/utils"
 	"gf-vue-admin/router"
@@ -25,7 +26,7 @@ func (s *_server) Initialize() {
 		server.AddStaticPath("/"+global.Config.Local.Path, global.Config.Local.Path)
 	}
 	server.AddStaticPath("/form-generator", "public/page")
-	server.Use(router.Error, router.CORS)
+	server.Use(internal.Middleware.Error, internal.Middleware.CORS)
 	router.Routers.Init()
 	g.Log().Printf(`
 	欢迎使用 Gf-Vue-Admin
