@@ -6,6 +6,10 @@ import (
 	"gf-vue-admin/library/config"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
+	"os"
+	"os/exec"
+	"runtime"
+	"strconv"
 )
 
 var Config = new(_config)
@@ -48,6 +52,25 @@ func (c *_config) GetServerInfo(r *ghttp.Request) *response.Response {
 		g.Log().Error("获取失败!", g.Map{"err": err})
 		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
 	} else {
-		return &response.Response{Data:g.Map{"server": result}, MessageCode: response.SuccessOperation}
+		return &response.Response{Data: g.Map{"server": result}, MessageCode: response.SuccessOperation}
 	}
+}
+
+// @Tags SystemConfig
+// @Summary 重启服务
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Param data body model.System true "重启服务"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"重启系统成功"}"
+// @Router /system/ReloadSystem [post]
+func (c *_config) ReloadSystem(r *ghttp.Request) *response.Response {
+	if runtime.GOOS == "windows" {
+		return &response.Response{Code: 7, Message: "windows系统不支持!"}
+	}
+	pid := os.Getpid()
+	cmd := exec.Command("kill", "-1", strconv.Itoa(pid))
+	if err := cmd.Run(); err != nil {
+		return &response.Response{Code: 7, Message: "重启系统失败!"}
+	}
+	return &response.Response{Code: 0, Message: "重启系统成功!"}
 }
