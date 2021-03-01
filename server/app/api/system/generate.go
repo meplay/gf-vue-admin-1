@@ -69,7 +69,7 @@ func (a *generate) GetColumns(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body model.AutoCodeStruct true "预览创建代码"
+// @Param data body model.AutoCode true "预览创建代码"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
 // @Router /autoCode/preview [post]
 func (a *generate) Preview(r *ghttp.Request) *response.Response {

@@ -60,9 +60,8 @@ func (c *_config) GetServerInfo(r *ghttp.Request) *response.Response {
 // @Summary 重启服务
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body model.System true "重启服务"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"重启系统成功"}"
-// @Router /system/ReloadSystem [post]
+// @Router /system/reloadSystem [post]
 func (c *_config) ReloadSystem(r *ghttp.Request) *response.Response {
 	if runtime.GOOS == "windows" {
 		return &response.Response{Code: 7, Message: "windows系统不支持!"}

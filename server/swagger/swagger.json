@@ -4,7 +4,6 @@
         "description": "This is a Gf-vue-admin Server",
         "title": "Gf-vue-admin Swagger Docs",
         "contact": {},
-        "license": {},
         "version": "1.0.0"
     },
     "basePath": "/",
@@ -454,6 +453,163 @@
                 }
             }
         },
+        "/autoCode/createTemp": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemGenerate"
+                ],
+                "summary": "自动代码模板",
+                "parameters": [
+                    {
+                        "description": "创建自动代码",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.AutoCode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"创建成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getColumn": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemGenerate"
+                ],
+                "summary": "获取当前表所有字段",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getDatabase": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemGenerate"
+                ],
+                "summary": "获取当前所有数据库",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getTables": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemGenerate"
+                ],
+                "summary": "获取当前数据库所有表",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/preview": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemGenerate"
+                ],
+                "summary": "预览创建后的代码",
+                "parameters": [
+                    {
+                        "description": "预览创建代码",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.AutoCode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"创建成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/base/captcha": {
             "post": {
                 "security": [
@@ -557,6 +713,170 @@
                 }
             }
         },
+        "/excel/downloadTemplate": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraExcel"
+                ],
+                "summary": "下载模板",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "模板名称",
+                        "name": "fileName",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/excel/exportExcel": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "ExtraExcel"
+                ],
+                "summary": "导出Excel",
+                "parameters": [
+                    {
+                        "description": "导出Excel文件信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ExcelInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/excel/importExcel": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraExcel"
+                ],
+                "summary": "导入Excel文件",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "导入Excel文件",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"导入成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/excel/loadExcel": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraExcel"
+                ],
+                "summary": "加载Excel数据",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"加载数据成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/fileUploadAndDownload/breakpointContinue": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraFile"
+                ],
+                "summary": "断点续传到服务器",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "an example for breakpoint resume, 断点续传示例",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"切片创建成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/fileUploadAndDownload/deleteFile": {
             "post": {
                 "security": [
@@ -585,6 +905,42 @@
                 "responses": {
                     "200": {
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"删除成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/fileUploadAndDownload/findFile": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraFile"
+                ],
+                "summary": "创建文件",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "上传文件完成",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"file uploaded, 文件创建成功\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -623,6 +979,42 @@
                 "responses": {
                     "200": {
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/fileUploadAndDownload/removeChunk": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExtraFile"
+                ],
+                "summary": "删除切片",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "删除缓存切片",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"缓存切片删除成功\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -1577,6 +1969,30 @@
                 }
             }
         },
+        "/system/getServerInfo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemConfig"
+                ],
+                "summary": "获取服务器信息",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/system/getSystemConfig": {
             "post": {
                 "security": [
@@ -1594,6 +2010,30 @@
                 "responses": {
                     "200": {
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/system/reloadSystem": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemConfig"
+                ],
+                "summary": "重启服务",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"重启系统成功\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -1820,10 +2260,10 @@
         "config.Aliyun": {
             "type": "object",
             "properties": {
-                "access_key_id": {
+                "accessKeyId": {
                     "type": "string"
                 },
-                "acl_type": {
+                "aclType": {
                     "type": "string"
                 },
                 "bucket": {
@@ -1835,10 +2275,10 @@
                 "path": {
                     "type": "string"
                 },
-                "secret_access_key": {
+                "secretAccessKey": {
                     "type": "string"
                 },
-                "storage_class_type": {
+                "storageClassType": {
                     "type": "string"
                 }
             }
@@ -1872,48 +2312,37 @@
             "type": "object",
             "properties": {
                 "aliyun": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Aliyun"
                 },
                 "captcha": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Captcha"
                 },
                 "casbin": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Casbin"
                 },
                 "email": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Email"
                 },
                 "jwt": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Jwt"
                 },
                 "local": {
                     "description": "Oss",
-                    "type": "object",
                     "$ref": "#/definitions/config.Local"
                 },
                 "minio": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Minio"
                 },
                 "mysql": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Mysql"
                 },
                 "qiniu": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Qiniu"
                 },
                 "redis": {
-                    "type": "object",
                     "$ref": "#/definitions/config.Redis"
                 },
                 "system": {
-                    "type": "object",
                     "$ref": "#/definitions/config.System"
                 }
             }
@@ -1987,7 +2416,7 @@
                 "token": {
                     "type": "string"
                 },
-                "use_ssl": {
+                "useSsl": {
                     "type": "boolean"
                 }
             }
@@ -2027,22 +2456,22 @@
         "config.Qiniu": {
             "type": "object",
             "properties": {
-                "access_key": {
+                "accessKey": {
                     "type": "string"
                 },
                 "bucket": {
                     "type": "string"
                 },
-                "img_path": {
+                "imgPath": {
                     "type": "string"
                 },
-                "secret_key": {
+                "secretKey": {
                     "type": "string"
                 },
-                "use_cdn_domains": {
+                "useCdnDomains": {
                     "type": "boolean"
                 },
-                "use_https": {
+                "useHttps": {
                     "type": "boolean"
                 },
                 "zone": {
@@ -2078,6 +2507,9 @@
                 },
                 "errorToEmail": {
                     "type": "boolean"
+                },
+                "ormType": {
+                    "type": "string"
                 },
                 "ossType": {
                     "type": "string"
@@ -2121,6 +2553,73 @@
                     }
                 },
                 "parentId": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.AutoCode": {
+            "type": "object",
+            "properties": {
+                "abbreviation": {
+                    "type": "string"
+                },
+                "autoCreateApiToSql": {
+                    "type": "boolean"
+                },
+                "autoMoveFile": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Field"
+                    }
+                },
+                "packageName": {
+                    "type": "string"
+                },
+                "structName": {
+                    "type": "string"
+                },
+                "tableName": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Field": {
+            "type": "object",
+            "properties": {
+                "columnName": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "dataType": {
+                    "type": "string"
+                },
+                "dataTypeLong": {
+                    "type": "string"
+                },
+                "dictType": {
+                    "type": "string"
+                },
+                "fieldDesc": {
+                    "type": "string"
+                },
+                "fieldJson": {
+                    "type": "string"
+                },
+                "fieldName": {
+                    "type": "string"
+                },
+                "fieldSearchType": {
+                    "type": "string"
+                },
+                "fieldType": {
                     "type": "string"
                 }
             }
@@ -2259,7 +2758,6 @@
             "type": "object",
             "properties": {
                 "authority": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Authority"
                 },
                 "oldAuthorityId": {
@@ -2356,7 +2854,7 @@
                     "type": "string"
                 },
                 "latency": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "method": {
                     "type": "string"
@@ -2389,6 +2887,20 @@
                 },
                 "path": {
                     "type": "string"
+                }
+            }
+        },
+        "request.ExcelInfo": {
+            "type": "object",
+            "properties": {
+                "fileName": {
+                    "type": "string"
+                },
+                "infoList": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Menu"
+                    }
                 }
             }
         },

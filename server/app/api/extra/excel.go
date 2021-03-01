@@ -20,7 +20,7 @@ type excel struct{}
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce  application/octet-stream
-// @Param data body model.ExcelInfo true "导出Excel文件信息"
+// @Param data body request.ExcelInfo true "导出Excel文件信息"
 // @Success 200
 // @Router /excel/exportExcel [post]
 func (e *excel) Export(r *ghttp.Request) *response.Response {
@@ -74,7 +74,7 @@ func (e *excel) Load(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept multipart/form-data
 // @Produce  application/json
-// @Param fileName query fileName true "模板名称"
+// @Param fileName query string true "模板名称"
 // @Success 200
 // @Router /excel/downloadTemplate [get]
 func (e *excel) Download(r *ghttp.Request) *response.Response {
