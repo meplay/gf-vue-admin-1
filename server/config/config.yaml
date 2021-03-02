@@ -5,6 +5,7 @@ server:
   dump-router-map: true
   access-log-enabled: true
   error-log-enabled: true
+  graceful: true
 
 # Logger
 logger:

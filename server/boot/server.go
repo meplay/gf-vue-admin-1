@@ -5,10 +5,8 @@ import (
 	"gf-vue-admin/library/global"
 	"gf-vue-admin/library/utils"
 	"gf-vue-admin/router"
-	"github.com/gogf/swagger"
-	"time"
-
 	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/swagger"
 )
 
 var Server = new(_server)
@@ -16,10 +14,8 @@ var Server = new(_server)
 type _server struct{}
 
 func (s *_server) Initialize() {
-	var server = g.Server()
-	server.SetReadTimeout(10 * time.Second)
-	server.SetWriteTimeout(10 * time.Second)
-	server.SetMaxHeaderBytes(1 << 20)
+	server := g.Server()
+	address := g.Cfg().GetString("server.address")
 	server.SetIndexFolder(true)
 	if global.Config.System.OssType == "local" {
 		_ = utils.Directory.BatchCreate(global.Config.Local.Path)
@@ -35,8 +31,9 @@ func (s *_server) Initialize() {
 	默认自动化文档地址:http://127.0.0.1%s/swagger
 	默认前端文件运行地址:http://127.0.0.1:8080
 	如果项目让您获得了收益，希望您能请团队喝杯可乐:https://www.gin-vue-admin.com/docs/coffee
-`, g.Cfg().GetString("server.address"))
+`, address)
 	server.Plugin(&swagger.Swagger{})
 	server.SetPort()
+	server.EnableAdmin()
 	server.Run()
 }
