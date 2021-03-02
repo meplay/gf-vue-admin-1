@@ -39,7 +39,8 @@ The growth of GoFrame-vue-admin is inseparable from everyone's support. If you a
 
 #### 1.2.1 Issue specification
 
-- Issues are only used to submit bugs or features and design-related content, other content may be directly closed。If you have questions while using，Go to Slack or [Gitter](https://gitter.im/ElemeFE/element) Consulting。
+- Issues are only used to submit bugs or features and design-related content, other content may be directly closed。If you have questions while using，Go to Slack or [![Gitter](https://badges.gitter.im/Gf-Vue-Admin/community.svg)](https://gitter.im/Gf-Vue-Admin/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+  Consulting。
 
 - Before submitting an issue, please search whether the relevant content has been submitted。
 
