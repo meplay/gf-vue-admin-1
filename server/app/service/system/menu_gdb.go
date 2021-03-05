@@ -33,7 +33,10 @@ func (m *menu) Create(menu *model.Menu) error {
 func (m *menu) First(info *request.GetById) (menu *model.Menu, err error) {
 	var entity model.Menu
 	err = g.DB().Table(m._menu.TableName()).Where(info.Condition()).Struct(&entity)
-	entity.Parameters = *internal.Menu.GetMenusParameters(entity.ID)
+	var params = internal.Menu.GetMenusParameters(entity.ID)
+	if params != nil {
+		entity.Parameters = *params
+	}
 	return &entity, err
 }
 
