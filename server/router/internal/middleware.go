@@ -8,6 +8,7 @@ import (
 	model "gf-vue-admin/app/model/system"
 	service "gf-vue-admin/app/service/system"
 	"gf-vue-admin/library/global"
+	"gf-vue-admin/library/utils"
 	jwt "github.com/gogf/gf-jwt"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
@@ -79,6 +80,8 @@ func (m *middleware) CasbinRbac(r *ghttp.Request) {
 	}
 }
 
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 操作记录中间件
 func (m *middleware) OperationRecord(r *ghttp.Request) {
 	// Request
 
@@ -91,18 +94,26 @@ func (m *middleware) OperationRecord(r *ghttp.Request) {
 	if token, err := api.GfJWTMiddleware.ParseToken(r); err != nil { // 优先从jwt获取用户信息
 		id, _ := strconv.Atoi(r.Request.Header.Get("x-user-id"))
 		if m.result, m.err = service.Admin.FindAdminById(&request.GetById{Id: uint(id)}); m.err != nil {
-			g.Log().Error(g.Map{"err": m.err})
+			g.Log().Error(`Function service.Admin.FindAdminById() Failed!`, g.Map{"err": m.err})
 		}
 	} else {
 		claims := gconv.Map(token.Claims)
 		uuid := gconv.String(claims["admin_uuid"])
 		if m.result, m.err = service.Admin.FindAdmin(&request.GetByUuid{Uuid: uuid}); m.err != nil {
-			g.Log().Error(g.Map{"err": m.err})
+			g.Log().Error(`Function service.Admin.FindAdmin() Failed!`, g.Map{"err": m.err})
 		}
 		m.id = int(m.result.ID)
 	}
 
-	record := request.CreateOperationRecord{BaseOperationRecord: request.BaseOperationRecord{Ip: r.GetClientIp(), Method: r.Request.Method, Path: r.Request.URL.Path, Agent: r.Request.UserAgent(), Request: string(m.body), UserID: m.id}}
+	record := request.CreateOperationRecord{
+		BaseOperationRecord: request.BaseOperationRecord{
+			Ip:      r.GetClientIp(),
+			Method:  r.Request.Method,
+			Path:    r.Request.URL.Path,
+			Agent:   r.Request.UserAgent(),
+			Request: string(m.body), UserID: m.id,
+		},
+	}
 	now := time.Now()
 
 	r.Middleware.Next()
@@ -121,5 +132,15 @@ func (m *middleware) OperationRecord(r *ghttp.Request) {
 
 	if err := service.OperationRecord.Create(&record); err != nil {
 		g.Log().Error("create operation record error:", g.Map{"err": err})
+	}
+
+	str := "接收到的请求为" + record.Request + "\n" + "请求方式为" + record.Method + "\n" + "报错信息如下" + record.ErrorMessage + "\n" + "耗时" + latency.String() + "\n"
+	if global.Config.System.ErrorToEmail {
+		if record.Status != 200 {
+			subject := m.result.Username + "" + record.Ip + "调用了" + record.Path + "报错了"
+			if err := utils.Email.ErrorToEmail(subject, str); err != nil {
+				g.Log().Errorf("Function utils.Email.ErrorToEmail Failed!", g.Map{"err": err})
+			}
+		}
 	}
 }
