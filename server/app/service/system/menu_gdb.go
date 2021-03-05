@@ -27,7 +27,6 @@ func (m *menu) Create(menu *model.Menu) error {
 	return err
 }
 
-
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 返回当前选中menu
 func (m *menu) First(info *request.GetById) (menu *model.Menu, err error) {
@@ -47,7 +46,10 @@ func (m *menu) Delete(info *request.GetById) error {
 	if errors.Is(g.DB().Table(m._menu.TableName()).Where(g.Map{"parent_id": info.Id}).Struct(&entity), sql.ErrNoRows) {
 		return response.ErrorHasChildrenMenu
 	}
-	entity.Authorities = *internal.Menu.GetAuthoritiesMenus(entity.ID)
+	var authorities = internal.Menu.GetAuthoritiesMenus(entity.ID)
+	if authorities != nil {
+		entity.Authorities = *authorities
+	}
 	if _, err := g.DB().Table(m._parameter.TableName()).Delete(info.Condition()); err != nil {
 		return err
 	}
