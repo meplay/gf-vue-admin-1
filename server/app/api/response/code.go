@@ -42,6 +42,10 @@ const (
 	SuccessCreateChunk
 	SuccessRemoveChunk
 
+	// Uploader
+	SuccessCheckFileMd5
+	SuccessMergeFileMd5
+
 	SuccessEnd
 
 	//失败
@@ -80,6 +84,10 @@ const (
 	ErrorFormFile
 	ErrorCreateChunk
 	ErrorRemoveChunk
+
+	// Uploader
+	ErrorCheckFileMd5
+	ErrorMergeFileMd5
 
 	ErrorEnd
 

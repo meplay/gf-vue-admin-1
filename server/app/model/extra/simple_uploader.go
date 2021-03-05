@@ -11,3 +11,8 @@ type SimpleUploader struct {
 	CurrentChunkSize string `orm:"current_chunk_size" json:"currentChunkSize" gorm:"comment:当前切片容量"`
 	IsDone           bool   `orm:"is_done" json:"isDone" gorm:"comment:是否上传完成"`
 }
+
+func (s *SimpleUploader) TableName() string {
+	return "simple_uploader"
+}
+
