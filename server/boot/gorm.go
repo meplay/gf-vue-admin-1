@@ -11,6 +11,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
+	"strings"
 )
 
 var Gorm = new(_gorm)
@@ -25,12 +26,20 @@ func (g *_gorm) Initialize() {
 }
 
 func init() {
+	link := g.Cfg().GetString("database.default.link")
+	a := strings.Split(link, ":")
+	if len(a) < 4 {
+		g.Log().Error("获取失败!")
+	}
+	user := a[1]
+	passAndHost := strings.Split(a[2], "@")
+	portAndName := strings.Split(a[3], "/")
 	global.Config.Mysql = config.Mysql{
-		Path:          g.Cfg().GetString("database.default.host") + ":" + g.Cfg().GetString("database.default.port"),
+		Path:         strings.Split(passAndHost[1], "(")[1] + ":" + strings.Split(strings.Split(portAndName[0], "/")[0], ")")[0],
 		Config:        "charset=utf8mb4&parseTime=True&loc=Local",
-		Dbname:        g.Cfg().GetString("database.default.name"),
-		Username:      g.Cfg().GetString("database.default.user"),
-		Password:      g.Cfg().GetString("database.default.pass"),
+		Dbname:        portAndName[1],
+		Username:      user,
+		Password:      passAndHost[0],
 		MaxIdleConnes: 10,
 		MaxOpenConnes: 10,
 		LogMode:       false,

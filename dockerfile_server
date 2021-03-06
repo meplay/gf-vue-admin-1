@@ -5,12 +5,13 @@ ENV GOPROXY=https://goproxy.io,direct
 WORKDIR /go/src/gf-vue-admin
 COPY server/ ./
 
-RUN cat ./config/config.toml
+RUN cat ./config/config.yaml
 COPY .docker-compose/shell/server-handle.sh .
 RUN sh ./server-handle.sh
 RUN rm -f server-handle.sh
 RUN cat ./config/config.toml
 
+RUN go build -o gfva cmd/main.go
 RUN go env && go list && go build -o server .
 
 FROM alpine:latest
@@ -19,13 +20,13 @@ MAINTAINER SliverHorn <sliver_horn@qq.com>
 WORKDIR gf-vue-admin/
 
 # copy server
+COPY --from=0 /go/src/gin-vue-admin/gfva ./
 COPY --from=server /go/src/gf-vue-admin/server ./
-COPY --from=server /go/src/gf-vue-admin/i18n ./i18n
-COPY --from=server /go/src/gf-vue-admin/local ./local
 COPY --from=server /go/src/gf-vue-admin/public ./public
 COPY --from=server /go/src/gf-vue-admin/config ./config
+COPY --from=server /go/src/gf-vue-admin/swagger ./swagger
 COPY --from=server /go/src/gf-vue-admin/template ./template
 
 EXPOSE 8888
 
-ENTRYPOINT ./server
+ENTRYPOINT ./gfva initdb && ./server

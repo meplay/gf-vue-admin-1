@@ -16,21 +16,8 @@ logger:
 # database 配置
 database:
   default: # 默认启动Mysql配置
-    host: '127.0.0.1'
-    port: '13307'
-    user: 'root'
-    pass: 'gdkid,,..'
-    name: 'gf_vue_admin'
-    type: 'mysql'
-    role: ''
+    link: "mysql:root:gdkid,,..@tcp(127.0.0.1:13307)/gf_vue_admin"
     debug: true
-    pre-fix: ''
-    dry-run: ''
-    charset: 'utf8mb4'
-    weight: ''
-    max-idle: ''
-    max-open: ''
-    max-lifetime: ''
   logger: # Database logger.
     path: './logs/sql'
     level: 'all'
