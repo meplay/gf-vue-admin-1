@@ -33,6 +33,7 @@ func (r *routers) Init() {
 
 		extra.NewFileRouter(private).Init()
 		extra.NewExcelRouter(private).Init()
+		extra.NewWorkflowRouter(private).Init()
 		extra.NewSimpleUploaderRouter(private).Init()
 	}
 }

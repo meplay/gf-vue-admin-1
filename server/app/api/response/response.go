@@ -47,12 +47,16 @@ func (h *Handler) Handler() func(handler handler) func(r *ghttp.Request) {
 					panic(err)
 				}
 			default:
-				if response.Code == 0 || response.Code == 7 {
-					if response.Error != nil {
-						response.Err = response.Error.Error()
+				if response.Error != nil {
+					response.Err = response.Error.Error()
+					response.Code = 0
+					_ = r.Response.WriteJson(response)
+				} else {
+					response.Code = 7
+					if response.Message == "" {
+						response.Message = SuccessOperation.Message()
 					}
 					_ = r.Response.WriteJson(response)
-					return
 				}
 			}
 		}

@@ -6,7 +6,7 @@ import (
 	model "gf-vue-admin/app/model/extra"
 	"gf-vue-admin/library/global"
 	"gf-vue-admin/library/utils"
-	"go.uber.org/zap"
+	"github.com/gogf/gf/frame/g"
 	"gorm.io/gorm"
 	"io"
 	"io/ioutil"
@@ -36,7 +36,7 @@ func (u *uploaderGorm) Upload(header *multipart.FileHeader, info *request.Upload
 	u.chunkDir = global.Config.Uploader.GetIdentifier(info.Identifier)
 	if ok, _ := utils.Directory.PathExists(u.chunkDir); !ok {
 		if u.err = utils.Directory.BatchCreate(u.chunkDir); u.err != nil {
-			zap.L().Error("创建目录失败!", zap.Any("err", u.err))
+			g.Log().Error(`创建目录失败!`, g.Map{"err": u.err})
 		}
 	}
 	u.chunkPath = u.chunkDir + info.Filename + info.ChunkNumber
