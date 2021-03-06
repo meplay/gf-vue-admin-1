@@ -2,8 +2,10 @@ package gfva
 
 import (
 	"fmt"
+	extra "gf-vue-admin/app/model/extra"
 	system "gf-vue-admin/app/model/system"
-	data "gf-vue-admin/cmd/information/system"
+	extraSystem "gf-vue-admin/cmd/information/extra"
+	dataSystem "gf-vue-admin/cmd/information/system"
 	"gf-vue-admin/integration/gdbadapter"
 	"gf-vue-admin/library/global"
 	"github.com/gookit/color"
@@ -66,8 +68,19 @@ func (m *_mysql) AutoMigrateTables() {
 		new(system.Dictionary),
 		new(system.JwtBlacklist),
 		new(system.MenuParameter),
-		//new(system.OperationRecord),
+		new(system.OperationRecord),
 		new(system.DictionaryDetail),
+
+		new(extra.File),
+		new(extra.SimpleUploader),
+		new(extra.BreakpointContinue),
+		new(extra.BreakpointContinueChunk),
+		new(extra.WorkflowNode),
+		new(extra.WorkflowMove),
+		new(extra.WorkflowEdge),
+		new(extra.WorkflowProcess),
+		new(extra.WorkflowEndPoint),
+		new(extra.WorkflowStartPoint),
 	)
 	if m.err != nil {
 		color.Warn.Printf("[Mysql] --> 初始化数据表失败, err: %v\n", m.err)
@@ -79,44 +92,52 @@ func (m *_mysql) AutoMigrateTables() {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 初始化数据
 func (m *_mysql) InitData() {
-	if m.err = data.Api.Init(); m.err != nil {
+	if m.err = dataSystem.Api.Init(); m.err != nil {
 		color.Warn.Println("\n[Mysql] --> apis 表初始数据失败, err: %v\n", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.Menu.Init(); m.err != nil {
+	if m.err = dataSystem.Menu.Init(); m.err != nil {
 		color.Error.Println("\n[Mysql] --> menus 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.Admin.Init(); m.err != nil {
+	if m.err = dataSystem.Admin.Init(); m.err != nil {
 		color.Warn.Println("\n[Mysql] --> admins 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.Casbin.Init(); m.err != nil {
+	if m.err = dataSystem.Casbin.Init(); m.err != nil {
 		color.Error.Println("\n[Mysql] --> casbin_rule 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.Authority.Init(); m.err != nil {
+	if m.err = dataSystem.Authority.Init(); m.err != nil {
 		color.Error.Println("\n[Mysql] --> authorities 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.Dictionary.Init(); m.err != nil {
+	if m.err = dataSystem.Dictionary.Init(); m.err != nil {
 		color.Warn.Println("\n[Mysql] --> dictionaries 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.AuthorityMenu.Init(); m.err != nil {
+	if m.err = dataSystem.AuthorityMenu.Init(); m.err != nil {
 		color.Error.Println("\n[Mysql] --> authority_menu 视图创建失败!, err:%v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.DataAuthorities.Init(); m.err != nil {
+	if m.err = dataSystem.DataAuthorities.Init(); m.err != nil {
 		color.Warn.Println("\n[Mysql] --> data_authorities 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.DictionaryDetail.Init(); m.err != nil {
+	if m.err = dataSystem.DictionaryDetail.Init(); m.err != nil {
 		color.Warn.Println("\n[Mysql] --> dictionary_details 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
-	if m.err = data.AuthoritiesMenus.Init(); m.err != nil {
+	if m.err = dataSystem.AuthoritiesMenus.Init(); m.err != nil {
 		color.Warn.Println("\n[Mysql] --> authorities_menus 表初始数据失败, err: %v", m.err)
+		os.Exit(0)
+	}
+	if m.err = extraSystem.Workflow.Init(); m.err != nil {
+		color.Warn.Println("\n[Mysql] --> 工作流相关 表初始数据失败, err: %v", m.err)
+		os.Exit(0)
+	}
+	if m.err = extraSystem.File.Init(); m.err != nil {
+		color.Warn.Println("\n[Mysql] --> files 表初始数据失败, err: %v", m.err)
 		os.Exit(0)
 	}
 	color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
