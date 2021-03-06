@@ -3,7 +3,7 @@
 </div>
 <div align=center>
 <img src="https://img.shields.io/badge/golang-1.11-blue"/>
-<img src="https://img.shields.io/badge/goframe-1.13.1-lightBlue"/>
+<img src="https://img.shields.io/badge/goframe-1.15.3-lightBlue"/>
 <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen"/>
 <img src="https://img.shields.io/badge/element--ui-2.12.0-green"/>
 </div>
@@ -33,9 +33,9 @@ Online Preview ==> Server expired, online preview is temporarily not open
 
 Hi! First of all, thank you for using gf-vue-admin.
 
-GoFrame-vue-admin is a set of open source frameworks prepared for the back-end management platform with a separated architecture of front and back ends, aiming to quickly build a back-end management system.
+Gf-Vue-Admin is a set of open source frameworks prepared for the back-end management platform with a separated architecture of front and back ends, aiming to quickly build a back-end management system.
 
-The growth of GoFrame-vue-admin is inseparable from everyone's support. If you are willing to contribute code or provide suggestions for GoFrame-vue-admin, please read the following.
+The growth of Gf-Vue-Admin is inseparable from everyone's support. If you are willing to contribute code or provide suggestions for Gf-Vue-Admin, please read the following.
 
 #### 1.2.1 Issue specification
 

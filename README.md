@@ -7,7 +7,7 @@
 </div>
 <div align=center>
 <img src="https://img.shields.io/badge/golang-1.11-blue"/>
-<img src="https://img.shields.io/badge/goframe-1.13.1-lightBlue"/>
+<img src="https://img.shields.io/badge/goframe-1.15.3-lightBlue"/>
 <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen"/>
 <img src="https://img.shields.io/badge/element--ui-2.12.0-green"/>
 </div>
@@ -35,9 +35,9 @@
 
 Hi! 首先感谢你使用 gf-vue-admin。
 
-GoFrame-vue-admin 是一套为后台管理平台准备的一整套前后端分离架构式的开源框架，旨在快速搭建后台管理系统。
+Gf-Vue-Admin 是一套为后台管理平台准备的一整套前后端分离架构式的开源框架，旨在快速搭建后台管理系统。
 
-GoFrame-vue-admin 的成长离不开大家的支持，如果你愿意为 GoFrame-vue-admin 贡献代码或提供建议，请阅读以下内容。
+Gf-Vue-Admin 的成长离不开大家的支持，如果你愿意为 Gf-Vue-Admin 贡献代码或提供建议，请阅读以下内容。
 
 #### 1.2.1 Issue 规范
 

@@ -8,7 +8,7 @@
         <div class="header">
           <a href="/">
             <!-- <img src="~@/assets/logo.png" class="logo" alt="logo" /> -->
-            <span class="title">Goframe-Vue-Admin</span>
+            <span class="title">Gf-Vue-Admin</span>
           </a>
         </div>
       </div>
