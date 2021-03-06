@@ -96,7 +96,7 @@ func (p *process) Delete(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "批量删除WorkflowProcess"
+// @Param data body request.GetByIds true "批量删除WorkflowProcess"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /workflowProcess/deleteWorkflowProcessByIds [delete]
 func (p *process) Deletes(r *ghttp.Request) *response.Response {
