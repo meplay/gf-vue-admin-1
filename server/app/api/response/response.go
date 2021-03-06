@@ -49,10 +49,10 @@ func (h *Handler) Handler() func(handler handler) func(r *ghttp.Request) {
 			default:
 				if response.Error != nil {
 					response.Err = response.Error.Error()
-					response.Code = 0
+					response.Code = 7
 					_ = r.Response.WriteJson(response)
 				} else {
-					response.Code = 7
+					response.Code = 0
 					if response.Message == "" {
 						response.Message = SuccessOperation.Message()
 					}
