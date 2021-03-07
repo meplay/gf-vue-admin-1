@@ -150,7 +150,7 @@
             this.selectedModel = this.processModel;
           }
         });
-        this.graph.on('aftercommandexecute',(command)=>{
+         this.graph.on('aftercommandexecute',(command)=>{
           if (command.name !== 'undo' && command.name !== 'redo') return;
             // 更新selectedModel
          });
