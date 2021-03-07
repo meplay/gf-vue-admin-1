@@ -34,6 +34,5 @@ func (s *_server) Initialize() {
 `, address)
 	server.Plugin(&swagger.Swagger{})
 	server.SetPort()
-	server.EnableAdmin()
 	server.Run()
 }
