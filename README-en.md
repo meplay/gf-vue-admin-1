@@ -99,9 +99,38 @@ go build
 
 ### 2.3 swagger automation API documentation
 
-- Reasons to remove swagger
-	- Comment redundant code, resulting in bloated code
-	- Recommend alternative tool apipost
+#### 2.3.1 Installation swagger
+
+- You can climb over the wall.
+````
+go get -u github.com/swaggo/swag/cmd/swag
+````
+
+- Can't climb the wall.
+  Because it can not be installed in China. go.org/x What's under the bag.，Recommended use [goproxy.io](https://goproxy.io/zh/) Or [goproxy.cn/](https://goproxy.cn/)
+
+```bash
+# If you are using Go version 1.13 or above (recommended)
+# Enable Go Modules Function
+go env -w GO111MODULE=on 
+# Configuration GOPROXY Environment variable
+go env -w GOPROXY=https://goproxy.io,direct
+# Download swag using the following command
+go get -v github.com/swaggo/swag/cmd/swag
+```
+
+#### 2.3.2 Download the gf toolset
+
+[Download the tutorial](https://goframe.org/pages/viewpage.action?pageId=1114260)
+
+#### 2.3.3 Generate API documents
+
+````
+cd server
+gf swagger
+````
+
+After executing the above command, the docs folder appears in the server directory, open the browser and enter [http://localhost:8888/swaggerl](http://localhost:8888/swagger)，You can view the swagger document. 
 
 ## 3. Technical selection
 
