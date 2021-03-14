@@ -6,7 +6,7 @@ import (
 	system "gf-vue-admin/app/model/system"
 	extraSystem "gf-vue-admin/cmd/information/extra"
 	dataSystem "gf-vue-admin/cmd/information/system"
-	"gf-vue-admin/integration/gdbadapter"
+	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
 	"github.com/gookit/color"
 	"gorm.io/driver/mysql"

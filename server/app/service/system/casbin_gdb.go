@@ -4,7 +4,7 @@ import (
 	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	model "gf-vue-admin/app/model/system"
-	gdbAdapter "gf-vue-admin/library/gdbadapter"
+	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
@@ -71,7 +71,7 @@ func (c *_casbin) Clear(path, method string) bool {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 持久化到数据库  引入自定义规则
 func (c *_casbin) Casbin() *casbin.Enforcer {
-	a, _ := gdbAdapter.NewAdapterByDB(g.DB(), "casbin_rule")
+	a, _ := gdbadapter.NewAdapterByDB(g.DB(), "casbin_rule")
 	e, _ := casbin.NewEnforcer(global.Config.Casbin.ModelPath, a)
 	e.AddFunction("ParamsMatch", c.ParamsMatchFunc)
 	_ = e.LoadPolicy()
