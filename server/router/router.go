@@ -15,14 +15,14 @@ func (r *routers) Init() {
 	public := g.Server().Group("")
 	{ // 无需鉴权中间件
 		system.NewBaseGroup(public).Init()
-		system.NewConfigRouter(public).Init()
 	}
 	private := g.Server().Group("").Middleware(internal.Middleware.JwtAuth, internal.Middleware.CasbinRbac)
 	{ // 需要Jwt鉴权, casbin鉴权
 		system.NewApiRouter(private).Init()
-		system.NewAdminRouter(private).Init()
 		system.NewMenuRouter(private).Init()
 		system.NewEmailRouter(private).Init()
+		system.NewAdminRouter(private).Init()
+		system.NewSystemRouter(public).Init()
 		system.NewCasbinRouter(private).Init()
 		system.NewGenerateRouter(private).Init()
 		system.NewAuthorityRouter(private).Init()

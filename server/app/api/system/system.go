@@ -8,9 +8,9 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-var Config = new(_config)
+var System = new(system)
 
-type _config struct{}
+type system struct{}
 
 // @Tags SystemConfig
 // @Summary 获取配置文件内容
@@ -18,8 +18,8 @@ type _config struct{}
 // @Produce  application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /system/getSystemConfig [post]
-func (c *_config) GetConfig(r *ghttp.Request) *response.Response {
-	return &response.Response{Data: g.Map{"config": service.Config.GetConfig()}, MessageCode: response.SuccessOperation}
+func (s *system) GetConfig(r *ghttp.Request) *response.Response {
+	return &response.Response{Data: g.Map{"config": service.System.GetConfig()}, MessageCode: response.SuccessOperation}
 }
 
 // @Tags SystemConfig
@@ -29,9 +29,9 @@ func (c *_config) GetConfig(r *ghttp.Request) *response.Response {
 // @Param data body config.Config true "设置配置文件内容"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
 // @Router /system/setSystemConfig [post]
-func (c *_config) SetConfig(r *ghttp.Request) *response.Response {
+func (s *system) SetConfig(r *ghttp.Request) *response.Response {
 	var info config.Config
-	if err := service.Config.SetConfig(&info); err != nil {
+	if err := service.System.SetConfig(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
 	}
 	return &response.Response{MessageCode: response.SuccessOperation}
@@ -43,8 +43,8 @@ func (c *_config) SetConfig(r *ghttp.Request) *response.Response {
 // @Produce  application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /system/getServerInfo [post]
-func (c *_config) GetServerInfo(r *ghttp.Request) *response.Response {
-	if result, err := service.Config.GetServerInfo(); err != nil {
+func (s *system) GetServerInfo(r *ghttp.Request) *response.Response {
+	if result, err := service.System.GetServerInfo(); err != nil {
 		g.Log().Error("获取失败!", g.Map{"err": err})
 		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
 	} else {
@@ -58,7 +58,7 @@ func (c *_config) GetServerInfo(r *ghttp.Request) *response.Response {
 // @Produce  application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"重启系统成功"}"
 // @Router /system/reloadSystem [post]
-func (c *_config) ReloadSystem(r *ghttp.Request) *response.Response {
+func (s *system) ReloadSystem(r *ghttp.Request) *response.Response {
 	if err := ghttp.RestartAllServer(); err != nil {
 		return &response.Response{Code: 7, Error: err, Message: "重启系统失败!"}
 	}

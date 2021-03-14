@@ -19,9 +19,9 @@ func NewExcelRouter(router *ghttp.RouterGroup) interfaces.Router {
 func (e *excel) Init() {
 	group := e.router.Group("/excel")
 	{
-		group.GET("/loadExcel", e.response.Handler()(api.Excel.Load))            // 加载Excel数据
-		group.POST("/importExcel", e.response.Handler()(api.Excel.Import))       // 导入Excel
-		group.POST("/exportExcel", e.response.Handler()(api.Excel.Export))       // 导出Excel
-		group.GET("/downloadTemplate", e.response.Handler()(api.Excel.Download)) // 下载模板文件
+		group.GET("loadExcel", e.response.Handler()(api.Excel.Load))            // 加载Excel数据
+		group.POST("importExcel", e.response.Handler()(api.Excel.Import))       // 导入Excel
+		group.POST("exportExcel", e.response.Handler()(api.Excel.Export))       // 导出Excel
+		group.GET("downloadTemplate", e.response.Handler()(api.Excel.Download)) // 下载模板文件
 	}
 }
