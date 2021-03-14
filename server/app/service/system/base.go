@@ -2,7 +2,7 @@ package service
 
 import (
 	"gf-vue-admin/app/api/response"
-	"gf-vue-admin/integration"
+	"gf-vue-admin/library"
 	"gf-vue-admin/library/global"
 	"github.com/mojocn/base64Captcha"
 )
@@ -10,12 +10,11 @@ import (
 var (
 	Store base64Captcha.Store
 	Base = new(base)
-
 )
 
 func init() {
 	if global.Config.Captcha.CaptchaInRedis {
-		Store = integration.RedisStore
+		Store = library.RedisStore
 	} else {
 		Store = base64Captcha.DefaultMemStore
 	}

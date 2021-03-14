@@ -2,8 +2,8 @@ package upload
 
 import (
 	"context"
-	"gf-vue-admin/integration/upload/internal"
 	"gf-vue-admin/library/global"
+	"gf-vue-admin/library/upload/internal"
 	"mime/multipart"
 
 	"github.com/gogf/gf/frame/g"
