@@ -6,11 +6,11 @@ import "gf-vue-admin/library/global"
 //@description: 文件结构体
 type BreakpointContinue struct {
 	global.Model
-	FileMd5    string
-	FileName   string
-	FilePath   string
-	IsFinish   bool
-	ChunkTotal int
+	FileMd5    string                    `json:"FileMd5"`
+	FileName   string                    `json:"FileName"`
+	FilePath   string                    `json:"FilePath"`
+	IsFinish   bool                      `json:"IsFinish"`
+	ChunkTotal int                       `json:"ChunkTotal"`
 	FileChunk  []BreakpointContinueChunk `orm:"-" gorm:"foreignKey:FileID"`
 }
 

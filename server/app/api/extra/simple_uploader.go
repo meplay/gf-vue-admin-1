@@ -26,6 +26,9 @@ type uploader struct {
 // @Router /simpleUploader/upload [post]
 func (u *uploader) Upload(r *ghttp.Request) *response.Response {
 	var info request.Upload
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Code: 7, Error: u.err, Message: "切片创建失败!"}
+	}
 	if _, u.header, u.err = r.Request.FormFile("file"); u.err != nil {
 		return &response.Response{Error: u.err, MessageCode: response.ErrorFormFile}
 	}
@@ -60,6 +63,9 @@ func (u *uploader) CheckFileMd5(r *ghttp.Request) *response.Response {
 // @Router /simpleUploader/mergeFileMd5 [get]
 func (u *uploader) MergeFileMd5(r *ghttp.Request) *response.Response {
 	var info request.MergeFileMd5
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorMergeFileMd5}
+	}
 	if err := service.SimpleUploader().MergeFileMd5(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorMergeFileMd5}
 	}

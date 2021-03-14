@@ -73,3 +73,8 @@ aliyun:
   access-key-id: ''
   secret-access-key: ''
   storage-class-type: 'Standard' # 配置请看server/integration/upload/internal/aliyun.go
+
+# uploader configuration
+uploader:
+  chunk-dir: './chunk/'
+  finish-dir: './finish/'

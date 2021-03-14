@@ -31,7 +31,7 @@ func (r *routers) Init() {
 		system.NewOperationRecordRouter(private).Init()
 		system.NewDictionaryDetailRouter(private).Init()
 
-		extra.NewFileRouter(private).Init()
+		extra.NewFileRouter(public).Init()
 		extra.NewExcelRouter(private).Init()
 		extra.NewWorkflowRouter(private).Init()
 		extra.NewSimpleUploaderRouter(private).Init()
