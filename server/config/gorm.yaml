@@ -1,10 +1,11 @@
+# mysql connect configuration
 mysql:
-  config: charset=utf8mb4&parseTime=True&loc=Local
-  db-name: gfva
-  log-mode: false
-  log-zap: ""
+  path: ''
+  config: ''
+  db-name: ''
+  username: ''
+  password: ''
   max-idle-conns: 10
   max-open-conns: 100
-  password: gdkid,,..
-  path: 127.0.0.1:13307
-  username: root
+  log-mode: false
+  log-zap: ""

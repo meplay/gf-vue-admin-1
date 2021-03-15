@@ -83,7 +83,7 @@ func (b *base) InitDB(info *request.InitDB) error {
 		Password:      info.Password,
 		MaxIdleConnes: 10,
 		MaxOpenConnes: 100,
-		LogMode:       false,
+		LogMode:       info.LogMod,
 		LogZap:        "",
 	}
 	if err := b.update(info); err != nil {

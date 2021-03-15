@@ -5,9 +5,10 @@ import "fmt"
 type InitDB struct {
 	Host     string `json:"host"`
 	Port     string `json:"port"`
-	UserName string `json:"userName" binding:"required"`
+	DBName   string `json:"dbName" v:"required"`
+	UserName string `json:"userName" v:"required"`
 	Password string `json:"password"`
-	DBName   string `json:"dbName" binding:"required"`
+	LogMod   bool  `json:"logMod"`
 }
 
 func (i *InitDB) SqlDsn() string {
@@ -23,4 +24,3 @@ func (i *InitDB) SqlDsn() string {
 func (i *InitDB) GetCreateTableSql() string {
 	return fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;", i.DBName)
 }
-

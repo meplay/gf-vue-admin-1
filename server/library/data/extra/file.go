@@ -28,7 +28,6 @@ func (f *file) Init() error {
 		if err := tx.Create(&files).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		color.Info.Println("\n[Mysql] --> files 表初始数据成功!")
 		return nil
 	})
 }
