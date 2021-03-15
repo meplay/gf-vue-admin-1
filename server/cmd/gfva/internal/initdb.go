@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package gfva
+package internal
 
 import (
 	"gf-vue-admin/boot"
+	"gf-vue-admin/library/data"
 	"gf-vue-admin/library/global"
+	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )
 
@@ -32,23 +34,23 @@ var initdbCmd = &cobra.Command{
 		switch frame {
 		case "gin":
 			boot.Viper.Initialize(path)
-			Mysql.CheckDatabase()
-			Mysql.CheckUtf8mb4()
-			Mysql.Info()
-			Mysql.Init()
+			boot.Mysql.CheckDatabase()
+			boot.Mysql.CheckUtf8mb4()
+			boot.Mysql.Info()
+			boot.Mysql.Initialize()
 			if global.Config.System.DbType == "mysql" {
-				Mysql.AutoMigrateTables()
-				Mysql.InitData()
+				if err := data.Initialize(); err == nil {
+					color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
+				}
 			}
 		case "gf":
 			boot.Viper.Initialize(path)
-			Mysql.CheckDatabase()
-			Mysql.CheckUtf8mb4()
-			Mysql.Info()
-			Mysql.Init()
+			boot.Mysql.Check()
+			boot.Mysql.Initialize()
 			if global.Config.System.DbType == "mysql" {
-				Mysql.AutoMigrateTables()
-				Mysql.InitData()
+				if err := data.Initialize(); err == nil {
+					color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
+				}
 			}
 		}
 		return

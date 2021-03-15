@@ -32,3 +32,9 @@ func (f *file) Init() error {
 		return nil
 	})
 }
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 自定义表名
+func (f *file) TableName() string {
+	return "files"
+}

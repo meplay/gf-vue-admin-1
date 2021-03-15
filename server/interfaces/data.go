@@ -16,6 +16,8 @@ func InitDb(inits ...InitDateFunc) error {
 		if err := init.Init(); err != nil {
 			color.Warn.Printf("\n[Mysql] --> %v 表初始数据失败, err: %v\n", init.TableName(), err)
 			return err
+		} else {
+			color.Info.Printf("\n[Mysql] --> %v 表初始数据成功!\n", init.TableName())
 		}
 	}
 	return nil

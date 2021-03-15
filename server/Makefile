@@ -6,7 +6,7 @@ all: check gfva run
 gfva:
 	go env -w GO111MODULE=on
 	go env -w GOPROXY=https://goproxy.io,direct
-	go build -o ${GFVA} cmd/main.go
+	go build -o ${GFVA} cmd/gfva/main.go
 	@if [ -f ${GFVA} ] ; then ./${GFVA} initdb && rm ${GFVA} ; fi
 
 linux-build:

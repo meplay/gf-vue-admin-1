@@ -9,15 +9,16 @@ import (
 	"gorm.io/gorm"
 )
 
-var Authority = new(authority)
+var (
+	Authority   = new(authority)
+	authorities = []model.Authority{
+		{CreatedAt: time.Now(), UpdatedAt: time.Now(), AuthorityId: "888", AuthorityName: "普通用户", ParentId: "0", DefaultRouter: "dashboard"},
+		{CreatedAt: time.Now(), UpdatedAt: time.Now(), AuthorityId: "8881", AuthorityName: "普通用户子角色", ParentId: "888", DefaultRouter: "dashboard"},
+		{CreatedAt: time.Now(), UpdatedAt: time.Now(), AuthorityId: "9528", AuthorityName: "测试角色", ParentId: "0", DefaultRouter: "dashboard"},
+	}
+)
 
 type authority struct{}
-
-var authorities = []model.Authority{
-	{CreatedAt: time.Now(), UpdatedAt: time.Now(), AuthorityId: "888", AuthorityName: "普通用户", ParentId: "0", DefaultRouter: "dashboard"},
-	{CreatedAt: time.Now(), UpdatedAt: time.Now(), AuthorityId: "8881", AuthorityName: "普通用户子角色", ParentId: "888", DefaultRouter: "dashboard"},
-	{CreatedAt: time.Now(), UpdatedAt: time.Now(), AuthorityId: "9528", AuthorityName: "测试角色", ParentId: "0", DefaultRouter: "dashboard"},
-}
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: authorities 表数据初始化
@@ -30,7 +31,12 @@ func (a *authority) Init() error {
 		if err := tx.Create(&authorities).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		color.Info.Println("\n[Mysql] --> authorities 表初始数据成功!")
 		return nil
 	})
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 定义表名
+func (a *authority) TableName() string {
+	return "authorities"
 }

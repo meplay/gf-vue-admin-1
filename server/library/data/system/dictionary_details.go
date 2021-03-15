@@ -58,7 +58,12 @@ func (d *dictionaryDetail) Init() error {
 		if err := tx.Create(&details).Error; err != nil { // 遇到错误时回滚事务
 			return err
 		}
-		color.Info.Println("\n[Mysql] --> dictionary_details 表初始数据成功!")
 		return nil
 	})
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 定义表名
+func (d *dictionaryDetail) TableName() string {
+	return "dictionary_details"
 }

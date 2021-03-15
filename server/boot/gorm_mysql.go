@@ -1,17 +1,17 @@
-package gfva
+package boot
 
 import (
+	"database/sql"
 	"fmt"
 	extra "gf-vue-admin/app/model/extra"
 	system "gf-vue-admin/app/model/system"
-	extraSystem "gf-vue-admin/cmd/information/extra"
-	dataSystem "gf-vue-admin/cmd/information/system"
+	"gf-vue-admin/boot/internal"
 	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
+	"github.com/gogf/gf/frame/g"
 	"github.com/gookit/color"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"os"
 	"strings"
 )
@@ -26,6 +26,7 @@ var Mysql = &_mysql{_config: &gorm.Config{}}
 type _mysql struct {
 	db      *gorm.DB
 	err     error
+	sql     *sql.DB
 	_config *gorm.Config
 
 	old       string // 配置文件第一次读取数据库数据
@@ -36,22 +37,26 @@ type _mysql struct {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: gorm连接mysql数据库
-func (m *_mysql) Init() {
-	if global.Config.Mysql.LogMode {
-		m._config.Logger = logger.Default.LogMode(logger.Info)
-	} else {
-		m._config.Logger = logger.Default.LogMode(logger.Silent)
-	}
-	m._config.DisableForeignKeyConstraintWhenMigrating = true
-	m.db, m.err = gorm.Open(mysql.New(mysql.Config{
+func (m *_mysql) Initialize() {
+	if m.db, m.err = gorm.Open(mysql.New(mysql.Config{
 		DSN:                       global.Config.Mysql.Dsn(), // DSN data source name
-		DefaultStringSize:         256,                       // string 类型字段的默认长度
+		DefaultStringSize:         191,                       // string 类型字段的默认长度
 		DisableDatetimePrecision:  true,                      // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 		DontSupportRenameIndex:    true,                      // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
 		DontSupportRenameColumn:   true,                      // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
-		SkipInitializeWithVersion: false,                     // 根据当前 MySQL 版本自动配置
-	}), m._config)
-	global.Db = m.db
+		SkipInitializeWithVersion: false,                     // 根据版本自动配置
+	}), internal.GenerateConfig()); m.err != nil {
+		g.Log().Error(`Gorm连接MySQL异常!`, g.Map{"err": m.err})
+	} else {
+		if m.sql, m.err = m.db.DB(); m.err != nil {
+			g.Log().Error(`DatabaseSql对象获取异常!`, g.Map{"err": m.err})
+		} else {
+			global.Db = m.db
+			m.AutoMigrateTables()
+			m.sql.SetMaxIdleConns(global.Config.Mysql.GetMaxIdleConnes())
+			m.sql.SetMaxOpenConns(global.Config.Mysql.GetMaxOpenConnes())
+		}
+	}
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -75,6 +80,7 @@ func (m *_mysql) AutoMigrateTables() {
 		new(extra.SimpleUploader),
 		new(extra.BreakpointContinue),
 		new(extra.BreakpointContinueChunk),
+
 		new(extra.WorkflowNode),
 		new(extra.WorkflowMove),
 		new(extra.WorkflowEdge),
@@ -83,71 +89,25 @@ func (m *_mysql) AutoMigrateTables() {
 		new(extra.WorkflowStartPoint),
 	)
 	if m.err != nil {
-		color.Warn.Printf("[Mysql] --> 初始化数据表失败, err: %v\n", m.err)
+		g.Log().Error(`注册表失败!`, g.Map{"err": m.err})
 		os.Exit(0)
 	}
-	color.Info.Println("[Mysql] --> 初始化数据表成功! ")
+	g.Log().Info(`注册表成功!`)
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 初始化数据
-func (m *_mysql) InitData() {
-	if m.err = dataSystem.Api.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> apis 表初始数据失败, err: %v\n", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.Menu.Init(); m.err != nil {
-		color.Error.Println("\n[Mysql] --> menus 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.Admin.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> admins 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.Casbin.Init(); m.err != nil {
-		color.Error.Println("\n[Mysql] --> casbin_rule 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.Authority.Init(); m.err != nil {
-		color.Error.Println("\n[Mysql] --> authorities 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.Dictionary.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> dictionaries 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.AuthorityMenu.Init(); m.err != nil {
-		color.Error.Println("\n[Mysql] --> authority_menu 视图创建失败!, err:%v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.DataAuthorities.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> data_authorities 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.DictionaryDetail.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> dictionary_details 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = dataSystem.AuthoritiesMenus.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> authorities_menus 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = extraSystem.Workflow.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> 工作流相关 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	if m.err = extraSystem.File.Init(); m.err != nil {
-		color.Warn.Println("\n[Mysql] --> files 表初始数据失败, err: %v", m.err)
-		os.Exit(0)
-	}
-	color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
+//@description: 检查数据库是否存在
+func (m *_mysql) Check() {
+	m.Initialize()
+	m.CheckDatabase()
+	m.CheckUtf8mb4()
+	m.Info()
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 检查数据库是否存在
 func (m *_mysql) CheckDatabase() {
-	var unknownDatabase = fmt.Sprintf("Unknown database '%v'", global.Config.Mysql.Dbname)
-	m.Init()
+	unknownDatabase := fmt.Sprintf("Unknown database '%v'", global.Config.Mysql.Dbname)
 	if m.err != nil {
 		if strings.Split(m.err.Error(), ": ")[1] == unknownDatabase {
 			color.Debug.Print("\n[Mysql] -->配置文件的数据库名为:")
@@ -265,7 +225,7 @@ func (m *_mysql) database() {
 	m.old = global.Config.Mysql.Dbname
 	global.Config.Mysql.Dbname = "mysql"
 	color.Debug.Printf("\n[Mysql] --> 正在连接 mysql 数据库中.......\n")
-	m.Init()
+	m.Initialize()
 	if m.err != nil {
 		color.Error.Printf("\n[Mysql] --> 链接 mysql 数据库失败!, err: %v\n", m.err)
 		color.Error.Printf("[Mysql] --> 请自行创建配置文件所需的数据库!\n")
