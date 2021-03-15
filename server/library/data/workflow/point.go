@@ -1,7 +1,7 @@
 package data
 
 import (
-	model "gf-vue-admin/app/model/extra"
+	model "gf-vue-admin/app/model/workflow"
 	"gf-vue-admin/library/global"
 	"gorm.io/gorm"
 	"time"

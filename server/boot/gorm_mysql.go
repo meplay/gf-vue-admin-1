@@ -3,11 +3,8 @@ package boot
 import (
 	"database/sql"
 	"fmt"
-	extra "gf-vue-admin/app/model/extra"
-	system "gf-vue-admin/app/model/system"
-	workflow "gf-vue-admin/app/model/workflow"
+	service "gf-vue-admin/app/service/system"
 	"gf-vue-admin/boot/internal"
-	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gookit/color"
@@ -53,47 +50,11 @@ func (m *_mysql) Initialize() {
 			g.Log().Error(`DatabaseSql对象获取异常!`, g.Map{"err": m.err})
 		} else {
 			global.Db = m.db
-			m.AutoMigrateTables()
+			service.Base.AutoMigrateTables()
 			m.sql.SetMaxIdleConns(global.Config.Mysql.GetMaxIdleConnes())
 			m.sql.SetMaxOpenConns(global.Config.Mysql.GetMaxOpenConnes())
 		}
 	}
-}
-
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: gorm 同步模型 生成mysql表
-func (m *_mysql) AutoMigrateTables() {
-	if !global.Db.Migrator().HasTable("casbin_rule") {
-		m.err = global.Db.Migrator().CreateTable(&gdbadapter.CasbinRule{})
-	}
-	m.err = m.db.AutoMigrate(
-		new(system.Api),
-		new(system.Admin),
-		new(system.Menu),
-		new(system.Authority),
-		new(system.Dictionary),
-		new(system.JwtBlacklist),
-		new(system.MenuParameter),
-		new(system.OperationRecord),
-		new(system.DictionaryDetail),
-
-		new(extra.File),
-		new(extra.SimpleUploader),
-		new(extra.BreakpointContinue),
-		new(extra.BreakpointContinueChunk),
-
-		new(workflow.WorkflowNode),
-		new(workflow.WorkflowMove),
-		new(workflow.WorkflowEdge),
-		new(workflow.WorkflowProcess),
-		new(workflow.WorkflowEndPoint),
-		new(workflow.WorkflowStartPoint),
-	)
-	if m.err != nil {
-		g.Log().Error(`注册表失败!`, g.Map{"err": m.err})
-		os.Exit(0)
-	}
-	g.Log().Info(`注册表成功!`)
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)

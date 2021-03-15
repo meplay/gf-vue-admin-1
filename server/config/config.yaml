@@ -16,14 +16,9 @@ logger:
 # database 配置
 database:
   default: # 默认启动Mysql配置
-    link: "mysql:root:gdkid,,..@tcp(127.0.0.1:13307)/gf_vue_admin_test"
+    link: "mysql:root:gdkid,,..@tcp(127.0.0.1:13307)/gf_vue-admin"
     debug: true
   logger: # Database logger.
     path: './logs/sql'
     level: 'all'
     stdout: true
-
-# Redis 配置
-redis:
-  default: '127.0.0.1:6379,1,?idleTimeout=600'
-  cache: '127.0.0.1:6379,2,?idleTimeout=600'

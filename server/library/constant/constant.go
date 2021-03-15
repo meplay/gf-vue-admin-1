@@ -3,6 +3,7 @@ package constant
 const (
 	ConfigEnv      = "GVA_CONFIG"
 	ConfigFile     = "config/viper.yaml"
+	GormConfigFile = "config/gorm.yaml"
 	SerializerGob  = "gob"
 	SerializerJson = "json"
 

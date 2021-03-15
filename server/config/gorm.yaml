@@ -1,0 +1,10 @@
+mysql:
+  config: charset=utf8mb4&parseTime=True&loc=Local
+  db-name: gfva
+  log-mode: false
+  log-zap: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  password: gdkid,,..
+  path: 127.0.0.1:13307
+  username: root

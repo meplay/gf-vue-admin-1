@@ -183,7 +183,7 @@ func (t *traceRecorder) Trace(ctx context.Context, begin time.Time, fc func() (s
 }
 
 func GenerateConfig() *gorm.Config {
-	var _config = &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
+	_config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
 	switch global.Config.Mysql.LogZap {
 	case "silent", "Silent":
 		_config.Logger = Default.LogMode(logger.Silent)

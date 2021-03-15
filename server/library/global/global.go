@@ -12,10 +12,12 @@ import (
 )
 
 var (
-	Db     *gorm.DB
-	Viper  *viper.Viper
-	Redis  *redis.Client
-	Config config.Config
+	Db         *gorm.DB
+	Viper      *viper.Viper
+	Redis      *redis.Client
+	Config     config.Config
+	GormViper  *viper.Viper
+	GormConfig config.Mysql
 )
 
 type _gtime gtime.Time

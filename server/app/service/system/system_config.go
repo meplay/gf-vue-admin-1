@@ -7,19 +7,19 @@ import (
 	"gf-vue-admin/library/utils"
 )
 
-var System = new(system)
+var System = new(_system)
 
-type system struct{}
+type _system struct{}
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 读取配置文件
-func (s *system) GetConfig() *config.Config {
+func (s *_system) GetConfig() *config.Config {
 	return &global.Config
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 设置配置文件
-func (s *system) SetConfig(info *config.Config) (err error) {
+func (s *_system) SetConfig(info *config.Config) (err error) {
 	configMap := utils.StructToMap(info)
 	for k, v := range configMap {
 		global.Viper.Set(k, v)
@@ -28,6 +28,6 @@ func (s *system) SetConfig(info *config.Config) (err error) {
 	return err
 }
 
-func (s *system) GetServerInfo() (*response.Server, error) {
+func (s *_system) GetServerInfo() (*response.Server, error) {
 	return utils.Server.Data()
 }
