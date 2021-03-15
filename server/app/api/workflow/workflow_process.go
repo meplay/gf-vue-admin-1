@@ -1,11 +1,11 @@
-package api
+package workflow
 
 import (
 	"gf-vue-admin/app/api/internal"
 	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
-	model "gf-vue-admin/app/model/extra"
-	service "gf-vue-admin/app/service/extra"
+	model "gf-vue-admin/app/model/workflow"
+	service "gf-vue-admin/app/service/workflow"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )

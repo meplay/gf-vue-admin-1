@@ -1,10 +1,10 @@
-package service
+package workflow
 
 import (
 	"errors"
 	"fmt"
 	"gf-vue-admin/app/api/request"
-	model "gf-vue-admin/app/model/extra"
+	model "gf-vue-admin/app/model/workflow"
 	"gf-vue-admin/library/constant"
 	"gf-vue-admin/library/global"
 	"gorm.io/gorm"

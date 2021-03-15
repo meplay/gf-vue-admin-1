@@ -1,6 +1,6 @@
 package request
 
-import model "gf-vue-admin/app/model/extra"
+import model "gf-vue-admin/app/model/workflow"
 
 type SearchWorkflowProcess struct {
 	model.WorkflowProcess

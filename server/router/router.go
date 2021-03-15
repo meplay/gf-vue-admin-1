@@ -4,6 +4,7 @@ import (
 	extra "gf-vue-admin/router/extra"
 	"gf-vue-admin/router/internal"
 	system "gf-vue-admin/router/system"
+	workflow "gf-vue-admin/router/workflow"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -33,7 +34,8 @@ func (r *routers) Init() {
 
 		extra.NewFileRouter(public).Init()
 		extra.NewExcelRouter(private).Init()
-		extra.NewWorkflowRouter(private).Init()
 		extra.NewSimpleUploaderRouter(private).Init()
+
+		workflow.NewWorkflowRouter(private).Init()
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	extra "gf-vue-admin/app/model/extra"
 	system "gf-vue-admin/app/model/system"
+	workflow "gf-vue-admin/app/model/workflow"
 	"gf-vue-admin/boot/internal"
 	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
@@ -81,12 +82,12 @@ func (m *_mysql) AutoMigrateTables() {
 		new(extra.BreakpointContinue),
 		new(extra.BreakpointContinueChunk),
 
-		new(extra.WorkflowNode),
-		new(extra.WorkflowMove),
-		new(extra.WorkflowEdge),
-		new(extra.WorkflowProcess),
-		new(extra.WorkflowEndPoint),
-		new(extra.WorkflowStartPoint),
+		new(workflow.WorkflowNode),
+		new(workflow.WorkflowMove),
+		new(workflow.WorkflowEdge),
+		new(workflow.WorkflowProcess),
+		new(workflow.WorkflowEndPoint),
+		new(workflow.WorkflowStartPoint),
 	)
 	if m.err != nil {
 		g.Log().Error(`注册表失败!`, g.Map{"err": m.err})
