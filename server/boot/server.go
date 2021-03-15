@@ -30,7 +30,7 @@ func (s *_server) Initialize() {
 	加群方式:微信号：SliverHorn QQ群：1040044540
 	默认自动化文档地址:http://127.0.0.1%s/swagger
 	默认前端文件运行地址:http://127.0.0.1:8080
-	如果项目让您获得了收益，希望您能请团队喝杯可乐:https://www.gin-vue-admin.com/docs/coffee
+	如果项目让您获得了收益，希望您能请团队喝杯可乐:http://www.gf-vue-admin.com/docs/coffee
 `, address)
 	server.Plugin(&swagger.Swagger{})
 	server.SetPort()
