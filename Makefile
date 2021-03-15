@@ -1,3 +1,5 @@
+all: master-merge-from-gfva_develop develop-merge-from-master
+
 develop-merge-from-master:
 	@git checkout develop
 	@git pull origin master
