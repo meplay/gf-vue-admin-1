@@ -14,14 +14,14 @@ develop-merge-from-master:
 	@git pull origin master
 	@git add .
 	@git push origin develop
-	master
+	@master
 
 gfva_develop-merge-from-master:
 	@git checkout gfva_develop
 	@git pull origin master
 	@git add .
 	@git push origin gfva_develop
-	master
+	@master
 
 master-merge-from-develop:
 	@git checkout master
