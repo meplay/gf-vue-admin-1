@@ -1,7 +1,6 @@
 package config
 
 type Config struct {
-	Language string   `mapstructure:"language" json:"language" yaml:"language"`
 	Jwt      Jwt      `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
 	Redis    Redis    `mapstructure:"redis" json:"redis" yaml:"redis"`
 	Email    Email    `mapstructure:"email" json:"email" yaml:"email"`

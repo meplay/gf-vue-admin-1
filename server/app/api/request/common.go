@@ -52,3 +52,10 @@ func (p *PageInfo) Paginate() (limit, offset int) {
 	offset = p.PageSize * (p.Page - 1)
 	return limit, offset
 }
+
+type ExcelExport struct {
+	Filepath  string          `json:"filepath"`
+	SheetName string          `json:"sheetName"`
+	A1Data    []string        `json:"a1Data"`
+	Data      [][]interface{} `json:"data"`
+}
