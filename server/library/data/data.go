@@ -8,6 +8,7 @@ import (
 )
 
 func Initialize() error {
+	system.Init()
 	return interfaces.InitDb(
 		system.Api,
 		system.Menu,

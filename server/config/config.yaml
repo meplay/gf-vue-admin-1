@@ -1,4 +1,6 @@
 # HTTP Server
+language: 'en'
+
 server:
   address: ':8888'
   log-path: './logs/server'
