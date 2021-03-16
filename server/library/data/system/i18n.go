@@ -7,7 +7,7 @@ import (
 var I18nHash map[string]string
 
 func Init() {
-	if global.Config.Language == "en" {
+	if global.Config.System.Language == "en" {
 		I18nHash = GetEnI18n()
 	} else {
 		I18nHash = GetChI18n()
