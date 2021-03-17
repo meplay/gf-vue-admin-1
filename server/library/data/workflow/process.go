@@ -9,9 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	Process = new(_process)
-)
+var Process = new(_process)
 
 type _process struct{}
 

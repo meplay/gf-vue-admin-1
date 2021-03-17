@@ -16,8 +16,8 @@ func (g *_gorm) Initialize() {
 }
 
 func init() {
-	if global.GormConfig.Path != "" {
-		global.Config.Mysql = global.GormConfig
+	if global.GormConfig.Mysql.Path != "" {
+		global.Config.Mysql = global.GormConfig.Mysql
 	} else {
 		global.Config.Mysql = global.Config.Mysql.GetByLink()
 	}

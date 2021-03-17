@@ -75,7 +75,7 @@ func (b *base) InitDB(info *request.InitDB) error {
 	if err := b.createTable(info.SqlDsn(), "mysql", info.GetCreateTableSql()); err != nil { // 创建数据库
 		return err
 	}
-	global.GormConfig = config.Mysql{
+	global.GormConfig.Mysql = config.Mysql{
 		Path:          fmt.Sprintf("%s:%s", info.Host, info.Port),
 		Config:        "charset=utf8mb4&parseTime=True&loc=Local",
 		Dbname:        info.DBName,
@@ -89,7 +89,8 @@ func (b *base) InitDB(info *request.InitDB) error {
 	if err := b.update(info); err != nil {
 		return err
 	}
-	b.linkMysql()
+	b.linkGorm()
+	b.LinkGdb()
 	b.AutoMigrateTables()    // 初始化表
 	return data.Initialize() // 初始化数据
 }
@@ -132,7 +133,7 @@ func (b *base) AutoMigrateTables() {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: gorm连接mysql数据库
-func (b *base) linkMysql() {
+func (b *base) linkGorm() {
 	_config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
 	if global.Config.Mysql.LogMode {
 		_config.Logger = logger.Default.LogMode(logger.Info)
@@ -161,19 +162,19 @@ func (b *base) linkMysql() {
 }
 
 func (b *base) LinkGdb() {
-	if global.GormConfig.Path != "" {
-		list := strings.Split(global.GormConfig.Path, ":")
+	if global.GormConfig.Mysql.Path != "" {
+		list := strings.Split(global.GormConfig.Mysql.Path, ":")
 		if len(list) == 2 {
 			gdb.SetConfig(gdb.Config{
 				"default": gdb.ConfigGroup{
 					gdb.ConfigNode{
 						Host:  list[0],
 						Port:  list[1],
-						User:  global.GormConfig.Username,
-						Pass:  global.GormConfig.Password,
-						Name:  global.GormConfig.Dbname,
-						Type:  global.Config.System.DbType,
-						Debug: global.GormConfig.LogMode,
+						User:  global.GormConfig.Mysql.Username,
+						Pass:  global.GormConfig.Mysql.Password,
+						Name:  global.GormConfig.Mysql.Dbname,
+						Type: g.Cfg("viper").GetString("system.db-type"),
+						Debug: global.GormConfig.Mysql.LogMode,
 					},
 				},
 			})

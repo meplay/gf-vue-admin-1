@@ -9,9 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	Node = new(node)
-)
+var Node = new(node)
 
 type node struct{}
 

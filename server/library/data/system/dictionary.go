@@ -20,7 +20,6 @@ func init() {
 	*_true = true
 	_false = new(bool)
 	*_false = false
-
 }
 
 type dictionary struct{}
@@ -28,7 +27,7 @@ type dictionary struct{}
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: dictionaries 表数据初始化
 func (d *dictionary) Init() error {
-	var dictionaries = []model.Dictionary{
+	dictionaries := []model.Dictionary{
 		{Model: global.Model{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Name: I18nHash["Sex"], Type: "sex", Status: _true, Desc: I18nHash["SexDictionary"]},
 		{Model: global.Model{ID: 2, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Name: I18nHash["DBTypeInt"], Type: "int", Status: _true, Desc: I18nHash["DBTypeInt"]},
 		{Model: global.Model{ID: 3, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Name: I18nHash["DBTypeDateTime"], Type: "time.Time", Status: _true, Desc: I18nHash["DBTypeDateTime"]},

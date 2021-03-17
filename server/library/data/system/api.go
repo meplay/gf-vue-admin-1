@@ -10,16 +10,14 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	Api = new(api)
-)
+var Api = new(api)
 
 type api struct{}
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: apis 表数据初始化
 func (a *api) Init() error {
-	var apis = []model.Api{
+	apis := []model.Api{
 		{global.Model{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/base/login", I18nHash["UserLogin"], "base", "POST"},
 		{global.Model{ID: 2, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/user/register", I18nHash["UserRegister"], "user", "POST"},
 		{global.Model{ID: 3, CreatedAt: time.Now(), UpdatedAt: time.Now()}, "/api/createApi", I18nHash["CreateApi"], "api", "POST"},

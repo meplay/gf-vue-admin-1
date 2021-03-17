@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+type GormConfig struct {
+	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
+}
+
 type Mysql struct {
 	Path          string `mapstructure:"path" json:"path" yaml:"path"`
 	Config        string `mapstructure:"config" json:"config" yaml:"config"`

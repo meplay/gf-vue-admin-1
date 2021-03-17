@@ -9,16 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	Menu = new(menu)
-)
+var Menu = new(menu)
 
 type menu struct{}
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: menus 表数据初始化
 func (m *menu) Init() error {
-	var menus = []model.Menu{
+	menus := []model.Menu{
 		{Model: global.Model{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, ParentId: "0", Path: "dashboard", Name: "dashboard", Hidden: false, Component: "view/dashboard/index.vue", Sort: 1, Meta: model.Meta{Title: I18nHash["InstrumentPanel"], Icon: "setting"}},
 		{Model: global.Model{ID: 2, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, Hidden: false, ParentId: "0", Path: "about", Name: "about", Component: "view/about/index.vue", Sort: 7, Meta: model.Meta{Title: I18nHash["AboutUs"], Icon: "info"}},
 		{Model: global.Model{ID: 3, CreatedAt: time.Now(), UpdatedAt: time.Now()}, MenuLevel: 0, Hidden: false, ParentId: "0", Path: "admin", Name: "superAdmin", Component: "view/superAdmin/index.vue", Sort: 3, Meta: model.Meta{Title: I18nHash["SuperAdmin"], Icon: "user-solid"}},

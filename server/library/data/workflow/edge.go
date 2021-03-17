@@ -9,9 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	Edge = new(edge)
-)
+var Edge = new(edge)
 
 type edge struct{}
 

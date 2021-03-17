@@ -20,6 +20,11 @@ func init() {
 	*_true = true
 	_false = new(bool)
 	*_false = false
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: dictionary_details 表数据初始化
+func (d *dictionaryDetail) Init() error {
 	details = []model.DictionaryDetail{
 		{Model: global.Model{ID: 1, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Label: "smallint", Status: _true, Value: 1, Sort: 1, DictionaryID: 2},
 		{Model: global.Model{ID: 2, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Label: "mediumint", Status: _true, Value: 2, Sort: 2, DictionaryID: 2},
@@ -45,11 +50,6 @@ func init() {
 		{Model: global.Model{ID: 22, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Label: "longtext", Status: _true, Value: 9, Sort: 9, DictionaryID: 5},
 		{Model: global.Model{ID: 23, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Label: "tinyint", Status: _true, DictionaryID: 6},
 	}
-}
-
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: dictionary_details 表数据初始化
-func (d *dictionaryDetail) Init() error {
 	return global.Db.Transaction(func(tx *gorm.DB) error {
 		if tx.Where("id IN ?", []int{1, 23}).Find(&[]model.DictionaryDetail{}).RowsAffected == 2 {
 			color.Danger.Println("\n[Mysql] --> dictionary_details 表的初始数据已存在!")

@@ -7,9 +7,14 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	Casbin   = new(casbin)
-	carbines = []model.Casbin{
+var Casbin = new(casbin)
+
+type casbin struct{}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: casbin_rule 表数据初始化
+func (c *casbin) Init() error {
+	carbines := []model.Casbin{
 		{PType: "p", AuthorityId: "888", Path: "/base/login", Method: "POST"},
 
 		{PType: "p", AuthorityId: "888", Path: "/user/register", Method: "POST"},
@@ -189,13 +194,6 @@ var (
 		{PType: "p", AuthorityId: "9528", Path: "/customer/customerList", Method: "GET"},
 		{PType: "p", AuthorityId: "9528", Path: "/autoCode/createTemp", Method: "POST"},
 	}
-)
-
-type casbin struct{}
-
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: casbin_rule 表数据初始化
-func (c *casbin) Init() error {
 	return global.Db.Transaction(func(tx *gorm.DB) error {
 		if tx.Find(&[]model.Casbin{}).RowsAffected >= 158 {
 			color.Danger.Println("\n[Mysql] --> casbin_rule 表的初始数据已存在!")

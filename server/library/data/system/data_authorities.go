@@ -7,22 +7,20 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
-	ResourcesAuthorities = new(resources)
-	infos                = []model.DataAuthorities{
-		{AuthorityId: "888", DataAuthority: "888"},
-		{AuthorityId: "888", DataAuthority: "8881"},
-		{AuthorityId: "888", DataAuthority: "9528"},
-		{AuthorityId: "9528", DataAuthority: "8881"},
-		{AuthorityId: "9528", DataAuthority: "9528"},
-	}
-)
+var ResourcesAuthorities = new(resources)
 
 type resources struct{}
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: data_authorities 表数据初始化
 func (d *resources) Init() error {
+	infos := []model.DataAuthorities{
+		{AuthorityId: "888", DataAuthority: "888"},
+		{AuthorityId: "888", DataAuthority: "8881"},
+		{AuthorityId: "888", DataAuthority: "9528"},
+		{AuthorityId: "9528", DataAuthority: "8881"},
+		{AuthorityId: "9528", DataAuthority: "9528"},
+	}
 	return global.Db.Table("data_authorities").Transaction(func(tx *gorm.DB) error {
 		if tx.Where("authority_id IN ('888', '9528') ").Find(&[]model.DataAuthorities{}).RowsAffected == 5 {
 			color.Danger.Println("\n[Mysql] --> data_authorities 表初始数据已存在!")

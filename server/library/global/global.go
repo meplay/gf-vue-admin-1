@@ -17,7 +17,7 @@ var (
 	Redis      *redis.Client
 	Config     config.Config
 	GormViper  *viper.Viper
-	GormConfig config.Mysql
+	GormConfig config.GormConfig
 )
 
 type _gtime gtime.Time
