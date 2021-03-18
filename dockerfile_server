@@ -11,7 +11,7 @@ RUN sh ./server-handle.sh
 RUN rm -f server-handle.sh
 RUN cat ./config/config.yaml
 
-RUN go build -o gfva cmd/main.go
+RUN go build -o gfva cmd/gfva/main.go
 RUN go env && go list && go build -o server .
 
 FROM alpine:latest
