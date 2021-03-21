@@ -7,7 +7,7 @@
 
 var child_process = require("child_process");
 
-var url = "http://www.gf-vue-admin.com",
+var url = "https://www.gf-vue-admin.com",
     cmd = '';
 console.log(process.platform)
 switch (process.platform) {
