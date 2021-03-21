@@ -29,7 +29,7 @@ system:
   env: 'public' # Change to 'develop' to skip authentication for development mode
   db-type: 'mysql'
   orm-type: 'gdb'
-  language: 'zh_cn'
+  language: 'zh-CN'
   oss-type: 'local'
   error-to-email: false
   use-multipoint: false

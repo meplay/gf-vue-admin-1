@@ -9,6 +9,12 @@ gfva:
 	go build -o ${GFVA} cmd/gfva/main.go
 	@if [ -f ${GFVA} ] ; then ./${GFVA} initdb && rm ${GFVA} ; fi
 
+gva:
+	go env -w GO111MODULE=on
+	go env -w GOPROXY=https://goproxy.io,direct
+	go get -u github.com/flipped-aurora/gva@master
+	@gva initdb -f gf
+
 linux-build:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
 

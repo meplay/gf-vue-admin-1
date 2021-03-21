@@ -60,7 +60,7 @@ func TestDictionary_Update(t *testing.T) {
 		if err := Dictionary.Update(info); err != nil {
 			t.Error(err)
 		} else {
-			a := &request.FirstDictionary{Id: info.Id}
+			a := &request.FirstDictionary{Id: int(info.Id)}
 			if result, err := Dictionary.First(a); err != nil {
 				t.Error(err)
 			} else {

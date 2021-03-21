@@ -4,6 +4,7 @@
         "description": "This is a Gf-vue-admin Server",
         "title": "Gf-vue-admin Swagger Docs",
         "contact": {},
+        "license": {},
         "version": "1.0.0"
     },
     "basePath": "/",
@@ -1051,6 +1052,55 @@
                 "responses": {
                     "200": {
                         "description": "{\"success\":true,\"data\":{},\"msg\":\"上传成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/init/checkdb": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemCheckDB"
+                ],
+                "summary": "初始化用户数据库",
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"data\":{},\"msg\":\"探测完成\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/init/initdb": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemInitDB"
+                ],
+                "summary": "初始化用户数据库",
+                "parameters": [
+                    {
+                        "description": "初始化数据库参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InitDB"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"data\":{},\"msg\":\"自动创建数据库成功\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -2826,40 +2876,52 @@
             "type": "object",
             "properties": {
                 "aliyun": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Aliyun"
                 },
                 "captcha": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Captcha"
                 },
                 "casbin": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Casbin"
                 },
                 "email": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Email"
                 },
                 "jwt": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Jwt"
                 },
                 "local": {
                     "description": "Oss",
+                    "type": "object",
                     "$ref": "#/definitions/config.Local"
                 },
                 "minio": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Minio"
                 },
                 "mysql": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Mysql"
                 },
                 "qiniu": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Qiniu"
                 },
                 "redis": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Redis"
                 },
                 "system": {
+                    "type": "object",
                     "$ref": "#/definitions/config.System"
                 },
                 "uploader": {
+                    "type": "object",
                     "$ref": "#/definitions/config.Uploader"
                 }
             }
@@ -3024,6 +3086,9 @@
                 },
                 "errorToEmail": {
                     "type": "boolean"
+                },
+                "language": {
+                    "type": "string"
                 },
                 "ormType": {
                     "type": "string"
@@ -3257,6 +3322,7 @@
                 },
                 "endPoint": {
                     "description": "终点信息",
+                    "type": "object",
                     "$ref": "#/definitions/model.WorkflowEndPoint"
                 },
                 "hideIcon": {
@@ -3285,6 +3351,7 @@
                 },
                 "startPoint": {
                     "description": "起点信息",
+                    "type": "object",
                     "$ref": "#/definitions/model.WorkflowStartPoint"
                 },
                 "target": {
@@ -3522,6 +3589,7 @@
             "type": "object",
             "properties": {
                 "authority": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Authority"
                 },
                 "oldAuthorityId": {
@@ -3661,10 +3729,7 @@
                     "type": "string"
                 },
                 "infoList": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Menu"
-                    }
+                    "type": "string"
                 }
             }
         },
@@ -3704,6 +3769,29 @@
                     "items": {
                         "type": "integer"
                     }
+                }
+            }
+        },
+        "request.InitDB": {
+            "type": "object",
+            "properties": {
+                "dbName": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "logMod": {
+                    "type": "boolean"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
                 }
             }
         },

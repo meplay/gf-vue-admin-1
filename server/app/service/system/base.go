@@ -10,9 +10,10 @@ import (
 	workflow "gf-vue-admin/app/model/workflow"
 	"gf-vue-admin/library"
 	"gf-vue-admin/library/config"
-	"gf-vue-admin/library/data"
 	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
+	"github.com/flipped-aurora/gva/data"
+	dataGf "github.com/flipped-aurora/gva/data/gf"
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/mojocn/base64Captcha"
@@ -45,11 +46,11 @@ type base struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 生成二维码的信息
 func (b *base) Captcha() (result *response.Captcha, err error) {
-	var data response.Captcha
+	var info response.Captcha
 	var driver = base64Captcha.NewDriverDigit(global.Config.Captcha.ImageHeight, global.Config.Captcha.ImageWidth, global.Config.Captcha.KeyLong, 0.7, 80) // 字符,公式,验证码配置, 生成默认数字的driver
 	var captcha = base64Captcha.NewCaptcha(driver, Store)
-	data.Id, data.Path, err = captcha.Generate()
-	return &data, err
+	info.Id, info.Path, err = captcha.Generate()
+	return &info, err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -91,8 +92,8 @@ func (b *base) InitDB(info *request.InitDB) error {
 	}
 	b.linkGorm()
 	b.LinkGdb()
-	b.AutoMigrateTables()    // 初始化表
-	return data.Initialize() // 初始化数据
+	b.AutoMigrateTables() // 初始化表
+	return dataGf.GfVueAdmin(data.Options{Gorm: global.Db}, data.Options{Viper: global.Viper}) // 初始化数据
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
@@ -173,7 +174,7 @@ func (b *base) LinkGdb() {
 						User:  global.GormConfig.Mysql.Username,
 						Pass:  global.GormConfig.Mysql.Password,
 						Name:  global.GormConfig.Mysql.Dbname,
-						Type: g.Cfg("viper").GetString("system.db-type"),
+						Type:  g.Cfg("viper").GetString("system.db-type"),
 						Debug: global.GormConfig.Mysql.LogMode,
 					},
 				},
