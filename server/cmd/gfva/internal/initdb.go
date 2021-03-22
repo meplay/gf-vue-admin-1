@@ -17,9 +17,8 @@ package internal
 
 import (
 	"gf-vue-admin/boot"
+	"gf-vue-admin/library/data"
 	"gf-vue-admin/library/global"
-	"github.com/flipped-aurora/gva/data"
-	dataGf "github.com/flipped-aurora/gva/data/gf"
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )
@@ -37,9 +36,12 @@ var initdbCmd = &cobra.Command{
 			boot.Mysql.Check()
 			boot.Mysql.Initialize()
 			if global.Config.System.DbType == "mysql" {
-				if err := dataGf.GfVueAdmin(data.Options{Gorm: global.Db}, data.Options{Viper: global.Viper}); err == nil {
+				if err := data.Initialize(); err != nil {
 					color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
 				}
+				//if err := dataGf.GfVueAdmin(data.Options{Gorm: global.Db}, data.Options{Viper: global.Viper}); err == nil {
+				//	color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
+				//}
 			}
 		}
 		return

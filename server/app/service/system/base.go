@@ -10,10 +10,9 @@ import (
 	workflow "gf-vue-admin/app/model/workflow"
 	"gf-vue-admin/library"
 	"gf-vue-admin/library/config"
+	"gf-vue-admin/library/data"
 	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
-	"github.com/flipped-aurora/gva/data"
-	dataGf "github.com/flipped-aurora/gva/data/gf"
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/mojocn/base64Captcha"
@@ -93,7 +92,8 @@ func (b *base) InitDB(info *request.InitDB) error {
 	b.linkGorm()
 	b.LinkGdb()
 	b.AutoMigrateTables() // 初始化表
-	return dataGf.GfVueAdmin(data.Options{Gorm: global.Db}, data.Options{Viper: global.Viper}) // 初始化数据
+	return data.Initialize()
+	//return dataGf.GfVueAdmin(data.Options{Gorm: global.Db}, data.Options{Viper: global.Viper}) // 初始化数据
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
