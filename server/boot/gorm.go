@@ -14,12 +14,3 @@ func (g *_gorm) Initialize() {
 		Mysql.Initialize()
 	}
 }
-
-func init() {
-	if global.GormConfig.Mysql.Path != "" {
-		global.Config.Mysql = global.GormConfig.Mysql
-	} else {
-		global.Config.Mysql = global.Config.Mysql.GetByLink()
-	}
-
-}
