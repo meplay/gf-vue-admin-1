@@ -22,9 +22,4 @@ func (b *base) Init() {
 		group.POST("captcha", b.response.Handler()(api.Base.Captcha))
 		group.POST("login", api.GfJWTMiddleware.LoginHandler) // 登录
 	}
-	init := b.router.Group("/init")
-	{
-		init.POST("initdb", b.response.Handler()(api.Base.Initdb))
-		init.POST("checkdb", b.response.Handler()(api.Base.Checkdb))
-	}
 }
