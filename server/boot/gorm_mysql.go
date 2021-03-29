@@ -39,6 +39,7 @@ type _mysql struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: gorm连接mysql数据库
 func (m *_mysql) Initialize() {
+	global.Config.Mysql = global.Config.Mysql.GetByLink()
 	if m.db, m.err = gorm.Open(mysql.New(mysql.Config{
 		DSN:                       global.Config.Mysql.Dsn(), // DSN data source name
 		DefaultStringSize:         191,                       // string 类型字段的默认长度
