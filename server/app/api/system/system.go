@@ -31,6 +31,9 @@ func (s *system) GetConfig(r *ghttp.Request) *response.Response {
 // @Router /system/setSystemConfig [post]
 func (s *system) SetConfig(r *ghttp.Request) *response.Response {
 	var info config.Config
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
+	}
 	if err := service.System.SetConfig(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
 	}
