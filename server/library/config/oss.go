@@ -33,3 +33,12 @@ type Aliyun struct {
 	SecretAccessKey  string `mapstructure:"secret-access-key" json:"secretAccessKey" yaml:"secret-access-key"`
 	StorageClassType string `mapstructure:"storage-class-type" json:"storageClassType" yaml:"storage-class-type"`
 }
+
+type Tencent struct {
+	Bucket     string `mapstructure:"bucket" json:"bucket" yaml:"bucket"`
+	Region     string `mapstructure:"region" json:"region" yaml:"region"`
+	BaseURL    string `mapstructure:"base-url" json:"baseURL" yaml:"base-url"`
+	SecretID   string `mapstructure:"secret-id" json:"secretID" yaml:"secret-id"`
+	SecretKey  string `mapstructure:"secret-key" json:"secretKey" yaml:"secret-key"`
+	PathPrefix string `mapstructure:"path-prefix" json:"pathPrefix" yaml:"path-prefix"`
+}

@@ -12,8 +12,9 @@ type Config struct {
 	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 
 	// Oss
-	Local  Local  `mapstructure:"local" json:"local" yaml:"local"`
-	Qiniu  Qiniu  `mapstructure:"qiniu" json:"qiniu" yaml:"qiniu"`
-	Minio  Minio  `mapstructure:"minio" json:"minio" yaml:"minio"`
-	Aliyun Aliyun `mapstructure:"aliyun" json:"aliyun" yaml:"aliyun"`
+	Local   Local   `mapstructure:"local" json:"local" yaml:"local"`
+	Qiniu   Qiniu   `mapstructure:"qiniu" json:"qiniu" yaml:"qiniu"`
+	Minio   Minio   `mapstructure:"minio" json:"minio" yaml:"minio"`
+	Aliyun  Aliyun  `mapstructure:"aliyun" json:"aliyun" yaml:"aliyun"`
+	Tencent Tencent `mapstructure:"tencent" json:"tencent" yaml:"tencent"`
 }

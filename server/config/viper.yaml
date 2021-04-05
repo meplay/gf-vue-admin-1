@@ -75,6 +75,16 @@ aliyun:
   secret-access-key: ''
   storage-class-type: 'Standard' # 配置请看server/integration/upload/internal/aliyun.go
 
+# tencent configuration
+tencent-cos:
+  bucket: ''
+  region: 'ap-shanghai'
+  secret-id: ''
+  secret-key: ''
+  base-url: 'https://gin.vue.admin'
+  path-prefix: 'gin-vue-admin'
+
+
 # uploader configuration
 uploader:
   chunk-dir: './chunk/'

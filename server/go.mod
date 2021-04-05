@@ -26,6 +26,8 @@ require (
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/tencentyun/cos-go-sdk-v5 v0.7.24
+	go.uber.org/zap v1.10.0
 	golang.org/x/crypto v0.0.0-20210317152858-513c2a44f670
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e // indirect
 	gorm.io/driver/mysql v1.0.5

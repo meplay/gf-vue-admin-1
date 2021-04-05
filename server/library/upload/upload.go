@@ -26,6 +26,8 @@ func Oss() interfaces.Oss {
 		} else {
 			return result
 		}
+	case "tencent":
+		return TencentCos
 	default:
 		return Local
 	}
