@@ -60,6 +60,13 @@ func (a *api) Delete(info *request.DeleteApi) error {
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
+//@description: 删除选中API
+func (a *api) Deletes(info *request.GetByIds) error {
+	_, err := g.DB().Table(a._api.TableName()).Delete(info.Condition())
+	return err
+}
+
+//@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 分页获取数据
 func (a *api) GetList(info *request.SearchApi) (list interface{}, total int, err error) {
 	var apis []model.Api

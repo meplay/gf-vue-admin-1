@@ -90,6 +90,25 @@ func (a *api) Delete(r *ghttp.Request) *response.Response {
 }
 
 // @Tags SystemApi
+// @Summary 删除选中Api
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body request.IdsReq true "ID"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Router /api/deleteApisByIds [delete]
+func (a *api) Deletes(r *ghttp.Request) *response.Response {
+	var info request.GetByIds
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorBatchDeleted}
+	}
+	if err := service.Api.Deletes(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorBatchDeleted}
+	}
+	return &response.Response{MessageCode: response.SuccessBatchDeleted}
+}
+
+// @Tags SystemApi
 // @Summary 分页获取API列表
 // @Security ApiKeyAuth
 // @accept application/json

@@ -30,6 +30,7 @@ func (c *casbin) Init() error {
 		{PType: "p", AuthorityId: "888", Path: "/api/deleteApi", Method: "POST"},
 		{PType: "p", AuthorityId: "888", Path: "/api/getApiList", Method: "POST"},
 		{PType: "p", AuthorityId: "888", Path: "/api/getAllApis", Method: "POST"},
+		{PType: "p", AuthorityId: "888", Path: "/api/deleteApisByIds", Method: "DELETE"},
 
 		{PType: "p", AuthorityId: "888", Path: "/authority/createAuthority", Method: "POST"},
 		{PType: "p", AuthorityId: "888", Path: "/authority/copyAuthority", Method: "POST"},

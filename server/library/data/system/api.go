@@ -101,9 +101,10 @@ func (a *api) Init() error {
 		{Model: global.Model{ID: 82, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Path: "/excel/loadExcel", Description: I18nHash["LoadExcel"], ApiGroup: "excel", Method: "GET"},
 		{Model: global.Model{ID: 83, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Path: "/excel/exportExcel", Description: I18nHash["ExportExcel"], ApiGroup: "excel", Method: "POST"},
 		{Model: global.Model{ID: 84, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Path: "/excel/downloadTemplate", Description: I18nHash["DownloadTemplate"], ApiGroup: "excel", Method: "GET"},
+		{Model: global.Model{ID: 85, CreatedAt: time.Now(), UpdatedAt: time.Now()}, Path: "/api/deleteApisByIds", Method: "批量删除api", ApiGroup: "api", Description: "DELETE"},
 	}
 	return global.Db.Transaction(func(tx *gorm.DB) error {
-		if tx.Where("id IN ?", []int{1, 84}).Find(&[]model.Api{}).RowsAffected == 2 {
+		if tx.Where("id IN ?", []int{1, 85}).Find(&[]model.Api{}).RowsAffected == 2 {
 			color.Danger.Println("\n[Mysql] --> apis 表的初始数据已存在!")
 			return nil
 		}
