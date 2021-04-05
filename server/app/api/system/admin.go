@@ -1,10 +1,10 @@
 package api
 
 import (
-	"gf-vue-admin/app/api/internal"
-	"gf-vue-admin/library/response"
+	"gf-vue-admin/app/api/system/internal"
 	"gf-vue-admin/app/model/system/request"
 	"gf-vue-admin/app/service/system"
+	"gf-vue-admin/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -71,7 +71,7 @@ func (a *admin) GetList(r *ghttp.Request) *response.Response {
 		Total:    total,
 		Page:     info.Page,
 		PageSize: info.PageSize,
-	}, MessageCode: response.SuccessGetList, }
+	}, MessageCode: response.SuccessGetList}
 }
 
 // @Tags SystemAdmin
