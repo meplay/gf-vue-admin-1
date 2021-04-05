@@ -3,8 +3,8 @@ package service
 import (
 	"database/sql"
 	"errors"
-	"gf-vue-admin/app/api/response"
 	model "gf-vue-admin/app/model/system"
+	"gf-vue-admin/app/model/system/response"
 	"gf-vue-admin/app/service/system/internal"
 	"gf-vue-admin/library/constant"
 	"gf-vue-admin/library/utils"

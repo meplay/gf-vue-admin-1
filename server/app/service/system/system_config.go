@@ -1,7 +1,7 @@
 package service
 
 import (
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/app/model/system/response"
 	"gf-vue-admin/library/config"
 	"gf-vue-admin/library/global"
 	"gf-vue-admin/library/utils"

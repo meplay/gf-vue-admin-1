@@ -1,8 +1,8 @@
 package service
 
 import (
-	"gf-vue-admin/app/api/request"
 	model "gf-vue-admin/app/model/extra"
+	"gf-vue-admin/app/model/extra/request"
 	"gf-vue-admin/library/global"
 	"mime/multipart"
 )

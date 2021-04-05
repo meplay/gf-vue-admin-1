@@ -2,7 +2,7 @@ package service
 
 import (
 	"database/sql"
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/app/model/system/response"
 	"gf-vue-admin/library"
 	"gf-vue-admin/library/global"
 	"github.com/mojocn/base64Captcha"

@@ -1,9 +1,9 @@
 package service
 
 import (
-	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	model "gf-vue-admin/app/model/system"
+	"gf-vue-admin/app/model/system/request"
 	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
 	"github.com/casbin/casbin/v2"

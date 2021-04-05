@@ -3,8 +3,8 @@ package workflow
 import (
 	"errors"
 	"fmt"
-	"gf-vue-admin/app/api/request"
 	model "gf-vue-admin/app/model/workflow"
+	"gf-vue-admin/app/model/workflow/request"
 	"gf-vue-admin/library/constant"
 	"gf-vue-admin/library/global"
 	"gorm.io/gorm"

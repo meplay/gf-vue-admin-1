@@ -1,7 +1,7 @@
 package service
 
 import (
-	"gf-vue-admin/app/api/request"
+	"gf-vue-admin/app/model/system/request"
 	"testing"
 )
 

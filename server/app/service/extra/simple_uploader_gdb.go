@@ -3,8 +3,8 @@ package service
 import (
 	"database/sql"
 	"errors"
-	"gf-vue-admin/app/api/request"
 	model "gf-vue-admin/app/model/extra"
+	"gf-vue-admin/app/model/extra/request"
 	"gf-vue-admin/library/global"
 	"gf-vue-admin/library/utils"
 	"github.com/gogf/gf/database/gdb"

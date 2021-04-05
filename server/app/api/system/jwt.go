@@ -2,9 +2,9 @@ package api
 
 import (
 	"errors"
-	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	model "gf-vue-admin/app/model/system"
+	"gf-vue-admin/app/model/system/request"
 	service "gf-vue-admin/app/service/system"
 	"gf-vue-admin/library/global"
 	"github.com/gogf/gf-jwt"

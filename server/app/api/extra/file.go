@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/app/api/request"
 	"gf-vue-admin/app/api/response"
 	model "gf-vue-admin/app/model/extra"
+	"gf-vue-admin/app/model/extra/request"
 	service "gf-vue-admin/app/service/extra"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"

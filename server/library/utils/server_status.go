@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/app/model/system/response"
 	"gf-vue-admin/library/constant"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
