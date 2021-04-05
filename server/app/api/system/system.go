@@ -1,7 +1,7 @@
 package api
 
 import (
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/library/response"
 	service "gf-vue-admin/app/service/system"
 	"gf-vue-admin/library/config"
 	"github.com/gogf/gf/frame/g"

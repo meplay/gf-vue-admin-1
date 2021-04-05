@@ -2,7 +2,7 @@ package internal
 
 import (
 	"bytes"
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/library/response"
 	api "gf-vue-admin/app/api/system"
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/app/model/system/request"

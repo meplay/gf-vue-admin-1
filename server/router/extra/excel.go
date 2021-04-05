@@ -2,7 +2,7 @@ package router
 
 import (
 	api "gf-vue-admin/app/api/extra"
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/library/response"
 	"gf-vue-admin/interfaces"
 	"github.com/gogf/gf/net/ghttp"
 )

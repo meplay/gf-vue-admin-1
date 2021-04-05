@@ -2,7 +2,7 @@ package api
 
 import (
 	"gf-vue-admin/app/api/internal"
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/library/response"
 	model "gf-vue-admin/app/model/workflow"
 	"gf-vue-admin/app/model/workflow/request"
 	service "gf-vue-admin/app/service/workflow"

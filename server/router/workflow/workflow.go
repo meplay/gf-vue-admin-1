@@ -1,7 +1,7 @@
 package workflow
 
 import (
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/library/response"
 	api "gf-vue-admin/app/api/workflow"
 	"gf-vue-admin/interfaces"
 	"github.com/gogf/gf/net/ghttp"

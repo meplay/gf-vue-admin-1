@@ -1,7 +1,7 @@
 package api
 
 import (
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/library/response"
 	"gf-vue-admin/app/model/extra/request"
 	service "gf-vue-admin/app/service/extra"
 	"gf-vue-admin/library/constant"

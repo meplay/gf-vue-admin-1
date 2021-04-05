@@ -1,7 +1,7 @@
 package api
 
 import (
-	"gf-vue-admin/app/api/response"
+	"gf-vue-admin/library/response"
 	service "gf-vue-admin/app/service/system"
 	"github.com/gogf/gf/net/ghttp"
 )
