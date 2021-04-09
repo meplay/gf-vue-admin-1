@@ -36,7 +36,7 @@ func (m *Mysql) GetMaxOpenConnes() int {
 func (m *Mysql) GetByLink() Mysql {
 	var result Mysql
 	// link = "mysql:root:gdkid,,..@tcp(127.0.0.1:13307)/gf_vue_admin
-	link := g.Cfg().GetString("database.default.link")
+	link := g.Cfg().GetString("database.default.link")  //*这个地方GF的配置模块会默认找到config.yaml配置文件
 	// a := []string{"mysql", "root", "gdkid,,..@tcp(127.0.0.1", "13307)/gf_vue_admin"}
 	// a[0] = "mysql"
 	// a[1] = "root
