@@ -2,11 +2,11 @@ package api
 
 import (
 	"errors"
-	"gf-vue-admin/library/response"
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/app/model/system/request"
 	service "gf-vue-admin/app/service/system"
 	"gf-vue-admin/library/global"
+	"gf-vue-admin/library/response"
 	"github.com/gogf/gf-jwt"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
@@ -45,22 +45,22 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 	return claims
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 设置JWT的身份。
+// IdentityHandler 设置JWT的身份。
+// Author  [SliverHorn](https://github.com/SliverHorn)
 func IdentityHandler(r *ghttp.Request) interface{} {
 	claims := jwt.ExtractClaims(r)
 	return claims[GfJWTMiddleware.IdentityKey]
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 用于定义自定义的未经授权的回调函数。
+// Unauthorized 用于定义自定义的未经授权的回调函数。
+// Author  [SliverHorn](https://github.com/SliverHorn)
 func Unauthorized(r *ghttp.Request, code int, message string) {
 	_ = r.Response.WriteJson(&response.Response{Code: 7, Data: g.Map{"reload": true}, Message: "未登录或非法访问或" + message})
 	r.ExitAll()
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 用于定义自定义的登录成功回调函数
+// LoginResponse 用于定义自定义的登录成功回调函数
+// Author  [SliverHorn](https://github.com/SliverHorn)
 func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 	claims := r.GetParam("admin")
 	data, ok := claims.(*model.Admin)
@@ -93,8 +93,8 @@ func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 	_ = r.Response.WriteJson(&response.Response{Code: 0, Data: g.Map{"user": data, "token": token, "expiresAt": expire.Unix() * 1000}, Message: "登录成功!"})
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 用于获取新令牌，无论当前令牌是否过期。
+// RefreshResponse 用于获取新令牌，无论当前令牌是否过期。
+// Author [SliverHorn](https://github.com/SliverHorn)
 func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 	//if service.IsBlacklist(token) {
 	//	global.Result(r, global.ERROR, g.Map{"reload": true}, "您的帐户异地登陆或令牌失效")
@@ -137,8 +137,8 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 	r.ExitAll()
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 用于验证登录参数。 它必须返回用户数据作为用户标识符，并将其存储在Claim Array中。 检查错误（e），以确定适当的错误消息。
+// Authenticator 用于验证登录参数。 它必须返回用户数据作为用户标识符，并将其存储在Claim Array中。 检查错误（e），以确定适当的错误消息。
+// Author [SliverHorn](https://github.com/SliverHorn)
 func Authenticator(r *ghttp.Request) (interface{}, error) {
 	var info request.AdminLogin
 	if err := r.Parse(&info); err != nil {
@@ -148,7 +148,7 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 	if !service.Store.Verify(info.CaptchaId, info.Captcha, true) { // 验证码校对
 		return nil, errors.New("验证码错误! ")
 	}
-	if data, err := service.Admin.Login(&info); err != nil {
+	if data, err := service.Admin().Login(&info); err != nil {
 		_ = r.Response.WriteJson(&response.Response{Code: 7, Error: err, Err: err.Error()})
 		r.ExitAll()
 		return nil, nil

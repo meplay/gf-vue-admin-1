@@ -48,6 +48,14 @@ func (a *adminGorm) First(info *request.GetById) (result *model.Admin, err error
 	return &entity, err
 }
 
+// FindAdmin 用于刷新token,根据uuid返回admin信息
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a *adminGorm) FindAdmin(info *request.GetByUuid) (result *model.Admin, err error) {
+	var entity model.Admin
+	err = global.Db.Find(&entity, "uuid = ?", info.Uuid).Error
+	return &entity, err
+}
+
 // Update 设置管理员信息
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (a *adminGorm) Update(info *request.UpdateAdmin) (result *model.Admin, err error) {

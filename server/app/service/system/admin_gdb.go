@@ -53,6 +53,15 @@ func (a *adminGdb) First(info *request.GetById) (result *model.Admin, err error)
 	return &entity, err
 }
 
+// FindAdmin 用于刷新token,根据uuid返回admin信息
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a *adminGdb) FindAdmin(info *request.GetByUuid) (result *model.Admin, err error) {
+	var entity model.Admin
+	db := g.DB().Table(a._admin.TableName()).Safe()
+	err = db.Where(g.Map{"uuid": info.Uuid}).Struct(&entity)
+	return &entity, err
+}
+
 // Update 设置管理员信息
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (a *adminGdb) Update(info *request.UpdateAdmin) (result *model.Admin, err error) {
@@ -85,15 +94,6 @@ func (a *adminGdb) ChangePassword(info *request.ChangePassword) error {
 func (a *adminGdb) SetUserAuthority(info *request.SetAuthority) error {
 	_, err := g.DB().Table(a._admin.TableName()).Update(g.Map{"authority_id": info.AuthorityId}, g.Map{"uuid": info.Uuid})
 	return err
-}
-
-// FindAdmin 用于刷新token,根据uuid返回admin信息
-// Author [SliverHorn](https://github.com/SliverHorn)
-func (a *adminGdb) FindAdmin(info *request.GetByUuid) (result *model.Admin, err error) {
-	var entity model.Admin
-	db := g.DB().Table(a._admin.TableName()).Safe()
-	err = db.Where(g.Map{"uuid": info.Uuid}).Struct(&entity)
-	return &entity, err
 }
 
 // Delete 删除管理员
