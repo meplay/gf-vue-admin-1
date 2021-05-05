@@ -24,7 +24,7 @@ func (a *admin) Register(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorAdminRegister}
 	}
-	if err := service.Admin.Register(&info); err != nil {
+	if err := service.Admin().Register(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorAdminRegister}
 	}
 	return &response.Response{MessageCode: response.SuccessAdminRegister}
@@ -43,7 +43,7 @@ func (a *admin) ChangePassword(r *ghttp.Request) *response.Response {
 		return &response.Response{Error: err, MessageCode: response.ErrorChangePassword}
 	}
 	info.Uuid = internal.Info.GetUserUuid(r)
-	if err := service.Admin.ChangePassword(&info); err != nil {
+	if err := service.Admin().ChangePassword(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorChangePassword}
 	}
 	return &response.Response{MessageCode: response.SuccessChangePassword}
@@ -62,7 +62,7 @@ func (a *admin) GetList(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
-	list, total, err := service.Admin.GetAdminList(&info)
+	list, total, err := service.Admin().GetList(&info)
 	if err != nil {
 		return &response.Response{MessageCode: response.ErrorGetList, Error: err}
 	}
@@ -87,7 +87,7 @@ func (a *admin) SetAuthority(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorSetAuthority}
 	}
-	if err := service.Admin.SetUserAuthority(&info); err != nil {
+	if err := service.Admin().SetUserAuthority(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorSetAuthority}
 	}
 	return &response.Response{MessageCode: response.SuccessSetAuthority}
@@ -106,7 +106,7 @@ func (a *admin) Delete(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
-	if err := service.Admin.Delete(&info); err != nil {
+	if err := service.Admin().Delete(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
 	return &response.Response{MessageCode: response.SuccessDeleted}
@@ -126,7 +126,7 @@ func (a *admin) Update(r *ghttp.Request) *response.Response {
 		return &response.Response{Error: err, MessageCode: response.ErrorSetAdminInfo}
 	}
 	info.Uuid = internal.Info.GetUserUuid(r)
-	if data, err := service.Admin.SetAdminInfo(&info); err != nil {
+	if data, err := service.Admin().Update(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorSetAdminInfo}
 	} else {
 		return &response.Response{Data: g.Map{"userInfo": data}, MessageCode: response.SuccessSetAdminInfo}

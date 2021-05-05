@@ -40,8 +40,8 @@ type authority struct {
 	authoritiesMap map[string][]model.Authority
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 查询资源角色
+// First 查询资源角色
+// Author [SliverHorn](https://github.com/SliverHorn)
 func (a *authority) First(id string) model.Authority {
 	entity := a.authorityMap[id]
 	return entity
