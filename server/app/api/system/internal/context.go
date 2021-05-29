@@ -7,13 +7,13 @@ import (
 	"github.com/gogf/gf/util/gconv"
 )
 
-var Info = new(info)
+var Context = new(_context)
 
-type info struct{}
+type _context struct{}
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 从GoFrame的Context中获取从jwt解析出来的用户ID
-func (i *info) GetAdminID(r *ghttp.Request) uint {
+// GetAdminID 从GoFrame的Context中获取从jwt解析出来的用户ID
+// Author: [SliverHorn](https://github.com/SliverHorn)
+func (i *_context) GetAdminID(r *ghttp.Request) uint {
 	var claims request.CustomClaims
 	param := r.GetParam("claims")
 	if err := gconv.Struct(param, &claims); err != nil {
@@ -23,9 +23,9 @@ func (i *info) GetAdminID(r *ghttp.Request) uint {
 	return claims.AdminId
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 从GoFrame的Context中获取从jwt解析出来的用户UUID
-func (i *info) GetUserUuid(r *ghttp.Request) string {
+// GetUserUuid 从GoFrame的Context中获取从jwt解析出来的用户UUID
+// Author: [SliverHorn](https://github.com/SliverHorn)
+func (i *_context) GetUserUuid(r *ghttp.Request) string {
 	var claims request.CustomClaims
 	param := r.GetParam("claims")
 	if err := gconv.Struct(param, &claims); err != nil {
@@ -35,9 +35,9 @@ func (i *info) GetUserUuid(r *ghttp.Request) string {
 	return claims.AdminUuid
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 从GoFrame的Context中获取从jwt解析出来的AuthorityId
-func (i *info) GetUserAuthorityId(r *ghttp.Request) string {
+// GetUserAuthorityId 从GoFrame的Context中获取从jwt解析出来的AuthorityId
+// Author: [SliverHorn](https://github.com/SliverHorn)
+func (i *_context) GetUserAuthorityId(r *ghttp.Request) string {
 	var claims request.CustomClaims
 	param := r.GetParam("claims")
 	if err := gconv.Struct(param, &claims); err != nil {
@@ -49,9 +49,9 @@ func (i *info) GetUserAuthorityId(r *ghttp.Request) string {
 	return claims.AdminAuthorityId
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取jwt里含有的管理员信息
-func (i *info) GetAdminClaims(r *ghttp.Request) *request.CustomClaims {
+// GetAdminClaims 获取jwt里含有的管理员信息
+// Author: [SliverHorn](https://github.com/SliverHorn)
+func (i *_context) GetAdminClaims(r *ghttp.Request) *request.CustomClaims {
 	var claims request.CustomClaims
 	param := r.GetParam("claims")
 	if err := gconv.Struct(param, &claims); err != nil {

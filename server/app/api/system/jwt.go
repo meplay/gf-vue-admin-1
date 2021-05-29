@@ -110,7 +110,7 @@ func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time)
 	//	redisJwt string
 	//	admin    *admins.AdminHasOneAuthority
 	//)
-	//admin, err = service.FindAdmin(gconv.String(claims["admin_uuid"]))
+	//admin, err = service.FirstByUuid(gconv.String(claims["admin_uuid"]))
 	//if err != nil {
 	//	global.FailWithMessage(r, "刷新Token失败")
 	//	r.Exit()
@@ -148,7 +148,7 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 	if !service.Store.Verify(info.CaptchaId, info.Captcha, true) { // 验证码校对
 		return nil, errors.New("验证码错误! ")
 	}
-	if data, err := service.Admin().Login(&info); err != nil {
+	if data, err := service.Admin.Login(&info); err != nil {
 		_ = r.Response.WriteJson(&response.Response{Code: 7, Error: err, Err: err.Error()})
 		r.ExitAll()
 		return nil, nil

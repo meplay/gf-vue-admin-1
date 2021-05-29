@@ -1,6 +1,7 @@
 package router
 
 import (
+	"gf-vue-admin/interfaces"
 	extra "gf-vue-admin/router/extra"
 	"gf-vue-admin/router/internal"
 	system "gf-vue-admin/router/system"
@@ -14,28 +15,29 @@ type routers struct{}
 
 func (r *routers) Init() {
 	public := g.Server().Group("")
-	{ // 无需鉴权中间件
-		system.NewBaseGroup(public).Init()
-	}
+	interfaces.RouterInit( // 无需鉴权中间件
+		system.NewBaseGroup(public),
+	)
+
 	private := g.Server().Group("").Middleware(internal.Middleware.JwtAuth, internal.Middleware.CasbinRbac)
-	{ // 需要Jwt鉴权, casbin鉴权
-		system.NewApiRouter(private).Init()
-		system.NewMenuRouter(private).Init()
-		system.NewEmailRouter(private).Init()
-		system.NewAdminRouter(private).Init()
-		system.NewSystemRouter(public).Init()
-		system.NewCasbinRouter(private).Init()
-		system.NewGenerateRouter(private).Init()
-		system.NewAuthorityRouter(private).Init()
-		system.NewDictionaryRouter(private).Init()
-		system.NewJwtBlacklistRouter(private).Init()
-		system.NewOperationRecordRouter(private).Init()
-		system.NewDictionaryDetailRouter(private).Init()
+	interfaces.RouterInit( // 需要Jwt鉴权, casbin鉴权
+		system.NewApiRouter(private),
+		system.NewMenuRouter(private),
+		system.NewEmailRouter(private),
+		system.NewAdminRouter(private),
+		system.NewSystemRouter(private),
+		system.NewCasbinRouter(private),
+		system.NewGenerateRouter(private),
+		system.NewAuthorityRouter(private),
+		system.NewDictionaryRouter(private),
+		system.NewJwtBlacklistRouter(private),
+		system.NewOperationRecordRouter(private),
+		system.NewDictionaryDetailRouter(private),
 
-		extra.NewFileRouter(public).Init()
-		extra.NewExcelRouter(private).Init()
-		extra.NewSimpleUploaderRouter(private).Init()
+		extra.NewFileRouter(private),
+		extra.NewExcelRouter(private),
+		extra.NewSimpleUploaderRouter(private),
 
-		workflow.NewWorkflowRouter(private).Init()
-	}
+		workflow.NewWorkflowRouter(private),
+	)
 }

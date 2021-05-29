@@ -20,7 +20,7 @@ type authorityMenu struct {}
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /menu/getMenu [post]
 func (a *authorityMenu) GetMenu(r *ghttp.Request) *response.Response {
-	if menus, err := service.AuthorityMenu.GetMenuTree(internal.Info.GetUserAuthorityId(r)); err != nil {
+	if menus, err := service.AuthorityMenu.GetMenuTree(internal.Context.GetUserAuthorityId(r)); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorOperation}
 	} else {
 		return &response.Response{Data: g.Map{"menus": menus}, MessageCode: response.SuccessOperation}

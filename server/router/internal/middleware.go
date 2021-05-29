@@ -93,14 +93,14 @@ func (m *middleware) OperationRecord(r *ghttp.Request) {
 
 	if token, err := api.GfJWTMiddleware.ParseToken(r); err != nil { // 优先从jwt获取用户信息
 		id, _ := strconv.Atoi(r.Request.Header.Get("x-user-id"))
-		if m.result, m.err = service.Admin().First(&request.GetById{Id: uint(id)}); m.err != nil {
+		if m.result, m.err = service.Admin.First(&request.GetById{Id: uint(id)}); m.err != nil {
 			g.Log().Error(`Function service.Admin.First() Failed!`, g.Map{"err": m.err})
 		}
 	} else {
 		claims := gconv.Map(token.Claims)
 		uuid := gconv.String(claims["admin_uuid"])
-		if m.result, m.err = service.Admin().FindAdmin(&request.GetByUuid{Uuid: uuid}); m.err != nil {
-			g.Log().Error(`Function service.Admin.FindAdmin() Failed!`, g.Map{"err": m.err})
+		if m.result, m.err = service.Admin.FirstByUuid(uuid); m.err != nil {
+			g.Log().Error(`Function service.Admin.FirstByUuid() Failed!`, g.Map{"err": m.err})
 		}
 		m.id = int(m.result.ID)
 	}

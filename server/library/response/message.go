@@ -20,8 +20,6 @@ var Message = map[Code]string{
 	SuccessAdminLogin:     "登录成功!",
 	SuccessSetAuthority:   "设置角色成功!",
 	SuccessSetAdminInfo:   "更新用户信息成功!",
-	SuccessAdminRegister:  "注册成功!",
-	SuccessChangePassword: "修改密码成功!",
 
 	// Captcha
 	SuccessCaptcha: "验证码获取成功!",
@@ -60,10 +58,10 @@ var Message = map[Code]string{
 
 	// Admin
 	ErrorAdminLogin:     "登录失败!",
-	ErrorSetAuthority:   "设置角色失败!",
-	ErrorSetAdminInfo:   "更新用户信息失败!",
-	ErrorAdminRegister:  "注册失败!",
-	ErrorChangePassword: "修改密码失败!",
+	ErrorSetAuthority:   "!",
+	ErrorSetAdminInfo:   "!",
+	ErrorAdminRegister:  "",
+	ErrorChangePassword: "",
 
 	// Captcha
 	ErrorCaptcha: "验证码获取失败!",

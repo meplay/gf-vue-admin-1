@@ -2,14 +2,9 @@ package request
 
 import (
 	model "gf-vue-admin/app/model/system"
+	"gf-vue-admin/library/global"
 	uuid "github.com/satori/go.uuid"
 )
-
-type BaseAdmin struct {
-	Username    string `p:"username" v:"required|length:1,30#请输入用户名称|您输入用户名称长度非法"`
-	Password    string `p:"password" v:"required|length:6,30#请输入旧密码|旧密码长度为:min到:max位"`
-	NewPassword string `p:"new_password" v:"required|length:6,30#请输入新密码|新密码长度为:min到:max位"`
-}
 
 type Register struct {
 	Avatar      string `p:"headerImg"`
@@ -19,13 +14,13 @@ type Register struct {
 	AuthorityId string `p:"authorityId"`
 }
 
-func (r *Register) Create() *model.Admin {
-	return &model.Admin{
+func (r *Register) Create() model.Admin {
+	return model.Admin{
 		Uuid:        uuid.NewV4().String(),
+		Avatar:      r.Avatar,
 		Username:    r.Username,
 		Password:    r.Password,
 		Nickname:    r.Nickname,
-		Avatar:      r.Avatar,
 		AuthorityId: r.AuthorityId,
 	}
 }
@@ -46,4 +41,8 @@ type UpdateAdmin struct {
 	GetById
 	Uuid   string
 	Avatar string `p:"headerImg" v:"required|length:1, 100#请输入头像链接|头像链接长度为:min到:max位"`
+}
+
+func (u *UpdateAdmin) Update() model.Admin {
+	return model.Admin{Model:global.Model{ID: u.Id}, Uuid: u.Uuid, Avatar: u.Avatar}
 }

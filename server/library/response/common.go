@@ -6,3 +6,7 @@ type PageResult struct {
 	Page     int         `json:"page"`
 	PageSize int         `json:"pageSize"`
 }
+
+func NewPageResult(list interface{}, total int64, page int, pageSize int) *PageResult {
+	return &PageResult{List: list, Total: int(total), Page: page, PageSize: pageSize}
+}
