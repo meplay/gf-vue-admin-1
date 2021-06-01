@@ -2,7 +2,7 @@ package request
 
 import (
 	model "gf-vue-admin/app/model/system"
-	"github.com/gogf/gf/frame/g"
+	"gorm.io/gorm"
 )
 
 type BaseDictionaryDetail struct {
@@ -34,8 +34,14 @@ type UpdateDictionaryDetail struct {
 	BaseDictionaryDetail
 }
 
-func (u *UpdateDictionaryDetail) Update() g.Map {
-	return g.Map{"label": u.Label, "status": u.Status, "value": u.Value, "sort": u.Status, "dictionary_id": u.DictionaryId}
+func (u *UpdateDictionaryDetail) Update() *model.DictionaryDetail {
+	return &model.DictionaryDetail{
+		Label:        u.Label,
+		Status:       u.Status,
+		Value:        u.Value,
+		Sort:         u.Sort,
+		DictionaryID: u.DictionaryId,
+	}
 }
 
 type SearchDictionaryDetail struct {
@@ -47,23 +53,24 @@ type SearchDictionaryDetail struct {
 	PageInfo
 }
 
-func (s *SearchDictionaryDetail) Search() g.Map {
-	condition := make(g.Map, 4)
-	if s.Label != "" {
-		condition["`label` like ?"] = "%" + s.Label + "%"
-	}
-	if s.Status != nil {
-		if *s.Status == true {
-			condition["`status`"] = 1
-		} else {
-			condition["`status`"] = 2
+func (s *SearchDictionaryDetail) Search() func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if s.Label != "" {
+			db.Where("label like ?", "%"+s.Label+"%")
 		}
+		if s.Status != nil {
+			if *s.Status == true {
+				db.Where("status = ?", 1)
+			} else {
+				db.Where("status = ?", 2)
+			}
+		}
+		if s.Value != 0 {
+			db.Where("value = ?", s.Value)
+		}
+		if s.DictionaryId != 0 {
+			db.Where("dictionary_id = ?", s.DictionaryId)
+		}
+		return db
 	}
-	if s.Value != 0 {
-		condition["`value`"] = s.Value
-	}
-	if s.DictionaryId != 0 {
-		condition["`dictionary_id`"] = s.DictionaryId
-	}
-	return condition
 }
