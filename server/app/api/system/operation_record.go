@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
 	"gf-vue-admin/app/model/system/request"
 	service "gf-vue-admin/app/service/system"
+	"gf-vue-admin/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -106,5 +106,5 @@ func (o *operation) GetList(r *ghttp.Request) *response.Response {
 	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
-	return &response.Response{Data: response.PageResult{List: list, Total: total, Page: info.Page, PageSize: info.PageSize}, MessageCode: response.SuccessGetList}
+	return &response.Response{Data: response.NewPageResult(list,total,info.Page,info.PageSize),MessageCode: response.SuccessGetList}
 }

@@ -2,7 +2,7 @@ package request
 
 import (
 	model "gf-vue-admin/app/model/system"
-	"github.com/gogf/gf/frame/g"
+	"gorm.io/gorm"
 )
 
 type BaseOperationRecord struct {
@@ -45,16 +45,17 @@ type SearchOperationRecord struct {
 	PageInfo
 }
 
-func (s *SearchOperationRecord) Search() g.Map {
-	condition := make(g.Map, 3)
-	if s.Path != "" {
-		condition["path"] = s.Path
+func (s *SearchOperationRecord) Search() func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if s.Path != "" {
+			db.Where("path = ?", s.Path)
+		}
+		if s.Method != "" {
+			db.Where("Method = ?", s.Method)
+		}
+		if s.Status != 0 {
+			db.Where("status = ?", s.Status)
+		}
+		return db
 	}
-	if s.Method != "" {
-		condition["Method"] = s.Method
-	}
-	if s.Status != 0 {
-		condition["status"] = s.Status
-	}
-	return condition
 }
