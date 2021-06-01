@@ -2,7 +2,6 @@ package request
 
 import (
 	model "gf-vue-admin/app/model/system"
-	"github.com/gogf/gf/frame/g"
 )
 
 type BaseAuthority struct {
@@ -34,8 +33,12 @@ type UpdateAuthority struct {
 	BaseAuthority
 }
 
-func (u *UpdateAuthority) Update() g.Map {
-	return g.Map{"parent_id": u.ParentId, "authority_name": u.AuthorityName, "default_router": u.DefaultRouter}
+func (u *UpdateAuthority) Update() *model.Authority {
+	return &model.Authority{
+		ParentId:      u.ParentId,
+		AuthorityName: u.AuthorityName,
+		DefaultRouter: u.DefaultRouter,
+	}
 }
 
 type Authority struct {

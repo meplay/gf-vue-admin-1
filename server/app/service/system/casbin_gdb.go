@@ -34,11 +34,11 @@ func (c *_casbin) Update(info *request.UpdateCasbin) error {
 	return nil
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: API更新随动
-func (c *_casbin) UpdateApi(newPath string, newMethod string) error {
+// UpdateApi API更新随动
+// Author [Aizen1172](https://github.com/Aizen1172)
+func (c *_casbin) UpdateApi(oldPath string,newPath string, oldMethod string,newMethod string) error {
 	entity := &model.Casbin{Path: newPath, Method: newMethod}
-	err := global.Db.Updates(entity).Error
+	err := global.Db.Where("v1 = ? AND v2 = ?",oldPath,oldMethod).Updates(entity).Error
 	return err
 }
 

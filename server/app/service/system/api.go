@@ -46,7 +46,7 @@ func (a *api) Update(info *request.UpdateApi) error {
 		return response.ErrorSameApi
 	}
 	err := global.Db.Where("id = ?",info.Id).Updates(info.Update()).Error
-	//err = Casbin.UpdateApi(info.Path,info.Method)
+	err = Casbin.UpdateApi(old.Path, info.Path, old.Method, info.Method)
 	return err
 }
 

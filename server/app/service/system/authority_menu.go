@@ -4,6 +4,7 @@ import (
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/app/model/system/request"
 	"gf-vue-admin/app/service/system/internal"
+	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -36,10 +37,10 @@ func (a *authorityMenu) AddMenuAuthority(info *request.AddMenuAuthority) error {
 	return internal.Authority().ReplaceMenu(&entity)
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 查看当前角色树
+// GetMenuAuthority 查看当前角色树
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (a *authorityMenu) GetMenuAuthority(info *request.GetAuthorityId) (menus *[]model.AuthorityMenu, err error) {
 	entities := make([]model.AuthorityMenu, 0, 10)
-	err = g.DB().Table(a._authorityMenu.TableName()).Where(info.Condition()).Order("sort").Structs(&entities)
+	err = global.Db.Where("authority_id = ?",info.AuthorityId).Order("sort").Find(&entities).Error
 	return &entities, err
 }
