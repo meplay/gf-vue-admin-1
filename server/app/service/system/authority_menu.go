@@ -9,10 +9,7 @@ import (
 
 var AuthorityMenu = new(authorityMenu)
 
-type authorityMenu struct{
-	_authority model.Authority
-	_authorityMenu model.AuthorityMenu
-}
+type authorityMenu struct{}
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取动态菜单树

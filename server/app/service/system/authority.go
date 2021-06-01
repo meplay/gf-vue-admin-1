@@ -14,12 +14,7 @@ import (
 
 var Authority = new(authority)
 
-type authority struct {
-	_menu             model.Menu
-	_authority        model.Authority
-	_dataAuthorities  model.DataAuthorities
-	_authoritiesMenus model.AuthoritiesMenus
-}
+type authority struct {}
 
 // Create 创建一个角色
 // Author [Aizen1172](https://github.com/Aizen1172)

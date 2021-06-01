@@ -2,6 +2,7 @@ package internal
 
 import (
 	model "gf-vue-admin/app/model/system"
+	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 	"strconv"
 )
@@ -62,7 +63,7 @@ func (m *menu) GetMenusParameters(id uint) *[]model.MenuParameter {
 
 func (m *menu) GetAuthoritiesMenus(id uint) *[]model.Authority {
 	entities := make([]model.AuthoritiesMenus, 0, 10)
-	if err := g.DB().Table(m._menusParameters.TableName()).Where(g.Map{"menu_id": id}).Structs(&entities); err != nil {
+	if err := global.Db.Where("menu_id", id).Find(&entities).Error;err != nil {
 		g.Log().Error("获取 authorities_menus 表数据失败!", g.Map{"menu_id": id})
 		return nil
 	}
@@ -83,11 +84,11 @@ func (m *menu) GetChildrenList(menu *model.Menu, treeMap map[string][]model.Menu
 	return
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取路由总树map
+// GetTreeMap 获取路由总树map
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (m *menu) GetTreeMap() map[string][]model.Menu {
 	var entities []model.Menu
-	if err := g.DB().Table(m._menu.TableName()).Structs(&entities); err != nil {
+	if err := global.Db.Find(&entities).Error;err != nil {
 		g.Log().Error("获取 menus 表数据失败!")
 		return nil
 	}
