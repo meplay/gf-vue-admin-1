@@ -135,8 +135,8 @@ func (a *authority) Delete(info *request.GetAuthorityId) error {
 func (a *authority) GetList(info *request.PageInfo) (list interface{}, total int64, err error) {
 	var authorities []model.Authority
 	db := global.Db.Model(&model.Authority{})
-	err = db.Count(&total).Error
-	err = db.Scopes(internal.Gorm.Paginate(info)).Find(&authorities).Error
+	err = db.Where("parent_id","0").Count(&total).Error
+	err = db.Scopes(internal.Gorm.Paginate(info)).Where("parent_id","0").Find(&authorities).Error
 	if len(authorities) > 0 {
 		for i, b := range authorities {
 			authorities[i].DataAuthority = internal.Authority().GetDataAuthority(b.AuthorityId)

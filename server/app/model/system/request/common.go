@@ -43,10 +43,6 @@ type GetAuthorityId struct {
 	AuthorityId string `p:"authorityId"`
 }
 
-func (i *GetAuthorityId) Condition() g.Map {
-	return g.Map{"authority_id": i.AuthorityId}
-}
-
 func (p *PageInfo) Paginate() (limit, offset int) {
 	limit = p.PageSize
 	offset = p.PageSize * (p.Page - 1)
