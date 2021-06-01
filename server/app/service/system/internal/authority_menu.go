@@ -2,6 +2,7 @@ package internal
 
 import (
 	model "gf-vue-admin/app/model/system"
+	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -11,11 +12,11 @@ type authorityMenu struct {
 	_authorityMenu model.AuthorityMenu
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取路由总树map
+// GetTreeMap 获取路由总树map
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (a *authorityMenu) GetTreeMap(id string) map[string][]model.AuthorityMenu {
 	entities := make([]model.AuthorityMenu, 0, 10)
-	if err := g.DB().Table(a._authorityMenu.TableName()).Where(g.Map{"authority_id": id}).Order("sort").Structs(&entities); err != nil {
+	if err := global.Db.Where("authority_id", id).Order("sort").Find(&entities).Error;err != nil {
 		g.Log().Error("获取 authority_menu 视图数据失败!", g.Map{"authority_id": id})
 	}
 	tree := make(map[string][]model.AuthorityMenu, len(entities))

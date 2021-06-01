@@ -9,9 +9,9 @@ import (
 func Authority() *authority {
 	var _authority authority
 	entities := make([]model.Authority, 0, 1)
-	if err := g.DB().Table(_authority._authority.TableName()).Structs(&entities); err != nil {
+	if err := global.Db.Find(&entities).Error;err != nil {
 		g.Log().Error("获取全部 Authority 失败!", g.Map{"err": err})
-	} else {
+	}else {
 		_authority.authorityMap = make(map[string]model.Authority, len(entities))
 		_authority.authoritiesMap = make(map[string][]model.Authority, len(entities))
 		for _, entity := range entities {

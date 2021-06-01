@@ -5,7 +5,6 @@ import (
 	"gf-vue-admin/app/model/system/request"
 	"gf-vue-admin/app/service/system/internal"
 	"gf-vue-admin/library/global"
-	"github.com/gogf/gf/frame/g"
 )
 
 var AuthorityMenu = new(authorityMenu)
@@ -26,11 +25,11 @@ func (a *authorityMenu) GetMenuTree(authorityId string) (menus []model.Authority
 	return menus, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 为角色增加menu树
+// AddMenuAuthority 为角色增加menu树
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (a *authorityMenu) AddMenuAuthority(info *request.AddMenuAuthority) error {
 	var entity model.Authority
-	if err := g.DB().Table(a._authority.TableName()).Where(info.Condition()).Struct(&entity); err != nil {
+	if err := global.Db.Where("authority_id = ?", info.AuthorityId).First(&entity).Error;err != nil {
 		return err
 	}
 	entity.Menus = info.Menus

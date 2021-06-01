@@ -61,9 +61,11 @@ func (c *_casbin) ClearCasbin(v int, p ...string) bool {
 	return success
 }
 
+// Clear API清除
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (c *_casbin) Clear(path, method string) bool {
 	var rule model.Casbin
-	if _, err := g.DB().Table(rule.TableName()).Delete(g.Map{"v1": path, "v2": method}); err != nil {
+	if err := global.Db.Delete(&rule, path, method).Error;err != nil {
 		return false
 	}
 	return true
