@@ -124,7 +124,7 @@ func (a *api) GetList(r *ghttp.Request) *response.Response {
 	if list, total, err := service.Api.GetList(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	} else {
-		return &response.Response{Data: response.PageResult{List: list, Total: total, Page: info.Page, PageSize: info.PageSize}, MessageCode: response.SuccessGetList}
+		return &response.Response{Data: response.NewPageResult(list, total, info.Page, info.PageSize), MessageCode: response.SuccessGetList}
 	}
 }
 

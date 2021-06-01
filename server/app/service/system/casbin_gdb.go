@@ -1,11 +1,11 @@
 package service
 
 import (
-	"gf-vue-admin/library/response"
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/app/model/system/request"
 	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
+	"gf-vue-admin/library/response"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
 	"github.com/gogf/gf/frame/g"
@@ -36,8 +36,9 @@ func (c *_casbin) Update(info *request.UpdateCasbin) error {
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: API更新随动
-func (c *_casbin) UpdateApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
-	_, err := g.DB().Table(c._casbin.TableName()).Update(g.Map{"v1": newPath, "v2": newMethod}, g.Map{"v1": oldPath, "v2": oldMethod})
+func (c *_casbin) UpdateApi(newPath string, newMethod string) error {
+	entity := &model.Casbin{Path: newPath, Method: newMethod}
+	err := global.Db.Updates(entity).Error
 	return err
 }
 

@@ -2,7 +2,7 @@ package request
 
 import (
 	model "gf-vue-admin/app/model/system"
-	"github.com/gogf/gf/frame/g"
+	"gorm.io/gorm"
 )
 
 type BaseApi struct {
@@ -54,19 +54,20 @@ type SearchApi struct {
 	PageInfo
 }
 
-func (s *SearchApi) Search() g.Map {
-	condition := make(g.Map, 4)
-	if s.Path != "" {
-		condition["path like ?"] = "%" + s.Path + "%"
+func (s *SearchApi) Search() func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if s.Path != "" {
+			db.Where("path LIKE ?", "%"+s.Path+"%")
+		}
+		if s.Description != "" {
+			db.Where("description LIKE ?", "%"+s.Description+"%")
+		}
+		if s.Method != "" {
+			db.Where("method = ?", s.Method)
+		}
+		if s.ApiGroup != "" {
+			db.Where("api_group = ?", s.ApiGroup)
+		}
+		return db
 	}
-	if s.Description != "" {
-		condition["description like ?"] = "%" + s.Description + "%"
-	}
-	if s.Method != "" {
-		condition["method"] = s.Method
-	}
-	if s.ApiGroup != "" {
-		condition["api_group"] = s.ApiGroup
-	}
-	return condition
 }
