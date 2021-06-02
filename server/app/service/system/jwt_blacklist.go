@@ -2,11 +2,10 @@ package service
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/library/global"
-	"github.com/gogf/gf/frame/g"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -16,17 +15,17 @@ type blacklist struct {
 	_blacklist model.JwtBlacklist
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 拉黑jwt
+// JwtToBlacklist 拉黑jwt
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (b *blacklist) JwtToBlacklist(jwt string) error {
-	_, err := g.DB().Table(b._blacklist.TableName()).Data(&model.JwtBlacklist{Jwt: jwt}).Insert()
-	return err
+	entity := model.JwtBlacklist{Jwt: jwt}
+	return global.Db.Create(&entity).Error
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 判断JWT是否在jwt黑名单
+// IsBlacklist 判断JWT是否在jwt黑名单
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (b *blacklist) IsBlacklist(jwt string) bool {
-	return !errors.Is(g.DB().Table(b._blacklist.TableName()).Where("jwt = ?", jwt).Struct(&model.JwtBlacklist{}), sql.ErrNoRows)
+	return !errors.Is(global.Db.Where("jwt = ?",jwt).First(&model.JwtBlacklist{}).Error,gorm.ErrNotImplemented)
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
