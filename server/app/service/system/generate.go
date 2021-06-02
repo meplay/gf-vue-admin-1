@@ -28,22 +28,22 @@ type generate struct {
 	extension string   // 文件后缀名
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取所有的数据库名
+// GetDbs 获取所有的数据库名
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (s *generate) GetDbs() (result []*response.Dbs, err error) {
 	err = global.Db.Table("INFORMATION_SCHEMA.SCHEMATA").Select("SCHEMA_NAME AS `database`").Find(&result).Error
 	return result, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取数据库的所有表名
+// GetTables 获取数据库的所有表名
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (s *generate) GetTables(db string) (result []response.Tables, err error) {
 	err = global.Db.Table("information_schema.tables").Select("table_name AS table_name").Where("table_schema = ?", db).Find(&result).Error
 	return result, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取指定数据库与指定表名的表字段
+// GetColumns 获取指定数据库与指定表名的表字段
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (s *generate) GetColumns(db string, table string) (result []*response.Columns, err error) {
 	err = global.Db.Table("INFORMATION_SCHEMA.COLUMNS c").Select("column_name,data_type,CASE DATA_TYPE WHEN 'longtext' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'varchar' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'double' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'decimal' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'int' THEN c.NUMERIC_PRECISION WHEN 'bigint' THEN c.NUMERIC_PRECISION ELSE '' END AS data_type_long, column_comment").Where("table_name = ? AND table_schema = ?",table,db).Find(&result).Error
 	return result, err
@@ -159,8 +159,8 @@ func (s *generate) Preview(info *model.AutoCode) (result map[string]string, err 
 	return result, nil
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 自动创建api数据
+// AutoCreateApis 自动创建api数据
+// Author [Aizen1172](https://github.com/Aizen1172)
 func (s *generate) AutoCreateApis(info *model.AutoCode) error {
 	apis := []model.Api{
 		{Path: "/" + info.Abbreviation + "/" + "create", Method: "POST", ApiGroup: info.Abbreviation, Description: "新增" + info.Description},

@@ -22,7 +22,7 @@ type menu struct {
 func (m *menu) Init() {
 	_menusParametersMap := make(map[uint][]uint)
 	entities := make([]model.MenusParameters, 0, 10)
-	if err := g.DB().Table(m._menusParameters.TableName()).Structs(&entities); err != nil {
+	if err := global.Db.Find(&entities).Error; err != nil {
 		g.Log().Error("获取 menus_parameters 表数据失败!")
 	}
 	for _, entity := range entities {
@@ -37,7 +37,7 @@ func (m *menu) Init() {
 	}
 
 	var parameters []model.MenuParameter
-	if err := g.DB().Table(m._parameters.TableName()).Structs(&parameters); err != nil {
+	if err := global.Db.Find(&parameters).Error; err != nil {
 		g.Log().Error("获取 menus_parameters 表数据失败!")
 	}
 	m._menuParameterMap = make(map[uint]model.MenuParameter, len(parameters))
