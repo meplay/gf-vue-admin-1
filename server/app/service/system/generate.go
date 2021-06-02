@@ -1,15 +1,14 @@
 package service
 
 import (
-	"database/sql"
 	"errors"
 	model "gf-vue-admin/app/model/system"
 	"gf-vue-admin/app/model/system/response"
 	"gf-vue-admin/app/service/system/internal"
 	"gf-vue-admin/library/constant"
+	"gf-vue-admin/library/global"
 	"gf-vue-admin/library/utils"
-	"github.com/gogf/gf/database/gdb"
-	"github.com/gogf/gf/frame/g"
+	"gorm.io/gorm"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -21,7 +20,7 @@ var Generate = new(generate)
 type generate struct {
 	err  error
 	file *os.File
-	data []model.TemplateData // 模板数据切片
+	data []model.TemplateData // 模板数据切片[
 
 	content   []byte   // 生成数据
 	files     []string // 全部模板文件名
@@ -32,21 +31,21 @@ type generate struct {
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取所有的数据库名
 func (s *generate) GetDbs() (result []*response.Dbs, err error) {
-	err = g.DB().GetStructs(&result, "SELECT SCHEMA_NAME AS `database` FROM INFORMATION_SCHEMA.SCHEMATA;")
+	err = global.Db.Table("INFORMATION_SCHEMA.SCHEMATA").Select("SCHEMA_NAME AS `database`").Find(&result).Error
 	return result, err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取数据库的所有表名
 func (s *generate) GetTables(db string) (result []response.Tables, err error) {
-	err = g.DB().GetStructs(&result, "select table_name as table_name from information_schema.tables where table_schema = ?", db)
+	err = global.Db.Table("information_schema.tables").Select("table_name AS table_name").Where("table_schema = ?", db).Find(&result).Error
 	return result, err
 }
 
 //@author: [SliverHorn](https://github.com/SliverHorn)
 //@description: 获取指定数据库与指定表名的表字段
 func (s *generate) GetColumns(db string, table string) (result []*response.Columns, err error) {
-	err = g.DB().GetStructs(&result, "SELECT COLUMN_NAME column_name,DATA_TYPE data_type,CASE DATA_TYPE WHEN 'longtext' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'varchar' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'double' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'decimal' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'int' THEN c.NUMERIC_PRECISION WHEN 'bigint' THEN c.NUMERIC_PRECISION ELSE '' END AS data_type_long,COLUMN_COMMENT column_comment FROM INFORMATION_SCHEMA.COLUMNS c WHERE table_name = ? AND table_schema = ?", table, db)
+	err = global.Db.Table("INFORMATION_SCHEMA.COLUMNS c").Select("column_name,data_type,CASE DATA_TYPE WHEN 'longtext' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'varchar' THEN c.CHARACTER_MAXIMUM_LENGTH WHEN 'double' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'decimal' THEN CONCAT_WS( ',', c.NUMERIC_PRECISION, c.NUMERIC_SCALE ) WHEN 'int' THEN c.NUMERIC_PRECISION WHEN 'bigint' THEN c.NUMERIC_PRECISION ELSE '' END AS data_type_long, column_comment").Where("table_name = ? AND table_schema = ?",table,db).Find(&result).Error
 	return result, err
 }
 
@@ -171,11 +170,11 @@ func (s *generate) AutoCreateApis(info *model.AutoCode) error {
 		{Path: "/" + info.Abbreviation + "/" + "deletes", Method: "DELETE", ApiGroup: info.Abbreviation, Description: "批量删除" + info.Description},
 		{Path: "/" + info.Abbreviation + "/" + "getList", Method: "GET", ApiGroup: info.Abbreviation, Description: "获取" + info.Description + "列表"},
 	}
-	return g.DB().Transaction(func(tx *gdb.TX) error {
+	return global.Db.Transaction(func(tx *gorm.DB) error {
 		for _, v := range apis {
 			var entity model.Api
-			if errors.Is(tx.Table(entity.TableName()).Where(g.Map{"path": v.Path, "method": v.Method}).Struct(&entity), sql.ErrNoRows) {
-				if _, err := tx.Table(entity.TableName()).Insert(&v); err != nil { // 遇到错误时回滚事务
+			if errors.Is(tx.Where("path = ? AND method = ?",v.Path,v.Method).First(&entity).Error,gorm.ErrRecordNotFound) {
+				if err := tx.Create(&v).Error; err != nil { // 遇到错误时回滚事务
 					return err
 				}
 			}
