@@ -22,8 +22,8 @@ type breakpointContinueGorm struct {
 	entity  *model.BreakpointContinue
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 上传文件时检测当前文件属性，如果没有文件则创建，有则返回文件的当前切片
+// FindOrCreateFile 上传文件时检测当前文件属性，如果没有文件则创建，有则返回文件的当前切片
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *breakpointContinueGorm) FindOrCreateFile(info *request.BreakpointContinue) (result *model.BreakpointContinue, err error) {
 	var entity model.BreakpointContinue
 	var create = info.Create()
@@ -37,15 +37,15 @@ func (b *breakpointContinueGorm) FindOrCreateFile(info *request.BreakpointContin
 	return &entity, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 创建文件切片记录
+// CreateFileChunk 创建文件切片记录
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *breakpointContinueGorm) CreateFileChunk(info *request.CreateFileChunk) error {
 	entity := info.Create()
 	return global.Db.Create(&entity).Error
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 删除文件切片记录
+// DeleteFileChunk 删除文件切片记录
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *breakpointContinueGorm) DeleteFileChunk(info *request.BreakpointContinue) error {
 	var chunks []model.BreakpointContinueChunk
 	var entity model.BreakpointContinue
@@ -55,8 +55,8 @@ func (b *breakpointContinueGorm) DeleteFileChunk(info *request.BreakpointContinu
 	return err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 断点续传到服务器
+// BreakpointContinue 断点续传到服务器
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *breakpointContinueGorm) BreakpointContinue(info *request.BreakpointContinue, header *multipart.FileHeader) error {
 	if b.file, b.err = header.Open(); b.err != nil {
 		return errors.New("文件读取失败! ")
@@ -81,8 +81,8 @@ func (b *breakpointContinueGorm) BreakpointContinue(info *request.BreakpointCont
 	return nil
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 上传文件完成
+// BreakpointContinueFinish 上传文件完成
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *breakpointContinueGorm) BreakpointContinueFinish(info *request.BreakpointContinueFinish) (filepath string, err error) {
 	return utils.File.MakeFile(info.FileName, info.FileMd5)
 }

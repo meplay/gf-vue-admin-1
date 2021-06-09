@@ -12,10 +12,10 @@ import (
 )
 
 var (
-	Db         *gorm.DB
-	Viper      *viper.Viper
-	Redis      *redis.Client
-	Config     config.Config
+	Db     *gorm.DB
+	Viper  *viper.Viper
+	Redis  *redis.Client
+	Config config.Config
 )
 
 type _gtime gtime.Time
@@ -45,8 +45,8 @@ func (t _gtime) GormDataType() string {
 //}
 
 type Model struct {
-	ID        uint           `orm:"id" json:"ID" gorm:"primarykey"`
-	CreatedAt time.Time      `orm:"created_at" json:"CreatedAt"`
-	UpdatedAt time.Time      `orm:"updated_at" json:"UpdatedAt"`
-	DeletedAt gorm.DeletedAt `orm:"deleted_at" json:"-" gorm:"index"`
+	ID        uint           `orm:"id" json:"ID" gorm:"primaryKey;comment:主键ID"`
+	CreatedAt time.Time      `orm:"created_at" json:"CreatedAt" gorm:"column:created_at;comment:创建时间"`
+	UpdatedAt time.Time      `orm:"updated_at" json:"UpdatedAt" gorm:"column:updated_at;comment:更新时间"`
+	DeletedAt gorm.DeletedAt `orm:"deleted_at" json:"-" gorm:"index;column:deleted_at;comment:删除时间"`
 }
