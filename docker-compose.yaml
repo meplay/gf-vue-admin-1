@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 networks:
   network:
     ipam:
@@ -9,8 +9,8 @@ networks:
 services:
   web:
     build:
-      context: ./
-      dockerfile: ./dockerfile_web
+      context: ./web
+      dockerfile: ./Dockerfile
     container_name: gf-vue-admin-web
     restart: always
     ports:
@@ -24,8 +24,8 @@ services:
 
   server:
     build:
-      context: ./
-      dockerfile: ./dockerfile_server
+      context: ./server
+      dockerfile: ./Dockerfile
     container_name: gf-vue-admin-server
     restart: always
     ports:

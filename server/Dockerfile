@@ -1,34 +1,30 @@
-FROM golang:alpine
+FROM golang
 
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.io,direct
-WORKDIR /go/src/gf-vue-admin
-COPY server/ ./
+WORKDIR /go/src/gf-vue-admin/server
+COPY . .
 
-RUN go env && go list && go build -o server .
+RUN go mod tidy
+RUN go build -tags "mysql" -o gfva cmd/main.go
+RUN go env
+RUN go build -tags "mysql" -o server .
 
 FROM alpine:latest
-LABEL MAINTAINER="SliverHorn@sliver_horn@qq.com"
+MAINTAINER SliverHorn <sliver_horn@qq.com>
 
-WORKDIR /go/src/gf-vue-admin
+ENV GFVA_CONFIG=DockerCompose
 
-COPY --from=0 /go/src/gf-vue-admin/server ./
-COPY --from=0 /go/src/gf-vue-admin/i18n ./i18n
-COPY --from=0 /go/src/gf-vue-admin/public ./public
-COPY --from=0 /go/src/gf-vue-admin/config ./config
-COPY --from=0 /go/src/gf-vue-admin/template ./template
+WORKDIR go/src/gf-vue-admin/
 
-ENTRYPOINT ./server
-# 根据Dockerfile生成Docker镜像
+# copy server
+COPY --from=0 /go/src/gf-vue-admin/server/gfva ./
+COPY --from=0 /go/src/gf-vue-admin/server/server ./
+COPY --from=0 /go/src/gf-vue-admin/server/public ./public
+COPY --from=0 /go/src/gf-vue-admin/server/config ./config
+COPY --from=0 /go/src/gf-vue-admin/server/swagger ./swagger
+COPY --from=0 /go/src/gf-vue-admin/server/template ./template
 
-# docker build -t gva-server:1.0 .
+EXPOSE 8888
 
-#- 根据Docker镜像启动Docker容器
-#    - 后台运行
-#    - ```
-#    docker run -d -p 8888:8888 --name gva-server-v1 gva-server:1.0
-#      ```
-#    - 以可交互模式运行, Ctrl + p + q 后台运行
-#    - ```
-#    docker run -it -p 8888:8888 --name gva-server-v1 gva-server:1.0
-#      ```
+CMD ./gfva initdb -p config/config.mysql.yaml && ./server
