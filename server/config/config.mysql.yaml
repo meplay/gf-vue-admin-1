@@ -1,7 +1,7 @@
 # jwt configuration
 jwt:
-  expires-at: 1 # 3600000000000秒 == 1天 默认设置为1天
-  refresh-at: 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
+  expires-at: 24h # 24h == 1天 默认设置为1天
+  refresh-at: 24h # 24h == 1天 , 24h * 7 = 168h 刷新的token设置为一星期
   signing-key: 'SliverHorn'
 
 # gorm configuration

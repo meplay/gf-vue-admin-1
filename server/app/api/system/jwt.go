@@ -19,8 +19,8 @@ func init() {
 	GfJWTMiddleware, _ = jwt.New(&jwt.GfJWTMiddleware{
 		Realm:           global.Config.Jwt.SigningKey,
 		Key:             []byte(global.Config.Jwt.SigningKey),
-		Timeout:         time.Duration(global.Config.Jwt.ExpiresAt) * time.Hour * 24,
-		MaxRefresh:      time.Duration(global.Config.Jwt.RefreshAt) * time.Hour * 24,
+		Timeout:         global.Config.Jwt.ExpiresAt,
+		MaxRefresh:      global.Config.Jwt.RefreshAt * 7,
 		IdentityKey:     "admin_id",
 		TokenLookup:     "header:Authorization, query:token, cookie:jwt",
 		TokenHeadName:   "Bearer",
