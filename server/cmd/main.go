@@ -15,8 +15,10 @@ limitations under the License.
 */
 package main
 
-import "gf-vue-admin/cmd/gfva/internal"
+import (
+	"gf-vue-admin/cmd/gfva"
+)
 
 func main() {
-	internal.Execute()
+	gfva.Execute()
 }

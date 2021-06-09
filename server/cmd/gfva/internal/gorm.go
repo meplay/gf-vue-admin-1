@@ -1,4 +1,4 @@
-package boot
+package internal
 
 import (
 	"database/sql"
@@ -6,13 +6,13 @@ import (
 	extra "gf-vue-admin/app/model/extra"
 	system "gf-vue-admin/app/model/system"
 	workflow "gf-vue-admin/app/model/workflow"
-	"gf-vue-admin/boot/internal"
 	"gf-vue-admin/library/gdbadapter"
 	"gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gookit/color"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"os"
 	"strings"
 )
@@ -22,13 +22,12 @@ type DatabaseInfo struct {
 	VariableName string `gorm:"column:Variable_name"`
 }
 
-var Mysql = &_mysql{_config: &gorm.Config{}}
+var Mysql = new(_mysql)
 
 type _mysql struct {
 	db      *gorm.DB
 	err     error
 	sql     *sql.DB
-	_config *gorm.Config
 
 	old       string // 配置文件第一次读取数据库数据
 	input     string
@@ -36,10 +35,15 @@ type _mysql struct {
 	character string
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: gorm连接mysql数据库
+// Initialize gorm连接mysql数据库
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) Initialize() {
-	//global.Config.Mysql = global.Config.Mysql.GetByLink()
+	_config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
+	if global.Config.Mysql.LogMode {
+		_config.Logger = logger.Default.LogMode(logger.Info)
+	} else {
+		_config.Logger = logger.Default.LogMode(logger.Silent)
+	}
 	if m.db, m.err = gorm.Open(mysql.New(mysql.Config{
 		DSN:                       global.Config.Mysql.Dsn(), // DSN data source name
 		DefaultStringSize:         191,                       // string 类型字段的默认长度
@@ -47,7 +51,7 @@ func (m *_mysql) Initialize() {
 		DontSupportRenameIndex:    true,                      // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
 		DontSupportRenameColumn:   true,                      // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
 		SkipInitializeWithVersion: false,                     // 根据版本自动配置
-	}), internal.GenerateConfig()); m.err != nil {
+	}), _config); m.err != nil {
 		g.Log().Error(`Gorm连接MySQL异常!`, g.Map{"err": m.err})
 	} else {
 		if m.sql, m.err = m.db.DB(); m.err != nil {
@@ -61,8 +65,8 @@ func (m *_mysql) Initialize() {
 	}
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: gorm 同步模型 生成mysql表
+// AutoMigrateTables gorm 同步模型 生成mysql表
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) AutoMigrateTables() {
 	if !global.Db.Migrator().HasTable("casbin_rule") {
 		m.err = global.Db.Migrator().CreateTable(&gdbadapter.CasbinRule{})
@@ -97,8 +101,8 @@ func (m *_mysql) AutoMigrateTables() {
 	g.Log().Info(`注册表成功!`)
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 检查数据库是否存在
+// Check 检查数据库是否存在
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) Check() {
 	global.Config.Mysql = global.Config.Mysql.GetByLink()
 	m.Initialize()
@@ -107,8 +111,8 @@ func (m *_mysql) Check() {
 	m.Info()
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 检查数据库是否存在
+// CheckDatabase 检查数据库是否存在
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) CheckDatabase() {
 	unknownDatabase := fmt.Sprintf("Unknown database '%v'", global.Config.Mysql.Dbname)
 	if m.err != nil {
@@ -144,8 +148,8 @@ func (m *_mysql) CheckDatabase() {
 	}
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 检查数据库编码是不是utf8mb4
+// CheckUtf8mb4 检查数据库编码是不是utf8mb4
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) CheckUtf8mb4() {
 	m.Character()
 	if m.character != "utf8mb4" {
@@ -167,8 +171,8 @@ func (m *_mysql) CheckUtf8mb4() {
 	}
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 打印数据库基本信息
+// Info 打印数据库基本信息
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) Info() {
 	m.Version()
 	color.Debug.Print("\n您当前的数据库版本: ")
@@ -179,8 +183,8 @@ func (m *_mysql) Info() {
 	color.LightGreen.Printf(" {%v} \n\n", m.character)
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取数据库版本
+// Version 获取数据库版本
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) Version() {
 	color.Debug.Println("[Mysql] -->获取数据库版本中.......")
 	if err := global.Db.Raw("SELECT VERSION() AS version;").Scan(&m.version).Error; err != nil {
@@ -190,8 +194,8 @@ func (m *_mysql) Version() {
 	color.Debug.Printf("\n[Mysql] -->获取数据库版本成功!\n")
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取数据库编码
+// Character 获取数据库编码
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) Character() {
 	var info DatabaseInfo
 	color.Debug.Println("\n[Mysql] -->获取数据库编码中.......")
@@ -203,8 +207,8 @@ func (m *_mysql) Character() {
 	m.character = info.Value
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 设置配置文件的数据库编码为utf8mb4
+// utf8mb4 设置配置文件的数据库编码为utf8mb4
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) utf8mb4() {
 	color.Debug.Print("\n[Mysql] --> 设置数据库名为:")
 	color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
@@ -222,8 +226,8 @@ func (m *_mysql) utf8mb4() {
 	color.Debug.Print("的编码为utf8mb4成功!\n")
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 创建配置文件的数据库
+// database 创建配置文件的数据库
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) database() {
 	m.old = global.Config.Mysql.Dbname
 	global.Config.Mysql.Dbname = "mysql"
@@ -252,8 +256,8 @@ func (m *_mysql) database() {
 	color.Debug.Print("成功!\n")
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 处理零值
+// zero 处理零值
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) zero() {
 	var info DatabaseInfo
 	color.Info.Println("\n[Mysql]--> 获取数据库数据中.......")

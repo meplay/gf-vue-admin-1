@@ -6,14 +6,14 @@ all: check gfva run
 gfva:
 	go env -w GO111MODULE=on
 	go env -w GOPROXY=https://goproxy.io,direct
-	go build -o ${GFVA} cmd/gfva/main.go
-	@if [ -f ${GFVA} ] ; then ./${GFVA} initdb && rm ${GFVA} ; fi
+	go build -tags "postgres" -o ${GFVA} cmd/main.go
+	@if [ -f ${GFVA} ] ; then ./${GFVA} initdb -p config/config.postgres.yaml && rm ${GFVA} ; fi
 
-gva:
+gfva-mysql:
 	go env -w GO111MODULE=on
 	go env -w GOPROXY=https://goproxy.io,direct
-	go get -u github.com/flipped-aurora/gva@master
-	@gva initdb -f gf
+	go build -tags "mysql" -o ${GFVA} cmd/main.go
+	@#if [ -f ${GFVA} ] ; then ./${GFVA} initdb -p config/config.mysql.yaml && rm ${GFVA} ; fi
 
 linux-build:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build

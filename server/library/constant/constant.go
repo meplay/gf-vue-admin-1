@@ -1,11 +1,12 @@
 package constant
 
 const (
-	ConfigEnv      = "GVA_CONFIG"
-	ConfigFile     = "config/viper.yaml"
-	GormConfigFile = "config/gorm.yaml"
-	SerializerGob  = "gob"
-	SerializerJson = "json"
+	ConfigEnv               = "GFVA_CONFIG"
+	ConfigMysqlFile         = "config/config.mysql.yaml"
+	ConfigPostgresFile      = "config/config.postgres.yaml"
+	ConfigDevelopFile       = "config/config.develop.yaml"
+	ConfigProductionFile    = "config/config.production.yaml"
+	ConfigDockerComposeFile = "config/config.docker-compose.yaml"
 
 	BasePath = "./template"
 	AutoPath = "generate/"

@@ -9,6 +9,7 @@ type Config struct {
 	Captcha  Captcha  `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
 	Uploader Uploader `mapstructure:"uploader" json:"uploader" yaml:"uploader"`
 
+	Gorm  Gorm  `mapstructure:"gorm" json:"gorm" yaml:"gorm"`
 	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 
 	// Oss

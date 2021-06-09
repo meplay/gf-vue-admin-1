@@ -60,5 +60,6 @@ jobs:
 
       - name: Test and Build
         run: |
-          go build -v -race
+          go build -tags "mysql" -v -race
+          go build -tags "postgres" -v -race
         working-directory: ./server

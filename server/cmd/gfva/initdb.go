@@ -1,3 +1,4 @@
+// Package gfva
 /*
 Copyright © 2020 SliverHorn
 
@@ -13,10 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package internal
+package gfva
 
 import (
 	"gf-vue-admin/boot"
+	"gf-vue-admin/cmd/gfva/internal"
+	"gf-vue-admin/library/constant"
 	"gf-vue-admin/library/data"
 	"gf-vue-admin/library/global"
 	"github.com/gookit/color"
@@ -33,15 +36,12 @@ var initdbCmd = &cobra.Command{
 		path, _ := cmd.Flags().GetString("path")
 		if frame == "gf" {
 			boot.Viper.Initialize(path)
-			boot.Mysql.Check()
-			boot.Mysql.Initialize()
+			internal.Mysql.Check()
+			internal.Mysql.Initialize()
 			if global.Config.System.DbType == "mysql" {
 				if err := data.Initialize(); err != nil {
 					color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
 				}
-				//if err := dataGf.GfVueAdmin(data.Options{Gorm: global.Db}, data.Options{Viper: global.Viper}); err == nil {
-				//	color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
-				//}
 			}
 		}
 		return
@@ -50,7 +50,7 @@ var initdbCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(initdbCmd)
-	initdbCmd.Flags().StringP("path", "p", "./config/viper.yaml", "自定配置文件路径(绝对路径)")
+	initdbCmd.Flags().StringP("path", "p", constant.ConfigPostgresFile, "自定配置文件路径(绝对路径)")
 	initdbCmd.Flags().StringP("frame", "f", "gf", "可选参数为gin,gf")
 	initdbCmd.Flags().StringP("type", "t", "mysql", "可选参数为mysql,postgresql,sqlite,sqlserver")
 }

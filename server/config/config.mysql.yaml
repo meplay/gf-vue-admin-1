@@ -4,6 +4,40 @@ jwt:
   refresh-at: 168 # 3600000000000秒 == 1天 , 24 * 7 = 168 刷新的token设置为一星期
   signing-key: 'SliverHorn'
 
+# gorm configuration
+gorm:
+  config: 'charset=utf8mb4&parseTime=True&loc=Local'
+  log-zap: ""
+  log-mode: false
+  auto-migrate: true
+  max-idle-conns: 10
+  max-open-conns: 100
+  conn-max-lifetime: 1h
+  conn-max-idle-time: 24h
+  dsn:
+    sources:
+      - host: '127.0.0.1'
+        port: '13307'
+        db-name: 'gf_vue_admin'
+        username: 'root'
+        password: 'gdkid,,..'
+#      - host: '127.0.0.1'
+#        port: '5432'
+#        db-name: 'gin-vue-admin-business'
+#        username: 'root'
+#        password: 'gdkid,,..'
+#    replicas:
+#      - host: '127.0.0.1'
+#        port: '5432'
+#        db-name: 'gin-vue-admin-business'
+#        username: 'root'
+#        password: 'gdkid,,..'
+#      - host: '127.0.0.1'
+#        port: '5432'
+#        db-name: 'gin-vue-admin-business'
+#        username: 'root'
+#        password: 'gdkid,,..'
+
 # redis configuration
 redis:
   db: 0

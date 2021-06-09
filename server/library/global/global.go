@@ -18,35 +18,32 @@ var (
 	Config config.Config
 )
 
-type _gtime gtime.Time
+type _gTime gtime.Time
 
-func (t *_gtime) Scan(value interface{}) (err error) {
+func (t *_gTime) Scan(value interface{}) (err error) {
 	nullTime := &sql.NullTime{}
 	err = nullTime.Scan(value)
-	*t = _gtime(*gtime.NewFromTime(nullTime.Time))
+	*t = _gTime(*gtime.NewFromTime(nullTime.Time))
 	return
 }
 
-func (t _gtime) Value() (driver.Value, error) {
+func (t _gTime) Value() (driver.Value, error) {
 	y, m, d := gtime.Time(t).Date()
 	return time.Date(y, m, d, 0, 0, 0, 0, gtime.Time(t).Location()), nil
 }
 
 // GormDataType gorm common data type
-func (t _gtime) GormDataType() string {
+func (t _gTime) GormDataType() string {
 	return "date"
 }
 
-//type Model struct {
-//	Id       uint        `orm:"id,primary"   json:"ID"`        // 自增ID
-//	CreateAt *_gtime `orm:"create_at"    json:"CreatedAt"` // 创建时间
-//	UpdateAt *_gtime `orm:"update_at"    json:"UpdatedAt"` // 更新时间
-//	DeleteAt *_gtime `orm:"delete_at"    json:"DeletedAt"` // 删除时间
-//}
 
 type Model struct {
-	ID        uint           `orm:"id" json:"ID" gorm:"primaryKey;comment:主键ID"`
-	CreatedAt time.Time      `orm:"created_at" json:"CreatedAt" gorm:"column:created_at;comment:创建时间"`
-	UpdatedAt time.Time      `orm:"updated_at" json:"UpdatedAt" gorm:"column:updated_at;comment:更新时间"`
-	DeletedAt gorm.DeletedAt `orm:"deleted_at" json:"-" gorm:"index;column:deleted_at;comment:删除时间"`
+	ID uint `orm:"id" json:"ID" gorm:"primaryKey;comment:主键ID"` // 自增ID
+
+	CreatedAt time.Time `orm:"created_at" json:"CreatedAt" gorm:"column:created_at;comment:创建时间"` // 创建时间
+
+	UpdatedAt time.Time `orm:"updated_at" json:"UpdatedAt" gorm:"column:updated_at;comment:更新时间"` // 更新时间
+
+	DeletedAt gorm.DeletedAt `orm:"deleted_at" json:"-" gorm:"index;column:deleted_at;comment:删除时间"` // 删除时间
 }

@@ -27,8 +27,11 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.24
-	golang.org/x/crypto v0.0.0-20210317152858-513c2a44f670
+	go.uber.org/zap v1.13.0
+	golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e // indirect
 	gorm.io/driver/mysql v1.0.5
-	gorm.io/gorm v1.21.3
+	gorm.io/driver/postgres v1.1.0
+	gorm.io/gorm v1.21.9
+	gorm.io/plugin/dbresolver v1.1.0
 )
