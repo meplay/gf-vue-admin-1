@@ -45,7 +45,7 @@ func (m *_mysql) Initialize() {
 		_config.Logger = logger.Default.LogMode(logger.Silent)
 	}
 	if m.db, m.err = gorm.Open(mysql.New(mysql.Config{
-		DSN:                       global.Config.Mysql.Dsn(), // DSN data source name
+		DSN:                       global.Config.Gorm.Master(), // DSN data source name
 		DefaultStringSize:         191,                       // string 类型字段的默认长度
 		DisableDatetimePrecision:  true,                      // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 		DontSupportRenameIndex:    true,                      // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
@@ -59,8 +59,8 @@ func (m *_mysql) Initialize() {
 		} else {
 			global.Db = m.db
 			m.AutoMigrateTables()
-			m.sql.SetMaxIdleConns(global.Config.Mysql.GetMaxIdleConnes())
-			m.sql.SetMaxOpenConns(global.Config.Mysql.GetMaxOpenConnes())
+			m.sql.SetMaxIdleConns(global.Config.Gorm.GetMaxIdleConnes())
+			m.sql.SetMaxOpenConns(global.Config.Gorm.GetMaxOpenConnes())
 		}
 	}
 }
@@ -114,17 +114,17 @@ func (m *_mysql) Check() {
 // CheckDatabase 检查数据库是否存在
 // Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) CheckDatabase() {
-	unknownDatabase := fmt.Sprintf("Unknown database '%v'", global.Config.Mysql.Dbname)
+	unknownDatabase := fmt.Sprintf("Unknown database '%v'", global.Config.Gorm.Dsn.Sources[0].DbName)
 	if m.err != nil {
 		if strings.Split(m.err.Error(), ": ")[1] == unknownDatabase {
 			color.Debug.Print("\n[Mysql] -->配置文件的数据库名为:")
-			color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+			color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 			color.Debug.Println("不存在!\n")
 			color.Debug.Println("您的配置文件所配置的数据库不存在,请选择:")
 			color.Debug.Print("0:请自行创建配置文件所配置的数据库名为:")
-			color.LightGreen.Printf(" {%v} \n", global.Config.Mysql.Dbname)
+			color.LightGreen.Printf(" {%v} \n", global.Config.Gorm.Dsn.Sources[0].DbName)
 			color.Debug.Print("1:尝试使用sql为您创建配置文件所配置的数据库名为:")
-			color.LightGreen.Printf(" {%v} \n", global.Config.Mysql.Dbname)
+			color.LightGreen.Printf(" {%v} \n", global.Config.Gorm.Dsn.Sources[0].DbName)
 			color.Debug.Println("2:忽略错误! 注意: 如果不修复, 将会退出初始化数据的进程!")
 			color.Warn.Println("\n注意!!!!!!!")
 			color.Warn.Println("输入1之后,如果配置文件的mysql用户名为root才会有百分百的权限去创建数据库,不是root的话就会跳过创建数据库步骤!\n")
@@ -135,7 +135,7 @@ func (m *_mysql) CheckDatabase() {
 						m.database()
 					} else {
 						color.Debug.Print("\n很抱歉,您的配置文件的mysql用户名配置不是root,不确定你有无权限创建数据库,为您跳过创建数据库操作,请自行创建配置文件所配置的数据库名为:")
-						color.LightGreen.Printf(" {%v} \n", global.Config.Mysql.Dbname)
+						color.LightGreen.Printf(" {%v} \n", global.Config.Gorm.Dsn.Sources[0].DbName)
 					}
 				} else if m.input == "2" {
 					os.Exit(0)
@@ -178,7 +178,7 @@ func (m *_mysql) Info() {
 	color.Debug.Print("\n您当前的数据库版本: ")
 	color.LightGreen.Printf(" {%v} ", m.version)
 	color.Debug.Print(", 使用的数据库是: ")
-	color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+	color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 	color.Debug.Print(", 数据库编码是: ")
 	color.LightGreen.Printf(" {%v} \n\n", m.character)
 }
@@ -211,26 +211,26 @@ func (m *_mysql) Character() {
 // Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) utf8mb4() {
 	color.Debug.Print("\n[Mysql] --> 设置数据库名为:")
-	color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+	color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 	color.Debug.Print("数据库的编码为utf8mb4中.......\n")
-	if err := global.Db.Debug().Exec("ALTER DATABASE " + global.Config.Mysql.Dbname + " CHARACTER SET `utf8mb4` COLLATE `utf8mb4_general_ci`").Error; err != nil {
+	if err := global.Db.Debug().Exec("ALTER DATABASE " + global.Config.Gorm.Dsn.Sources[0].DbName + " CHARACTER SET `utf8mb4` COLLATE `utf8mb4_general_ci`").Error; err != nil {
 		color.Debug.Print("\n[Mysql] --> 设置数据库名为:")
-		color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+		color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 		color.Debug.Print("数据库的编码为utf8mb4失败!请手动修改数据库名为:")
-		color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+		color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 		color.Debug.Println("的编码为utf8mb4\n")
 		return
 	}
 	color.Info.Print("\n[Mysql] --> 设置数据库名为:")
-	color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+	color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 	color.Debug.Print("的编码为utf8mb4成功!\n")
 }
 
 // database 创建配置文件的数据库
 // Author: [SliverHorn](https://github.com/SliverHorn)
 func (m *_mysql) database() {
-	m.old = global.Config.Mysql.Dbname
-	global.Config.Mysql.Dbname = "mysql"
+	m.old = global.Config.Gorm.Dsn.Sources[0].DbName
+	global.Config.Gorm.Dsn.Sources[0].DbName = "mysql"
 	color.Debug.Printf("\n[Mysql] --> 正在连接 mysql 数据库中.......\n")
 	m.Initialize()
 	if m.err != nil {
@@ -239,20 +239,20 @@ func (m *_mysql) database() {
 		os.Exit(0)
 	}
 	color.Debug.Printf("\n[Mysql] --> 连接 mysql 数据库成功\n")
-	global.Config.Mysql.Dbname = m.old
+	global.Config.Gorm.Dsn.Sources[0].DbName = m.old
 	color.Debug.Print("\n[Mysql] --> 正在为您创建数据库名为:")
-	color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+	color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 	color.Debug.Print("中.......\n")
-	if m.err = global.Db.Exec("CREATE DATABASE IF NOT EXISTS " + global.Config.Mysql.Dbname + " DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;").Error; m.err != nil {
+	if m.err = global.Db.Exec("CREATE DATABASE IF NOT EXISTS " + global.Config.Gorm.Dsn.Sources[0].DbName + " DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;").Error; m.err != nil {
 		color.Debug.Print("\n[Mysql] --> 创建数据库名为:")
-		color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+		color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 		color.Debug.Print("失败!请手动修改数据库名为")
-		color.LightGreen.Printf(" {%v} \n", global.Config.Mysql.Dbname)
+		color.LightGreen.Printf(" {%v} \n", global.Config.Gorm.Dsn.Sources[0].DbName)
 		os.Exit(0)
 		return
 	}
 	color.Debug.Print("\n[Mysql] --> 正在为您创建数据库名为:")
-	color.LightGreen.Printf(" {%v} ", global.Config.Mysql.Dbname)
+	color.LightGreen.Printf(" {%v} ", global.Config.Gorm.Dsn.Sources[0].DbName)
 	color.Debug.Print("成功!\n")
 }
 

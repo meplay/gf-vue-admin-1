@@ -17,3 +17,5 @@ cbuild
 main
 .vscode
 go.sum
+server/gf-vue-admin
+server/gfva

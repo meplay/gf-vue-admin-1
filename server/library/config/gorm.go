@@ -106,3 +106,7 @@ func (g *Gorm) GetMaxOpenConnes() int {
 	}
 	return g.Dsn.MaxOpenConnes
 }
+
+func (g *Gorm) Master() string {
+	return g.Dsn.Sources[0].GetMysqlDsn(g.Config)
+}
