@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"gf-vue-admin/app/model/system/response"
-	"gf-vue-admin/library/constant"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/response"
+	"flipped-aurora/gf-vue-admin/server/library/constant"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"

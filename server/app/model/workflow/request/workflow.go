@@ -1,6 +1,6 @@
 package request
 
-import model "gf-vue-admin/app/model/workflow"
+import model "flipped-aurora/gf-vue-admin/server/app/model/workflow"
 
 type SearchWorkflowProcess struct {
 	model.WorkflowProcess

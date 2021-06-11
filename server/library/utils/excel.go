@@ -3,7 +3,7 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"gf-vue-admin/interfaces"
+	"flipped-aurora/gf-vue-admin/server/interfaces"
 	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 

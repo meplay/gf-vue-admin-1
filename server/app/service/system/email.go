@@ -1,6 +1,6 @@
 package service
 
-import "gf-vue-admin/library/utils"
+import "flipped-aurora/gf-vue-admin/server/library/utils"
 
 var Email = new(email)
 

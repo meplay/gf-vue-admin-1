@@ -1,8 +1,8 @@
 package boot
 
 import (
-	model "gf-vue-admin/app/model/system"
-	"gf-vue-admin/library/excel"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	"flipped-aurora/gf-vue-admin/server/library/excel"
 	"testing"
 )
 

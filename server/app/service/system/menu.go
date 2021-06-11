@@ -2,11 +2,11 @@ package service
 
 import (
 	"errors"
-	model "gf-vue-admin/app/model/system"
-	"gf-vue-admin/app/model/system/request"
-	"gf-vue-admin/app/service/system/internal"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/response"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	"flipped-aurora/gf-vue-admin/server/app/service/system/internal"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"gorm.io/gorm"
 )
 

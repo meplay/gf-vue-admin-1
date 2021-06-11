@@ -1,7 +1,7 @@
 package model
 
 import (
-	"gf-vue-admin/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 )
 
 type OperationRecord struct {
@@ -10,8 +10,8 @@ type OperationRecord struct {
 	Path         string `json:"path" form:"path" gorm:"column:path;comment:请求路径"`
 	Agent        string `json:"agent" form:"agent" gorm:"column:agent;comment:代理"`
 	Method       string `json:"method" form:"method" gorm:"column:method;comment:请求方法"`
-	Request      string `json:"body" form:"body" gorm:"type:longtext;column:body;comment:请求Body"`
-	Response     string `json:"resp" form:"resp" gorm:"type:longtext;column:resp;comment:响应Body"`
+	Request      string `json:"body" form:"body" gorm:"type:text;column:body;comment:请求Body"`
+	Response     string `json:"resp" form:"resp" gorm:"type:text;column:resp;comment:响应Body"`
 	ErrorMessage string `json:"error_message" form:"error_message" gorm:"column:error_message;comment:错误信息"`
 
 	Status int `json:"status" form:"status" gorm:"column:status;comment:请求状态"`

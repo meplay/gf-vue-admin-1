@@ -1,6 +1,6 @@
 package model
 
-import "gf-vue-admin/library/global"
+import "flipped-aurora/gf-vue-admin/server/library/global"
 
 type Menu struct {
 	global.Model

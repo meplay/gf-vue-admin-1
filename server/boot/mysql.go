@@ -3,11 +3,11 @@
 package boot
 
 import (
-	extra "gf-vue-admin/app/model/extra"
-	system "gf-vue-admin/app/model/system"
-	workflow "gf-vue-admin/app/model/workflow"
-	"gf-vue-admin/boot/internal"
-	"gf-vue-admin/library/global"
+	extra "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	system "flipped-aurora/gf-vue-admin/server/app/model/system"
+	workflow "flipped-aurora/gf-vue-admin/server/app/model/workflow"
+	"flipped-aurora/gf-vue-admin/server/boot/internal"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"github.com/gogf/gf/frame/g"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
@@ -20,6 +20,7 @@ var DbResolver = new(_mysql)
 
 type _mysql struct {
 	dsn string
+	err error
 }
 
 // Initialize gorm连接mysql数据库
@@ -33,12 +34,14 @@ func (m *_mysql) Initialize() {
 	}), internal.Gorm.GenerateConfig())
 	if err != nil {
 		g.Log().Error(`mysql 链接失败!`, g.Map{"err": err})
-		os.Exit(0)
+		m.err = err
+		return
 	}
 	err = db.Use(resolver)
 	if err != nil {
 		g.Log().Error("mysql 链接集群失败!", g.Map{"err": err})
-		os.Exit(0)
+		m.err = err
+		return
 	}
 	global.Db = db
 	if global.Config.Gorm.AutoMigrate {
@@ -116,4 +119,8 @@ func (m *_mysql) AutoMigrate() {
 		os.Exit(0)
 	}
 	zap.L().Info(`注册表成功!`)
+}
+
+func (m *_mysql) GetError() error {
+	return m.err
 }

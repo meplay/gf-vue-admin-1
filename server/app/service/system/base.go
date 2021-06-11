@@ -2,9 +2,9 @@ package service
 
 import (
 	"database/sql"
-	"gf-vue-admin/app/model/system/response"
-	"gf-vue-admin/library"
-	"gf-vue-admin/library/global"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/response"
+	"flipped-aurora/gf-vue-admin/server/library"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"github.com/mojocn/base64Captcha"
 	"gorm.io/gorm"
 )
@@ -28,8 +28,8 @@ type base struct {
 	sql *sql.DB
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 生成二维码的信息
+// Captcha 生成二维码的信息
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *base) Captcha() (result *response.Captcha, err error) {
 	var info response.Captcha
 	var driver = base64Captcha.NewDriverDigit(global.Config.Captcha.ImageHeight, global.Config.Captcha.ImageWidth, global.Config.Captcha.KeyLong, 0.7, 80) // 字符,公式,验证码配置, 生成默认数字的driver

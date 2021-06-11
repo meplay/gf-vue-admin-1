@@ -1,0 +1,3 @@
+//+build mysql
+
+package internal

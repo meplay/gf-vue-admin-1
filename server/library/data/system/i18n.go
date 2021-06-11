@@ -1,7 +1,7 @@
 package data
 
 import (
-	"gf-vue-admin/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 )
 
 var I18nHash map[string]string

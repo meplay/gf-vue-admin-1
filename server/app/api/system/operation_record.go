@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
-	"gf-vue-admin/library/response"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -12,6 +12,7 @@ var OperationRecord = new(operation)
 
 type operation struct{}
 
+// Create
 // @Tags SystemOperationRecord
 // @Summary 创建OperationRecord
 // @Security ApiKeyAuth
@@ -31,6 +32,7 @@ func (o *operation) Create(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessCreated}
 }
 
+// First
 // @Tags SystemOperationRecord
 // @Summary 用id查询OperationRecord
 // @Security ApiKeyAuth
@@ -51,6 +53,7 @@ func (o *operation) First(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Delete
 // @Tags SystemOperationRecord
 // @Summary 删除OperationRecord
 // @Security ApiKeyAuth
@@ -70,6 +73,7 @@ func (o *operation) Delete(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessDeleted}
 }
 
+// Deletes
 // @Tags SystemOperationRecord
 // @Summary 批量删除OperationRecord
 // @Security ApiKeyAuth
@@ -89,6 +93,7 @@ func (o *operation) Deletes(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessBatchDeleted}
 }
 
+// GetList
 // @Tags SystemOperationRecord
 // @Summary 分页获取OperationRecord列表
 // @Security ApiKeyAuth
@@ -106,5 +111,5 @@ func (o *operation) GetList(r *ghttp.Request) *response.Response {
 	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
-	return &response.Response{Data: response.NewPageResult(list,total,info.Page,info.PageSize),MessageCode: response.SuccessGetList}
+	return &response.Response{Data: response.NewPageResult(list, total, info.Page, info.PageSize), MessageCode: response.SuccessGetList}
 }

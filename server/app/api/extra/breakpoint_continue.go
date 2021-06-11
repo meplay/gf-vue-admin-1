@@ -1,13 +1,14 @@
 package api
 
 import (
-	"gf-vue-admin/app/model/extra/request"
-	service "gf-vue-admin/app/service/extra"
-	"gf-vue-admin/library/response"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/extra"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
+// BreakpointContinue
 // @Tags ExtraFile
 // @Summary 断点续传到服务器
 // @Security ApiKeyAuth
@@ -30,6 +31,7 @@ func (f *file) BreakpointContinue(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessCreateChunk}
 }
 
+// FindFile
 // @Tags ExtraFile
 // @Summary 查找文件
 // @Security ApiKeyAuth
@@ -50,6 +52,7 @@ func (f *file) FindFile(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: g.Map{"file": data}, MessageCode: response.SuccessFind}
 }
 
+// BreakpointContinueFinish
 // @Tags ExtraFile
 // @Summary 创建文件
 // @Security ApiKeyAuth
@@ -70,6 +73,7 @@ func (f *file) BreakpointContinueFinish(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: g.Map{"filePath": filePath}, MessageCode: response.SuccessFinish}
 }
 
+// RemoveChunk
 // @Tags ExtraFile
 // @Summary 删除切片
 // @Security ApiKeyAuth

@@ -1,18 +1,20 @@
 package api
 
 import (
-	"gf-vue-admin/app/api/system/internal"
-	"gf-vue-admin/library/response"
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/app/api/system/internal"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
-var AuthorityMenu =  new(authorityMenu)
+var AuthorityMenu = new(authorityMenu)
 
-type authorityMenu struct {}
+type authorityMenu struct{}
 
+// GetMenu
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemAuthorityMenu
 // @Summary 获取用户动态路由
 // @Security ApiKeyAuth
@@ -27,6 +29,8 @@ func (a *authorityMenu) GetMenu(r *ghttp.Request) *response.Response {
 	}
 }
 
+// AddMenuAuthority
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemAuthorityMenu
 // @Summary 增加menu和角色关联关系
 // @Security ApiKeyAuth
@@ -46,6 +50,8 @@ func (a *authorityMenu) AddMenuAuthority(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessAdd}
 }
 
+// GetMenuAuthority
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemAuthorityMenu
 // @Summary 获取指定角色menu
 // @Security ApiKeyAuth

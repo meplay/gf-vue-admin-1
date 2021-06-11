@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
-	"gf-vue-admin/library/response"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -12,6 +12,7 @@ var DictionaryDetail = new(detail)
 
 type detail struct{}
 
+// Create
 // @Tags SystemDictionaryDetail
 // @Summary 创建DictionaryDetail
 // @Security ApiKeyAuth
@@ -31,6 +32,7 @@ func (d *detail) Create(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessCreated}
 }
 
+// First
 // @Tags SystemDictionaryDetail
 // @Summary 用id查询DictionaryDetail
 // @Security ApiKeyAuth
@@ -51,6 +53,7 @@ func (d *detail) First(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Update
 // @Tags SystemDictionaryDetail
 // @Summary 更新DictionaryDetail
 // @Security ApiKeyAuth
@@ -70,6 +73,8 @@ func (d *detail) Update(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessUpdated}
 }
 
+// Delete
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemDictionaryDetail
 // @Summary 删除DictionaryDetail
 // @Security ApiKeyAuth
@@ -90,6 +95,7 @@ func (d *detail) Delete(r *ghttp.Request) *response.Response {
 
 }
 
+// GetList
 // @Tags SystemDictionaryDetail
 // @Summary 分页获取DictionaryDetail列表
 // @Security ApiKeyAuth
@@ -106,6 +112,6 @@ func (d *detail) GetList(r *ghttp.Request) *response.Response {
 	if list, total, err := service.DictionaryDetail.GetList(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	} else {
-		return &response.Response{Data: response.NewPageResult(list,total,info.Page,info.PageSize),MessageCode: response.SuccessGetList}
+		return &response.Response{Data: response.NewPageResult(list, total, info.Page, info.PageSize), MessageCode: response.SuccessGetList}
 	}
 }

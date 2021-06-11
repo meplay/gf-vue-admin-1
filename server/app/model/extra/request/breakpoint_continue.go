@@ -1,7 +1,7 @@
 package request
 
 import (
-	model "gf-vue-admin/app/model/extra"
+	model "flipped-aurora/gf-vue-admin/server/app/model/extra"
 	"mime/multipart"
 	"strconv"
 )

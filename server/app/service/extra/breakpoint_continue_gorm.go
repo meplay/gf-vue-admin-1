@@ -2,10 +2,10 @@ package service
 
 import (
 	"errors"
-	model "gf-vue-admin/app/model/extra"
-	"gf-vue-admin/app/model/extra/request"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/utils"
+	model "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/utils"
 	"gorm.io/gorm"
 	"io/ioutil"
 	"mime/multipart"

@@ -1,8 +1,8 @@
 package data
 
 import (
-	model "gf-vue-admin/app/model/workflow"
-	"gf-vue-admin/library/global"
+	model "flipped-aurora/gf-vue-admin/server/app/model/workflow"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"gorm.io/gorm"
 	"time"
 )

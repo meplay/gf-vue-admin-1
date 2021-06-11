@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
-	"gf-vue-admin/library/response"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -11,6 +11,7 @@ var Authority = new(authority)
 
 type authority struct{}
 
+// Create
 // @Tags SystemAuthority
 // @Summary 创建角色
 // @Security ApiKeyAuth
@@ -31,6 +32,7 @@ func (a *authority) Create(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Copy
 // @Tags SystemAuthority
 // @Summary 拷贝角色
 // @Security ApiKeyAuth
@@ -51,6 +53,7 @@ func (a *authority) Copy(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Update
 // @Tags SystemAuthority
 // @Summary 更新角色信息
 // @Security ApiKeyAuth
@@ -71,6 +74,7 @@ func (a *authority) Update(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Delete
 // @Tags SystemAuthority
 // @Summary 删除角色
 // @Security ApiKeyAuth
@@ -90,6 +94,7 @@ func (a *authority) Delete(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessDeleted}
 }
 
+// GetList
 // @Tags SystemAuthority
 // @Summary 分页获取角色列表
 // @Security ApiKeyAuth
@@ -110,6 +115,7 @@ func (a *authority) GetList(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: response.NewPageResult(list, total, info.Page, info.PageSize), MessageCode: response.SuccessGetList}
 }
 
+// SetDataAuthority
 // @Tags SystemAuthority
 // @Summary 设置角色资源权限
 // @Security ApiKeyAuth

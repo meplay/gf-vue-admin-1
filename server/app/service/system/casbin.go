@@ -1,11 +1,11 @@
 package service
 
 import (
-	model "gf-vue-admin/app/model/system"
-	"gf-vue-admin/app/model/system/request"
-	"gf-vue-admin/library/gdbadapter"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/response"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	"flipped-aurora/gf-vue-admin/server/library/gdbadapter"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
 	"github.com/gogf/gf/frame/g"
@@ -14,12 +14,10 @@ import (
 
 var Casbin = new(_casbin)
 
-type _casbin struct {
-	_casbin model.Casbin
-}
+type _casbin struct{}
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 更新casbin权限
+// Update 更新casbin权限
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (c *_casbin) Update(info *request.UpdateCasbin) error {
 	c.ClearCasbin(0, info.AuthorityId)
 	rules := make([][]string, 0, len(info.CasbinInfos))
@@ -36,14 +34,14 @@ func (c *_casbin) Update(info *request.UpdateCasbin) error {
 
 // UpdateApi API更新随动
 // Author [Aizen1172](https://github.com/Aizen1172)
-func (c *_casbin) UpdateApi(oldPath string,newPath string, oldMethod string,newMethod string) error {
+func (c *_casbin) UpdateApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
 	entity := &model.Casbin{Path: newPath, Method: newMethod}
-	err := global.Db.Where("v1 = ? AND v2 = ?",oldPath,oldMethod).Updates(entity).Error
+	err := global.Db.Where("v1 = ? AND v2 = ?", oldPath, oldMethod).Updates(entity).Error
 	return err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取权限列表
+// GetPolicyPath 获取权限列表
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (c *_casbin) GetPolicyPath(authorityId string) (pathMaps []request.CasbinInfo) {
 	enforcer := c.Casbin()
 	list := enforcer.GetFilteredPolicy(0, authorityId)
@@ -53,8 +51,8 @@ func (c *_casbin) GetPolicyPath(authorityId string) (pathMaps []request.CasbinIn
 	return pathMaps
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 清除匹配的权限
+// ClearCasbin 清除匹配的权限
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (c *_casbin) ClearCasbin(v int, p ...string) bool {
 	e := c.Casbin()
 	success, _ := e.RemoveFilteredPolicy(v, p...)
@@ -65,14 +63,14 @@ func (c *_casbin) ClearCasbin(v int, p ...string) bool {
 // Author [Aizen1172](https://github.com/Aizen1172)
 func (c *_casbin) Clear(path, method string) bool {
 	var rule model.Casbin
-	if err := global.Db.Delete(&rule, path, method).Error;err != nil {
+	if err := global.Db.Delete(&rule, path, method).Error; err != nil {
 		return false
 	}
 	return true
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 持久化到数据库  引入自定义规则
+// Casbin 持久化到数据库  引入自定义规则
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (c *_casbin) Casbin() *casbin.Enforcer {
 	a, _ := gdbadapter.NewAdapterByDB(g.DB(), "casbin_rule")
 	e, _ := casbin.NewEnforcer(global.Config.Casbin.ModelPath, a)
@@ -81,16 +79,16 @@ func (c *_casbin) Casbin() *casbin.Enforcer {
 	return e
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 自定义规则函数
+// ParamsMatch 自定义规则函数
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (c *_casbin) ParamsMatch(key1 string, key2 string) bool {
 	key1 = strings.Split(key1, "?")[0]
 	// 剥离路径后再使用casbin的keyMatch2
 	return util.KeyMatch2(key1, key2)
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 自定义规则函数
+// ParamsMatchFunc 自定义规则函数
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (c *_casbin) ParamsMatchFunc(args ...interface{}) (interface{}, error) {
 	var name1 = args[0].(string)
 	var name2 = args[1].(string)

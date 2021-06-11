@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"errors"
-	model "gf-vue-admin/app/model/system"
-	"gf-vue-admin/library/global"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"gorm.io/gorm"
 	"time"
 )
@@ -28,21 +28,21 @@ func (b *blacklist) IsBlacklist(jwt string) bool {
 	return !errors.Is(global.Db.Where("jwt = ?",jwt).First(&model.JwtBlacklist{}).Error,gorm.ErrNotImplemented)
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取用户在Redis的token
+// GetRedisJWT 获取用户在Redis的token
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *blacklist) GetRedisJWT(uuid string) (string, error) {
 	return global.Redis.Get(context.Background(), uuid).Result()
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 保存jwt到Redis
+// SetRedisJWT 保存jwt到Redis
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *blacklist) SetRedisJWT(uuid string, jwt string) error {
 	timer := time.Duration(global.Config.Jwt.ExpiresAt) * time.Second
 	return global.Redis.Set(context.Background(), uuid, jwt, timer).Err()
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 鉴权jwt
+// ValidatorRedisToken 鉴权jwt
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (b *blacklist) ValidatorRedisToken(userUUID string, oldToken string) bool {
 	if jwt, err := b.GetRedisJWT(userUUID); err != nil {
 		return false

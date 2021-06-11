@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
-	"gf-vue-admin/library/response"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -11,7 +11,7 @@ import (
 var Dictionary = new(dictionary)
 
 type dictionary struct{}
-
+// Create
 // @Tags SystemDictionary
 // @Summary 创建Dictionary
 // @Security ApiKeyAuth
@@ -30,7 +30,7 @@ func (d *dictionary) Create(r *ghttp.Request) *response.Response {
 	}
 	return &response.Response{Data: g.Map{"dictionary": info}, MessageCode: response.SuccessCreated}
 }
-
+// First
 // @Tags SystemDictionary
 // @Summary 用id查询Dictionary
 // @Security ApiKeyAuth
@@ -50,7 +50,7 @@ func (d *dictionary) First(r *ghttp.Request) *response.Response {
 		return &response.Response{Data: g.Map{"resysDictionary": data}, MessageCode: response.SuccessFirst}
 	}
 }
-
+// Update
 // @Tags SystemDictionary
 // @Summary 更新Dictionary
 // @Security ApiKeyAuth
@@ -69,7 +69,7 @@ func (d *dictionary) Update(r *ghttp.Request) *response.Response {
 	}
 	return &response.Response{MessageCode: response.SuccessUpdated}
 }
-
+// Delete
 // @Tags SystemDictionary
 // @Summary 删除Dictionary
 // @Security ApiKeyAuth
@@ -88,7 +88,7 @@ func (d *dictionary) Delete(r *ghttp.Request) *response.Response {
 	}
 	return &response.Response{MessageCode: response.SuccessDeleted}
 }
-
+// GetList
 // @Tags SystemDictionary
 // @Summary 分页获取Dictionary列表
 // @Security ApiKeyAuth

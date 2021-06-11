@@ -2,9 +2,9 @@ package upload
 
 import (
 	"context"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/upload/internal"
 	"fmt"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/upload/internal"
 	"github.com/gogf/gf/frame/g"
 	"mime/multipart"
 	"time"
@@ -17,8 +17,8 @@ type tencent struct{
 	file multipart.File
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: upload file to COS
+// Upload upload file to COS
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (t *tencent) Upload(file *multipart.FileHeader) (string, string, error) {
 	client := internal.Tencent.Client()
 
@@ -36,8 +36,8 @@ func (t *tencent) Upload(file *multipart.FileHeader) (string, string, error) {
 
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: delete file form COS
+// Delete delete file form COS
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (t *tencent) Delete(key string) error {
 	client := internal.Tencent.Client()
 	name := global.Config.Tencent.PathPrefix + "/" + key

@@ -2,10 +2,10 @@ package api
 
 import (
 	"errors"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"fmt"
-	"gf-vue-admin/library/response"
-	model "gf-vue-admin/app/model/system"
-	service "gf-vue-admin/app/service/system"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"net/url"
@@ -16,6 +16,7 @@ var Generate = new(generate)
 
 type generate struct{}
 
+// GetDbs
 // @Tags SystemGenerate
 // @Summary 获取当前所有数据库
 // @Security ApiKeyAuth
@@ -31,6 +32,7 @@ func (a *generate) GetDbs(r *ghttp.Request) *response.Response {
 	}
 }
 
+// GetTables
 // @Tags SystemGenerate
 // @Summary 获取当前数据库所有表
 // @Security ApiKeyAuth
@@ -47,6 +49,7 @@ func (a *generate) GetTables(r *ghttp.Request) *response.Response {
 	}
 }
 
+// GetColumns
 // @Tags SystemGenerate
 // @Summary 获取当前表所有字段
 // @Security ApiKeyAuth
@@ -64,6 +67,7 @@ func (a *generate) GetColumns(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Preview
 // @Tags SystemGenerate
 // @Summary 预览创建后的代码
 // @Security ApiKeyAuth
@@ -84,6 +88,7 @@ func (a *generate) Preview(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Create
 // @Tags SystemGenerate
 // @Summary 自动代码模板
 // @Security ApiKeyAuth

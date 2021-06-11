@@ -2,11 +2,11 @@ package workflow
 
 import (
 	"errors"
+	model "flipped-aurora/gf-vue-admin/server/app/model/workflow"
+	"flipped-aurora/gf-vue-admin/server/app/model/workflow/request"
+	"flipped-aurora/gf-vue-admin/server/library/constant"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"fmt"
-	model "gf-vue-admin/app/model/workflow"
-	"gf-vue-admin/app/model/workflow/request"
-	"gf-vue-admin/library/constant"
-	"gf-vue-admin/library/global"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"strconv"

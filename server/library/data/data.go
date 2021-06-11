@@ -1,10 +1,10 @@
 package data
 
 import (
-	"gf-vue-admin/interfaces"
-	extra "gf-vue-admin/library/data/extra"
-	system "gf-vue-admin/library/data/system"
-	workflow "gf-vue-admin/library/data/workflow"
+	"flipped-aurora/gf-vue-admin/server/interfaces"
+	extra "flipped-aurora/gf-vue-admin/server/library/data/extra"
+	system "flipped-aurora/gf-vue-admin/server/library/data/system"
+	workflow "flipped-aurora/gf-vue-admin/server/library/data/workflow"
 )
 
 func Initialize() error {

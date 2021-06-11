@@ -2,10 +2,10 @@ package service
 
 import (
 	"errors"
-	model "gf-vue-admin/app/model/extra"
-	"gf-vue-admin/app/model/extra/request"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/utils"
+	model "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/utils"
 	"github.com/gogf/gf/frame/g"
 	"gorm.io/gorm"
 	"io"
@@ -30,8 +30,8 @@ type uploaderGorm struct {
 	finishDir string
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 上传保存切片文件
+// Upload 上传保存切片文件
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (u *uploaderGorm) Upload(header *multipart.FileHeader, info *request.Upload) error {
 	u.chunkDir = global.Config.Uploader.GetIdentifier(info.Identifier)
 	if ok, _ := utils.Directory.PathExists(u.chunkDir); !ok {
@@ -47,14 +47,14 @@ func (u *uploaderGorm) Upload(header *multipart.FileHeader, info *request.Upload
 	return global.Db.Create(&entity).Error
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 保存文件切片路径
+// CreateChunk 保存文件切片路径
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (u *uploaderGorm) CreateChunk(info model.SimpleUploader) error {
 	return global.Db.Create(&info).Error
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 检查文件是否已经上传过
+// CheckFileMd5 检查文件是否已经上传过
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (u *uploaderGorm) CheckFileMd5(info *request.CheckFileMd5) (uploads *[]model.SimpleUploader, isDone bool, err error) {
 	var entities []model.SimpleUploader
 	err = global.Db.Find(&entities, "identifier = ? AND is_done = ?", info.Md5, false).Error
@@ -62,8 +62,8 @@ func (u *uploaderGorm) CheckFileMd5(info *request.CheckFileMd5) (uploads *[]mode
 	return &entities, !isDone, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 合并文件
+// MergeFileMd5 合并文件
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (u *uploaderGorm) MergeFileMd5(info *request.MergeFileMd5) error {
 	u.finishDir = global.Config.Uploader.FinishDir
 	u.checkPath = global.Config.Uploader.GetCheckPath(info.Md5)
@@ -108,8 +108,8 @@ func (u *uploaderGorm) MergeFileMd5(info *request.MergeFileMd5) error {
 	})
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 保存文件
+// SaveUploadedFile 保存文件
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (u *uploaderGorm) SaveUploadedFile(file *multipart.FileHeader, chunkPath string) error {
 	if u.old, u.err = file.Open(); u.err != nil { // 读取文件
 		return errors.New("function file.Open() Filed! err:" + u.err.Error())

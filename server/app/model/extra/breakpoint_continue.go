@@ -1,9 +1,8 @@
 package model
 
-import "gf-vue-admin/library/global"
+import "flipped-aurora/gf-vue-admin/server/library/global"
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 文件结构体
+// BreakpointContinue 文件结构体
 type BreakpointContinue struct {
 	global.Model
 	FileMd5    string                    `json:"FileMd5"`
@@ -18,8 +17,7 @@ func (b *BreakpointContinue) TableName() string {
 	return "breakpoint_continue"
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 切片结构体
+// BreakpointContinueChunk 切片结构体
 type BreakpointContinueChunk struct {
 	global.Model
 	FileChunkPath   string

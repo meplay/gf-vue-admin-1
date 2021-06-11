@@ -1,10 +1,10 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
-	model "gf-vue-admin/app/model/system"
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -13,17 +13,7 @@ var Menu = new(menu)
 
 type menu struct{}
 
-// @Tags SystemMenu
-// @Summary 获取用户动态路由
-// @Security ApiKeyAuth
-// @Produce  application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
-// @Router /menu/getBaseMenuTree [post]
-func (m *menu) GetBaseMenuTree(r *ghttp.Request) *response.Response {
-	menus := service.Menu.GetTree()
-	return &response.Response{Data: g.Map{"menus": menus}, MessageCode: response.SuccessOperation}
-}
-
+// Create
 // @Tags SystemMenu
 // @Summary 新增菜单
 // @Security ApiKeyAuth
@@ -43,46 +33,7 @@ func (m *menu) Create(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessAdd}
 }
 
-// @Tags SystemMenu
-// @Summary 删除菜单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.GetById true "菜单id"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
-// @Router /menu/deleteBaseMenu [post]
-func (m *menu) Delete(r *ghttp.Request) *response.Response {
-	var info request.GetById
-	if err := r.Parse(&info); err != nil {
-		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
-	}
-	if err := service.Menu.Delete(&info); err != nil {
-		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
-	}
-	return &response.Response{MessageCode: response.SuccessDeleted}
-
-}
-
-// @Tags SystemMenu
-// @Summary 更新菜单
-// @Security ApiKeyAuth
-// @accept application/json
-// @Produce application/json
-// @Param data body request.UpdateMenu true "路由path, 父菜单ID, 路由name, 对应前端文件路径, 排序标记"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /menu/updateBaseMenu [post]
-func (m *menu) Update(r *ghttp.Request) *response.Response {
-	var info request.UpdateMenu
-	if err := r.Parse(&info); err != nil {
-		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
-	}
-	if err := service.Menu.Update(&info); err != nil {
-		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
-	}
-	return &response.Response{MessageCode: response.SuccessUpdated}
-
-}
-
+// First
 // @Tags SystemMenu
 // @Summary 根据id获取菜单
 // @Security ApiKeyAuth
@@ -103,6 +54,49 @@ func (m *menu) First(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Update
+// @Tags SystemMenu
+// @Summary 更新菜单
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body request.UpdateMenu true "路由path, 父菜单ID, 路由name, 对应前端文件路径, 排序标记"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
+// @Router /menu/updateBaseMenu [post]
+func (m *menu) Update(r *ghttp.Request) *response.Response {
+	var info request.UpdateMenu
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
+	}
+	if err := service.Menu.Update(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
+	}
+	return &response.Response{MessageCode: response.SuccessUpdated}
+
+}
+
+// Delete
+// @Tags SystemMenu
+// @Summary 删除菜单
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body request.GetById true "菜单id"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Router /menu/deleteBaseMenu [post]
+func (m *menu) Delete(r *ghttp.Request) *response.Response {
+	var info request.GetById
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
+	}
+	if err := service.Menu.Delete(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
+	}
+	return &response.Response{MessageCode: response.SuccessDeleted}
+
+}
+
+// GetList
 // @Tags SystemMenu
 // @Summary 分页获取基础menu列表
 // @Security ApiKeyAuth
@@ -126,4 +120,16 @@ func (m *menu) GetList(r *ghttp.Request) *response.Response {
 			PageSize: info.PageSize,
 		}, MessageCode: response.SuccessGetList}
 	}
+}
+
+// GetBaseMenuTree
+// @Tags SystemMenu
+// @Summary 获取用户动态路由
+// @Security ApiKeyAuth
+// @Produce  application/json
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /menu/getBaseMenuTree [post]
+func (m *menu) GetBaseMenuTree(r *ghttp.Request) *response.Response {
+	menus := service.Menu.GetTree()
+	return &response.Response{Data: g.Map{"menus": menus}, MessageCode: response.SuccessOperation}
 }

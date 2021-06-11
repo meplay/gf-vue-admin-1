@@ -1,10 +1,10 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
-	model "gf-vue-admin/app/model/extra"
-	"gf-vue-admin/app/model/extra/request"
-	service "gf-vue-admin/app/service/extra"
+	model "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/extra"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"mime/multipart"
@@ -17,6 +17,7 @@ type file struct {
 	header *multipart.FileHeader
 }
 
+// UploadFile
 // @Tags ExtraFile
 // @Summary 上传文件示例
 // @Security ApiKeyAuth
@@ -38,6 +39,7 @@ func (f *file) UploadFile(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Delete
 // @Tags ExtraFile
 // @Summary 删除文件
 // @Security ApiKeyAuth
@@ -56,6 +58,7 @@ func (f *file) Delete(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessDeleted}
 }
 
+// GetList
 // @Tags ExtraFile
 // @Summary 分页文件列表
 // @Security ApiKeyAuth

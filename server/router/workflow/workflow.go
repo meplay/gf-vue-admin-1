@@ -1,9 +1,9 @@
-package workflow
+package router
 
 import (
-	"gf-vue-admin/library/response"
-	api "gf-vue-admin/app/api/workflow"
-	"gf-vue-admin/interfaces"
+	api "flipped-aurora/gf-vue-admin/server/app/api/workflow"
+	"flipped-aurora/gf-vue-admin/server/interfaces"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/net/ghttp"
 )
 

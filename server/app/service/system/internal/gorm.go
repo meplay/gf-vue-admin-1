@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"gf-vue-admin/app/model/system/request"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
 	"gorm.io/gorm"
 )
 

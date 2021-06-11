@@ -17,32 +17,30 @@ limitations under the License.
 package gfva
 
 import (
-	"gf-vue-admin/boot"
-	"gf-vue-admin/cmd/gfva/internal"
-	"gf-vue-admin/library/constant"
-	"gf-vue-admin/library/data"
-	"gf-vue-admin/library/global"
-	"github.com/gookit/color"
+	"flipped-aurora/gf-vue-admin/server/boot"
+	"flipped-aurora/gf-vue-admin/server/cmd/gfva/internal"
+	"flipped-aurora/gf-vue-admin/server/library/constant"
 	"github.com/spf13/cobra"
 )
 
 // initdbCmd represents the initdb command
 var initdbCmd = &cobra.Command{
 	Use:   "initdb",
-	Short: "gf-vue-admin初始化数据",
-	Long:  `gf-vue-admin初始化数据适配数据库情况: 1. mysql完美适配, 2. postgresql未适配, 3. sqlite未适配, 4. sqlserver未适配`,
+	Short: "flipped-aurora/gf-vue-admin/server初始化数据",
+	Long:  `flipped-aurora/gf-vue-admin/server初始化数据适配数据库情况: 1. mysql完美适配, 2. postgresql未适配, 3. sqlite未适配, 4. sqlserver未适配`,
 	Run: func(cmd *cobra.Command, args []string) {
 		frame, _ := cmd.Flags().GetString("frame")
 		path, _ := cmd.Flags().GetString("path")
 		if frame == "gf" {
 			boot.Viper.Initialize(path)
-			internal.Mysql.Check()
-			internal.Mysql.Initialize()
-			if global.Config.System.DbType == "mysql" {
-				if err := data.Initialize(); err != nil {
-					color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
-				}
-			}
+			internal.DbResolver.Database()
+			//internal.Mysql.Check()
+			//boot.DbResolver.Initialize()
+			//if global.Config.System.DbType == "mysql" {
+			//	if err := data.Initialize(); err != nil {
+			//		color.Info.Println("\n[Mysql] --> 初始化数据成功!\n")
+			//	}
+			//}
 		}
 		return
 	},

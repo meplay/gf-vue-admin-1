@@ -2,9 +2,9 @@ package service
 
 import (
 	"errors"
-	model "gf-vue-admin/app/model/extra"
-	"gf-vue-admin/app/model/extra/request"
-	"gf-vue-admin/library/upload"
+	model "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	"flipped-aurora/gf-vue-admin/server/library/upload"
 	"github.com/gogf/gf/frame/g"
 	"mime/multipart"
 	"strings"
@@ -16,24 +16,24 @@ type file struct{
 	_file model.File
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 创建文件上传记录
+// Create
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (f *file) Create(info *request.CreateFile) (result *model.File, err error) {
 	entity := info.Create()
 	_, err = g.DB().Table(f._file.TableName()).Insert(entity)
 	return entity, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 根据id获取文件切片记录
+// First 根据id获取文件切片记录
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (f *file) First(info *request.GetById) (result *model.File, err error) {
 	var entity model.File
 	err = g.DB().Table(f._file.TableName()).Where(info.Condition()).Struct(&entity)
 	return &entity, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 删除文件记录
+// Delete 删除文件记录
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (f *file) Delete(info *request.GetById) error {
 	if result, err := f.First(info); err != nil {
 		return err
@@ -46,8 +46,8 @@ func (f *file) Delete(info *request.GetById) error {
 	}
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 分页获取数据
+// GetList 分页获取数据
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (f *file) GetList(info *request.PageInfo) (list *[]model.File, total int, err error) {
 	var files []model.File
 	db := g.DB().Table(f._file.TableName()).Safe()
@@ -57,8 +57,8 @@ func (f *file) GetList(info *request.PageInfo) (list *[]model.File, total int, e
 	return &files, total, err
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 根据配置文件判断是文件上传到本地或者七牛云
+// UploadFile 根据配置文件判断是文件上传到本地或者七牛云
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (f *file) UploadFile(header *multipart.FileHeader, noSave string) (file *model.File, err error) {
 	if filePath, key, uploadErr := upload.Oss().Upload(header); uploadErr != nil {
 		return nil, uploadErr

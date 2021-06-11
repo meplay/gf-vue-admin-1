@@ -1,8 +1,6 @@
 package request
 
-import (
-	model "gf-vue-admin/app/model/extra"
-)
+import model "flipped-aurora/gf-vue-admin/server/app/model/extra"
 
 type Upload struct {
 	Filename         string `r:"filename" json:"filename" form:"filename"`

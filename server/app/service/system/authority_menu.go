@@ -1,18 +1,18 @@
 package service
 
 import (
-	model "gf-vue-admin/app/model/system"
-	"gf-vue-admin/app/model/system/request"
-	"gf-vue-admin/app/service/system/internal"
-	"gf-vue-admin/library/global"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	"flipped-aurora/gf-vue-admin/server/app/service/system/internal"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 )
 
 var AuthorityMenu = new(authorityMenu)
 
 type authorityMenu struct{}
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 获取动态菜单树
+// GetMenuTree 获取动态菜单树
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (a *authorityMenu) GetMenuTree(authorityId string) (menus []model.AuthorityMenu, err error) {
 	var menuTree = internal.AuthorityMenu.GetTreeMap(authorityId)
 	menus = menuTree["0"]
@@ -26,7 +26,7 @@ func (a *authorityMenu) GetMenuTree(authorityId string) (menus []model.Authority
 // Author [Aizen1172](https://github.com/Aizen1172)
 func (a *authorityMenu) AddMenuAuthority(info *request.AddMenuAuthority) error {
 	var entity model.Authority
-	if err := global.Db.Where("authority_id = ?", info.AuthorityId).First(&entity).Error;err != nil {
+	if err := global.Db.Where("authority_id = ?", info.AuthorityId).First(&entity).Error; err != nil {
 		return err
 	}
 	entity.Menus = info.Menus
@@ -37,6 +37,6 @@ func (a *authorityMenu) AddMenuAuthority(info *request.AddMenuAuthority) error {
 // Author [Aizen1172](https://github.com/Aizen1172)
 func (a *authorityMenu) GetMenuAuthority(info *request.GetAuthorityId) (menus *[]model.AuthorityMenu, err error) {
 	entities := make([]model.AuthorityMenu, 0, 10)
-	err = global.Db.Where("authority_id = ?",info.AuthorityId).Order("sort").Find(&entities).Error
+	err = global.Db.Where("authority_id = ?", info.AuthorityId).Order("sort").Find(&entities).Error
 	return &entities, err
 }

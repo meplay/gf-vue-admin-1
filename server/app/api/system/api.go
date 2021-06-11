@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -12,6 +12,7 @@ var Api = new(api)
 
 type api struct{}
 
+// Create
 // @Tags SystemApi
 // @Summary 创建基础api
 // @Security ApiKeyAuth
@@ -31,6 +32,8 @@ func (a *api) Create(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessCreated}
 }
 
+// First
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemApi
 // @Summary 根据id获取api
 // @Security ApiKeyAuth
@@ -51,6 +54,8 @@ func (a *api) First(r *ghttp.Request) *response.Response {
 	}
 }
 
+// Update
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemApi
 // @Summary 创建基础api
 // @Security ApiKeyAuth
@@ -70,6 +75,8 @@ func (a *api) Update(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: g.Map{"api": info}, MessageCode: response.SuccessUpdated}
 }
 
+// Delete
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemApi
 // @Summary 删除api
 // @Security ApiKeyAuth
@@ -89,6 +96,8 @@ func (a *api) Delete(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: g.Map{"api": info}, MessageCode: response.SuccessDeleted}
 }
 
+// Deletes
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemApi
 // @Summary 删除选中Api
 // @Security ApiKeyAuth
@@ -108,6 +117,8 @@ func (a *api) Deletes(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessBatchDeleted}
 }
 
+// GetList
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemApi
 // @Summary 分页获取API列表
 // @Security ApiKeyAuth
@@ -128,6 +139,8 @@ func (a *api) GetList(r *ghttp.Request) *response.Response {
 	}
 }
 
+// GetAllApis
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags SystemApi
 // @Summary 获取所有的Api 不分页
 // @Security ApiKeyAuth

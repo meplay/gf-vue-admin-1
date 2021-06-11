@@ -2,9 +2,9 @@ package boot
 
 import (
 	"flag"
+	"flipped-aurora/gf-vue-admin/server/library/constant"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"fmt"
-	"gf-vue-admin/library/constant"
-	"gf-vue-admin/library/global"
 	"github.com/fsnotify/fsnotify"
 	"github.com/gogf/gf/frame/g"
 	"github.com/spf13/viper"

@@ -1,24 +1,24 @@
 package service
 
 import (
-	"gf-vue-admin/app/model/system/response"
-	"gf-vue-admin/library/config"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/utils"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/response"
+	"flipped-aurora/gf-vue-admin/server/library/config"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/utils"
 )
 
 var System = new(_system)
 
 type _system struct{}
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 读取配置文件
+// GetConfig 读取配置文件
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (s *_system) GetConfig() *config.Config {
 	return &global.Config
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 设置配置文件
+// SetConfig 设置配置文件
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (s *_system) SetConfig(info *config.Config) (err error) {
 	configMap := utils.StructToMap(info)
 	for k, v := range configMap {

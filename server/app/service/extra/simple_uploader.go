@@ -1,9 +1,9 @@
 package service
 
 import (
-	model "gf-vue-admin/app/model/extra"
-	"gf-vue-admin/app/model/extra/request"
-	"gf-vue-admin/library/global"
+	model "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"mime/multipart"
 )
 

@@ -1,10 +1,10 @@
 package boot
 
 import (
-	"gf-vue-admin/boot/internal"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/utils"
-	"gf-vue-admin/router"
+	"flipped-aurora/gf-vue-admin/server/boot/internal"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/utils"
+	"flipped-aurora/gf-vue-admin/server/router"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/swagger"
 )

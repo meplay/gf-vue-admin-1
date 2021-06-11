@@ -1,11 +1,11 @@
 package api
 
 import (
-	"gf-vue-admin/app/api/workflow/internal"
-	model "gf-vue-admin/app/model/workflow"
-	"gf-vue-admin/app/model/workflow/request"
-	service "gf-vue-admin/app/service/workflow"
-	"gf-vue-admin/library/response"
+	"flipped-aurora/gf-vue-admin/server/app/api/workflow/internal"
+	model "flipped-aurora/gf-vue-admin/server/app/model/workflow"
+	"flipped-aurora/gf-vue-admin/server/app/model/workflow/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/workflow"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -14,6 +14,7 @@ var WorkflowProcess = new(process)
 
 type process struct{}
 
+// Create
 // @Tags ExtraWorkflowProcess
 // @Summary 创建WorkflowProcess
 // @Security ApiKeyAuth

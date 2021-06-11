@@ -2,7 +2,7 @@ package excel
 
 import (
 	"fmt"
-	"gf-vue-admin/library/excel/internal"
+	"flipped-aurora/gf-vue-admin/server/library/excel/internal"
 	"gorm.io/gorm/schema"
 	"reflect"
 )

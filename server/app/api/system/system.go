@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
-	service "gf-vue-admin/app/service/system"
-	"gf-vue-admin/library/config"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/config"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -12,6 +12,7 @@ var System = new(system)
 
 type system struct{}
 
+// GetConfig
 // @Tags SystemConfig
 // @Summary 获取配置文件内容
 // @Security ApiKeyAuth
@@ -22,6 +23,7 @@ func (s *system) GetConfig(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: g.Map{"config": service.System.GetConfig()}, MessageCode: response.SuccessOperation}
 }
 
+// SetConfig
 // @Tags SystemConfig
 // @Summary 设置配置文件内容
 // @Security ApiKeyAuth
@@ -40,6 +42,7 @@ func (s *system) SetConfig(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessOperation}
 }
 
+// GetServerInfo
 // @Tags SystemConfig
 // @Summary 获取服务器信息
 // @Security ApiKeyAuth
@@ -55,6 +58,7 @@ func (s *system) GetServerInfo(r *ghttp.Request) *response.Response {
 	}
 }
 
+// ReloadSystem
 // @Tags SystemConfig
 // @Summary 重启服务
 // @Security ApiKeyAuth

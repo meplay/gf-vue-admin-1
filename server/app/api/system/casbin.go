@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
@@ -12,6 +12,7 @@ var Casbin = new(casbin)
 
 type casbin struct{}
 
+// Update
 // @Tags SystemCasbin
 // @Summary 更新角色api权限
 // @Security ApiKeyAuth
@@ -31,6 +32,7 @@ func (casbin *casbin) Update(r *ghttp.Request) *response.Response {
 	return &response.Response{MessageCode: response.SuccessUpdated}
 }
 
+// GetPolicyPath
 // @Tags SystemCasbin
 // @Summary 获取权限列表
 // @Security ApiKeyAuth

@@ -3,9 +3,9 @@ package service
 import (
 	"database/sql"
 	"errors"
-	model "gf-vue-admin/app/model/extra"
-	"gf-vue-admin/app/model/extra/request"
-	"gf-vue-admin/library/utils"
+	model "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	"flipped-aurora/gf-vue-admin/server/library/utils"
 	"github.com/gogf/gf/frame/g"
 	"io/ioutil"
 	"mime/multipart"

@@ -1,11 +1,11 @@
 package router
 
 import (
-	"gf-vue-admin/interfaces"
-	extra "gf-vue-admin/router/extra"
-	"gf-vue-admin/router/internal"
-	system "gf-vue-admin/router/system"
-	workflow "gf-vue-admin/router/workflow"
+	"flipped-aurora/gf-vue-admin/server/interfaces"
+	extra "flipped-aurora/gf-vue-admin/server/router/extra"
+	"flipped-aurora/gf-vue-admin/server/router/internal"
+	system "flipped-aurora/gf-vue-admin/server/router/system"
+	workflow "flipped-aurora/gf-vue-admin/server/router/workflow"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -35,7 +35,6 @@ func (r *routers) Init() {
 		system.NewDictionaryDetailRouter(private),
 
 		extra.NewFileRouter(private),
-		extra.NewExcelRouter(private),
 		extra.NewSimpleUploaderRouter(private),
 
 		workflow.NewWorkflowRouter(private),

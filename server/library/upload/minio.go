@@ -2,8 +2,8 @@ package upload
 
 import (
 	"context"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/upload/internal"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/upload/internal"
 	"mime/multipart"
 
 	"github.com/gogf/gf/frame/g"

@@ -2,9 +2,9 @@ package upload
 
 import (
 	"context"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/upload/internal"
 	"fmt"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/upload/internal"
 	"mime/multipart"
 	"time"
 

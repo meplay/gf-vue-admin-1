@@ -1,8 +1,8 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
-	service "gf-vue-admin/app/service/system"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/net/ghttp"
 )
 

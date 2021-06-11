@@ -1,9 +1,9 @@
 package api
 
 import (
-	"gf-vue-admin/library/response"
-	"gf-vue-admin/app/model/extra/request"
-	service "gf-vue-admin/app/service/extra"
+	"flipped-aurora/gf-vue-admin/server/app/model/extra/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/extra"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"mime/multipart"
@@ -15,7 +15,8 @@ type uploader struct {
 	err    error
 	header *multipart.FileHeader
 }
-
+// Upload
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags ExtraSimpleUploader
 // @Summary 断点续传插件版示例
 // @Security ApiKeyAuth
@@ -37,7 +38,8 @@ func (u *uploader) Upload(r *ghttp.Request) *response.Response {
 	}
 	return &response.Response{Code: 0, Message: "切片创建成功!"}
 }
-
+// CheckFileMd5
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags ExtraSimpleUploader
 // @Summary 断点续传插件版示例
 // @Security ApiKeyAuth
@@ -53,7 +55,8 @@ func (u *uploader) CheckFileMd5(r *ghttp.Request) *response.Response {
 	}
 	return &response.Response{Data: g.Map{"chunks": chunks, "isDone": isDone}, MessageCode: response.SuccessCheckFileMd5}
 }
-
+// MergeFileMd5
+// Author: [SliverHorn](https://github.com/SliverHorn)
 // @Tags ExtraSimpleUploader
 // @Summary 合并文件
 // @Security ApiKeyAuth

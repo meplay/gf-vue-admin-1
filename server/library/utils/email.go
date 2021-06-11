@@ -2,8 +2,8 @@ package utils
 
 import (
 	"crypto/tls"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"fmt"
-	"gf-vue-admin/library/global"
 	"net/smtp"
 	"strings"
 
@@ -16,15 +16,15 @@ type _email struct {
 	_email *email.Email
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 发送测试邮件
+// Test 发送测试邮件
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (e *_email) Test(subject string, body string) error {
 	to := strings.Split(global.Config.Email.To, ",")
 	return e.send(to, subject, body)
 }
 
-//@author: [SliverHorn](https://github.com/SliverHorn)
-//@description: 发送邮件
+// ErrorToEmail 发送邮件
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (e *_email) ErrorToEmail(subject string, body string) error {
 	to := strings.Split(global.Config.Email.To, ",")
 	if to[len(to)-1] == "" { // 判断切片的最后一个元素是否为空,为空则移除
@@ -33,6 +33,8 @@ func (e *_email) ErrorToEmail(subject string, body string) error {
 	return e.send(to, subject, body)
 }
 
+// send 发送邮件封装方法
+// Author: [SliverHorn](https://github.com/SliverHorn)
 func (e *_email) send(to []string, subject string, body string) error {
 	auth := smtp.PlainAuth("", global.Config.Email.From, global.Config.Email.Secret, global.Config.Email.Host)
 	e._email = email.NewEmail()

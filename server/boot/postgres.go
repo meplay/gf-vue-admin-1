@@ -3,11 +3,11 @@
 package boot
 
 import (
-	extra "gf-vue-admin/app/model/extra"
-	system "gf-vue-admin/app/model/system"
-	workflow "gf-vue-admin/app/model/workflow"
-	"gf-vue-admin/boot/internal"
-	"gf-vue-admin/library/global"
+	extra "flipped-aurora/gf-vue-admin/server/app/model/extra"
+	system "flipped-aurora/gf-vue-admin/server/app/model/system"
+	workflow "flipped-aurora/gf-vue-admin/server/app/model/workflow"
+	"flipped-aurora/gf-vue-admin/server/boot/internal"
+	"flipped-aurora/gf-vue-admin/server/library/global"
 	"github.com/gogf/gf/frame/g"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -18,26 +18,30 @@ import (
 var DbResolver = new(_postgres)
 
 type _postgres struct {
+	db  *gorm.DB
 	dsn string
+	err error
 }
 
 func (p *_postgres) Initialize() {
 	resolver := p.GetResolver()
-	db, err := gorm.Open(postgres.Open(p.dsn), internal.Gorm.GenerateConfig())
-	if err != nil {
-		g.Log().Error("postgres 链接失败!", g.Map{"err": err})
-		os.Exit(0)
+	p.db, p.err = gorm.Open(postgres.Open(p.dsn), internal.Gorm.GenerateConfig())
+	if p.err != nil {
+		g.Log().Error("postgres 链接失败!", g.Map{"err": p.err})
+		return
 	}
-	err = db.Use(resolver)
-	if err != nil {
-		g.Log().Error("mysql 链接集群失败!", g.Map{"err": err})
-		os.Exit(0)
+	defer func() {
+		global.Db = p.db
+	}()
+	p.err = p.db.Use(resolver)
+	if p.err != nil {
+		g.Log().Error("mysql 链接集群失败!", g.Map{"err": p.err})
+		return
 	}
-	global.Db = db
 	if global.Config.Gorm.AutoMigrate {
 		p.AutoMigrate()
 	}
-	sql, _ := db.DB()
+	sql, _ := p.db.DB()
 	sql.SetMaxIdleConns(global.Config.Gorm.GetMaxIdleConnes())
 	sql.SetMaxOpenConns(global.Config.Gorm.GetMaxOpenConnes())
 }
@@ -80,7 +84,7 @@ func (p *_postgres) GetResolver() gorm.Plugin {
 }
 
 func (p *_postgres) AutoMigrate() {
-	err := global.Db.AutoMigrate(
+	err := p.db.AutoMigrate(
 		new(system.Api),
 		new(system.Menu),
 		new(system.Admin),
@@ -109,4 +113,8 @@ func (p *_postgres) AutoMigrate() {
 		os.Exit(0)
 	}
 	g.Log().Info(`注册表成功!`)
+}
+
+func (p *_postgres) Error() error {
+	return p.err
 }

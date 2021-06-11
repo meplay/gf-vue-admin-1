@@ -16,7 +16,7 @@ limitations under the License.
 package main
 
 import (
-	"gf-vue-admin/cmd/gfva"
+	"flipped-aurora/gf-vue-admin/server/cmd/gfva"
 )
 
 func main() {

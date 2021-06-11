@@ -2,11 +2,11 @@ package api
 
 import (
 	"errors"
-	model "gf-vue-admin/app/model/system"
-	"gf-vue-admin/app/model/system/request"
-	service "gf-vue-admin/app/service/system"
-	"gf-vue-admin/library/global"
-	"gf-vue-admin/library/response"
+	model "flipped-aurora/gf-vue-admin/server/app/model/system"
+	"flipped-aurora/gf-vue-admin/server/app/model/system/request"
+	service "flipped-aurora/gf-vue-admin/server/app/service/system"
+	"flipped-aurora/gf-vue-admin/server/library/global"
+	"flipped-aurora/gf-vue-admin/server/library/response"
 	"github.com/gogf/gf-jwt"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
