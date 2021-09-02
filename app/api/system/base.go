@@ -5,10 +5,10 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-var Api = new(api)
+var Base = new(base)
 
-type api struct{}
+type base struct{}
 
-func (a *api) Create(r *ghttp.Request) *response.Response {
+func (b *base) Captcha(r *ghttp.Request) *response.Response {
 	return &response.Response{}
 }
