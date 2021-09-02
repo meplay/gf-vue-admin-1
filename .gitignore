@@ -30,7 +30,6 @@ yarn-error.log*
 *.sln
 *.sw?
 
-go.sum
 /server/uploads/file/
 /server/log/
 /server/app/service/system/log/
