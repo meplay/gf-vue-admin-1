@@ -1,0 +1,14 @@
+# HTTP Server
+server:
+  address: ':8888'
+  log-path: './logs/server'
+  dump-router-map: true
+  access-log-enabled: true
+  error-log-enabled: true
+  graceful: true
+
+# Logger
+logger:
+  path: './logs/log'
+  level: 'all'
+  stdout: true
