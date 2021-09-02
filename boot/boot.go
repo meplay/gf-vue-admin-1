@@ -7,4 +7,5 @@ func Initialize() {
 	Zap.Initialize()
 	Gorm.Initialize(boot.DbResolver)
 	Redis.Initialize()
+	Routers.Initialize()
 }

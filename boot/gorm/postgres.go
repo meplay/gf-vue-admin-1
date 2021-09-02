@@ -76,5 +76,5 @@ func (p *_postgres) GetGormDialector() gorm.Dialector {
 }
 
 func (p *_postgres) GetConfigPath() string {
-	return "config/config.postgres.yaml"
+	return "config/gorm.postgres.yaml"
 }
