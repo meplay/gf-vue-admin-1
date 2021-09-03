@@ -2,7 +2,7 @@ package request
 
 import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
-	"github.com/flipped-aurora/gf-vue-admin/library/config/common"
+	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"gorm.io/gorm"
 )
 

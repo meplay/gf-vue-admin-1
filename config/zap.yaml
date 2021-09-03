@@ -2,8 +2,8 @@
 zap:
   level: 'info'
   format: 'console'
-  prefix: '[github.com/flipped-aurora/gin-vue-admin/server]'
-  director: 'log'
+  prefix: '[GF-VUE-ADMIN]'
+  director: 'logs'
   link-name: 'latest_log'
   show-line: true
   encode-level: 'LowercaseColorLevelEncoder'

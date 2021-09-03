@@ -1,7 +1,9 @@
 package response
 
 import (
+	"fmt"
 	"github.com/gogf/gf/net/ghttp"
+	"go.uber.org/zap"
 )
 
 type Response struct {
@@ -30,22 +32,23 @@ func (h *Handler) Handler() func(handler handler) func(r *ghttp.Request) {
 			if response.Data == nil {
 				response.Data = empty{}
 			}
+			if response.Error != nil {
+				response.Code = ERROR
+				response.Err = response.Error.Error()
+				zap.L().Error(fmt.Sprintf("%+v", response.Error))
+			}
 			switch {
 			case SuccessStart < response.MessageCode && response.MessageCode < SuccessEnd:
 				response.Code = SUCCESS
 				response.Message = response.MessageCode.Message()
-				if err := r.Response.WriteJson(response); err != nil {
-					panic(err)
-				}
+				_ = r.Response.WriteJson(response)
 			case ErrorStart < response.MessageCode && response.MessageCode < ErrorEnd:
 				response.Code = ERROR
 				response.Message = response.MessageCode.Message()
 				if response.Error != nil {
 					response.Err = response.Error.Error()
 				}
-				if err := r.Response.WriteJson(response); err != nil {
-					panic(err)
-				}
+				_ = r.Response.WriteJson(response)
 			default:
 				if response.Error != nil {
 					response.Err = response.Error.Error()

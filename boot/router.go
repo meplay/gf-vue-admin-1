@@ -1,7 +1,7 @@
 package boot
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/router/system"
+	"github.com/flipped-aurora/gf-vue-admin/app/router/system"
 	"github.com/gogf/gf/frame/g"
 )
 
@@ -14,10 +14,10 @@ type _router struct{}
 func (r *_router) Initialize() {
 	public := g.Server().Group("")
 	{
-		system.NewApiRouter(public)
+		system.NewBaseGroup(public).Init()
 	} // 无需鉴权中间件
 	private := g.Server().Group("")
 	{
-		system.NewApiRouter(private)
+		system.NewApiRouter(private).Init()
 	} // 需要Jwt鉴权, casbin鉴权
 }

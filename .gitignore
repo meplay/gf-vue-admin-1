@@ -30,9 +30,8 @@ yarn-error.log*
 *.sln
 *.sw?
 
-/server/uploads/file/
-/server/log/
-/server/app/service/system/log/
+/uploads/file/
+/logs
 /server/latest_log
 
 *.iml

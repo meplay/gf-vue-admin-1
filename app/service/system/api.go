@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
-	"github.com/flipped-aurora/gf-vue-admin/library/config/common"
+	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	_errors "github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -14,9 +14,9 @@ var Api = new(api)
 
 type api struct{}
 
-// CreateApi 新增基础api
+// Create 新增基础api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) CreateApi(info *request.CreateApi) error {
+func (s *api) Create(info *request.CreateApi) error {
 	if !errors.Is(global.Db.Where("path = ? AND method = ?", info.Path, info.Method).First(&system.Api{}).Error, gorm.ErrRecordNotFound) {
 		return _errors.New("存在相同api!")
 	}
@@ -59,7 +59,7 @@ func (s *api) Update(info *request.UpdateApi) error {
 
 // DeleteApi 删除基础api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) DeleteApi(info *request.DeleteApi) error {
+func (s *api) Delete(info *request.DeleteApi) error {
 	if err := global.Db.Delete(&system.Api{}, info.ID).Error; err != nil {
 		return _errors.Wrap(err, "删除api失败!")
 	}
@@ -69,7 +69,7 @@ func (s *api) DeleteApi(info *request.DeleteApi) error {
 
 // Deletes 批量删除 system.Api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) Deletes(ids common.GetByIDs) error {
+func (s *api) Deletes(ids *common.GetByIDs) error {
 	return global.Db.Delete(&[]system.Api{}, "id in ?", ids.Ids).Error
 }
 
