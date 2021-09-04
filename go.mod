@@ -3,8 +3,10 @@ module github.com/flipped-aurora/gf-vue-admin
 go 1.16
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-redis/redis/v8 v8.11.3
 	github.com/gogf/gf v1.16.6
+	github.com/gogf/gf-jwt v1.1.3
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
