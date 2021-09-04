@@ -9,106 +9,106 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-var Dictionary = new(dictionary)
+var DictionaryDetail = new(dictionaryDetail)
 
-type dictionary struct{}
+type dictionaryDetail struct{}
 
 // Create
-// @Tags SystemDictionary
-// @Summary 创建系统字典
+// @Tags SystemDictionaryDetail
+// @Summary 创建系统字典详情
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.DictionaryCreate true "请求参数"
+// @Param data body system.SysDictionaryDetail true "请求参数"
 // @Success 200 {object} response.Response{message=string} "创建成功!"
-// @Router /sysDictionary/createSysDictionary [post]
-func (a *dictionary) Create(r *ghttp.Request) *response.Response {
-	var info request.DictionaryCreate
+// @Router /sysDictionaryDetail/createSysDictionaryDetail [post]
+func (a *dictionaryDetail) Create(r *ghttp.Request) *response.Response {
+	var info request.DictionaryDetailCreate
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorCreated}
 	}
-	if err := system.Dictionary.Create(&info); err != nil {
+	if err := system.DictionaryDetail.Create(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorCreated}
 	}
 	return &response.Response{MessageCode: response.SuccessCreated}
 }
 
 // First
-// @Tags SystemDictionary
-// @Summary 用id查询系统字典
+// @Tags SystemDictionaryDetail
+// @Summary 用id查询系统详情字典
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query request.DictionaryFirst true "请求参数"
+// @Param data query system.SysDictionaryDetail true "请求参数"
 // @Success 200 {object} response.Response{message=string} "获取数据成功!"
-// @Router /sysDictionary/findSysDictionary [get]
-func (a *dictionary) First(r *ghttp.Request) *response.Response {
-	var info request.DictionaryFirst
+// @Router /sysDictionaryDetail/findSysDictionaryDetail [get]
+func (a *dictionaryDetail) First(r *ghttp.Request) *response.Response {
+	var info common.GetByID
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorFirst}
 	}
-	data, err := system.Dictionary.First(&info)
+	data, err := system.DictionaryDetail.First(&info)
 	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorFirst}
 	}
-	return &response.Response{Data: g.Map{"resysDictionary": data}, MessageCode: response.SuccessFirst}
+	return &response.Response{Data: g.Map{"resysDictionaryDetail": data}, MessageCode: response.SuccessFirst}
 }
 
 // Update
-// @Tags SystemDictionary
-// @Summary 更新系统字典
+// @Tags SystemDictionaryDetail
+// @Summary 更新系统详情字典
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysDictionary true "请求参数"
-// @Success 200 {object} response.Response{data=system.Dictionary} "更新成功!"
-// @Router /sysDictionary/updateSysDictionary [put]
-func (a *dictionary) Update(r *ghttp.Request) *response.Response {
-	var info request.DictionaryUpdate
+// @Param data body system.SysDictionaryDetail true "请求参数"
+// @Success 200 {object} response.Response{data=system.DictionaryDetail} "更新成功!"
+// @Router /sysDictionaryDetail/updateSysDictionaryDetail [put]
+func (a *dictionaryDetail) Update(r *ghttp.Request) *response.Response {
+	var info request.DictionaryDetailUpdate
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
 	}
-	if err := system.Dictionary.Update(&info); err != nil {
+	if err := system.DictionaryDetail.Update(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
 	}
 	return &response.Response{MessageCode: response.SuccessUpdated}
 }
 
 // Delete
-// @Tags SystemDictionary
-// @Summary 删除系统字典
+// @Tags SystemDictionaryDetail
+// @Summary 删除系统详情字典
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysDictionary true "请求参数"
+// @Param data body system.SysDictionaryDetail true "请求参数"
 // @Success 200 {object} response.Response{message=string} "删除成功!"
-// @Router /sysDictionary/deleteSysDictionary [delete]
-func (a *dictionary) Delete(r *ghttp.Request) *response.Response {
+// @Router /sysDictionaryDetail/deleteSysDictionaryDetail [delete]
+func (a *dictionaryDetail) Delete(r *ghttp.Request) *response.Response {
 	var info common.GetByID
 	if err := r.Parse(&info); err != nil {
-		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
+		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
-	if err := system.Dictionary.Delete(&info); err != nil {
+	if err := system.DictionaryDetail.Delete(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
 	return &response.Response{MessageCode: response.SuccessDeleted}
 }
 
 // GetList
-// @Tags SystemDictionary
-// @Summary 分页获取系统字典列表
+// @Tags SystemDictionaryDetail
+// @Summary 分页获取系统字典详情列表
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query request.DictionarySearch true "请求参数"
-// @Success 200 {object} response.Response{data=[]system.Dictionary} "获取列表数据成功!"
-// @Router /sysDictionary/getSysDictionaryList [get]
-func (a *dictionary) GetList(r *ghttp.Request) *response.Response {
-	var info request.DictionarySearch
+// @Param data query request.SysDictionaryDetailSearch true "请求参数"
+// @Success 200 {object} response.Response{data=[]system.DictionaryDetail} "获取列表数据成功!"
+// @Router /sysDictionaryDetail/getSysDictionaryDetailList [get]
+func (a *dictionaryDetail) GetList(r *ghttp.Request) *response.Response {
+	var info request.DictionaryDetailSearch
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
-	list, total, err := system.Dictionary.GetList(&info)
+	list, total, err := system.DictionaryDetail.GetList(&info)
 	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}

@@ -67,7 +67,7 @@ func (s *dictionary) Delete(info *common.GetByID) error {
 // GetList 分页获取字典列表
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *dictionary) GetList(info *request.DictionarySearch) (list []system.Dictionary, total int64, err error) {
-	var entities []system.Dictionary
+	entities := make([]system.Dictionary, 0, info.PageSize)
 	db := global.Db.Model(&system.Dictionary{})
 	err = db.Count(&total).Scopes(info.Search()).Find(&entities).Error
 	return entities, total, err

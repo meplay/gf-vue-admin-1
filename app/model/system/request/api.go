@@ -21,8 +21,8 @@ type ApiUpdate struct {
 	Description string `json:"description"  example:"中文描述"`
 }
 
-func (u *ApiUpdate) Update() system.Api {
-	return system.Api{Path: u.Path, Method: u.Method, ApiGroup: u.ApiGroup, Description: u.Description}
+func (r *ApiUpdate) Update() system.Api {
+	return system.Api{Path: r.Path, Method: r.Method, ApiGroup: r.ApiGroup, Description: r.Description}
 
 }
 
@@ -42,25 +42,25 @@ type ApiSearch struct {
 	Description string `json:"description" example:"api中文描述"`
 }
 
-func (s *ApiSearch) Search() func(db *gorm.DB) *gorm.DB {
+func (r *ApiSearch) Search() func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		if s.Path != "" {
-			db = db.Where("path LIKE ?", "%"+s.Path+"%")
+		if r.Path != "" {
+			db = db.Where("path LIKE ?", "%"+r.Path+"%")
 		}
-		if s.Description != "" {
-			db = db.Where("description LIKE ?", "%"+s.Description+"%")
+		if r.Description != "" {
+			db = db.Where("description LIKE ?", "%"+r.Description+"%")
 		}
-		if s.Method != "" {
-			db = db.Where("method = ?", s.Method)
+		if r.Method != "" {
+			db = db.Where("method = ?", r.Method)
 		}
-		if s.ApiGroup != "" {
-			db = db.Where("api_group = ?", s.ApiGroup)
+		if r.ApiGroup != "" {
+			db = db.Where("api_group = ?", r.ApiGroup)
 		}
-		if s.Order != "" {
-			if s.Desc {
-				db = db.Order(s.Order + " desc")
+		if r.Order != "" {
+			if r.Desc {
+				db = db.Order(r.Order + " desc")
 			} else {
-				db = db.Order(s.Order)
+				db = db.Order(r.Order)
 			}
 		} else {
 			db = db.Order("api_group")

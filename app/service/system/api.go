@@ -49,7 +49,7 @@ func (s *api) Update(info *request.ApiUpdate) error {
 	err := global.Db.Transaction(func(tx *gorm.DB) error {
 		// TODO Casbin.UpdateCasbinApi(entity.Path, info.Path, entity.Method, info.Method)
 		entity = info.Update()
-		if err := tx.Where("id = ?", info.ID).Updates(&info).Error; err != nil {
+		if err := tx.Model(&system.Api{}).Where("id = ?", info.ID).Updates(&info).Error; err != nil {
 			return _errors.Wrap(err, "更新api信息失败!")
 		}
 		return nil
@@ -76,7 +76,7 @@ func (s *api) Deletes(ids *common.GetByIDs) error {
 // GetList 分页获取 []system.Api 数据
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *api) GetList(info *request.ApiSearch) (list []system.Api, total int64, err error) {
-	var entities []system.Api
+	entities := make([]system.Api, 0, info.PageSize)
 	db := global.Db.Model(&system.Api{})
 	db = db.Scopes(info.Search())
 	err = db.Count(&total).Scopes(common.Paginate(&info.PageInfo)).Find(&entities).Error

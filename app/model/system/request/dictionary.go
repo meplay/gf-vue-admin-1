@@ -14,8 +14,8 @@ type DictionaryCreate struct {
 	Status *bool  `json:"status" example:"状态"`
 }
 
-func (c *DictionaryCreate) Create() system.Dictionary {
-	return system.Dictionary{Desc: c.Desc, Name: c.Name, Type: c.Type, Status: c.Status}
+func (r *DictionaryCreate) Create() system.Dictionary {
+	return system.Dictionary{Desc: r.Desc, Name: r.Name, Type: r.Type, Status: r.Status}
 }
 
 type DictionaryFirst struct {
@@ -31,8 +31,8 @@ type DictionaryUpdate struct {
 	Status *bool  `json:"status" example:"状态"`
 }
 
-func (u *DictionaryUpdate) Update() g.Map {
-	return g.Map{"name": u.Name, "type": u.Type, "desc": u.Desc, "status": u.Status}
+func (r *DictionaryUpdate) Update() g.Map {
+	return g.Map{"name": r.Name, "type": r.Type, "desc": r.Desc, "status": r.Status}
 }
 
 type DictionarySearch struct {
@@ -43,19 +43,19 @@ type DictionarySearch struct {
 	Status *bool  `json:"status" example:"状态"`
 }
 
-func (d *DictionarySearch) Search() func(db *gorm.DB) *gorm.DB {
+func (r *DictionarySearch) Search() func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		if d.Desc != "" {
-			db = db.Where("`desc` LIKE ?", "%"+d.Desc+"%")
+		if r.Desc != "" {
+			db = db.Where("`desc` LIKE ?", "%"+r.Desc+"%")
 		}
-		if d.Name != "" {
-			db = db.Where("`name` LIKE ?", "%"+d.Name+"%")
+		if r.Name != "" {
+			db = db.Where("`name` LIKE ?", "%"+r.Name+"%")
 		}
-		if d.Type != "" {
-			db = db.Where("`type` LIKE ?", "%"+d.Type+"%")
+		if r.Type != "" {
+			db = db.Where("`type` LIKE ?", "%"+r.Type+"%")
 		}
-		if d.Status != nil {
-			db = db.Where("`status` = ?", d.Status)
+		if r.Status != nil {
+			db = db.Where("`status` = ?", r.Status)
 		}
 		return db
 	}
