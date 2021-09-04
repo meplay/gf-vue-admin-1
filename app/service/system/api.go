@@ -16,7 +16,7 @@ type api struct{}
 
 // Create 新增基础api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) Create(info *request.CreateApi) error {
+func (s *api) Create(info *request.ApiCreate) error {
 	if !errors.Is(global.Db.Where("path = ? AND method = ?", info.Path, info.Method).First(&system.Api{}).Error, gorm.ErrRecordNotFound) {
 		return _errors.New("存在相同api!")
 	}
@@ -36,7 +36,7 @@ func (s *api) First(info *common.GetByID) (entity *system.Api, err error) {
 
 // Update 根据id更新api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) Update(info *request.UpdateApi) error {
+func (s *api) Update(info *request.ApiUpdate) error {
 	var entity system.Api
 	if err := global.Db.First(&entity, info.ID).Error; err != nil {
 		return _errors.Wrap(err, "找不到记录!")
@@ -57,7 +57,7 @@ func (s *api) Update(info *request.UpdateApi) error {
 	return err
 }
 
-// DeleteApi 删除基础api
+// Delete 删除基础api
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *api) Delete(info *request.DeleteApi) error {
 	if err := global.Db.Delete(&system.Api{}, info.ID).Error; err != nil {
@@ -75,7 +75,7 @@ func (s *api) Deletes(ids *common.GetByIDs) error {
 
 // GetList 分页获取 []system.Api 数据
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) GetList(info *request.SearchApi) (list []system.Api, total int64, err error) {
+func (s *api) GetList(info *request.ApiSearch) (list []system.Api, total int64, err error) {
 	var entities []system.Api
 	db := global.Db.Model(&system.Api{})
 	db = db.Scopes(info.Search())

@@ -18,7 +18,7 @@ func (c *DictionaryCreate) Create() system.Dictionary {
 	return system.Dictionary{Desc: c.Desc, Name: c.Name, Type: c.Type, Status: c.Status}
 }
 
-type DictionaryGet struct {
+type DictionaryFirst struct {
 	common.GetByID
 	Type string `json:"type" example:"字典名(英)"`
 }

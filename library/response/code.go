@@ -18,7 +18,7 @@ const (
 	SuccessOperation
 	SuccessBatchDeleted
 
-	// SuccessStart 成功结束标记
+	// SuccessEnd 成功结束标记
 	SuccessEnd
 
 	// ErrorStart 失败开始标记

@@ -15,15 +15,15 @@ type api struct{}
 
 // Create
 // @Tags SystemApi
-// @Summary 创建基础api
+// @Summary 创建api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.Api true "api路径, api中文描述, api组, 方法"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"创建成功"}"
+// @Param data body request.ApiCreate true "请求参数"
+// @Success 200 {object} response.Response{message=string} "创建成功!"
 // @Router /api/createApi [post]
 func (a *api) Create(r *ghttp.Request) *response.Response {
-	var info request.CreateApi
+	var info request.ApiCreate
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorCreated}
 	}
@@ -39,8 +39,8 @@ func (a *api) Create(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetById true "根据id获取api"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Param data body request.GetById true "请求参数"
+// @Success 200 {object} response.Response{message=string} "获取数据成功!"
 // @Router /api/getApiById [post]
 func (a *api) First(r *ghttp.Request) *response.Response {
 	var info common.GetByID
@@ -56,15 +56,15 @@ func (a *api) First(r *ghttp.Request) *response.Response {
 
 // Update
 // @Tags SystemApi
-// @Summary 创建基础api
+// @Summary 更新api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.UpdateApi true "api路径, api中文描述, api组, 方法"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
+// @Param data body request.ApiUpdate true "请求参数"
+// @Success 200 {object} response.Response{data=request.ApiUpdate} "更新成功!"
 // @Router /api/updateApi [post]
 func (a *api) Update(r *ghttp.Request) *response.Response {
-	var info request.UpdateApi
+	var info request.ApiUpdate
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
 	}
@@ -80,8 +80,8 @@ func (a *api) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.DeleteApi true "ID"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Param data body request.DeleteApi true "请求参数"
+// @Success 200 {object} response.Response{message=string} "删除成功!"
 // @Router /api/deleteApi [post]
 func (a *api) Delete(r *ghttp.Request) *response.Response {
 	var info request.DeleteApi
@@ -91,17 +91,17 @@ func (a *api) Delete(r *ghttp.Request) *response.Response {
 	if err := system.Api.Delete(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
-	return &response.Response{Data: g.Map{"api": info}, MessageCode: response.SuccessDeleted}
+	return &response.Response{MessageCode: response.SuccessDeleted}
 }
 
 // Deletes
 // @Tags SystemApi
-// @Summary 删除选中Api
+// @Summary 批量删除api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.IdsReq true "ID"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
+// @Param data body common.GetByIDs true "请求参数"
+// @Success 200 {object} response.Response{message=string} "批量删除成功!"
 // @Router /api/deleteApisByIds [delete]
 func (a *api) Deletes(r *ghttp.Request) *response.Response {
 	var info common.GetByIDs
@@ -116,15 +116,15 @@ func (a *api) Deletes(r *ghttp.Request) *response.Response {
 
 // GetList
 // @Tags SystemApi
-// @Summary 分页获取API列表
+// @Summary 分页获取api列表
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.SearchApi true "分页获取API列表"
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Param data body request.ApiSearch true "分页获取API列表"
+// @Success 200 {object} response.Response{data=[]system.Api} "获取列表数据成功!"
 // @Router /api/getApiList [post]
 func (a *api) GetList(r *ghttp.Request) *response.Response {
-	var info request.SearchApi
+	var info request.ApiSearch
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
@@ -137,11 +137,11 @@ func (a *api) GetList(r *ghttp.Request) *response.Response {
 
 // GetAllApis
 // @Tags SystemApi
-// @Summary 获取所有的Api 不分页
+// @Summary 获取所有的Api
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Success 200 {object} response.Response{data=[]system.Api} "获取列表数据成功!"
 // @Router /api/getAllApis [post]
 func (a *api) GetAllApis(r *ghttp.Request) *response.Response {
 	if apis, err := system.Api.GetAllApis(); err != nil {

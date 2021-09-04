@@ -5,7 +5,7 @@ var Message = map[Code]string{
 
 	SuccessStart:        "成功码开始!",
 	SuccessAdd:          "添加成功!",
-	SuccessFirst:        "获取一条数据成功!",
+	SuccessFirst:        "获取数据成功!",
 	SuccessCreated:      "创建成功!",
 	SuccessUpdated:      "更新成功!",
 	SuccessDeleted:      "删除成功!",
@@ -16,7 +16,7 @@ var Message = map[Code]string{
 
 	ErrorStart:        "失败码开始!",
 	ErrorAdd:          "添加失败!",
-	ErrorFirst:        "获取一条数据失败!",
+	ErrorFirst:        "获取数据失败!",
 	ErrorCreated:      "创建失败!",
 	ErrorUpdated:      "更新失败!",
 	ErrorDeleted:      "删除失败!",

@@ -6,14 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
-type CreateApi struct {
+type ApiCreate struct {
 	Path        string `json:"path" example:"/api/create"`
 	Method      string `json:"method" example:"请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"`
 	ApiGroup    string `json:"apiGroup" example:"api组"`
 	Description string `json:"description" example:"api中文描述"`
 }
 
-type UpdateApi struct {
+type ApiUpdate struct {
 	common.GetByID
 	Path        string `json:"path" example:"api路径"`
 	Method      string `json:"method" example:"api组"`
@@ -21,7 +21,7 @@ type UpdateApi struct {
 	Description string `json:"description"  example:"中文描述"`
 }
 
-func (u *UpdateApi) Update() system.Api {
+func (u *ApiUpdate) Update() system.Api {
 	return system.Api{Path: u.Path, Method: u.Method, ApiGroup: u.ApiGroup, Description: u.Description}
 
 }
@@ -32,7 +32,7 @@ type DeleteApi struct {
 	Method string `json:"method" example:"请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"`
 }
 
-type SearchApi struct {
+type ApiSearch struct {
 	common.PageInfo
 	Desc        bool   `json:"desc" example:"false"`
 	Path        string `json:"path" example:"/api/create"`
@@ -42,7 +42,7 @@ type SearchApi struct {
 	Description string `json:"description" example:"api中文描述"`
 }
 
-func (s *SearchApi) Search() func(db *gorm.DB) *gorm.DB {
+func (s *ApiSearch) Search() func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		if s.Path != "" {
 			db = db.Where("path LIKE ?", "%"+s.Path+"%")
