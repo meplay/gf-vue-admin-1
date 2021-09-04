@@ -6,9 +6,6 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-// maxCharCount 最多26个字符A-Z
-const maxCharCount = 26
-
 type export struct {
 	a1         []string
 	rows       [][]interface{}
