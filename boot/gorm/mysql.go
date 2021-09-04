@@ -77,5 +77,5 @@ func (m *_mysql) GetGormDialector() gorm.Dialector {
 }
 
 func (m *_mysql) GetConfigPath() string {
-	return "config/gorm.mysql.yaml"
+	return "config/config.mysql.yaml"
 }
