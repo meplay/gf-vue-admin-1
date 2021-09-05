@@ -20,5 +20,6 @@ func (r *_router) Initialize() {
 	{
 		system.NewApiRouter(private).Init()
 		system.NewDictionaryRouter(private).Init()
+		system.NewDictionaryDetailRouter(private).Init()
 	} // 需要Jwt鉴权, casbin鉴权
 }

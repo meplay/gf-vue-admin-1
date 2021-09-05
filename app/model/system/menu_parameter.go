@@ -9,3 +9,7 @@ type MenuParameter struct {
 	Type   string `json:"type" gorm:"comment:地址栏携带参数为params还是query"`               // 地址栏携带参数为params还是query
 	Value  string `json:"value" gorm:"comment:地址栏携带参数的值"`                          // 地址栏携带参数的值
 }
+
+func (m *MenuParameter) TableName() string {
+	return "menu_parameter"
+}

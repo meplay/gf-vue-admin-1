@@ -1,3 +1,31 @@
+# HTTP Server
+server:
+  address: ':8888'
+  graceful: true
+  log-path: './logs/server'
+  dump-router-map: true
+  access-log-enabled: true
+  error-log-enabled: true
+
+# Logger
+logger:
+  path: './logs/log'
+  level: 'all'
+  stdout: true
+
+# zap logger configuration
+zap:
+  level: 'info'
+  format: 'console'
+  prefix: '[GF-VUE-ADMIN]'
+  director: 'logs'
+  link-name: 'latest_log'
+  show-line: true
+  encode-level: 'LowercaseColorLevelEncoder'
+  stacktrace-key: 'stacktrace'
+  log-in-console: true
+
+# gorm configuration
 gorm:
   config: 'sslmode=disable TimeZone=Asia/Shanghai'
   log-zap: false
@@ -30,3 +58,9 @@ gorm:
         db-name: ''
         username: ''
         password: ''
+
+# redis configuration
+redis:
+  db: 0
+  addr: '127.0.0.1:6379'
+  password: ''

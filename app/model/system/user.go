@@ -17,3 +17,7 @@ type User struct {
 	Authority   Authority   `json:"authority" gorm:"foreignKey:AuthorityId;references:AuthorityId;comment:用户角色"`
 	Authorities []Authority `json:"authorities" gorm:"many2many:sys_user_authority;"`
 }
+
+func (u *User) TableName() string {
+	return "users"
+}
