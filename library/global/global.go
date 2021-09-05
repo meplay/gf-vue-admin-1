@@ -3,14 +3,16 @@ package global
 import (
 	"github.com/flipped-aurora/gf-vue-admin/library/config"
 	"github.com/go-redis/redis/v8"
+	"github.com/songzhibin97/gkit/cache/local_cache"
 	"gorm.io/gorm"
 	"time"
 )
 
 var (
-	Db     *gorm.DB
-	Redis  *redis.Client
-	Config config.Config
+	Db       *gorm.DB
+	Redis    *redis.Client
+	Config   config.Config
+	JwtCache local_cache.Cache
 )
 
 type Model struct {
