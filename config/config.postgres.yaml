@@ -1,11 +1,11 @@
 # HTTP Server
 server:
   address: ':8888'
+  graceful: true
   log-path: './logs/server'
   dump-router-map: true
   access-log-enabled: true
   error-log-enabled: true
-  graceful: true
 
 # Logger
 logger:
