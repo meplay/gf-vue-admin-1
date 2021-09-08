@@ -19,7 +19,7 @@ type dictionaryDetail struct{}
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysDictionaryDetail true "请求参数"
+// @Param data body request.DictionaryDetailCreate true "请求参数"
 // @Success 200 {object} response.Response{message=string} "创建成功!"
 // @Router /sysDictionaryDetail/createSysDictionaryDetail [post]
 func (a *dictionaryDetail) Create(r *ghttp.Request) *response.Response {
@@ -39,7 +39,7 @@ func (a *dictionaryDetail) Create(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query system.SysDictionaryDetail true "请求参数"
+// @Param data query common.GetByID true "请求参数"
 // @Success 200 {object} response.Response{message=string} "获取数据成功!"
 // @Router /sysDictionaryDetail/findSysDictionaryDetail [get]
 func (a *dictionaryDetail) First(r *ghttp.Request) *response.Response {
@@ -60,7 +60,7 @@ func (a *dictionaryDetail) First(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysDictionaryDetail true "请求参数"
+// @Param data body request.DictionaryDetailUpdate true "请求参数"
 // @Success 200 {object} response.Response{data=system.DictionaryDetail} "更新成功!"
 // @Router /sysDictionaryDetail/updateSysDictionaryDetail [put]
 func (a *dictionaryDetail) Update(r *ghttp.Request) *response.Response {
@@ -80,7 +80,7 @@ func (a *dictionaryDetail) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysDictionaryDetail true "请求参数"
+// @Param data body common.GetByID true "请求参数"
 // @Success 200 {object} response.Response{message=string} "删除成功!"
 // @Router /sysDictionaryDetail/deleteSysDictionaryDetail [delete]
 func (a *dictionaryDetail) Delete(r *ghttp.Request) *response.Response {
@@ -100,7 +100,7 @@ func (a *dictionaryDetail) Delete(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data query request.SysDictionaryDetailSearch true "请求参数"
+// @Param data query request.DictionaryDetailSearch true "请求参数"
 // @Success 200 {object} response.Response{data=[]system.DictionaryDetail} "获取列表数据成功!"
 // @Router /sysDictionaryDetail/getSysDictionaryDetailList [get]
 func (a *dictionaryDetail) GetList(r *ghttp.Request) *response.Response {

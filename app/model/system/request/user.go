@@ -41,7 +41,7 @@ type UserLogin struct {
 }
 
 type UserFind struct {
-	ID   uint   `json:"id" example:"id"`
+	ID   uint   `json:"id" example:"7"`
 	Uuid string `json:"uuid" example:"uuid"`
 }
 
@@ -92,6 +92,6 @@ type UserSetAuthority struct {
 }
 
 type UserSetAuthorities struct {
-	ID           uint     `json:"ID" example:"id"`
+	ID           uint     `json:"ID" example:"7"`
 	AuthorityIds []string `json:"authorityIds" example:"角色id切片"`
 }
