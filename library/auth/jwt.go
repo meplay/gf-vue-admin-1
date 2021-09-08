@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	"github.com/golang-jwt/jwt"
 	_errors "github.com/pkg/errors"
 )
 
@@ -63,7 +63,5 @@ func (j *JWT) ParseToken(tokenString string) (*request.CustomClaims, error) {
 
 	} else {
 		return nil, TokenInvalid
-
 	}
-
 }

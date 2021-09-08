@@ -18,7 +18,7 @@ type User struct {
 	AuthorityId string `json:"authorityId" gorm:"default:888;comment:用户角色ID"`                                 // 用户角色ID
 
 	Authority   Authority   `json:"authority" gorm:"foreignKey:AuthorityId;references:AuthorityId;comment:用户角色"`
-	Authorities []Authority `json:"authorities" gorm:"many2many:user_authorities"`
+	Authorities []Authority `json:"authorities" gorm:"many2many:users_authorities"`
 }
 
 func (u *User) TableName() string {
