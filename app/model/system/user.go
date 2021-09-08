@@ -8,17 +8,17 @@ import (
 type User struct {
 	global.Model
 	Uuid        string `json:"uuid" gorm:"comment:用户UUID"`                                                    // 用户UUID
+	Avatar      string `json:"headerImg" gorm:"default:http://qmplusimg.henrongyi.top/head.png;comment:用户头像"` // 用户头像
 	Username    string `json:"userName" gorm:"comment:用户登录名"`                                                 // 用户登录名
 	Password    string `json:"-"  gorm:"comment:用户登录密码"`                                                      // 用户登录密码
 	Nickname    string `json:"nickName" gorm:"default:系统用户;comment:用户昵称"`                                     // 用户昵称
 	SideMode    string `json:"sideMode" gorm:"default:dark;comment:用户侧边主题"`                                   // 用户侧边主题
 	BaseColor   string `json:"baseColor" gorm:"default:#fff;comment:基础颜色"`                                    // 基础颜色
-	HeaderImg   string `json:"headerImg" gorm:"default:http://qmplusimg.henrongyi.top/head.png;comment:用户头像"` // 用户头像
 	ActiveColor string `json:"activeColor" gorm:"default:#1890ff;comment:用户角色ID"`                             // 活跃颜色
 	AuthorityId string `json:"authorityId" gorm:"default:888;comment:用户角色ID"`                                 // 用户角色ID
 
 	Authority   Authority   `json:"authority" gorm:"foreignKey:AuthorityId;references:AuthorityId;comment:用户角色"`
-	Authorities []Authority `json:"authorities" gorm:"many2many:sys_user_authority;"`
+	Authorities []Authority `json:"authorities" gorm:"many2many:user_authorities"`
 }
 
 func (u *User) TableName() string {

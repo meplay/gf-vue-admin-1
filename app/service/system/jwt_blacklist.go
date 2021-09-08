@@ -5,6 +5,7 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	_errors "github.com/pkg/errors"
+	"time"
 )
 
 var JwtBlacklist = new(jwtBlacklist)
@@ -38,7 +39,8 @@ func (s *jwtBlacklist) GetRedisJWT(uuid string) (string, error) {
 // SetRedisJWT 保存jwt到Redis
 // Author: [SliverHorn](https://github.com/SliverHorn)
 func (s *jwtBlacklist) SetRedisJWT(uuid string, jwt string) error {
-	return global.Redis.Set(context.Background(), uuid, jwt, global.Config.Jwt.ExpiresAt).Err()
+	timer := time.Duration(global.Config.Jwt.ExpiresTime) * time.Second
+	return global.Redis.Set(context.Background(), uuid, jwt, timer).Err()
 }
 
 // ValidatorRedisToken 鉴权jwt

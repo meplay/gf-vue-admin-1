@@ -1,9 +1,7 @@
 package config
 
-import "time"
-
 type Jwt struct {
-	ExpiresAt  time.Duration `mapstructure:"expires-at" json:"expiresAt" yaml:"expires-at"`
-	RefreshAt  time.Duration `mapstructure:"refresh-at" json:"refreshAt" yaml:"refresh-at"`
-	SigningKey string        `mapstructure:"signing-key" json:"signingKey" yaml:"signing-key"`
+	SigningKey  string `mapstructure:"signing-key" json:"signingKey" yaml:"signing-key"`    // 签名
+	BufferTime  int64  `mapstructure:"buffer-time" json:"bufferTime" yaml:"buffer-time"`    // 缓冲时间
+	ExpiresTime int64  `mapstructure:"expires-time" json:"expiresTime" yaml:"expires-time"` // 过期时间
 }

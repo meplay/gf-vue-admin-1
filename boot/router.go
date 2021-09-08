@@ -19,6 +19,7 @@ func (r *_router) Initialize() {
 	private := g.Server().Group("")
 	{
 		system.NewApiRouter(private).Init()
+		system.NewUserRouter(private).Init()
 		system.NewDictionaryRouter(private).Init()
 		system.NewDictionaryDetailRouter(private).Init()
 	} // 需要Jwt鉴权, casbin鉴权
