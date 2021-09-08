@@ -4,7 +4,7 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/golang-jwt/jwt"
-	_errors "github.com/pkg/errors"
+	"github.com/pkg/errors"
 )
 
 type JWT struct {
@@ -12,10 +12,10 @@ type JWT struct {
 }
 
 var (
-	TokenExpired     = _errors.New("Token is expired")
-	TokenNotValidYet = _errors.New("Token not active yet")
-	TokenMalformed   = _errors.New("That's not even a token")
-	TokenInvalid     = _errors.New("Couldn't handle this token:")
+	TokenExpired     = errors.New("Token is expired")
+	TokenNotValidYet = errors.New("Token not active yet")
+	TokenMalformed   = errors.New("That's not even a token")
+	TokenInvalid     = errors.New("Couldn't handle this token:")
 )
 
 func NewJWT() *JWT {

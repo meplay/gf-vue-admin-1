@@ -1,9 +1,9 @@
 package system
 
 import (
-	"errors"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
 

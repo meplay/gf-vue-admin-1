@@ -1,7 +1,6 @@
 package system
 
 import (
-	"errors"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/response"
@@ -10,7 +9,7 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/go-redis/redis/v8"
 	"github.com/golang-jwt/jwt"
-	_errors "github.com/pkg/errors"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 	"time"
 )
@@ -24,14 +23,14 @@ type user struct{}
 func (s *user) Register(info *request.UserRegister) (data *system.User, err error) {
 	var entity system.User
 	if !errors.Is(global.Db.Where("username = ?", info.Username).First(&entity).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
-		return nil, _errors.Wrap(err, "用户名已注册")
+		return nil, errors.Wrap(err, "用户名已注册")
 	}
 	create := info.Create()
 	if err = entity.EncryptedPassword(); err != nil {
-		return nil, _errors.Wrap(err, "密码加密失败!")
+		return nil, errors.Wrap(err, "密码加密失败!")
 	}
 	if err = global.Db.Create(&create).Error; err != nil {
-		return nil, _errors.Wrap(err, "用户注册失败!")
+		return nil, errors.Wrap(err, "用户注册失败!")
 	}
 	return &create, nil
 }
@@ -41,10 +40,10 @@ func (s *user) Register(info *request.UserRegister) (data *system.User, err erro
 func (s *user) Login(info *request.UserLogin) (data *response.UserLogin, err error) {
 	var entity system.User
 	if errors.Is(global.Db.Where("username = ?", info.Username).Preload("Authority").First(&entity).Error, gorm.ErrRecordNotFound) {
-		return nil, _errors.New("用户不存在!")
+		return nil, errors.New("用户不存在!")
 	}
 	if !entity.CompareHashAndPassword(info.Password) {
-		return nil, _errors.New("密码错误!")
+		return nil, errors.New("密码错误!")
 	}
 	return s.tokenNext(&entity)
 }
@@ -54,7 +53,7 @@ func (s *user) Login(info *request.UserLogin) (data *response.UserLogin, err err
 func (s *user) Find(info *request.UserFind) (data *system.User, err error) {
 	var entity system.User
 	if err = global.Db.Scopes(info.Search()).Preload("Authorities").Preload("Authority").First(&entity).Error; err != nil {
-		return nil, _errors.Wrap(err, "用户查询失败!")
+		return nil, errors.Wrap(err, "用户查询失败!")
 	}
 	return &entity, nil
 }
@@ -73,14 +72,14 @@ func (s *user) ChangePassword(info *request.UserChangePassword) error {
 	var entity system.User
 	err := global.Db.Where("username = ?", info.Username).First(&entity).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return _errors.Wrap(err, "用户不存在! ")
+		return errors.Wrap(err, "用户不存在! ")
 	}
 	if !entity.CompareHashAndPassword(info.Password) {
-		return _errors.Wrap(err, "密码错误!")
+		return errors.Wrap(err, "密码错误!")
 	}
 	entity.Password = info.NewPassword
 	if err = entity.EncryptedPassword(); err != nil {
-		return _errors.Wrap(err, "密码加密失败!")
+		return errors.Wrap(err, "密码加密失败!")
 	}
 	return global.Db.Where("username = ?", info.Username).Update("password", entity.Password).Error
 }
@@ -90,10 +89,10 @@ func (s *user) ChangePassword(info *request.UserChangePassword) error {
 func (s *user) SetAuthority(info *request.UserSetAuthority) error {
 	err := global.Db.Where("user_id = ? AND authority_id = ?", info.Uuid, info.AuthorityId).First(&system.UseAuthority{}).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return _errors.New("该用户无此角色!")
+		return errors.New("该用户无此角色!")
 	}
 	if err = global.Db.Model(&system.User{}).Where("uuid = ?", info.Uuid).Update("authority_id", info.AuthorityId).Error; err != nil {
-		return _errors.Wrap(err, "更新用户角色失败!")
+		return errors.Wrap(err, "更新用户角色失败!")
 	}
 	return nil
 }
@@ -103,7 +102,7 @@ func (s *user) SetAuthority(info *request.UserSetAuthority) error {
 func (s *user) SetUserAuthorities(info *request.UserSetAuthorities) error {
 	return global.Db.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Delete(&[]system.UseAuthority{}, "user_id = ?", info.ID).Error; err != nil {
-			return _errors.Wrap(err, "用户可切换的旧角色删除失败!")
+			return errors.Wrap(err, "用户可切换的旧角色删除失败!")
 		}
 		length := len(info.AuthorityIds)
 		entities := make([]system.UseAuthority, 0, length)
@@ -111,7 +110,7 @@ func (s *user) SetUserAuthorities(info *request.UserSetAuthorities) error {
 			entities = append(entities, system.UseAuthority{UserId: info.ID, AuthorityId: info.AuthorityIds[i]})
 		}
 		if err := tx.Create(&entities).Error; err != nil {
-			return _errors.Wrap(err, "设置用户多角色失败!")
+			return errors.Wrap(err, "设置用户多角色失败!")
 		}
 		return nil
 	})
@@ -152,7 +151,7 @@ func (s *user) tokenNext(user *system.User) (*response.UserLogin, error) {
 	}
 	token, err := _jwt.CreateToken(&claims)
 	if err != nil {
-		return nil, _errors.Wrap(err, "获取token失败!")
+		return nil, errors.Wrap(err, "获取token失败!")
 	}
 	if !global.Config.System.UseMultipoint {
 		entity := response.UserLogin{User: user, Token: token, ExpiresAt: claims.StandardClaims.ExpiresAt * 1000}
@@ -161,19 +160,19 @@ func (s *user) tokenNext(user *system.User) (*response.UserLogin, error) {
 
 	if jwtStr, _err := JwtBlacklist.GetRedisJWT(user.Username); _err == redis.Nil {
 		if err = JwtBlacklist.SetRedisJWT(token, user.Username); err != nil {
-			return nil, _errors.Wrap(err, "设置登录状态失败!")
+			return nil, errors.Wrap(err, "设置登录状态失败!")
 		}
 		entity := response.UserLogin{User: user, Token: token, ExpiresAt: claims.StandardClaims.ExpiresAt * 1000}
 		return &entity, nil
 	} else if _err != nil {
-		return nil, _errors.Wrap(_err, "设置登录状态失败!")
+		return nil, errors.Wrap(_err, "设置登录状态失败!")
 
 	} else {
 		if !JwtBlacklist.IsBlacklist(jwtStr) {
-			return nil, _errors.Wrap(_err, "jwt作废失败!")
+			return nil, errors.Wrap(_err, "jwt作废失败!")
 		}
 		if err = JwtBlacklist.SetRedisJWT(token, user.Username); err != nil {
-			return nil, _errors.Wrap(err, "设置登录状态失败!")
+			return nil, errors.Wrap(err, "设置登录状态失败!")
 		}
 		entity := response.UserLogin{User: user, Token: token, ExpiresAt: claims.StandardClaims.ExpiresAt * 1000}
 		return &entity, nil

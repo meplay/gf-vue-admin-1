@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
-	_errors "github.com/pkg/errors"
+	"github.com/pkg/errors"
 	"time"
 )
 
@@ -17,7 +17,7 @@ type jwtBlacklist struct{}
 func (s *jwtBlacklist) JwtToBlacklist(jwt string) error {
 	entity := system.JwtBlacklist{Jwt: jwt}
 	if err := global.Db.Create(&entity).Error; err != nil {
-		return _errors.Wrap(err, "拉黑jwt失败!")
+		return errors.Wrap(err, "拉黑jwt失败!")
 	}
 	global.JwtCache.SetDefault(jwt, struct{}{})
 	return nil
