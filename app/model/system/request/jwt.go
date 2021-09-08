@@ -1,6 +1,6 @@
 package request
 
-import "github.com/dgrijalva/jwt-go"
+import "github.com/golang-jwt/jwt"
 
 type CustomClaims struct {
 	ID          uint
