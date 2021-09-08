@@ -5,7 +5,7 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
-	_errors "github.com/pkg/errors"
+	"github.com/pkg/errors"
 )
 
 var DictionaryDetail = new(dictionaryDetail)
@@ -24,7 +24,7 @@ func (s *dictionaryDetail) Create(info *request.DictionaryDetailCreate) error {
 func (s *dictionaryDetail) First(info *common.GetByID) (data *system.DictionaryDetail, err error) {
 	var entity system.DictionaryDetail
 	if err = global.Db.Where("id = ?", info.ID).First(&entity).Error; err != nil {
-		return nil, _errors.Wrap(err, "更新字典详情失败!")
+		return nil, errors.Wrap(err, "更新字典详情失败!")
 	}
 	return nil, err
 }
@@ -34,7 +34,7 @@ func (s *dictionaryDetail) First(info *common.GetByID) (data *system.DictionaryD
 func (s *dictionaryDetail) Update(info *request.DictionaryDetailUpdate) error {
 	entity := info.Update()
 	if err := global.Db.Model(&system.DictionaryDetail{}).Where("id = ?", info.ID).Updates(&entity).Error; err != nil {
-		return _errors.Wrap(err, "更新字典详情失败!")
+		return errors.Wrap(err, "更新字典详情失败!")
 	}
 	return nil
 }
