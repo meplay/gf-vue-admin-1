@@ -60,7 +60,7 @@ func (a *dictionary) First(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysDictionary true "请求参数"
+// @Param data body request.DictionaryUpdate true "请求参数"
 // @Success 200 {object} response.Response{data=system.Dictionary} "更新成功!"
 // @Router /sysDictionary/updateSysDictionary [put]
 func (a *dictionary) Update(r *ghttp.Request) *response.Response {
@@ -80,7 +80,7 @@ func (a *dictionary) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysDictionary true "请求参数"
+// @Param data body common.GetByID true "请求参数"
 // @Success 200 {object} response.Response{message=string} "删除成功!"
 // @Router /sysDictionary/deleteSysDictionary [delete]
 func (a *dictionary) Delete(r *ghttp.Request) *response.Response {

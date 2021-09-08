@@ -20,7 +20,7 @@ type user struct{}
 // @Tags SysUser
 // @Summary 用户注册账号
 // @Produce  application/json
-// @Param data body systemReq.Register true "用户名, 昵称, 密码, 角色ID"
+// @Param data body request.UserRegister true "用户名, 昵称, 密码, 角色ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
 // @Router /user/register [post]
 func (b *user) Register(r *ghttp.Request) *response.Response {
@@ -45,9 +45,6 @@ func (b *user) Register(r *ghttp.Request) *response.Response {
 // @Router /user/getUserInfo [get]
 func (b *user) GetUserInfo(r *ghttp.Request) *response.Response {
 	var info request.UserFind
-	if err := r.Parse(&info); err != nil {
-		return &response.Response{Error: err, MessageCode: response.ErrorFirst}
-	}
 	claims := internal.NewClaims(r)
 	if info.Uuid = claims.GetUserUuid(); info.Uuid == "" || claims.Error() != nil {
 		return &response.Response{Error: claims.Error(), Message: "获取用户信息失败!"}
@@ -65,7 +62,7 @@ func (b *user) GetUserInfo(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body system.SysUser true "ID, 用户名, 昵称, 头像链接"
+// @Param data body request.UserUpdate true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
 // @Router /user/setUserInfo [put]
 func (b *user) SetUserInfo(r *ghttp.Request) *response.Response {
@@ -85,7 +82,7 @@ func (b *user) SetUserInfo(r *ghttp.Request) *response.Response {
 // @Summary 用户修改密码
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body request.UserChangePassword true "用户名, 原密码, 新密码"
+// @Param data body request.UserChangePassword true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/changePassword [post]
 func (b *user) ChangePassword(r *ghttp.Request) *response.Response {
@@ -105,7 +102,7 @@ func (b *user) ChangePassword(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetById true "用户ID"
+// @Param data body common.GetByID true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /user/deleteUser [delete]
 func (b *user) Delete(r *ghttp.Request) *response.Response {
@@ -131,7 +128,7 @@ func (b *user) Delete(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.PageInfo true "页码, 每页大小"
+// @Param data body common.PageInfo true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /user/getUserList [post]
 func (b *user) GetList(r *ghttp.Request) *response.Response {
@@ -146,12 +143,13 @@ func (b *user) GetList(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: common.NewPageResult(list, total, info), MessageCode: response.SuccessGetList}
 }
 
+// SetUserAuthority
 // @Tags SysUser
 // @Summary 更改用户权限
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body systemReq.SetUserAuth true "用户UUID, 角色ID"
+// @Param data body request.UserSetAuthority true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/setUserAuthority [post]
 func (b *user) SetUserAuthority(r *ghttp.Request) *response.Response {
@@ -182,12 +180,13 @@ func (b *user) SetUserAuthority(r *ghttp.Request) *response.Response {
 	}
 }
 
+// SetUserAuthorities
 // @Tags SysUser
 // @Summary 设置用户权限
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body systemReq.SetUserAuthorities true "用户UUID, 角色ID"
+// @Param data body request.UserSetAuthorities true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/setUserAuthorities [post]
 func (b *user) SetUserAuthorities(r *ghttp.Request) *response.Response {

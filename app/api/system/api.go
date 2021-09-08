@@ -39,7 +39,7 @@ func (a *api) Create(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.GetById true "请求参数"
+// @Param data body common.GetByID true "请求参数"
 // @Success 200 {object} response.Response{message=string} "获取数据成功!"
 // @Router /api/getApiById [post]
 func (a *api) First(r *ghttp.Request) *response.Response {

@@ -11,7 +11,7 @@ type DictionaryCreate struct {
 	Desc   string `json:"desc" example:"描述"`
 	Name   string `json:"name" example:"字典名(中)"`
 	Type   string `json:"type" example:"字典名(英)"`
-	Status *bool  `json:"status" example:"状态"`
+	Status *bool  `json:"status"`
 }
 
 func (r *DictionaryCreate) Create() system.Dictionary {
@@ -28,7 +28,7 @@ type DictionaryUpdate struct {
 	Desc   string `json:"desc" example:"描述"`
 	Name   string `json:"name" example:"字典名(中)"`
 	Type   string `json:"type" example:"字典名(英)"`
-	Status *bool  `json:"status" example:"状态"`
+	Status *bool  `json:"status"`
 }
 
 func (r *DictionaryUpdate) Update() g.Map {
@@ -40,7 +40,7 @@ type DictionarySearch struct {
 	Desc   string `json:"desc" example:"描述"`
 	Name   string `json:"name" example:"字典名(中)"`
 	Type   string `json:"type" example:"字典名(英)"`
-	Status *bool  `json:"status" example:"状态"`
+	Status *bool  `json:"status"`
 }
 
 func (r *DictionarySearch) Search() func(db *gorm.DB) *gorm.DB {

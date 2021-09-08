@@ -8,7 +8,7 @@ type PageInfo struct {
 
 // GetByID get by ID
 type GetByID struct {
-	ID float64 `json:"id" form:"page" example:"1"` // 主键ID
+	ID float64 `json:"id" form:"page" example:"7"` // 主键ID
 }
 
 func (c *GetByID) ToUint() uint {
@@ -16,7 +16,7 @@ func (c *GetByID) ToUint() uint {
 }
 
 type GetByIDs struct {
-	Ids []int `json:"ids" form:"ids" example:"[1, 2]"` // 主键Ids
+	Ids []int `json:"ids" form:"ids" swaggertype:"array,number"` // 主键Ids
 }
 
 // GetAuthorityId Get role by AuthorityI structure
