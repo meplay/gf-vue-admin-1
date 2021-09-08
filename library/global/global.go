@@ -4,15 +4,17 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/library/config"
 	"github.com/go-redis/redis/v8"
 	"github.com/songzhibin97/gkit/cache/local_cache"
+	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 	"time"
 )
 
 var (
-	Db       *gorm.DB
-	Redis    *redis.Client
-	Config   config.Config
-	JwtCache local_cache.Cache
+	Db                 *gorm.DB
+	Redis              *redis.Client
+	Config             config.Config
+	JwtCache           local_cache.Cache
+	ConcurrencyControl = &singleflight.Group{}
 )
 
 type Model struct {
