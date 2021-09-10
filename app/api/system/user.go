@@ -23,7 +23,7 @@ type user struct{}
 // @Param data body request.UserRegister true "用户名, 昵称, 密码, 角色ID"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"注册成功"}"
 // @Router /user/register [post]
-func (b *user) Register(r *ghttp.Request) *response.Response {
+func (a *user) Register(r *ghttp.Request) *response.Response {
 	var info request.UserRegister
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorCreated}
@@ -35,6 +35,29 @@ func (b *user) Register(r *ghttp.Request) *response.Response {
 	return &response.Response{Data: g.Map{"user": data}, Message: "注册成功!"}
 }
 
+// Login
+// @Tags Base
+// @Summary 用户登录
+// @Produce  application/json
+// @Param data body request.UserLogin true "请求参数"
+// @Success 200 {object} response.Response{data=response.UserLogin} "登录成功!"
+// @Router /base/login [post]
+func (a *user) Login(r *ghttp.Request) *response.Response {
+	var info request.UserLogin
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, MessageCode: response.ErrorCreated}
+	}
+	if system.Store.Verify(info.CaptchaId, info.Captcha, true) {
+		data, err := system.User.Login(&info)
+		if err != nil {
+			return &response.Response{Error: err, Message: "登录失败!"}
+		}
+		return &response.Response{Data: data, Message: "登录成功!"}
+	} else {
+		return &response.Response{Code: 7, Message: "验证码错误!"}
+	}
+}
+
 // GetUserInfo
 // @Tags SysUser
 // @Summary 获取用户信息
@@ -43,7 +66,7 @@ func (b *user) Register(r *ghttp.Request) *response.Response {
 // @Produce application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /user/getUserInfo [get]
-func (b *user) GetUserInfo(r *ghttp.Request) *response.Response {
+func (a *user) GetUserInfo(r *ghttp.Request) *response.Response {
 	var info request.UserFind
 	claims := internal.NewClaims(r)
 	if info.Uuid = claims.GetUserUuid(); info.Uuid == "" || claims.Error() != nil {
@@ -65,7 +88,7 @@ func (b *user) GetUserInfo(r *ghttp.Request) *response.Response {
 // @Param data body request.UserUpdate true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"设置成功"}"
 // @Router /user/setUserInfo [put]
-func (b *user) SetUserInfo(r *ghttp.Request) *response.Response {
+func (a *user) SetUserInfo(r *ghttp.Request) *response.Response {
 	var info request.UserUpdate
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
@@ -85,7 +108,7 @@ func (b *user) SetUserInfo(r *ghttp.Request) *response.Response {
 // @Param data body request.UserChangePassword true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/changePassword [post]
-func (b *user) ChangePassword(r *ghttp.Request) *response.Response {
+func (a *user) ChangePassword(r *ghttp.Request) *response.Response {
 	var info request.UserChangePassword
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
@@ -105,7 +128,7 @@ func (b *user) ChangePassword(r *ghttp.Request) *response.Response {
 // @Param data body common.GetByID true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /user/deleteUser [delete]
-func (b *user) Delete(r *ghttp.Request) *response.Response {
+func (a *user) Delete(r *ghttp.Request) *response.Response {
 	var info common.GetByID
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
@@ -131,7 +154,7 @@ func (b *user) Delete(r *ghttp.Request) *response.Response {
 // @Param data body common.PageInfo true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /user/getUserList [post]
-func (b *user) GetList(r *ghttp.Request) *response.Response {
+func (a *user) GetList(r *ghttp.Request) *response.Response {
 	var info common.PageInfo
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
@@ -152,7 +175,7 @@ func (b *user) GetList(r *ghttp.Request) *response.Response {
 // @Param data body request.UserSetAuthority true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/setUserAuthority [post]
-func (b *user) SetUserAuthority(r *ghttp.Request) *response.Response {
+func (a *user) SetUserAuthority(r *ghttp.Request) *response.Response {
 	var info request.UserSetAuthority
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
@@ -189,7 +212,7 @@ func (b *user) SetUserAuthority(r *ghttp.Request) *response.Response {
 // @Param data body request.UserSetAuthorities true "请求参数"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/setUserAuthorities [post]
-func (b *user) SetUserAuthorities(r *ghttp.Request) *response.Response {
+func (a *user) SetUserAuthorities(r *ghttp.Request) *response.Response {
 	var info request.UserSetAuthorities
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}

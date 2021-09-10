@@ -14,13 +14,14 @@ type _router struct{}
 func (r *_router) Initialize() {
 	public := g.Server().Group("")
 	{
-		system.NewBaseGroup(public).Init()
+		system.NewCaptchaGroup(public).Public()
+		system.NewUserRouter(public).Public()
 	} // 无需鉴权中间件
 	private := g.Server().Group("")
 	{
-		system.NewApiRouter(private).Init()
-		system.NewUserRouter(private).Init()
-		system.NewDictionaryRouter(private).Init()
-		system.NewDictionaryDetailRouter(private).Init()
+		system.NewApiRouter(private).Private()
+		system.NewUserRouter(private).Private()
+		system.NewDictionaryRouter(private).Private()
+		system.NewDictionaryDetailRouter(private).Private()
 	} // 需要Jwt鉴权, casbin鉴权
 }

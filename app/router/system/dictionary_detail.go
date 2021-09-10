@@ -15,7 +15,7 @@ func NewDictionaryDetailRouter(router *ghttp.RouterGroup) *dictionaryDetail {
 	return &dictionaryDetail{router: router, response: &response.Handler{}}
 }
 
-func (d *dictionaryDetail) Init() {
+func (d *dictionaryDetail) Private() {
 	group := d.router.Group("/sysDictionaryDetail")
 	{
 		group.POST("createSysDictionaryDetail", d.response.Handler()(system.DictionaryDetail.Create))   // 创建系统字典详情
