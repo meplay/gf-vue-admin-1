@@ -15,7 +15,7 @@ func NewApiRouter(router *ghttp.RouterGroup) *_api {
 	return &_api{router: router, response: &response.Handler{}}
 }
 
-func (a *_api) Init() {
+func (a *_api) Private() {
 	group := a.router.Group("/api")
 	{
 		group.POST("createApi", a.response.Handler()(system.Api.Create))          // 创建api
