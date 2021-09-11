@@ -37,16 +37,9 @@ func (s *_casbin) Update(authorityId string, casbinInfos []request.CasbinInfo) e
 	length := len(casbinInfos)
 	rules := make([][]string, 0, length)
 	for _, v := range casbinInfos {
-		cm := system.Casbin{
-			Ptype:       "p",
-			AuthorityId: authorityId,
-			Path:        v.Path,
-			Method:      v.Method,
-		}
-		rules = append(rules, []string{cm.AuthorityId, cm.Path, cm.Method})
+		rules = append(rules, []string{authorityId, v.Path, v.Method})
 	}
-	e := s.Casbin()
-	success, _ := e.AddPolicies(rules)
+	success, _ := s.Casbin().AddPolicies(rules)
 	if success == false {
 		return errors.New("存在相同api,添加失败,请联系管理员!")
 	}
@@ -56,28 +49,28 @@ func (s *_casbin) Update(authorityId string, casbinInfos []request.CasbinInfo) e
 // UpdateApi API更新随动
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *_casbin) UpdateApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
-	err := global.Db.Table("casbin_rule").Model(&system.Casbin{}).Where("v1 = ? AND v2 = ?", oldPath, oldMethod).Updates(map[string]interface{}{
+	return global.Db.Model(&system.Casbin{}).Where("v1 = ? AND v2 = ?", oldPath, oldMethod).Updates(map[string]interface{}{
 		"v1": newPath,
 		"v2": newMethod,
 	}).Error
-	return err
 }
 
 // GetPolicyPathByAuthorityId 获取权限列表
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *_casbin) GetPolicyPathByAuthorityId(authorityId string) (pathMaps []request.CasbinInfo) {
-	e := s.Casbin()
-	list := e.GetFilteredPolicy(0, authorityId)
+func (s *_casbin) GetPolicyPathByAuthorityId(authorityId string) []request.CasbinInfo {
+	list := s.Casbin().GetFilteredPolicy(0, authorityId)
+	length := len(list)
+	infos := make([]request.CasbinInfo, 0, length)
 	for _, v := range list {
-		pathMaps = append(pathMaps, request.CasbinInfo{
+		infos = append(infos, request.CasbinInfo{
 			Path:   v[1],
 			Method: v[2],
 		})
 	}
-	return pathMaps
+	return infos
 }
 
-// ClearCasbin 清除匹配的权限
+// Clear 清除匹配的权限
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *_casbin) Clear(v int, p ...string) bool {
 	e := s.Casbin()
