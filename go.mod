@@ -3,6 +3,8 @@ module github.com/flipped-aurora/gf-vue-admin
 go 1.16
 
 require (
+	github.com/casbin/casbin/v2 v2.37.0
+	github.com/casbin/gorm-adapter/v3 v3.0.2
 	github.com/go-redis/redis/v8 v8.11.3
 	github.com/gogf/gf v1.16.6
 	github.com/golang-jwt/jwt v3.2.2+incompatible

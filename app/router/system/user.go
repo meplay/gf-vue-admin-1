@@ -15,6 +15,13 @@ func NewUserRouter(router *ghttp.RouterGroup) *user {
 	return &user{router: router, response: &response.Handler{}}
 }
 
+func (r *user) Public() {
+	group := r.router.Group("/base")
+	{
+		group.POST("login", r.response.Handler()(system.User.Login)) // 用户登录
+	}
+}
+
 func (r *user) Private() {
 	group := r.router.Group("/user")
 	{
@@ -26,12 +33,5 @@ func (r *user) Private() {
 		group.POST("changePassword", r.response.Handler()(system.User.ChangePassword))         // 用户修改密码
 		group.DELETE("deleteUser", r.response.Handler()(system.User.Delete))                   // 删除用户
 		group.POST("getUserList", r.response.Handler()(system.User.GetList))                   // 分页获取用户列表
-	}
-}
-
-func (r *user) Public() {
-	group := r.router.Group("/base")
-	{
-		group.POST("login", r.response.Handler()(system.User.Login)) // 用户登录
 	}
 }

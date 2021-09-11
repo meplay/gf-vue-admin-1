@@ -46,7 +46,9 @@ func (s *api) Update(info *request.ApiUpdate) error {
 		}
 	}
 	err := global.Db.Transaction(func(tx *gorm.DB) error {
-		// TODO Casbin.UpdateCasbinApi(entity.Path, info.Path, entity.Method, info.Method)
+		if err := Casbin.UpdateApi(entity.Path, info.Path, entity.Method, info.Method); err != nil {
+			return errors.Wrap(err, "Casbin 更新api信息失败!")
+		}
 		entity = info.Update()
 		if err := tx.Model(&system.Api{}).Where("id = ?", info.ID).Updates(&info).Error; err != nil {
 			return errors.Wrap(err, "更新api信息失败!")
@@ -62,7 +64,9 @@ func (s *api) Delete(info *request.DeleteApi) error {
 	if err := global.Db.Delete(&system.Api{}, info.ID).Error; err != nil {
 		return errors.Wrap(err, "删除api失败!")
 	}
-	// TODO CasbinServiceApp.ClearCasbin(1, api.Path, api.Method)
+	if Casbin.Clear(1, info.Path, info.Method) {
+		return errors.New("Clear Casbin api失败")
+	}
 	return nil
 }
 
