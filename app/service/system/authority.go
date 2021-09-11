@@ -16,7 +16,7 @@ type authority struct{}
 
 // Create 创建一个角色
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) Create(info request.AuthorityCreate) (data *system.Authority, err error) {
+func (s *authority) Create(info *request.AuthorityCreate) (data *system.Authority, err error) {
 	var entity system.Authority
 	if !errors.Is(global.Db.Where("authority_id = ?", info.AuthorityId).First(&entity).Error, gorm.ErrRecordNotFound) {
 		return &entity, errors.New("存在相同角色id")
@@ -28,7 +28,7 @@ func (s *authority) Create(info request.AuthorityCreate) (data *system.Authority
 
 // Copy 复制一个角色
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) Copy(info request.AuthorityCopy) (*system.Authority, error) {
+func (s *authority) Copy(info *request.AuthorityCopy) (*system.Authority, error) {
 	var entity system.Authority
 	if !errors.Is(global.Db.Where("authority_id = ?", info.Authority.AuthorityId).First(&entity).Error, gorm.ErrRecordNotFound) {
 		return &entity, errors.New("存在相同角色id")
@@ -48,7 +48,7 @@ func (s *authority) Copy(info request.AuthorityCopy) (*system.Authority, error) 
 
 	paths := Casbin.GetPolicyPathByAuthorityId(info.OldAuthorityId)
 	if err = Casbin.Update(info.Authority.AuthorityId, paths); err != nil {
-		if err = s.Delete(&info.Authority); err != nil {
+		if err = s.Delete(&request.AuthorityDelete{Authority: info.Authority}); err != nil {
 			return nil, errors.Wrap(err, "更新权限失败, 删除角色失败!")
 		}
 	}
@@ -57,14 +57,14 @@ func (s *authority) Copy(info request.AuthorityCopy) (*system.Authority, error) 
 
 // Update 更新角色
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) Update(auth system.Authority) (err error, authority system.Authority) {
-	err = global.Db.Where("authority_id = ?", auth.AuthorityId).First(&system.Authority{}).Updates(&auth).Error
-	return err, auth
+func (s *authority) Update(info *request.AuthorityUpdate) (authority *system.Authority, err error) {
+	err = global.Db.Model(&system.Authority{}).Where("authority_id = ?", info.AuthorityId).Updates(&info.Authority).Error
+	return &info.Authority, err
 }
 
 // Delete 删除角色
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) Delete(info *system.Authority) (err error) {
+func (s *authority) Delete(info *request.AuthorityDelete) error {
 	if !errors.Is(global.Db.Where("authority_id = ?", info.AuthorityId).First(&system.User{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("此角色有用户正在使用禁止删除")
 	}
@@ -72,7 +72,7 @@ func (s *authority) Delete(info *system.Authority) (err error) {
 		return errors.New("此角色存在子角色不允许删除")
 	}
 	db := global.Db.Preload("Menus").Where("authority_id = ?", info.AuthorityId).First(info)
-	err = db.Unscoped().Delete(info).Error
+	err := db.Unscoped().Delete(info).Error
 	if len(info.Menus) > 0 {
 		err = global.Db.Model(info).Association("Menus").Delete(info.Menus)
 	} else {
@@ -91,22 +91,30 @@ func (s *authority) GetAuthorityInfo(info common.GetAuthorityId) (*system.Author
 	return &entity, err
 }
 
-// SetDataAuthority 设置角色资源权限
+// SetAuthorityResources 设置角色资源权限
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) SetDataAuthority(auth system.Authority) error {
+func (s *authority) SetAuthorityResources(info *request.AuthoritySetResources) error {
 	var entity system.Authority
-	global.Db.Preload("AuthorityResources").First(&entity, "authority_id = ?", auth.AuthorityId)
-	err := global.Db.Model(&entity).Association("AuthorityResources").Replace(&auth.AuthorityResources)
-	return err
+	if err := global.Db.Preload("AuthorityResources").First(&entity, "authority_id = ?", info.AuthorityId).Error; err != nil {
+		return errors.Wrap(err, "角色查找失败!")
+	}
+	if err := global.Db.Model(&entity).Association("AuthorityResources").Replace(&info.AuthorityResources); err != nil {
+		return errors.Wrap(err, "设置角色资源权限!")
+	}
+	return nil
 }
 
-// SetMenuAuthority 菜单与角色绑定
+// SetAuthorityMenu 菜单与角色绑定
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) SetMenuAuthority(auth *system.Authority) error {
+func (s *authority) SetAuthorityMenu(auth *request.AuthoritySetMenu) error {
 	var entity system.Authority
-	global.Db.Preload("Menus").First(&s, "authority_id = ?", auth.AuthorityId)
-	err := global.Db.Model(&entity).Association("Menus").Replace(&auth.Menus)
-	return err
+	if err := global.Db.Preload("Menus").First(&entity, "authority_id = ?", auth.AuthorityId).Error; err != nil {
+		return errors.Wrap(err, "菜单查找失败!")
+	}
+	if err := global.Db.Model(&entity).Association("Menus").Replace(&auth.Menus); err != nil {
+		return errors.Wrap(err, "设置菜单与角色绑定!")
+	}
+	return nil
 }
 
 // GetList 分页获取数据
@@ -124,7 +132,7 @@ func (s *authority) GetList(info *common.PageInfo) (list []system.Authority, tot
 	return entities, total, err
 }
 
-// findChildrenAuthority 查询子角色
+// findChildrenAuthority 查询子角色 todo 循环sql优化
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *authority) findChildrenAuthority(authority *system.Authority) (err error) {
 	err = global.Db.Preload("AuthorityResources").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error

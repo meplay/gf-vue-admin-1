@@ -24,3 +24,19 @@ type AuthorityCopy struct {
 	Authority      system.Authority `json:"authority" example:"角色信息"`
 	OldAuthorityId string           `json:"oldAuthorityId"  example:"旧角色ID"`
 }
+
+type AuthorityUpdate struct {
+	system.Authority
+}
+
+type AuthorityDelete struct {
+	system.Authority
+}
+
+type AuthoritySetResources struct {
+	system.Authority
+}
+
+type AuthoritySetMenu struct {
+	system.Authority
+}
