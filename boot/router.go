@@ -1,6 +1,7 @@
 package boot
 
 import (
+	"github.com/flipped-aurora/gf-vue-admin/app/router/middleware"
 	"github.com/flipped-aurora/gf-vue-admin/app/router/system"
 	"github.com/gogf/gf/frame/g"
 )
@@ -18,6 +19,7 @@ func (r *_router) Initialize() {
 		system.NewUserRouter(public).Public()
 	} // 无需鉴权中间件
 	private := g.Server().Group("")
+	private.Middleware(middleware.JwtAuth, middleware.Casbin)
 	{
 		system.NewApiRouter(private).Private()
 		system.NewUserRouter(private).Private()
