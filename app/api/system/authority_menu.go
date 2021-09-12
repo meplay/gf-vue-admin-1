@@ -14,7 +14,7 @@ var AuthorityMenu = new(authorityMenu)
 type authorityMenu struct{}
 
 // GetMenu
-// @Tags AuthorityMenu
+// @Tags SystemAuthorityMenu
 // @Summary 获取用户动态路由
 // @Security ApiKeyAuth
 // @Produce  application/json
@@ -32,7 +32,7 @@ func (a *authorityMenu) GetMenu(r *ghttp.Request) *response.Response {
 
 
 // GetMenuAuthority
-// @Tags AuthorityMenu
+// @Tags SystemAuthorityMenu
 // @Summary 获取指定角色menu
 // @Security ApiKeyAuth
 // @accept application/json

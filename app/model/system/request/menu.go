@@ -27,7 +27,7 @@ func (r *MenuUpdate) Update() map[string]interface{} {
 }
 
 type AddMenuAuthority struct {
-	Menus       []system.Menu `json:"menus" example:"菜单数据"`
+	Menus       []system.Menu `json:"menus"`
 	AuthorityId string        `json:"authorityId" example:"角色Id"`
 }
 

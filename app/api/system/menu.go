@@ -14,7 +14,7 @@ var Menu = new(menu)
 type menu struct{}
 
 // Create
-// @Tags Menu
+// @Tags SystemMenu
 // @Summary 新增菜单
 // @Security ApiKeyAuth
 // @accept application/json
@@ -34,7 +34,7 @@ func (a *menu) Create(r *ghttp.Request) *response.Response {
 }
 
 // First
-// @Tags Menu
+// @Tags SystemMenu
 // @Summary 根据id获取菜单
 // @Security ApiKeyAuth
 // @accept application/json
@@ -55,7 +55,7 @@ func (a *menu) First(r *ghttp.Request) *response.Response {
 }
 
 // Update
-// @Tags Menu
+// @Tags SystemMenu
 // @Summary 更新菜单
 // @Security ApiKeyAuth
 // @accept application/json
@@ -75,7 +75,7 @@ func (a *menu) Update(r *ghttp.Request) *response.Response {
 }
 
 // Delete
-// @Tags Menu
+// @Tags SystemMenu
 // @Summary 删除菜单
 // @Security ApiKeyAuth
 // @accept application/json
@@ -92,7 +92,7 @@ func (a *menu) Delete(r *ghttp.Request) *response.Response {
 }
 
 // GetList
-// @Tags Menu
+// @Tags SystemMenu
 // @Summary 分页获取基础menu列表
 // @Security ApiKeyAuth
 // @accept application/json
@@ -113,11 +113,11 @@ func (a *menu) GetList(r *ghttp.Request) *response.Response {
 }
 
 // GetTree
-// @Tags Menu
+// @Tags SystemMenu
 // @Summary 获取用户动态路由
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body request.Empty true "空"
+// @Param data body common.Empty true "空"
 // @Success 200 {object} response.Response{data=[]system.Menu} "获取列表数据成功!"
 // @Router /menu/getBaseMenuTree [post]
 func (a *menu) GetTree(r *ghttp.Request) *response.Response {
@@ -129,7 +129,7 @@ func (a *menu) GetTree(r *ghttp.Request) *response.Response {
 }
 
 // AddMenuAuthority
-// @Tags Menu
+// @Tags SystemMenu
 // @Summary 增加menu和角色关联关系
 // @Security ApiKeyAuth
 // @accept application/json
