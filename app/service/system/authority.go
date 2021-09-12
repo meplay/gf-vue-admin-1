@@ -106,12 +106,12 @@ func (s *authority) SetAuthorityResources(info *request.AuthoritySetResources) e
 
 // SetAuthorityMenu 菜单与角色绑定
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) SetAuthorityMenu(auth *request.AuthoritySetMenu) error {
+func (s *authority) SetAuthorityMenu(info *request.AuthoritySetMenu) error {
 	var entity system.Authority
-	if err := global.Db.Preload("Menus").First(&entity, "authority_id = ?", auth.AuthorityId).Error; err != nil {
+	if err := global.Db.Preload("Menus").First(&entity, "authority_id = ?", info.AuthorityId).Error; err != nil {
 		return errors.Wrap(err, "菜单查找失败!")
 	}
-	if err := global.Db.Model(&entity).Association("Menus").Replace(&auth.Menus); err != nil {
+	if err := global.Db.Model(&entity).Association("Menus").Replace(&info.Menus); err != nil {
 		return errors.Wrap(err, "设置菜单与角色绑定!")
 	}
 	return nil
