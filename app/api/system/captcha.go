@@ -11,7 +11,7 @@ var Captcha = new(captcha)
 type captcha struct{}
 
 // Captcha
-// @Tags Base
+// @Tags SystemCaptcha
 // @Summary 生成验证码
 // @Security ApiKeyAuth
 // @accept application/json

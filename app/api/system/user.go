@@ -17,7 +17,7 @@ var User = new(user)
 type user struct{}
 
 // Register
-// @Tags SysUser
+// @Tags SystemUser
 // @Summary 用户注册账号
 // @Produce  application/json
 // @Param data body request.UserRegister true "用户名, 昵称, 密码, 角色ID"
@@ -36,7 +36,7 @@ func (a *user) Register(r *ghttp.Request) *response.Response {
 }
 
 // Login
-// @Tags Base
+// @Tags SystemUser
 // @Summary 用户登录
 // @Produce  application/json
 // @Param data body request.UserLogin true "请求参数"
@@ -59,7 +59,7 @@ func (a *user) Login(r *ghttp.Request) *response.Response {
 }
 
 // GetUserInfo
-// @Tags SysUser
+// @Tags SystemUser
 // @Summary 获取用户信息
 // @Security ApiKeyAuth
 // @accept application/json
@@ -80,7 +80,7 @@ func (a *user) GetUserInfo(r *ghttp.Request) *response.Response {
 }
 
 // SetUserInfo
-// @Tags SysUser
+// @Tags SystemUser
 // @Summary 设置用户信息
 // @Security ApiKeyAuth
 // @accept application/json
@@ -101,7 +101,7 @@ func (a *user) SetUserInfo(r *ghttp.Request) *response.Response {
 }
 
 // ChangePassword
-// @Tags SysUser
+// @Tags SystemUser
 // @Summary 用户修改密码
 // @Security ApiKeyAuth
 // @Produce  application/json
@@ -146,7 +146,7 @@ func (a *user) Delete(r *ghttp.Request) *response.Response {
 }
 
 // GetList
-// @Tags SysUser
+// @Tags SystemUser
 // @Summary 分页获取用户列表
 // @Security ApiKeyAuth
 // @accept application/json
@@ -167,7 +167,7 @@ func (a *user) GetList(r *ghttp.Request) *response.Response {
 }
 
 // SetUserAuthority
-// @Tags SysUser
+// @Tags SystemUser
 // @Summary 更改用户权限
 // @Security ApiKeyAuth
 // @accept application/json
@@ -204,7 +204,7 @@ func (a *user) SetUserAuthority(r *ghttp.Request) *response.Response {
 }
 
 // SetUserAuthorities
-// @Tags SysUser
+// @Tags SystemUser
 // @Summary 设置用户权限
 // @Security ApiKeyAuth
 // @accept application/json

@@ -21,7 +21,9 @@ func (r *_router) Initialize() {
 	{
 		system.NewApiRouter(private).Private()
 		system.NewUserRouter(private).Private()
+		system.NewMenuRouter(private).Private()
 		system.NewDictionaryRouter(private).Private()
+		system.NewAuthorityMenuRouter(private).Private()
 		system.NewDictionaryDetailRouter(private).Private()
 	} // 需要Jwt鉴权, casbin鉴权
 }

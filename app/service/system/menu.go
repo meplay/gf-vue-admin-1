@@ -3,6 +3,7 @@ package system
 import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
+	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -20,6 +21,67 @@ func (s *_menu) Create(info *request.MenuCreate) error {
 		return errors.New("存在重复name，请修改name!")
 	}
 	return global.Db.Create(&info.Menu).Error
+}
+
+// Delete 删除基础路由
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (s *_menu) Delete(info *common.GetByID) (err error) {
+	err = global.Db.Preload("Parameters").Where("parent_id = ?", info.ID).First(&system.Menu{}).Error
+	if err != nil {
+		var menu system.Menu
+		db := global.Db.Preload("SysAuthoritys").Where("id = ?", info.ID).First(&menu).Delete(&menu)
+		err = global.Db.Delete(&system.MenuParameter{}, "menu_id = ?", info.ID).Error
+		if len(menu.Authorities) > 0 {
+			if err = global.Db.Model(&menu).Association("Authoritys").Delete(&menu.Authorities); err != nil {
+				return errors.Wrap(err, "删除菜单绑定的角色失败!")
+			}
+		} else {
+			err = db.Error
+		}
+	} else {
+		return errors.New("此菜单存在子菜单不可删除")
+	}
+	return err
+}
+
+// First 返回当前选中menu
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (s *_menu) First(info *common.GetByID) (*system.Menu, error) {
+	var entity system.Menu
+	err := global.Db.Preload("Parameters").Where("id = ?", info.ID).First(&entity).Error
+	return &entity, err
+}
+
+// Update 更新路由
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (s *_menu) Update(info *request.MenuUpdate) error {
+	return global.Db.Transaction(func(tx *gorm.DB) error {
+		var entity system.Menu
+		if err := tx.Where("id = ?", info.ID).First(&entity).Error; err != nil {
+			return errors.Wrap(err, "菜单信息获取失败!")
+		}
+		if entity.Name != info.Name {
+			if !errors.Is(tx.Where("id <> ? AND name = ?", info.ID, info.Name).First(&system.Menu{}).Error, gorm.ErrRecordNotFound) {
+				return errors.New("存在相同name修改失败!")
+			}
+		}
+		if err := tx.Unscoped().Delete(&system.MenuParameter{}, "menu_id = ?", info.ID).Error; err != nil {
+			return errors.Wrap(err, "更新菜单参数信息失败!")
+		}
+		if len(info.Parameters) > 0 {
+			for k := range info.Parameters {
+				info.Parameters[k].MenuID = info.ID
+			}
+			if err := tx.Create(&info.Parameters).Error; err != nil {
+				return errors.Wrap(err, "新增菜单参数信息失败!")
+			}
+		}
+		update := info.Update()
+		if err := tx.Updates(update).Error; err != nil {
+			return errors.Wrap(err, "更新菜单信息失败!")
+		}
+		return nil
+	})
 }
 
 // GetList 获取全部路由
@@ -56,12 +118,9 @@ func (s *_menu) GetTree() (list []system.Menu, err error) {
 
 // AddMenuAuthority 为角色增加menu树
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *_menu) AddMenuAuthority(menus []system.Menu, authorityId string) (err error) {
-	var entity system.Authority
-	entity.AuthorityId = authorityId
-	entity.Menus = menus
-	err = Authority.SetAuthorityMenu(&request.AuthoritySetMenu{Authority: entity})
-	return err
+func (s *_menu) AddMenuAuthority(info *request.AddMenuAuthority) error {
+	entity := info.ToAuthoritySetMenu()
+	return Authority.SetAuthorityMenu(&entity)
 }
 
 // getTreeMap 获取路由总树map
