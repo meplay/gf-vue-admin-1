@@ -120,7 +120,7 @@ func (a *api) Deletes(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.ApiSearch true "分页获取API列表"
+// @Param data body request.ApiSearch true "请求参数"
 // @Success 200 {object} response.Response{data=[]system.Api} "获取列表数据成功!"
 // @Router /api/getApiList [post]
 func (a *api) GetList(r *ghttp.Request) *response.Response {

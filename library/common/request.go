@@ -23,3 +23,5 @@ type GetByIDs struct {
 type GetAuthorityId struct {
 	AuthorityId string `json:"authorityId" form:"authorityId" example:"角色ID"` // 角色ID
 }
+
+type Empty struct{}

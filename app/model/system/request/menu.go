@@ -5,3 +5,33 @@ import "github.com/flipped-aurora/gf-vue-admin/app/model/system"
 type MenuCreate struct {
 	system.Menu
 }
+
+type MenuUpdate struct {
+	system.Menu
+}
+
+func (r *MenuUpdate) Update() map[string]interface{} {
+	return map[string]interface{}{
+		"path":         r.Path,
+		"icon":         r.Icon,
+		"sort":         r.Sort,
+		"name":         r.Name,
+		"title":        r.Title,
+		"hidden":       r.Hidden,
+		"parent_id":    r.ParentId,
+		"close_tab":    r.CloseTab,
+		"component":    r.Component,
+		"keep_alive":   r.KeepAlive,
+		"default_menu": r.DefaultMenu,
+	}
+}
+
+type AddMenuAuthority struct {
+	Menus       []system.Menu `json:"menus" example:"菜单数据"`
+	AuthorityId string        `json:"authorityId" example:"角色Id"`
+}
+
+func (r *AddMenuAuthority) ToAuthoritySetMenu() AuthoritySetMenu {
+	entity := system.Authority{Menus: r.Menus, AuthorityId: r.AuthorityId}
+	return AuthoritySetMenu{Authority: entity}
+}
