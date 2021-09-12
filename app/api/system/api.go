@@ -20,7 +20,7 @@ type api struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body request.ApiCreate true "请求参数"
-// @Success 200 {object} response.Response{message=string} "创建成功!"
+// @Success 200 {object} response.Response{} "创建成功!"
 // @Router /api/createApi [post]
 func (a *api) Create(r *ghttp.Request) *response.Response {
 	var info request.ApiCreate
@@ -40,7 +40,7 @@ func (a *api) Create(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data body common.GetByID true "请求参数"
-// @Success 200 {object} response.Response{message=string} "获取数据成功!"
+// @Success 200 {object} response.Response{} "获取数据成功!"
 // @Router /api/getApiById [post]
 func (a *api) First(r *ghttp.Request) *response.Response {
 	var info common.GetByID
@@ -81,7 +81,7 @@ func (a *api) Update(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.DeleteApi true "请求参数"
-// @Success 200 {object} response.Response{message=string} "删除成功!"
+// @Success 200 {object} response.Response{} "删除成功!"
 // @Router /api/deleteApi [post]
 func (a *api) Delete(r *ghttp.Request) *response.Response {
 	var info request.DeleteApi
@@ -101,7 +101,7 @@ func (a *api) Delete(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data body common.GetByIDs true "请求参数"
-// @Success 200 {object} response.Response{message=string} "批量删除成功!"
+// @Success 200 {object} response.Response{} "批量删除成功!"
 // @Router /api/deleteApisByIds [delete]
 func (a *api) Deletes(r *ghttp.Request) *response.Response {
 	var info common.GetByIDs

@@ -20,7 +20,7 @@ type menu struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body request.MenuCreate true "请求参数"
-// @Success 200 {object} response.Response{message=string} "创建成功!"
+// @Success 200 {object} response.Response{} "创建成功!"
 // @Router /menu/addBaseMenu [post]
 func (a *menu) Create(r *ghttp.Request) *response.Response {
 	var info request.MenuCreate
@@ -61,7 +61,7 @@ func (a *menu) First(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.MenuUpdate true "请求参数"
-// @Success 200 {object} response.Response{message=string} "更新成功!"
+// @Success 200 {object} response.Response{} "更新成功!"
 // @Router /menu/updateBaseMenu [post]
 func (a *menu) Update(r *ghttp.Request) *response.Response {
 	var info request.MenuUpdate
@@ -81,7 +81,7 @@ func (a *menu) Update(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data body common.GetByID true "请求参数"
-// @Success 200 {object} response.Response{message=string} "删除成功!"
+// @Success 200 {object} response.Response{} "删除成功!"
 // @Router /menu/deleteBaseMenu [post]
 func (a *menu) Delete(r *ghttp.Request) *response.Response {
 	var info common.GetByID
@@ -135,7 +135,7 @@ func (a *menu) GetTree(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data body request.AddMenuAuthority true "请求参数"
-// @Success 200 {object} response.Response{message=string} "添加成功!"
+// @Success 200 {object} response.Response{} "添加成功!"
 // @Router /menu/addMenuAuthority [post]
 func (a *menu) AddMenuAuthority(r *ghttp.Request) *response.Response {
 	var info request.AddMenuAuthority
