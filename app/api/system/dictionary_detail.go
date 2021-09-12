@@ -20,7 +20,7 @@ type dictionaryDetail struct{}
 // @accept application/json
 // @Produce application/json
 // @Param data body request.DictionaryDetailCreate true "请求参数"
-// @Success 200 {object} response.Response{message=string} "创建成功!"
+// @Success 200 {object} response.Response{} "创建成功!"
 // @Router /sysDictionaryDetail/createSysDictionaryDetail [post]
 func (a *dictionaryDetail) Create(r *ghttp.Request) *response.Response {
 	var info request.DictionaryDetailCreate
@@ -40,7 +40,7 @@ func (a *dictionaryDetail) Create(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data query common.GetByID true "请求参数"
-// @Success 200 {object} response.Response{message=string} "获取数据成功!"
+// @Success 200 {object} response.Response{} "获取数据成功!"
 // @Router /sysDictionaryDetail/findSysDictionaryDetail [get]
 func (a *dictionaryDetail) First(r *ghttp.Request) *response.Response {
 	var info common.GetByID
@@ -81,7 +81,7 @@ func (a *dictionaryDetail) Update(r *ghttp.Request) *response.Response {
 // @accept application/json
 // @Produce application/json
 // @Param data body common.GetByID true "请求参数"
-// @Success 200 {object} response.Response{message=string} "删除成功!"
+// @Success 200 {object} response.Response{} "删除成功!"
 // @Router /sysDictionaryDetail/deleteSysDictionaryDetail [delete]
 func (a *dictionaryDetail) Delete(r *ghttp.Request) *response.Response {
 	var info common.GetByID
