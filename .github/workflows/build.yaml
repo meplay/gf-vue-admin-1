@@ -15,32 +15,32 @@ on:
       - "**.md"
 
 jobs:
-#  frontend:
-#    name: Frontend build
-#    runs-on: ubuntu-latest
-#    strategy:
-#      matrix:
-#        node-version: [12.x]
-#    steps:
-#      - name: Check out branch
-#        uses: actions/checkout@v2
-#
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#
-#      - name: Build test
-#        run: |
-#          npm install
-#          npm run build
-#        working-directory: ./web
+  #  frontend:
+  #    name: Frontend build
+  #    runs-on: ubuntu-latest
+  #    strategy:
+  #      matrix:
+  #        node-version: [12.x]
+  #    steps:
+  #      - name: Check out branch
+  #        uses: actions/checkout@v2
+  #
+  #      - name: Use Node.js ${{ matrix.node-version }}
+  #        uses: actions/setup-node@v1
+  #        with:
+  #          node-version: ${{ matrix.node-version }}
+  #
+  #      - name: Build test
+  #        run: |
+  #          npm install
+  #          npm run build
+  #        working-directory: ./web
 
   backend:
     name: Backend build
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.6
+      - name: Set up Go 1.16
         uses: actions/setup-go@v1
         with:
           go-version: 1.16
@@ -56,9 +56,6 @@ jobs:
               curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
               dep ensure
           fi
-        working-directory: .
 
       - name: Test and Build
-        run: |
-          go build -tags="mysql" -v -race -o server
-        working-directory: ./server
+        run: go build -tags "mysql" -v -race -o gf-vue-admin main.go
