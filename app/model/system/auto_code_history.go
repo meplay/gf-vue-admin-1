@@ -1,6 +1,10 @@
 package system
 
-import "github.com/flipped-aurora/gf-vue-admin/library/global"
+import (
+	"github.com/flipped-aurora/gf-vue-admin/library/common"
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	"github.com/flipped-aurora/gf-vue-admin/library/types"
+)
 
 type AutoCodeHistory struct {
 	global.Model
@@ -12,4 +16,13 @@ type AutoCodeHistory struct {
 	RequestMeta   string `json:"requestMeta" gorm:"column:request_meta;comment:前端传入的结构化信息"`
 	AutoCodePath  string `json:"autoCodePath" gorm:"column:auto_code_path;comment:其他meta信息 path;path"`
 	InjectionMeta string `json:"injectionMeta" gorm:"column:injection_meta;comment:注入的内容 RouterPath@functionName@RouterString;"`
+
+	Apis types.UintSlice `json:"apis" gorm:"column:apis;comment:api表注册内容"`
+}
+
+func (a *AutoCodeHistory) ToCommonGetByID() *common.GetByIDs {
+	if a == nil {
+		return nil
+	}
+	return &common.GetByIDs{Ids: a.Apis.Uints}
 }
