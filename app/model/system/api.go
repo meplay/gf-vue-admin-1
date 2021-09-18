@@ -1,6 +1,10 @@
 package system
 
-import "github.com/flipped-aurora/gf-vue-admin/library/global"
+import (
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	"github.com/pkg/errors"
+	"gorm.io/gorm"
+)
 
 type Api struct {
 	global.Model
@@ -12,4 +16,13 @@ type Api struct {
 
 func (a *Api) TableName() string {
 	return "apis"
+}
+
+// BeforeCreate api创建前钩子函数
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a *Api) BeforeCreate(tx *gorm.DB) error {
+	if errors.Is(tx.Where("path = ? AND method = ?", a.Path, a.Method).First(&Api{}).Error, gorm.ErrRecordNotFound) {
+		return nil
+	}
+	return errors.New("存在相同api")
 }

@@ -16,7 +16,7 @@ func (c *GetByID) ToUint() uint {
 }
 
 type GetByIDs struct {
-	Ids []int `json:"ids" form:"ids" swaggertype:"array,number"` // 主键Ids
+	Ids []uint `json:"ids" form:"ids" swaggertype:"array,number"` // 主键Ids
 }
 
 // GetAuthorityId Get role by AuthorityI structure

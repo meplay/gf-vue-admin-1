@@ -1,5 +1,7 @@
 package system
 
+import "github.com/flipped-aurora/gf-vue-admin/library/utils"
+
 type AutoCodeStruct struct {
 	StructName         string   `json:"structName"`         // Struct名称
 	TableName          string   `json:"tableName"`          // 表名
@@ -23,4 +25,16 @@ type Field struct {
 	ColumnName      string `json:"columnName"`      // 数据库字段
 	FieldSearchType string `json:"fieldSearchType"` // 搜索条件
 	DictType        string `json:"dictType"`        // 字典
+}
+
+// TrimSpace 结构体去空格
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a *AutoCodeStruct) TrimSpace() {
+	if a == nil {
+		return
+	}
+	utils.File.TrimSpace(a)
+	for i := 0; i < len(a.Fields); i++ {
+		utils.File.TrimSpace(a.Fields[i])
+	}
 }
