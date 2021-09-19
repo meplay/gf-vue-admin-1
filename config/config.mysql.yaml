@@ -54,16 +54,16 @@ redis:
 auto-code:
   root: ''
   server:
+    root: ''
     api: '/app/api/example'
     boot: '/boot'
-    root: ''
     router: '/boot'
     model: '/app/model/example'
     request: '/app/model/example/request'
     service: '/app/service/example'
   web:
-    api: '/api'
     root: '/web/src'
+    api: '/api'
     flow: '/view'
     form: '/view'
     table: '/view'
