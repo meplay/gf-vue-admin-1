@@ -20,6 +20,12 @@ type AutoCodeHistory struct {
 	Apis types.UintSlice `json:"apis" gorm:"column:apis;comment:api表注册内容"`
 }
 
+type Injection struct {
+	Path         string `json:"path" gorm:"column:path;comment:注入文件路径"`
+	FunctionName string `json:"function_name" gorm:"column:function_name;comment:函数名"`
+	InsertString string `json:"insert_string" gorm:"column:insert_string;comment:插入字符串"`
+}
+
 func (a *AutoCodeHistory) ToCommonGetByID() *common.GetByIDs {
 	if a == nil {
 		return nil

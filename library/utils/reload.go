@@ -1,4 +1,4 @@
-package reload
+package utils
 
 import (
 	"github.com/pkg/errors"
@@ -8,7 +8,11 @@ import (
 	"strconv"
 )
 
-func Reload() error {
+var Service = new(service)
+
+type service struct{}
+
+func (s *service) Reload() error {
 	if runtime.GOOS == "windows" {
 		return errors.New("系统不支持")
 	}

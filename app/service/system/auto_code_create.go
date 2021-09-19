@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
-	"github.com/flipped-aurora/gf-vue-admin/library/reload"
 	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
@@ -80,7 +79,7 @@ func (s *autoCode) CreateTemp(autoCode *system.AutoCodeStruct, ids ...uint) erro
 
 		if global.Config.AutoCode.Restart {
 			go func() {
-				_ = reload.Reload()
+				_ = utils.Service.Reload()
 			}()
 		}
 	} else { // 打包

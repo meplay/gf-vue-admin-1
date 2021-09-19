@@ -8,21 +8,16 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"github.com/pkg/errors"
-	"go.uber.org/zap"
 	"path/filepath"
 	"strings"
 	"time"
 )
 
-var RepeatErr = errors.New("重复创建!")
-
-type autoCodeHistory struct {
-}
+type autoCodeHistory struct {}
 
 var AutoCodeHistory = new(autoCodeHistory)
 
 func (s *autoCodeHistory) Repeat(structName string) bool {
-
 	var count int64
 	global.Db.Model(&system.AutoCodeHistory{}).Where("struct_name = ? and flag = 0", structName).Count(&count)
 	return count > 0
@@ -50,13 +45,12 @@ func (s *autoCodeHistory) RollBack(id uint) error {
 
 	err := Api.Deletes(entity.ToCommonGetByID())
 	if err != nil {
-		zap.L().Error("ClearTag DeleteApiByIds:", zap.Error(err))
 		return errors.Wrap(err, "回滚api表数据失败!")
 	} // 清除API表
 
-	dbNames, err := AutoCode.GetTables(global.Config.Gorm.Dsn.Sources[0].GetDsn(global.Config.Gorm.Config))
-	if err != nil {
-		return errors.Wrap(err, "获取表数据失败!")
+	dbNames, getErr := AutoCode.GetTables(global.Config.Gorm.Dsn.Sources[0].GetDsn(global.Config.Gorm.Config))
+	if getErr != nil {
+		return errors.Wrap(getErr, "获取表数据失败!")
 	} // 获取全部表名
 
 	for _, name := range dbNames {
@@ -110,7 +104,8 @@ func (s *autoCodeHistory) GetList(info *request.AutoCodeHistorySearch) (list []s
 	return entities, total, err
 }
 
-// DeletePage 删除历史数据
-func (s *autoCodeHistory) DeletePage(id uint) error {
+// Delete 删除历史数据
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (s *autoCodeHistory) Delete(id uint) error {
 	return global.Db.Delete(system.AutoCodeHistory{}, id).Error
 }
