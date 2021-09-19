@@ -49,3 +49,22 @@ redis:
   db: 0
   addr: '127.0.0.1:6379'
   password: ''
+
+# auto-code configuration
+auto-code:
+  root: ''
+  server:
+    api: '/app/api/example'
+    boot: '/boot'
+    root: ''
+    router: '/boot'
+    model: '/app/model/example'
+    request: '/app/model/example/request'
+    service: '/app/service/example'
+  web:
+    api: '/api'
+    root: '/web/src'
+    flow: '/view'
+    form: '/view'
+    table: '/view'
+  restart: true
