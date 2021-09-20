@@ -10,6 +10,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/go-redis/redis/v8 v8.11.3
 	github.com/gogf/gf v1.16.6
+	github.com/gogf/swagger v1.3.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible

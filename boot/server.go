@@ -3,6 +3,7 @@ package boot
 import (
 	boot "github.com/flipped-aurora/gf-vue-admin/boot/gorm"
 	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/swagger"
 )
 
 var Server = new(_server)
@@ -25,5 +26,6 @@ func (s *_server) Initialize() {
 	如果项目让您获得了收益，希望您能请团队喝杯可乐:https://www.gf-vue-admin.com/docs/coffee
 `, address)
 	server.SetPort()
+	server.Plugin(&swagger.Swagger{})
 	server.Run()
 }
