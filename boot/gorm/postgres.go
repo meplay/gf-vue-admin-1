@@ -9,6 +9,8 @@ import (
 	"gorm.io/plugin/dbresolver"
 )
 
+var _ interfaces.Gorm = (*_mysql)(nil)
+
 var DbResolver = new(_postgres)
 
 type _postgres struct {
