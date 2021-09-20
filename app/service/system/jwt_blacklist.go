@@ -5,6 +5,7 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/pkg/errors"
+	"go.uber.org/zap"
 	"time"
 )
 
@@ -62,8 +63,9 @@ func (s *jwtBlacklist) LoadJwt() {
 	var data []string
 	err := global.Db.Model(&system.JwtBlacklist{}).Select("jwt").Find(&data).Error
 	if err != nil {
-		for i := range data { // 从db加载jwt数据
-			global.JwtCache.SetDefault(data[i], struct{}{})
-		}
+		zap.L().Error("加载失败!", zap.Error(err))
+	}
+	for i := range data { // 从db加载jwt数据
+		global.JwtCache.SetDefault(data[i], struct{}{})
 	}
 }

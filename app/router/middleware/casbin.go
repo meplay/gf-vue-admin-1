@@ -10,11 +10,16 @@ import (
 
 // Casbin Casbin拦截器
 func Casbin(r *ghttp.Request) {
-	claims := r.Get("claims")
-	waitUse := claims.(*request.CustomClaims)
-	url := r.Request.URL.RequestURI()  // 获取请求的URI
-	method := r.Request.Method         // 获取请求方法
-	authorityId := waitUse.AuthorityId // 获取用户的角色
+	claims := r.GetCtxVar("claims")
+	var user request.CustomClaims
+	if err := claims.Struct(&user); err != nil {
+		_ = r.Response.WriteJson(&response.Response{Code: 7, Message: "权限不足!"})
+		r.ExitAll()
+		return
+	}
+	url := r.Request.URL.RequestURI() // 获取请求的URI
+	method := r.Request.Method        // 获取请求方法
+	authorityId := user.AuthorityId   // 获取用户的角色
 	e := system.Casbin.Casbin()
 	success, _ := e.Enforce(authorityId, url, method)
 	if global.Config.System.Env == "develop" || success {

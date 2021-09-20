@@ -31,12 +31,12 @@ func NewClaims(r *ghttp.Request) *_claims {
 }
 
 func (i *_claims) Initialize(r *ghttp.Request) {
-	data := r.GetParam("claims")
-	if value, ok := data.(*request.CustomClaims); ok {
-		i.data = value
-		return
+	data := r.GetCtxVar("claims")
+	var claims request.CustomClaims
+	if err := data.Struct(&claims); err != nil {
+		i.err = _errors.New("反射失败!")
 	}
-	i.err = _errors.New("反射失败!")
+	i.data = &claims
 }
 
 // GetUserID 从GoFrame的Context中获取从jwt解析出来的用户ID

@@ -49,14 +49,11 @@ func (s *authorityMenu) getMenuTreeMap(authorityId string) (treeMap map[string][
 // getChildrenList 获取子菜单列表
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *authorityMenu) getChildrenList(menu *system.AuthorityMenu, treeMap map[string][]system.AuthorityMenu) error {
-	if value, ok := treeMap[menu.MenuId]; ok {
-		menu.Children = value
-		for i := 0; i < len(menu.Children); i++ {
-			if err := s.getChildrenList(&menu.Children[i], treeMap); err != nil {
-				return err
-			}
+	menu.Children = treeMap[menu.MenuId]
+	for i := 0; i < len(menu.Children); i++ {
+		if err := s.getChildrenList(&menu.Children[i], treeMap); err != nil {
+			return err
 		}
-		return nil
 	}
-	return errors.New("子菜单列表数据获取失败!")
+	return nil
 }

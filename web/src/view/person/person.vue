@@ -52,7 +52,7 @@
                 <li>
                   <p class="title">密保邮箱</p>
                   <p class="desc">
-                    已绑定邮箱：gin-vue-admin@google.com.cn
+                    已绑定邮箱：gf-vue-admin@google.com.cn
                     <a href="javascript:void(0)">立即修改</a>
                   </p>
                 </li>

@@ -1,6 +1,6 @@
 <template>
   <div class="dashbord-line-box">
-    <div class="dashbord-line-title">Gva 仓库commit 记录</div>
+    <div class="dashbord-line-title">Gfva 仓库commit 记录</div>
     <div
       ref="echart"
       class="dashbord-line"

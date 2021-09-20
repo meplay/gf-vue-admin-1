@@ -1,3 +1,9 @@
+# jwt configuration
+jwt:
+  signing-key: 'qmPlus'
+  buffer-time: 86400
+  expires-time: 604800
+
 # zap logger configuration
 zap:
   level: 'info'
@@ -49,6 +55,22 @@ redis:
   db: 0
   addr: '127.0.0.1:6379'
   password: ''
+
+# casbin configuration
+casbin:
+  model-path: './public/rbac_model.conf'
+
+# system configuration
+system:
+  env: 'public'  # Change to "develop" to skip authentication for development mode
+  oss-type: 'local'    # 控制oss选择走本期还是 七牛等其他仓 自行增加其他oss仓可以在 server/utils/upload/upload.go 中 Oss函数配置
+  use-multipoint: false
+
+# captcha configuration
+captcha:
+  key-long: 6
+  img-width: 240
+  img-height: 80
 
 # auto-code configuration
 auto-code:

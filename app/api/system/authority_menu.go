@@ -23,7 +23,7 @@ type authorityMenu struct{}
 // @Router /menu/getMenu [post]
 func (a *authorityMenu) GetMenu(r *ghttp.Request) *response.Response {
 	claims := internal.NewClaims(r)
-	data, err := system.AuthorityMenu.GetMenuTree(claims.GetUserUuid())
+	data, err := system.AuthorityMenu.GetMenuTree(claims.GetUserAuthorityId())
 	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
