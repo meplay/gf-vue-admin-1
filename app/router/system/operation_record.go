@@ -2,28 +2,45 @@ package system
 
 import (
 	"github.com/flipped-aurora/gf-vue-admin/app/api/system"
+	"github.com/flipped-aurora/gf-vue-admin/interfaces"
 	"github.com/flipped-aurora/gf-vue-admin/library/response"
 	"github.com/gogf/gf/net/ghttp"
 )
 
-var OperationRecord = new(operationRecord)
+var _ interfaces.Router = (*operationRecord)(nil)
 
 type operationRecord struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
 }
 
-func NewOperationRecordRouter(router *ghttp.RouterGroup) *operationRecord {
+func NewOperationRecordRouter(router *ghttp.RouterGroup) interfaces.Router {
 	return &operationRecord{router: router, response: &response.Handler{}}
 }
 
-func (m *operationRecord) Private() {
-	group := m.router.Group("/menu")
+func (r *operationRecord) Public() interfaces.Router {
+	return r
+}
+
+func (r *operationRecord) Private() interfaces.Router {
+	group := r.router.Group("/menu")
 	{
-		group.POST("createSysOperationRecord", m.response.Handler()(system.OperationRecord.Create))         // 新建操作日志
-		group.GET("findSysOperationRecord", m.response.Handler()(system.OperationRecord.First))             // 根据ID获取操作日志
-		group.DELETE("deleteSysOperationRecord", m.response.Handler()(system.OperationRecord.Delete))       // 删除操作日志
-		group.DELETE("deleteSysOperationRecordByIds", m.response.Handler()(system.OperationRecord.Deletes)) // 批量删除操作日志
-		group.GET("getSysOperationRecordList", m.response.Handler()(system.OperationRecord.GetList))        // 获取操作日志列表
+		group.POST("createSysOperationRecord", r.response.Handler()(system.OperationRecord.Create))         // 新建操作日志
+		group.DELETE("deleteSysOperationRecord", r.response.Handler()(system.OperationRecord.Delete))       // 删除操作日志
+		group.DELETE("deleteSysOperationRecordByIds", r.response.Handler()(system.OperationRecord.Deletes)) // 批量删除操作日志
 	}
+	return r
+}
+
+func (r *operationRecord) PublicWithoutRecord() interfaces.Router {
+	return r
+}
+
+func (r *operationRecord) PrivateWithoutRecord() interfaces.Router {
+	group := r.router.Group("/menu")
+	{
+		group.GET("findSysOperationRecord", r.response.Handler()(system.OperationRecord.First))      // 根据ID获取操作日志
+		group.GET("getSysOperationRecordList", r.response.Handler()(system.OperationRecord.GetList)) // 获取操作日志列表
+	}
+	return r
 }
