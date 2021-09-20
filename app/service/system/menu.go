@@ -148,6 +148,7 @@ func (s *_menu) getChildrenList(menu *system.Menu, treeMap map[string][]system.M
 			}
 		}
 		return nil
+	} else {
+		return nil
 	}
-	return errors.New("子菜单列表数据获取失败!")
 }

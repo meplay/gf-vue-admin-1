@@ -2191,10 +2191,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "authoritys": {
                     "type": "array",
@@ -2224,7 +2226,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "keepAlive": {
                     "type": "boolean"
@@ -2256,10 +2259,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "authoritys": {
                     "type": "array",
@@ -2289,7 +2294,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "keepAlive": {
                     "type": "boolean"
@@ -2321,10 +2327,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "agent": {
                     "type": "string"
@@ -2336,7 +2344,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "ip": {
                     "type": "string"
@@ -2566,10 +2575,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "apiGroup": {
                     "type": "string"
@@ -2578,7 +2589,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "method": {
                     "type": "string"
@@ -2642,10 +2654,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "authoritys": {
                     "type": "array",
@@ -2675,7 +2689,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "keepAlive": {
                     "type": "boolean"
@@ -2710,16 +2725,19 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "desc": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "name": {
                     "type": "string"
@@ -2742,13 +2760,16 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "label": {
                     "type": "string"
@@ -2771,10 +2792,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "authoritys": {
                     "type": "array",
@@ -2804,7 +2827,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "keepAlive": {
                     "type": "boolean"
@@ -2836,13 +2860,16 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "key": {
                     "description": "地址栏携带参数的key",
@@ -2866,10 +2893,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "agent": {
                     "type": "string"
@@ -2881,7 +2910,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "ip": {
                     "type": "string"
@@ -2914,10 +2944,12 @@
             "type": "object",
             "properties": {
                 "CreatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "创建时间"
                 },
                 "UpdatedAt": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "更新时间"
                 },
                 "activeColor": {
                     "description": "活跃颜色",
@@ -2946,7 +2978,8 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 7
                 },
                 "nickName": {
                     "description": "用户昵称",
