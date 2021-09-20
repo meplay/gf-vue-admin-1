@@ -64,5 +64,4 @@ func JwtAuth(r *ghttp.Request) {
 	}
 	r.SetCtxVar("claims", claims)
 	r.Middleware.Next()
-	return
 }
