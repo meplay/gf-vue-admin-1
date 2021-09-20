@@ -26,6 +26,7 @@
       </div>
       <img src="@/assets/dashbord.png" class="dashbord1-right" alt>
     </div>
+    <!--
     <div class="mycard dashbord2">
       <div>
         <div class="dashbord2-item">
@@ -46,6 +47,7 @@
         </div>
       </div>
     </div>
+      -->
 
     <el-card class="mycard quick-entrance">
       <template #header>

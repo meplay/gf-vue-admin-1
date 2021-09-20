@@ -1,6 +1,7 @@
 package system
 
 import (
+	"fmt"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
 	adapter "github.com/casbin/gorm-adapter/v3"
@@ -25,6 +26,7 @@ type _casbin struct{}
 func (s *_casbin) Casbin() *casbin.SyncedEnforcer {
 	once.Do(func() {
 		a, _ := adapter.NewAdapterByDB(global.Db)
+		fmt.Println(global.Config.Casbin.ModelPath)
 		syncedEnforcer, _ = casbin.NewSyncedEnforcer(global.Config.Casbin.ModelPath, a)
 		syncedEnforcer.AddFunction("ParamsMatch", s.ParamsMatchFunc)
 	})

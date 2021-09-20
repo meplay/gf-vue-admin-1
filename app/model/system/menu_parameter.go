@@ -11,5 +11,5 @@ type MenuParameter struct {
 }
 
 func (m *MenuParameter) TableName() string {
-	return "menu_parameter"
+	return "menu_parameters"
 }

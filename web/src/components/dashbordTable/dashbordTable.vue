@@ -1,6 +1,6 @@
 <template>
   <div class="commit-table">
-    <div class="commit-table-title">Gva 仓库commit 记录</div>
+    <div class="commit-table-title">Gfva 仓库commit 记录</div>
     <el-table v-loading="loading" :data="dataTimeline" style="width: 100%">
       <el-table-column prop="from" show-overflow-tooltip label="日期" width="180" />
       <el-table-column prop="title" show-overflow-tooltip label="推送者" width="120" />
