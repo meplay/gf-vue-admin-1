@@ -19,3 +19,8 @@ type OperationRecord struct {
 	UserID       int           `json:"user_id" gorm:"column:user_id;comment:用户id"`
 	User         User          `json:"user"`
 }
+
+func (o *OperationRecord) TableName() string {
+	return "operation_records"
+}
+
