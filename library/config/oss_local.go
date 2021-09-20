@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"path"
 	"strings"
@@ -24,5 +23,5 @@ func (l *Local) Filename(filename string) string {
 // Filepath 拼接路径和文件名
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (l *Local) Filepath(filename string) string {
-	return global.Config.Local.Path + "/" + filename
+	return l.Path + "/" + filename
 }
