@@ -1,4 +1,5 @@
-//+build mysql
+//go:build mysql
+// +build mysql
 
 package system
 
