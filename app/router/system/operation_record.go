@@ -23,7 +23,7 @@ func (r *operationRecord) Public() interfaces.Router {
 }
 
 func (r *operationRecord) Private() interfaces.Router {
-	group := r.router.Group("/menu")
+	group := r.router.Group("/sysOperationRecord")
 	{
 		group.POST("createSysOperationRecord", r.response.Handler()(system.OperationRecord.Create))         // 新建操作日志
 		group.DELETE("deleteSysOperationRecord", r.response.Handler()(system.OperationRecord.Delete))       // 删除操作日志
@@ -37,7 +37,7 @@ func (r *operationRecord) PublicWithoutRecord() interfaces.Router {
 }
 
 func (r *operationRecord) PrivateWithoutRecord() interfaces.Router {
-	group := r.router.Group("/menu")
+	group := r.router.Group("/sysOperationRecord")
 	{
 		group.GET("findSysOperationRecord", r.response.Handler()(system.OperationRecord.First))      // 根据ID获取操作日志
 		group.GET("getSysOperationRecordList", r.response.Handler()(system.OperationRecord.GetList)) // 获取操作日志列表

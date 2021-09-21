@@ -25,8 +25,8 @@ func (s *_menu) Create(info *request.MenuCreate) error {
 
 // Delete 删除基础路由
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *_menu) Delete(info *common.GetByID) (err error) {
-	err = global.Db.Preload("Parameters").Where("parent_id = ?", info.ID).First(&system.Menu{}).Error
+func (s *_menu) Delete(info *common.GetByID) error {
+	err := global.Db.Preload("Parameters").Where("parent_id = ?", info.ID).First(&system.Menu{}).Error
 	if err != nil {
 		var menu system.Menu
 		db := global.Db.Preload("SysAuthoritys").Where("id = ?", info.ID).First(&menu).Delete(&menu)

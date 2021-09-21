@@ -2,7 +2,6 @@ package boot
 
 import (
 	"fmt"
-	boot "github.com/flipped-aurora/gf-vue-admin/boot/gorm"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/swagger"
 	"go.uber.org/zap"
@@ -14,7 +13,6 @@ type _server struct{}
 
 func (s *_server) Initialize() {
 	server := g.Server()
-	g.Cfg().SetFileName(boot.DbResolver.GetConfigPath())
 	address := g.Cfg().GetString("server.address")
 	server.SetIndexFolder(true)
 	server.AddStaticPath("/form-generator", "public/page")

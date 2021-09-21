@@ -19,10 +19,6 @@ func NewCaptchaGroup(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (r *captcha) Public() interfaces.Router {
-	group := r.router.Group("/base")
-	{
-		group.POST("captcha", r.response.Handler()(system.Captcha.Captcha))
-	}
 	return r
 }
 
@@ -35,5 +31,9 @@ func (r *captcha) PublicWithoutRecord() interfaces.Router {
 }
 
 func (r *captcha) PrivateWithoutRecord() interfaces.Router {
+	group := r.router.Group("/base")
+	{
+		group.POST("captcha", r.response.Handler()(system.Captcha.Captcha))
+	}
 	return r
 }

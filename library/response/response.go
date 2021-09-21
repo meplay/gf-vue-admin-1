@@ -7,12 +7,12 @@ import (
 )
 
 type Response struct {
-	Code        int         `json:"code"`
+	Code        int         `json:"code" swaggertype:"string" example:"int 状态码(成功:0, 失败:7)"`
 	MessageCode Code        `json:"-"`
-	Data        interface{} `json:"data"`
+	Data        interface{} `json:"data" swaggertype:"string" example:"object 数据"`
 	Error       error       `json:"-"`
-	Err         string      `json:"err,omitempty"`
-	Message     string      `json:"msg"`
+	Err         string      `json:"err,omitempty" example:"错误信息"`
+	Message     string      `json:"msg" example:"消息"`
 }
 
 const (
