@@ -8,11 +8,11 @@ import (
 	"strconv"
 )
 
-var Service = new(service)
+var Server = new(server)
 
-type service struct{}
+type server struct{}
 
-func (s *service) Reload() error {
+func (s *server) Reload() error {
 	if runtime.GOOS == "windows" {
 		return errors.New("系统不支持")
 	}

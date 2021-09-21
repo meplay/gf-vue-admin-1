@@ -406,6 +406,97 @@
                 }
             }
         },
+        "/authority/deleteAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "删除角色",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityDelete"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/authority/getAuthorityList": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "分页获取角色列表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.PageInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Authority"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/authority/updateAuthority": {
             "post": {
                 "security": [
@@ -420,7 +511,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Authority"
+                    "SystemAuthority"
                 ],
                 "summary": "更新角色信息",
                 "parameters": [
@@ -438,7 +529,19 @@
                     "200": {
                         "description": "更新成功!",
                         "schema": {
-                            "$ref": "#/definitions/response.Response"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.Authority"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -1657,6 +1760,140 @@
                 }
             }
         },
+        "/system/getServerInfo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "获取服务器信息",
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.Server"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/getSystemConfig": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "获取配置文件内容",
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/config.Config"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/reloadSystem": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "重启系统",
+                "responses": {
+                    "200": {
+                        "description": "重启系统成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/system/setSystemConfig": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "设置配置文件内容",
+                "parameters": [
+                    {
+                        "description": "设置配置文件内容",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/config.Config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "设置成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/user/changePassword": {
             "post": {
                 "security": [
@@ -2030,6 +2267,481 @@
                 }
             }
         },
+        "config.Aliyun": {
+            "type": "object",
+            "properties": {
+                "accessKeyId": {
+                    "type": "string"
+                },
+                "accessKeySecret": {
+                    "type": "string"
+                },
+                "basePath": {
+                    "type": "string"
+                },
+                "bucketName": {
+                    "type": "string"
+                },
+                "bucketUrl": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.AutoCode": {
+            "type": "object",
+            "properties": {
+                "restart": {
+                    "type": "boolean"
+                },
+                "root": {
+                    "type": "string"
+                },
+                "server": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Server"
+                },
+                "web": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Web"
+                }
+            }
+        },
+        "config.Captcha": {
+            "type": "object",
+            "properties": {
+                "imgHeight": {
+                    "description": "验证码高度",
+                    "type": "integer"
+                },
+                "imgWidth": {
+                    "description": "验证码宽度",
+                    "type": "integer"
+                },
+                "keyLong": {
+                    "description": "验证码长度",
+                    "type": "integer"
+                }
+            }
+        },
+        "config.Casbin": {
+            "type": "object",
+            "properties": {
+                "modelPath": {
+                    "description": "存放casbin模型的相对路径",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Config": {
+            "type": "object",
+            "properties": {
+                "aliyun": {
+                    "description": "阿里云对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Aliyun"
+                },
+                "autoCode": {
+                    "description": "代码生成器",
+                    "type": "object",
+                    "$ref": "#/definitions/config.AutoCode"
+                },
+                "captcha": {
+                    "description": "captcha 验证码",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Captcha"
+                },
+                "casbin": {
+                    "description": "casbin 权限",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Casbin"
+                },
+                "gorm": {
+                    "description": "gorm",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Gorm"
+                },
+                "jwt": {
+                    "description": "jwt",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Jwt"
+                },
+                "local": {
+                    "description": "本地",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Local"
+                },
+                "minio": {
+                    "description": "minio对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Minio"
+                },
+                "qiniu": {
+                    "description": "七牛云对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Qiniu"
+                },
+                "redis": {
+                    "description": "redis",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Redis"
+                },
+                "system": {
+                    "description": "system 系统",
+                    "type": "object",
+                    "$ref": "#/definitions/config.System"
+                },
+                "tencent": {
+                    "description": "腾讯对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Tencent"
+                },
+                "zap": {
+                    "description": "zap 日志",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Zap"
+                }
+            }
+        },
+        "config.Dsn": {
+            "type": "object",
+            "properties": {
+                "connMaxIdleTime": {
+                    "type": "string"
+                },
+                "connMaxLifetime": {
+                    "type": "string"
+                },
+                "maxIdleConnes": {
+                    "type": "integer"
+                },
+                "maxOpenConnes": {
+                    "type": "integer"
+                },
+                "replicas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/config.Replica"
+                    }
+                },
+                "sources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/config.Source"
+                    }
+                }
+            }
+        },
+        "config.Gorm": {
+            "type": "object",
+            "properties": {
+                "autoMigrate": {
+                    "type": "boolean"
+                },
+                "config": {
+                    "type": "string"
+                },
+                "connMaxIdleTime": {
+                    "type": "string"
+                },
+                "connMaxLifetime": {
+                    "type": "string"
+                },
+                "dns": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Dsn"
+                },
+                "logMode": {
+                    "type": "string"
+                },
+                "logZap": {
+                    "type": "boolean"
+                },
+                "maxIdleConnes": {
+                    "type": "integer"
+                },
+                "maxOpenConnes": {
+                    "type": "integer"
+                }
+            }
+        },
+        "config.Jwt": {
+            "type": "object",
+            "properties": {
+                "bufferTime": {
+                    "description": "缓冲时间",
+                    "type": "integer"
+                },
+                "expiresTime": {
+                    "description": "过期时间",
+                    "type": "integer"
+                },
+                "signingKey": {
+                    "description": "签名",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Local": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "description": "本地文件路径",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Minio": {
+            "type": "object",
+            "properties": {
+                "bucket": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "secret": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "useSsl": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "config.Qiniu": {
+            "type": "object",
+            "properties": {
+                "accessKey": {
+                    "description": "秘钥AK",
+                    "type": "string"
+                },
+                "bucket": {
+                    "description": "空间名称",
+                    "type": "string"
+                },
+                "imgPath": {
+                    "description": "CDN加速域名",
+                    "type": "string"
+                },
+                "secretKey": {
+                    "description": "秘钥SK",
+                    "type": "string"
+                },
+                "useCdnDomains": {
+                    "description": "上传是否使用CDN上传加速",
+                    "type": "boolean"
+                },
+                "useHttps": {
+                    "description": "是否使用https",
+                    "type": "boolean"
+                },
+                "zone": {
+                    "description": "存储区域",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Redis": {
+            "type": "object",
+            "properties": {
+                "addr": {
+                    "description": "服务器地址:端口",
+                    "type": "string"
+                },
+                "db": {
+                    "description": "redis的哪个数据库",
+                    "type": "integer"
+                },
+                "password": {
+                    "description": "密码",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Replica": {
+            "type": "object",
+            "properties": {
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "otherConfig": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Server": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "boot": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "request": {
+                    "type": "string"
+                },
+                "root": {
+                    "type": "string"
+                },
+                "router": {
+                    "type": "string"
+                },
+                "service": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Source": {
+            "type": "object",
+            "properties": {
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "otherConfig": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.System": {
+            "type": "object",
+            "properties": {
+                "env": {
+                    "description": "环境值",
+                    "type": "string"
+                },
+                "ossType": {
+                    "description": "Oss类型",
+                    "type": "string"
+                },
+                "useMultipoint": {
+                    "description": "多点登录拦截",
+                    "type": "boolean"
+                }
+            }
+        },
+        "config.Tencent": {
+            "type": "object",
+            "properties": {
+                "baseURL": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "pathPrefix": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "secretID": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Web": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "flow": {
+                    "type": "string"
+                },
+                "form": {
+                    "type": "string"
+                },
+                "root": {
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Zap": {
+            "type": "object",
+            "properties": {
+                "director": {
+                    "description": "日志文件夹",
+                    "type": "string"
+                },
+                "encodeLevel": {
+                    "description": "编码级",
+                    "type": "string"
+                },
+                "format": {
+                    "description": "输出",
+                    "type": "string"
+                },
+                "level": {
+                    "description": "级别",
+                    "type": "string"
+                },
+                "linkName": {
+                    "description": "软链接名称",
+                    "type": "string"
+                },
+                "logInConsole": {
+                    "description": "输出控制台",
+                    "type": "boolean"
+                },
+                "prefix": {
+                    "description": "日志前缀",
+                    "type": "string"
+                },
+                "showLine": {
+                    "description": "显示行",
+                    "type": "boolean"
+                },
+                "stacktraceKey": {
+                    "description": "栈名",
+                    "type": "string"
+                }
+            }
+        },
         "request.AddMenuAuthority": {
             "type": "object",
             "properties": {
@@ -2168,9 +2880,17 @@
                 }
             }
         },
-        "request.AuthorityUpdate": {
+        "request.AuthorityDelete": {
             "type": "object",
             "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
                 "authorityId": {
                     "description": "角色ID",
                     "type": "string"
@@ -2185,10 +2905,6 @@
                         "$ref": "#/definitions/system.Authority"
                     }
                 },
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "dataAuthorityId": {
                     "type": "array",
                     "items": {
@@ -2197,9 +2913,6 @@
                 },
                 "defaultRouter": {
                     "description": "默认菜单(默认dashboard)",
-                    "type": "string"
-                },
-                "deletedAt": {
                     "type": "string"
                 },
                 "menus": {
@@ -2211,9 +2924,52 @@
                 "parentId": {
                     "description": "父角色ID",
                     "type": "string"
+                }
+            }
+        },
+        "request.AuthorityUpdate": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
                 },
-                "updatedAt": {
-                    "description": "更新时间",
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authorityId": {
+                    "description": "角色ID",
+                    "type": "string"
+                },
+                "authorityName": {
+                    "description": "角色名",
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "dataAuthorityId": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "defaultRouter": {
+                    "description": "默认菜单(默认dashboard)",
+                    "type": "string"
+                },
+                "menus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "parentId": {
+                    "description": "父角色ID",
                     "type": "string"
                 }
             }
@@ -2764,6 +3520,60 @@
                 }
             }
         },
+        "response.Cpu": {
+            "type": "object",
+            "properties": {
+                "cores": {
+                    "type": "integer"
+                },
+                "cpus": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "response.Disk": {
+            "type": "object",
+            "properties": {
+                "totalGb": {
+                    "type": "integer"
+                },
+                "totalMb": {
+                    "type": "integer"
+                },
+                "usedGb": {
+                    "type": "integer"
+                },
+                "usedMb": {
+                    "type": "integer"
+                },
+                "usedPercent": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Os": {
+            "type": "object",
+            "properties": {
+                "compiler": {
+                    "type": "string"
+                },
+                "goVersion": {
+                    "type": "string"
+                },
+                "goos": {
+                    "type": "string"
+                },
+                "numCpu": {
+                    "type": "integer"
+                },
+                "numGoroutine": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.Response": {
             "type": "object",
             "properties": {
@@ -2778,6 +3588,41 @@
                 },
                 "msg": {
                     "type": "string"
+                }
+            }
+        },
+        "response.Rrm": {
+            "type": "object",
+            "properties": {
+                "totalMb": {
+                    "type": "integer"
+                },
+                "usedMb": {
+                    "type": "integer"
+                },
+                "usedPercent": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Server": {
+            "type": "object",
+            "properties": {
+                "cpu": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Cpu"
+                },
+                "disk": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Disk"
+                },
+                "os": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Os"
+                },
+                "ram": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Rrm"
                 }
             }
         },
@@ -2828,6 +3673,14 @@
         "system.Authority": {
             "type": "object",
             "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
                 "authorityId": {
                     "description": "角色ID",
                     "type": "string"
@@ -2842,10 +3695,6 @@
                         "$ref": "#/definitions/system.Authority"
                     }
                 },
-                "createdAt": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "dataAuthorityId": {
                     "type": "array",
                     "items": {
@@ -2856,9 +3705,6 @@
                     "description": "默认菜单(默认dashboard)",
                     "type": "string"
                 },
-                "deletedAt": {
-                    "type": "string"
-                },
                 "menus": {
                     "type": "array",
                     "items": {
@@ -2867,10 +3713,6 @@
                 },
                 "parentId": {
                     "description": "父角色ID",
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "description": "更新时间",
                     "type": "string"
                 }
             }

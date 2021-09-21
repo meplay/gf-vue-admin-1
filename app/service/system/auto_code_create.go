@@ -79,7 +79,7 @@ func (s *autoCode) CreateTemp(autoCode *system.AutoCodeStruct, ids ...uint) erro
 
 		if global.Config.AutoCode.Restart {
 			go func() {
-				_ = utils.Service.Reload()
+				_ = utils.Server.Reload()
 			}()
 		}
 	} else { // 打包

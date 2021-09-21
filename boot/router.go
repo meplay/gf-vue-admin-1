@@ -25,6 +25,7 @@ func (r *_router) Initialize() {
 		system.NewApiRouter(private).Private().PrivateWithoutRecord()
 		system.NewUserRouter(private).Private().PrivateWithoutRecord()
 		system.NewMenuRouter(private).Private().PrivateWithoutRecord()
+		system.NewServerRouter(private).Private().PrivateWithoutRecord()
 		system.NewAuthorityRouter(private).Private().PrivateWithoutRecord()
 		system.NewDictionaryRouter(private).Private().PrivateWithoutRecord()
 		system.NewAuthorityMenuRouter(private).Private().PrivateWithoutRecord()
