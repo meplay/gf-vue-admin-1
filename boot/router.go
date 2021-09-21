@@ -29,6 +29,7 @@ func (r *_router) Initialize() {
 		system.NewServerRouter(private).Private().PrivateWithoutRecord()
 		system.NewAuthorityRouter(private).Private().PrivateWithoutRecord()
 		system.NewDictionaryRouter(private).Private().PrivateWithoutRecord()
+		system.NewJwtBlacklistRouter(private).Private().PrivateWithoutRecord()
 		system.NewAuthorityMenuRouter(private).Private().PrivateWithoutRecord()
 		system.NewOperationRecordRouter(private).Private().PrivateWithoutRecord()
 		system.NewDictionaryDetailRouter(private).Private().PrivateWithoutRecord()
