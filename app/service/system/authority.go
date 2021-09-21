@@ -21,8 +21,20 @@ func (s *authority) Create(info *request.AuthorityCreate) (data *system.Authorit
 	if !errors.Is(global.Db.Where("authority_id = ?", info.AuthorityId).First(&entity).Error, gorm.ErrRecordNotFound) {
 		return &entity, errors.New("存在相同角色id")
 	}
-	entity = info.Create()
-	err = global.Db.Create(&entity).Error
+	err = global.Db.Transaction(func(tx *gorm.DB) error {
+		entity = info.Create()
+		err = global.Db.Create(&entity).Error
+		menus := info.DefaultMenu()
+		if err = s.SetAuthorityMenuByTransaction(tx, menus); err != nil {
+			return errors.Wrap(err, "新角色添加默认菜单权限失败!")
+		}
+		entities := info.DefaultCasbin()
+		if err = tx.Create(&entities).Error; err != nil {
+			return errors.Wrap(err, "新角色添加默认菜单权限失败!")
+		}
+		entity.Menus = menus.Menus
+		return nil
+	})
 	return &entity, err
 }
 
@@ -112,6 +124,19 @@ func (s *authority) SetAuthorityMenu(info *request.AuthoritySetMenu) error {
 		return errors.Wrap(err, "菜单查找失败!")
 	}
 	if err := global.Db.Model(&entity).Association("Menus").Replace(&info.Menus); err != nil {
+		return errors.Wrap(err, "设置菜单与角色绑定!")
+	}
+	return nil
+}
+
+// SetAuthorityMenuByTransaction 菜单与角色绑定 事务
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (s *authority) SetAuthorityMenuByTransaction(tx *gorm.DB, info *request.AuthoritySetMenu) error {
+	var entity system.Authority
+	if err := tx.Preload("Menus").First(&entity, "authority_id = ?", info.AuthorityId).Error; err != nil {
+		return errors.Wrap(err, "菜单查找失败!")
+	}
+	if err := tx.Model(&entity).Association("Menus").Replace(&info.Menus); err != nil {
 		return errors.Wrap(err, "设置菜单与角色绑定!")
 	}
 	return nil

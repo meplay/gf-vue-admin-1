@@ -306,6 +306,59 @@
                 }
             }
         },
+        "/authority/createAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "创建角色",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Authority"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/base/captcha": {
             "post": {
                 "security": [
@@ -1990,6 +2043,30 @@
                 "path": {
                     "type": "string",
                     "example": "api路径"
+                }
+            }
+        },
+        "request.AuthorityCreate": {
+            "type": "object",
+            "required": [
+                "authorityId"
+            ],
+            "properties": {
+                "authorityId": {
+                    "type": "string",
+                    "example": "角色ID"
+                },
+                "authorityName": {
+                    "type": "string",
+                    "example": "角色名"
+                },
+                "defaultRouter": {
+                    "type": "string",
+                    "example": "登录菜单(默认dashboard)"
+                },
+                "parentId": {
+                    "type": "string",
+                    "example": "父角色ID"
                 }
             }
         },

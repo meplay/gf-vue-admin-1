@@ -34,6 +34,8 @@ func (s *_casbin) Casbin() *casbin.SyncedEnforcer {
 	return syncedEnforcer
 }
 
+// Update 更新角色权限
+// Author [SliverHorn](https://github.com/SliverHorn)
 func (s *_casbin) Update(authorityId string, casbinInfos []request.CasbinInfo) error {
 	s.Clear(0, authorityId)
 	length := len(casbinInfos)
