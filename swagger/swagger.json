@@ -306,6 +306,56 @@
                 }
             }
         },
+        "/authority/copyAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "拷贝角色",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityCopy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "拷贝成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.Authority"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/authority/createAuthority": {
             "post": {
                 "security": [
@@ -336,7 +386,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "获取列表数据成功!",
+                        "description": "创建成功!",
                         "schema": {
                             "allOf": [
                                 {
@@ -346,14 +396,49 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/system.Authority"
-                                            }
+                                            "$ref": "#/definitions/system.Authority"
                                         }
                                     }
                                 }
                             ]
+                        }
+                    }
+                }
+            }
+        },
+        "/authority/updateAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authority"
+                ],
+                "summary": "更新角色信息",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
                         }
                     }
                 }
@@ -2046,6 +2131,19 @@
                 }
             }
         },
+        "request.AuthorityCopy": {
+            "type": "object",
+            "properties": {
+                "authority": {
+                    "type": "object",
+                    "$ref": "#/definitions/system.Authority"
+                },
+                "oldAuthorityId": {
+                    "type": "string",
+                    "example": "旧角色ID"
+                }
+            }
+        },
         "request.AuthorityCreate": {
             "type": "object",
             "required": [
@@ -2067,6 +2165,56 @@
                 "parentId": {
                     "type": "string",
                     "example": "父角色ID"
+                }
+            }
+        },
+        "request.AuthorityUpdate": {
+            "type": "object",
+            "properties": {
+                "authorityId": {
+                    "description": "角色ID",
+                    "type": "string"
+                },
+                "authorityName": {
+                    "description": "角色名",
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "dataAuthorityId": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "defaultRouter": {
+                    "description": "默认菜单(默认dashboard)",
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "menus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "parentId": {
+                    "description": "父角色ID",
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
                 }
             }
         },

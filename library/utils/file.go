@@ -32,7 +32,8 @@ func (f *file) TrimSpace(target interface{}) {
 
 // Move 文件移动 src: 源位置,绝对路径or相对路径, dst: 目标位置,绝对路径or相对路径,必须为文件夹
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (f *file) Move(src string, dst string) (err error) {
+func (f *file) Move(src string, dst string) error {
+	var err error
 	if dst == "" || src == "" {
 		return nil
 	}

@@ -2,6 +2,7 @@ package request
 
 import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
+	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 )
 
@@ -48,8 +49,16 @@ func (r *AuthorityCreate) DefaultCasbin() []system.Casbin {
 }
 
 type AuthorityCopy struct {
-	Authority      system.Authority `json:"authority" example:"角色信息"`
+	Authority      system.Authority `json:"authority"`
 	OldAuthorityId string           `json:"oldAuthorityId"  example:"旧角色ID"`
+}
+
+func (r *AuthorityCopy) ToGetAuthorityId() *common.GetAuthorityId  {
+	return &common.GetAuthorityId{AuthorityId: r.OldAuthorityId}
+}
+
+func (r *AuthorityCopy) ToCasbinSearch() *CasbinSearch {
+	return &CasbinSearch{AuthorityId: r.OldAuthorityId}
 }
 
 type AuthorityUpdate struct {

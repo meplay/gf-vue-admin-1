@@ -14,7 +14,7 @@ type operationRecord struct{}
 
 // Create 创建记录
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *operationRecord) Create(info *request.OperationRecordCreate) (err error) {
+func (s *operationRecord) Create(info *request.OperationRecordCreate) error {
 	return global.Db.Create(&info.OperationRecord).Error
 }
 
@@ -30,13 +30,13 @@ func (s *operationRecord) First(info *common.GetByID) (data *system.OperationRec
 
 // Delete 删除操作记录
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *operationRecord) Delete(info *common.GetByID) (err error) {
+func (s *operationRecord) Delete(info *common.GetByID) error {
 	return global.Db.Delete(&system.OperationRecord{}, info.ID).Error
 }
 
 // Deletes 批量删除记录
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *operationRecord) Deletes(ids *common.GetByIDs) (err error) {
+func (s *operationRecord) Deletes(ids *common.GetByIDs) error {
 	return global.Db.Delete(&[]system.OperationRecord{}, "id in (?)", ids.Ids).Error
 }
 

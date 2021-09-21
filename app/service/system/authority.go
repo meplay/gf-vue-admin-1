@@ -45,25 +45,43 @@ func (s *authority) Copy(info *request.AuthorityCopy) (*system.Authority, error)
 	if !errors.Is(global.Db.Where("authority_id = ?", info.Authority.AuthorityId).First(&entity).Error, gorm.ErrRecordNotFound) {
 		return &entity, errors.New("存在相同角色id")
 	}
-	info.Authority.Children = []system.Authority{}
-	menus, err := AuthorityMenu.GetAuthorityMenu(&common.GetAuthorityId{AuthorityId: info.OldAuthorityId})
-	var menu []system.Menu
-	for _, v := range menus {
-		intNum, _ := strconv.Atoi(v.MenuId)
-		v.Menu.ID = uint(intNum)
-		menu = append(menu, v.Menu)
+
+	menus, err := AuthorityMenu.GetAuthorityMenu(info.ToGetAuthorityId())
+	if err != nil {
+		return nil, errors.Wrap(err, "查询角色id("+info.OldAuthorityId+")的菜单数据失败")
 	}
-	info.Authority.Menus = menu
+
+	length := len(menus)
+	info.Authority.Menus = make([]system.Menu, 0, length)
+	for i := 0; i < length; i++ {
+		intNum, _ := strconv.Atoi(menus[i].MenuId)
+		menus[i].Menu.ID = uint(intNum)
+		info.Authority.Menus = append(info.Authority.Menus, menus[i].Menu)
+	} // 角色菜单数据组装
+
 	if err = global.Db.Create(&info.Authority).Error; err != nil {
 		return nil, errors.Wrap(err, "复制角色失败!")
 	}
 
-	paths := Casbin.GetPolicyPathByAuthorityId(info.OldAuthorityId)
-	if err = Casbin.Update(info.Authority.AuthorityId, paths); err != nil {
-		if err = s.Delete(&request.AuthorityDelete{Authority: info.Authority}); err != nil {
-			return nil, errors.Wrap(err, "更新权限失败, 删除角色失败!")
-		}
+	var casbinRules []system.Casbin
+	casbinRules, _, err = Casbin.GetList(info.ToCasbinSearch())
+	if err != nil {
+		return nil, errors.Wrap(err, "查询角色id("+info.OldAuthorityId+")的权限数据失败")
 	}
+	length = len(casbinRules)
+	for i := 0; i < length; i++ {
+		casbinRules[i].AuthorityId = info.Authority.AuthorityId
+	} // 替换旧角色id为复制后的角色id
+
+	err = global.Db.Transaction(func(tx *gorm.DB) error {
+		if err = tx.Create(&info.Authority).Error; err != nil {
+			return errors.Wrap(err, "复制角色及角色菜单数据失败!")
+		}
+		if err = tx.Create(&casbinRules).Error; err != nil {
+			return errors.Wrap(err, "复制角色权限数据失败!")
+		}
+		return nil
+	})
 	return &info.Authority, nil
 }
 
@@ -159,8 +177,8 @@ func (s *authority) GetList(info *common.PageInfo) (list []system.Authority, tot
 
 // findChildrenAuthority 查询子角色 todo 循环sql优化
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) findChildrenAuthority(authority *system.Authority) (err error) {
-	err = global.Db.Preload("AuthorityResources").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error
+func (s *authority) findChildrenAuthority(authority *system.Authority) error {
+	err := global.Db.Preload("AuthorityResources").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error
 	if len(authority.Children) > 0 {
 		for k := range authority.Children {
 			err = s.findChildrenAuthority(&authority.Children[k])

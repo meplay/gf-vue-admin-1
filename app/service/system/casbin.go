@@ -34,6 +34,21 @@ func (s *_casbin) Casbin() *casbin.SyncedEnforcer {
 	return syncedEnforcer
 }
 
+// GetPolicyPathByAuthorityId 获取权限列表
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (s *_casbin) GetPolicyPathByAuthorityId(authorityId string) []request.CasbinInfo {
+	list := s.Casbin().GetFilteredPolicy(0, authorityId)
+	length := len(list)
+	infos := make([]request.CasbinInfo, 0, length)
+	for _, v := range list {
+		infos = append(infos, request.CasbinInfo{
+			Path:   v[1],
+			Method: v[2],
+		})
+	}
+	return infos
+}
+
 // Update 更新角色权限
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *_casbin) Update(authorityId string, casbinInfos []request.CasbinInfo) error {
@@ -59,27 +74,22 @@ func (s *_casbin) UpdateApi(oldPath string, newPath string, oldMethod string, ne
 	}).Error
 }
 
-// GetPolicyPathByAuthorityId 获取权限列表
-// Author [SliverHorn](https://github.com/SliverHorn)
-func (s *_casbin) GetPolicyPathByAuthorityId(authorityId string) []request.CasbinInfo {
-	list := s.Casbin().GetFilteredPolicy(0, authorityId)
-	length := len(list)
-	infos := make([]request.CasbinInfo, 0, length)
-	for _, v := range list {
-		infos = append(infos, request.CasbinInfo{
-			Path:   v[1],
-			Method: v[2],
-		})
-	}
-	return infos
-}
-
 // Clear 清除匹配的权限
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *_casbin) Clear(v int, p ...string) bool {
 	e := s.Casbin()
 	success, _ := e.RemoveFilteredPolicy(v, p...)
 	return success
+}
+
+// GetList 获取 system.Casbin 列表数据
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (s *_casbin) GetList(info *request.CasbinSearch) (list []system.Casbin, total int64, err error) {
+	db := global.Db.Model(&system.Casbin{})
+	var entities []system.Casbin
+	db.Scopes(info.Search())
+	err = db.Count(&total).Find(&entities).Error
+	return entities, total, err
 }
 
 // ParamsMatch 自定义规则函数
