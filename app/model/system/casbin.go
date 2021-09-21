@@ -13,8 +13,8 @@ type Casbin struct {
 }
 
 func (c *Casbin) BeforeCreate(tx *gorm.DB) error {
-	entity := Casbin{}
-	if errors.Is(tx.First(&entity).Error, gorm.ErrRecordNotFound) {
+	entity := Casbin{PType: c.PType, AuthorityId: c.AuthorityId, Path: c.Path, Method: c.Method}
+	if errors.Is(tx.Where(&entity).First(&entity).Error, gorm.ErrRecordNotFound) {
 		return nil
 	}
 	return errors.Errorf(`角色id(%s:%s)存在相同api(%s:%s)!`, c.PType, c.AuthorityId, c.Path, c.Method)

@@ -65,6 +65,10 @@ type AuthorityUpdate struct {
 	system.Authority
 }
 
+func (r *AuthorityUpdate) Update() system.Authority {
+	return r.Authority
+}
+
 type AuthorityDelete struct {
 	system.Authority
 }

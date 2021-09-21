@@ -23,12 +23,15 @@ func (s *authority) Create(info *request.AuthorityCreate) (data *system.Authorit
 	}
 	err = global.Db.Transaction(func(tx *gorm.DB) error {
 		entity = info.Create()
-		err = global.Db.Create(&entity).Error
+		err = tx.Create(&entity).Error
 		menus := info.DefaultMenu()
 		if err = s.SetAuthorityMenuByTransaction(tx, menus); err != nil {
 			return errors.Wrap(err, "新角色添加默认菜单权限失败!")
 		}
 		entities := info.DefaultCasbin()
+		for i := 0; i < len(entities); i++ {
+			entities[i].AuthorityId = info.AuthorityId
+		}
 		if err = tx.Create(&entities).Error; err != nil {
 			return errors.Wrap(err, "新角色添加默认菜单权限失败!")
 		}
@@ -88,23 +91,29 @@ func (s *authority) Copy(info *request.AuthorityCopy) (*system.Authority, error)
 // Update 更新角色
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *authority) Update(info *request.AuthorityUpdate) (authority *system.Authority, err error) {
-	err = global.Db.Model(&system.Authority{}).Where("authority_id = ?", info.AuthorityId).Updates(&info.Authority).Error
-	return &info.Authority, err
+	updates := info.Update()
+	err = global.Db.Select("*").Omit("created_at", "deleted_at").Updates(&updates).Error
+	return &updates, err
 }
 
 // Delete 删除角色
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *authority) Delete(info *request.AuthorityDelete) error {
 	if !errors.Is(global.Db.Where("authority_id = ?", info.AuthorityId).First(&system.User{}).Error, gorm.ErrRecordNotFound) {
-		return errors.New("此角色有用户正在使用禁止删除")
+		return errors.New("此角色有用户正在使用禁止删除!")
 	}
 	if !errors.Is(global.Db.Where("parent_id = ?", info.AuthorityId).First(&system.Authority{}).Error, gorm.ErrRecordNotFound) {
-		return errors.New("此角色存在子角色不允许删除")
+		return errors.New("此角色存在子角色不允许删除!")
 	}
-	db := global.Db.Preload("Menus").Where("authority_id = ?", info.AuthorityId).First(info)
-	err := db.Unscoped().Delete(info).Error
+	db := global.Db.Model(&system.Authority{})
+
+	if err := db.Preload("Menus").Where("authority_id = ?", info.AuthorityId).First(&info.Authority).Error; err != nil {
+		return errors.Wrap(err, "角色不存在!")
+	}
+
+	err := db.Unscoped().Delete(&info.Authority).Error
 	if len(info.Menus) > 0 {
-		err = global.Db.Model(info).Association("Menus").Delete(info.Menus)
+		err = global.Db.Model(info).Association("Menus").Delete(&info.Menus)
 	} else {
 		err = db.Error
 	}
