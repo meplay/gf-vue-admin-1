@@ -1,5 +1,5 @@
 //go:build mysql
-// +build
+// +build mysql
 
 package constant
 
