@@ -53,7 +53,7 @@ type AuthorityCopy struct {
 	OldAuthorityId string           `json:"oldAuthorityId"  example:"旧角色ID"`
 }
 
-func (r *AuthorityCopy) ToGetAuthorityId() *common.GetAuthorityId  {
+func (r *AuthorityCopy) ToGetAuthorityId() *common.GetAuthorityId {
 	return &common.GetAuthorityId{AuthorityId: r.OldAuthorityId}
 }
 
@@ -71,6 +71,10 @@ func (r *AuthorityUpdate) Update() system.Authority {
 
 type AuthorityDelete struct {
 	system.Authority
+}
+
+func (r *AuthorityDelete) ToCasbinSearch() *CasbinSearch {
+	return &CasbinSearch{AuthorityId: r.AuthorityId}
 }
 
 type AuthoritySetResources struct {

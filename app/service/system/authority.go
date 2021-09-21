@@ -105,26 +105,38 @@ func (s *authority) Delete(info *request.AuthorityDelete) error {
 	if !errors.Is(global.Db.Where("parent_id = ?", info.AuthorityId).First(&system.Authority{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("此角色存在子角色不允许删除!")
 	}
-	db := global.Db.Model(&system.Authority{})
 
-	if err := db.Preload("Menus").Where("authority_id = ?", info.AuthorityId).First(&info.Authority).Error; err != nil {
+	if err := global.Db.Model(&system.Authority{}).Preload("Menus").Where("authority_id = ?", info.AuthorityId).First(&info.Authority).Error; err != nil {
 		return errors.Wrap(err, "角色不存在!")
-	}
+	} // 查询角色关联的菜单
 
-	err := db.Unscoped().Delete(&info.Authority).Error
-	if len(info.Menus) > 0 {
-		err = global.Db.Model(info).Association("Menus").Delete(&info.Menus)
-	} else {
-		err = db.Error
-	}
-	err = global.Db.Delete(&[]system.UseAuthority{}, "authority_id = ?", info.AuthorityId).Error
-	Casbin.Clear(0, info.AuthorityId)
-	return err
+	list, _, err := Casbin.GetList(info.ToCasbinSearch())
+	if err != nil {
+		return errors.Wrap(err, "查询角色关联的权限列表失败!")
+	} // 查询角色关联的权限列表
+
+	return global.Db.Transaction(func(tx *gorm.DB) error {
+		if err = tx.Model(&system.Authority{}).Unscoped().Delete(&info.Authority).Error; err != nil {
+			return errors.Wrap(err, "删除角色失败!")
+		} // 删除角色信息
+		if len(info.Menus) > 0 {
+			if err = tx.Model(&system.Authority{}).Association("Menus").Delete(&info.Menus); err != nil {
+				return errors.Wrap(err, "删除角色菜单失败!")
+			}
+		} // 删除角色菜单信息
+		if err = tx.Model(&system.Casbin{}).Delete(&list).Error; err != nil {
+			return errors.Wrap(err, "删除角色权限失败!")
+		} // 删除角色权限信息
+		if err = tx.Delete(&[]system.UseAuthority{}, "authority_id = ?", info.AuthorityId).Error; err != nil {
+			return errors.Wrap(err, "删除用户多角色失败!")
+		} // 删除用户多角色信息
+		return nil
+	})
 }
 
 // GetAuthorityInfo 获取角色所有信息
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authority) GetAuthorityInfo(info common.GetAuthorityId) (*system.Authority, error) {
+func (s *authority) GetAuthorityInfo(info *common.GetAuthorityId) (*system.Authority, error) {
 	var entity system.Authority
 	err := global.Db.Preload("AuthorityResources").Where("authority_id = ?", info.AuthorityId).First(&entity).Error
 	return &entity, err
