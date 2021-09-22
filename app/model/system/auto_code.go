@@ -1,17 +1,27 @@
 package system
 
-import "github.com/flipped-aurora/gf-vue-admin/library/utils"
+import (
+	"database/sql/driver"
+	"encoding/json"
+	"fmt"
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	"github.com/flipped-aurora/gf-vue-admin/library/utils"
+	"github.com/pkg/errors"
+	"path/filepath"
+)
 
 type AutoCodeStruct struct {
-	StructName         string   `json:"structName"`         // Struct名称
 	TableName          string   `json:"tableName"`          // 表名
+	StructName         string   `json:"structName"`         // Struct名称
 	PackageName        string   `json:"packageName"`        // 文件名称
-	HumpPackageName    string   `json:"humpPackageName"`    // go文件名称
-	Abbreviation       string   `json:"abbreviation"`       // Struct简称
 	Description        string   `json:"description"`        // Struct中文名称
-	AutoCreateApiToSql bool     `json:"autoCreateApiToSql"` // 是否自动创建api
+	Abbreviation       string   `json:"abbreviation"`       // Struct简称
+	HumpPackageName    string   `json:"humpPackageName"`    // go文件名称
 	AutoMoveFile       bool     `json:"autoMoveFile"`       // 是否自动移动文件
+	AutoCreateApiToSql bool     `json:"autoCreateApiToSql"` // 是否自动创建api
 	Fields             []*Field `json:"fields"`
+
+	Injection []AutoCodeInjection `json:"-" gorm:"-"`
 }
 
 type Field struct {
@@ -27,6 +37,34 @@ type Field struct {
 	DictType        string `json:"dictType"`        // 字典
 }
 
+// Scan 扫描
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a *AutoCodeStruct) Scan(value interface{}) error {
+	switch v := value.(type) {
+	case []byte:
+		if err := json.Unmarshal(v, a); err != nil {
+			return err
+		}
+	case string:
+		if err := json.Unmarshal([]byte(v), a); err != nil {
+			return err
+		}
+	default:
+		return errors.New(fmt.Sprint("Failed to unmarshal AutoCodeStruct value:", value))
+	}
+	return nil
+}
+
+// Value 值
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a AutoCodeStruct) Value() (driver.Value, error) {
+	bytes, err := json.Marshal(&a)
+	if err != nil {
+		return nil, err
+	}
+	return driver.Value(bytes), err
+}
+
 // TrimSpace 结构体去空格
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (a *AutoCodeStruct) TrimSpace() {
@@ -37,4 +75,37 @@ func (a *AutoCodeStruct) TrimSpace() {
 	for i := 0; i < len(a.Fields); i++ {
 		utils.File.TrimSpace(a.Fields[i])
 	}
+}
+
+// GenerateInjection 生成注入内容
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a *AutoCodeStruct) GenerateInjection() []AutoCodeInjection {
+	entities := []AutoCodeInjection{
+		{
+			Filepath:       filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "gorm.go"),
+			FunctionName:   "Initialize",
+			CodeDataFormat: "new(example.%s)",
+		},
+		{
+			Filepath:       filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "router.go"),
+			FunctionName:   "Initialize",
+			CodeDataFormat: "example.New%sRouter(private).Public().PublicWithoutRecord()",
+		},
+		{
+			Filepath:       filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "router.go"),
+			FunctionName:   "Initialize",
+			CodeDataFormat: "example.New%sRouter(private).Private().PrivateWithoutRecord()",
+		},
+	}
+	for i := 0; i < 3; i++ {
+		if a.TableName != "" {
+			entities[i].StructName = a.TableName
+			entities[i].CodeData = fmt.Sprintf(entities[i].CodeDataFormat, a.TableName)
+		} else {
+			entities[i].StructName = a.StructName
+			entities[i].CodeData = fmt.Sprintf(entities[i].CodeDataFormat, a.StructName)
+		}
+	}
+	a.Injection = entities
+	return entities
 }

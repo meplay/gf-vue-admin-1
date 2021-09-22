@@ -4,20 +4,23 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"fmt"
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/pkg/errors"
+	"path/filepath"
+	"time"
 )
 
-type AutoCodeInjection struct {
-	Filepath       string `json:"filepath" gorm:"column:filepath;comment:注入的文件绝对路径"`
-	CodeData       string `json:"codeData" gorm:"column:code_data;comment:注入代码"`
-	StructName     string `json:"structName" gorm:"column:struct_name;comment:注入的结构体名"`
-	FunctionName   string `json:"functionName" gorm:"column:function_name;comment:注入的函数名"`
-	CodeDataFormat string `json:"codeDataFormat" gorm:"column:code_data_format;comment:注入代码带格式化"`
+type AutoCodePaths struct {
+	Filepath string `json:"filepath"`
+}
+
+func (a *AutoCodePaths) RmFilePath() string {
+	return filepath.Join(global.Config.AutoCode.Root, "rm_file", time.Now().Format("20060102"), filepath.Base(filepath.Dir(filepath.Dir(a.Filepath))), filepath.Base(filepath.Dir(a.Filepath)), filepath.Base(a.Filepath))
 }
 
 // Scan 扫描
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (a *AutoCodeInjection) Scan(value interface{}) error {
+func (a *AutoCodePaths) Scan(value interface{}) error {
 	switch v := value.(type) {
 	case []byte:
 		if err := json.Unmarshal(v, a); err != nil {
@@ -35,7 +38,7 @@ func (a *AutoCodeInjection) Scan(value interface{}) error {
 
 // Value 值
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (a AutoCodeInjection) Value() (driver.Value, error) {
+func (a AutoCodePaths) Value() (driver.Value, error) {
 	bytes, err := json.Marshal(&a)
 	if err != nil {
 		return nil, err
