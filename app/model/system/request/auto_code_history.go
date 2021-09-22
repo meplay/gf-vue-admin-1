@@ -11,7 +11,6 @@ type AutoCodeHistorySearch struct {
 
 func (s *AutoCodeHistorySearch) Search() func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-
 		return db.Select("id,created_at,updated_at,struct_name,struct_cn_name,flag,table_name")
 	}
 }

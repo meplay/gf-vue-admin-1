@@ -31,7 +31,6 @@ func (s *autoCode) CreateTemp(autoCode *system.AutoCodeStruct, ids ...uint) erro
 		return err
 	} // 写入文件前，先创建文件夹
 
-
 	for _, value := range dataList {
 		file, _err := os.OpenFile(value.AutoCodePath, os.O_CREATE|os.O_WRONLY, 0755)
 		if _err != nil {
@@ -45,7 +44,7 @@ func (s *autoCode) CreateTemp(autoCode *system.AutoCodeStruct, ids ...uint) erro
 
 	defer func() { // 移除中间文件
 		if err = os.RemoveAll(autoPath); err != nil {
-			zap.L().Error("")
+			zap.L().Error("移除中间文件失败!", zap.Error(err))
 		}
 	}()
 	bf := strings.Builder{}

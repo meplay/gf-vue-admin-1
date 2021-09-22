@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-type autoCodeHistory struct {}
+type autoCodeHistory struct{}
 
 var AutoCodeHistory = new(autoCodeHistory)
 
@@ -26,13 +26,13 @@ func (s *autoCodeHistory) Repeat(structName string) bool {
 // Create RouterPath : RouterPath@RouterString;RouterPath2@RouterString2
 func (s *autoCodeHistory) Create(meta, structName, structCNName, autoCodePath string, injectionMeta string, tableName string, apiIds string) error {
 	return global.Db.Create(&system.AutoCodeHistory{
-		RequestMeta:   meta,
 		AutoCodePath:  autoCodePath,
 		InjectionMeta: injectionMeta,
 		StructName:    structName,
 		StructCNName:  structCNName,
 		TableName:     tableName,
 		ApiIDs:        apiIds,
+		Request:       meta,
 	}).Error
 }
 
@@ -43,7 +43,7 @@ func (s *autoCodeHistory) RollBack(id uint) error {
 		return err
 	}
 
-	err := Api.Deletes(entity.ToCommonGetByID())
+	err := Api.Deletes(entity.Apis.ToCommonGetByID())
 	if err != nil {
 		return errors.Wrap(err, "回滚api表数据失败!")
 	} // 清除API表

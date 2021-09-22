@@ -39,6 +39,11 @@ func Init() {
 			funcName:    "Initialize",
 			structNameF: "example.New%sRouter(private).Private()",
 		},
+		{
+			path:        filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "router.go"),
+			funcName:    "Initialize",
+			structNameF: "example.New%sRouter(private).Private()",
+		},
 	}
 }
 
@@ -76,7 +81,8 @@ func (s *autoCode) DropTable(tableName string) error {
 func (s *autoCode) getNeedList(info *system.AutoCodeStruct) (dataList []response.Template, fileList []string, needMkdir []string, err error) {
 	info.TrimSpace() // 去除所有空格
 
-	templateFileList, err := s.GetAllTemplateFile(basePath, nil)
+	var templateFileList []string
+	templateFileList, err = s.GetAllTemplateFile(basePath, nil)
 	if err != nil {
 		return nil, nil, nil, err
 	} // 获取 basePath 文件夹下所有tpl文件
