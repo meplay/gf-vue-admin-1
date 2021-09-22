@@ -1,11 +1,9 @@
 package system
 
 import (
-	"fmt"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
-	"github.com/flipped-aurora/gf-vue-admin/app/model/system/response"
+	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
-	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -22,30 +20,68 @@ const (
 	basePath = "resource/template"
 )
 
-var injectionPaths []injectionMeta
+type Templates []Template
 
-func Init() {
-	if len(injectionPaths) != 0 {
+type Template struct {
+	Template         *template.Template
+	LocationPath     string
+	AutoCodePath     string
+	AutoMoveFilePath string
+}
+
+func (t *Template) GenerateAutoMoveFilePath() {
+	base := filepath.Base(t.AutoCodePath)
+	fileSlice := strings.Split(t.AutoCodePath, string(os.PathSeparator))
+	n := len(fileSlice)
+	if n <= 2 {
 		return
 	}
-	injectionPaths = []injectionMeta{
-		{
-			path:        filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "gorm.go"),
-			funcName:    "Initialize",
-			structNameF: "new(example.%s),",
-		},
-		{
-			path:        filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "router.go"),
-			funcName:    "Initialize",
-			structNameF: "example.New%sRouter(private).Private()",
-		},
+	if strings.Contains(fileSlice[1], "server") {
+		if strings.Contains(fileSlice[n-2], "router") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root,
+				global.Config.AutoCode.Server.Router, base)
+		} else if strings.Contains(fileSlice[n-2], "api") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root,
+				global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Api, base)
+		} else if strings.Contains(fileSlice[n-2], "service") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root,
+				global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Service, base)
+		} else if strings.Contains(fileSlice[n-2], "model") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root,
+				global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Model, base)
+		} else if strings.Contains(fileSlice[n-2], "request") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root,
+				global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Request, base)
+		}
+	} else if strings.Contains(fileSlice[1], "web") {
+		if strings.Contains(fileSlice[n-1], "js") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root,
+				global.Config.AutoCode.Web.Root, global.Config.AutoCode.Web.Api, base)
+		} else if strings.Contains(fileSlice[n-2], "form") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Web.Root, global.Config.AutoCode.Web.Form, filepath.Base(filepath.Dir(filepath.Dir(t.AutoCodePath))), strings.TrimSuffix(base, filepath.Ext(base))+"Form.vue")
+		} else if strings.Contains(fileSlice[n-2], "table") {
+			t.AutoMoveFilePath = filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Web.Root, global.Config.AutoCode.Web.Table, filepath.Base(filepath.Dir(filepath.Dir(t.AutoCodePath))), base)
+		}
 	}
 }
 
-type injectionMeta struct {
-	path        string
-	funcName    string
-	structNameF string // 带格式化的
+func (t *Templates) ToRequestAutoCodeHistoryCreate(info *system.AutoCodeStruct, apis system.AutoCodeApis) *request.AutoCodeHistoryCreate {
+	if t == nil || info == nil {
+		return nil
+	}
+	entity := request.AutoCodeHistoryCreate{
+		Apis:           apis,
+		Injection:      info.Injection,
+		AutoCodeStruct: *info,
+	}
+	templates := *t
+	length := len(templates)
+	paths := make([]system.AutoCodePaths, 0, length)
+	for i := 0; i < length; i++ {
+		paths = append(paths, system.AutoCodePaths{Filepath: templates[i].AutoMoveFilePath})
+	}
+	entity.AutoCodePaths = paths
+	return &entity
 }
 
 // GetAllTemplateFile 获取 pathName 文件夹下所有 tpl 文件
@@ -73,23 +109,24 @@ func (s *autoCode) DropTable(tableName string) error {
 	return global.Db.Migrator().DropTable(tableName)
 }
 
-func (s *autoCode) getNeedList(info *system.AutoCodeStruct) (dataList []response.Template, fileList []string, needMkdir []string, err error) {
+func (s *autoCode) getNeedList(info *system.AutoCodeStruct) (dataList Templates, fileList []string, needMkdir []string, err error) {
 	info.TrimSpace() // 去除所有空格
 
-	templateFileList, err := s.GetAllTemplateFile(basePath, nil)
+	var templateFileList []string
+	templateFileList, err = s.GetAllTemplateFile(basePath, nil)
 	if err != nil {
 		return nil, nil, nil, err
 	} // 获取 basePath 文件夹下所有tpl文件
 
 	length := len(templateFileList)
-	dataList = make([]response.Template, 0, length)
+	dataList = make(Templates, 0, length)
 	fileList = make([]string, 0, length)
 	needMkdir = make([]string, 0, length) // 当文件夹下存在多个tpl文件时，改为map更合理
 
 	for i := 0; i < length; i++ {
-		dataList = append(dataList, response.Template{LocationPath: templateFileList[i]}) // 根据文件路径生成 tplData 结构体，待填充数据
+		dataList = append(dataList, Template{LocationPath: templateFileList[i]}) // 根据文件路径生成 tplData 结构体，待填充数据
 
-		dataList[i].Template, err = template.ParseFiles(dataList[i].LocationPath)         // 生成 *Template, 填充 template 字段
+		dataList[i].Template, err = template.ParseFiles(dataList[i].LocationPath) // 生成 *Template, 填充 template 字段
 		if err != nil {
 			return nil, nil, nil, err
 		}
@@ -126,16 +163,4 @@ func (s *autoCode) getNeedList(info *system.AutoCodeStruct) (dataList []response
 		fileList = append(fileList, dataList[i].AutoCodePath)
 	}
 	return dataList, fileList, needMkdir, err
-}
-
-// injectionCode 封装代码注入
-func injectionCode(structName string, bf *strings.Builder) error {
-	for _, meta := range injectionPaths {
-		code := fmt.Sprintf(meta.structNameF, structName)
-		if err := utils.Injection.AutoCode(meta.path, meta.funcName, code); err != nil {
-			return err
-		}
-		bf.WriteString(fmt.Sprintf("%s@%s@%s;", meta.path, meta.funcName, code))
-	}
-	return nil
 }
