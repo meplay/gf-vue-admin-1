@@ -547,6 +547,370 @@
                 }
             }
         },
+        "/autoCode/createTemp": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "自动代码模板",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AutoCodeCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/delSysHistory": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AutoCode"
+                ],
+                "summary": "删除回滚记录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getColumn": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "获取当前表所有字段",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "数据库名",
+                        "name": "dbName",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "表名",
+                        "name": "tableName",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.Column"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getDatabase": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "获取当前所有数据库",
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getMeta": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCodeHistory"
+                ],
+                "summary": "回滚",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getSysHistory": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCodeHistory"
+                ],
+                "summary": "查询回滚记录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AutoCodeHistorySearch"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "回滚成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getTables": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "获取当前数据库所有表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "数据库名",
+                        "name": "dbName",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.Table"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/preview": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "预览创建后的代码",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AutoCodeCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/rollback": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCodeHistory"
+                ],
+                "summary": "回滚",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "回滚成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/base/captcha": {
             "post": {
                 "security": [
@@ -1234,9 +1598,8 @@
                 "summary": "用id查询系统字典",
                 "parameters": [
                     {
-                        "type": "number",
-                        "example": 7,
-                        "description": "主键ID",
+                        "type": "string",
+                        "example": "uint 主键ID",
                         "name": "id",
                         "in": "query"
                     },
@@ -1288,15 +1651,15 @@
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "example": 1,
+                        "type": "string",
+                        "example": "int 页码",
                         "description": "页码",
                         "name": "page",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "example": 10,
+                        "type": "string",
+                        "example": "int 每页大小",
                         "description": "每页大小",
                         "name": "pageSize",
                         "in": "query"
@@ -1483,9 +1846,8 @@
                 "summary": "用id查询系统详情字典",
                 "parameters": [
                     {
-                        "type": "number",
-                        "example": 7,
-                        "description": "主键ID",
+                        "type": "string",
+                        "example": "uint 主键ID",
                         "name": "id",
                         "in": "query"
                     }
@@ -1531,15 +1893,15 @@
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "example": 1,
+                        "type": "string",
+                        "example": "int 页码",
                         "description": "页码",
                         "name": "page",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "example": 10,
+                        "type": "string",
+                        "example": "int 每页大小",
                         "description": "每页大小",
                         "name": "pageSize",
                         "in": "query"
@@ -1770,9 +2132,8 @@
                 "summary": "用id查询操作日志记录",
                 "parameters": [
                     {
-                        "type": "number",
-                        "example": 7,
-                        "description": "主键ID",
+                        "type": "string",
+                        "example": "uint 主键ID",
                         "name": "id",
                         "in": "query"
                     }
@@ -1812,15 +2173,15 @@
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "example": 1,
+                        "type": "string",
+                        "example": "int 页码",
                         "description": "页码",
                         "name": "page",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "example": 10,
+                        "type": "string",
+                        "example": "int 每页大小",
                         "description": "每页大小",
                         "name": "pageSize",
                         "in": "query"
@@ -2337,9 +2698,8 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "description": "主键ID",
-                    "type": "number",
-                    "example": 7
+                    "type": "string",
+                    "example": "uint 主键ID"
                 }
             }
         },
@@ -2360,13 +2720,13 @@
             "properties": {
                 "page": {
                     "description": "页码",
-                    "type": "integer",
-                    "example": 1
+                    "type": "string",
+                    "example": "int 页码"
                 },
                 "pageSize": {
                     "description": "每页大小",
-                    "type": "integer",
-                    "example": 10
+                    "type": "string",
+                    "example": "int 每页大小"
                 }
             }
         },
@@ -2906,13 +3266,13 @@
                 },
                 "page": {
                     "description": "页码",
-                    "type": "integer",
-                    "example": 1
+                    "type": "string",
+                    "example": "int 页码"
                 },
                 "pageSize": {
                     "description": "每页大小",
-                    "type": "integer",
-                    "example": 10
+                    "type": "string",
+                    "example": "int 每页大小"
                 },
                 "path": {
                     "type": "string",
@@ -2932,9 +3292,8 @@
                     "example": "中文描述"
                 },
                 "id": {
-                    "description": "主键ID",
-                    "type": "number",
-                    "example": 7
+                    "type": "string",
+                    "example": "uint 主键ID"
                 },
                 "method": {
                     "type": "string",
@@ -3077,6 +3436,64 @@
                 }
             }
         },
+        "request.AutoCodeCreate": {
+            "type": "object",
+            "properties": {
+                "abbreviation": {
+                    "description": "Struct简称",
+                    "type": "string"
+                },
+                "autoCreateApiToSql": {
+                    "description": "是否自动创建api",
+                    "type": "boolean"
+                },
+                "autoMoveFile": {
+                    "description": "是否自动移动文件",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "Struct中文名称",
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Field"
+                    }
+                },
+                "humpPackageName": {
+                    "description": "go文件名称",
+                    "type": "string"
+                },
+                "packageName": {
+                    "description": "文件名称",
+                    "type": "string"
+                },
+                "structName": {
+                    "description": "Struct名称",
+                    "type": "string"
+                },
+                "tableName": {
+                    "description": "表名",
+                    "type": "string"
+                }
+            }
+        },
+        "request.AutoCodeHistorySearch": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "description": "页码",
+                    "type": "string",
+                    "example": "int 页码"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "string",
+                    "example": "int 每页大小"
+                }
+            }
+        },
         "request.CasbinInReceive": {
             "type": "object",
             "properties": {
@@ -3109,9 +3526,8 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "description": "主键ID",
-                    "type": "number",
-                    "example": 7
+                    "type": "string",
+                    "example": "uint 主键ID"
                 },
                 "method": {
                     "type": "string",
@@ -3180,13 +3596,13 @@
                 },
                 "page": {
                     "description": "页码",
-                    "type": "integer",
-                    "example": 1
+                    "type": "string",
+                    "example": "int 页码"
                 },
                 "pageSize": {
                     "description": "每页大小",
-                    "type": "integer",
-                    "example": 10
+                    "type": "string",
+                    "example": "int 每页大小"
                 },
                 "sort": {
                     "type": "integer",
@@ -3209,9 +3625,8 @@
                     "example": 7
                 },
                 "id": {
-                    "description": "主键ID",
-                    "type": "number",
-                    "example": 7
+                    "type": "string",
+                    "example": "uint 主键ID"
                 },
                 "label": {
                     "type": "string",
@@ -3234,9 +3649,8 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "description": "主键ID",
-                    "type": "number",
-                    "example": 7
+                    "type": "string",
+                    "example": "uint 主键ID"
                 },
                 "type": {
                     "type": "string",
@@ -3257,13 +3671,13 @@
                 },
                 "page": {
                     "description": "页码",
-                    "type": "integer",
-                    "example": 1
+                    "type": "string",
+                    "example": "int 页码"
                 },
                 "pageSize": {
                     "description": "每页大小",
-                    "type": "integer",
-                    "example": 10
+                    "type": "string",
+                    "example": "int 每页大小"
                 },
                 "status": {
                     "type": "boolean"
@@ -3282,9 +3696,8 @@
                     "example": "描述"
                 },
                 "id": {
-                    "description": "主键ID",
-                    "type": "number",
-                    "example": 7
+                    "type": "string",
+                    "example": "uint 主键ID"
                 },
                 "name": {
                     "type": "string",
@@ -3495,13 +3908,13 @@
                 },
                 "page": {
                     "description": "页码",
-                    "type": "integer",
-                    "example": 1
+                    "type": "string",
+                    "example": "int 页码"
                 },
                 "pageSize": {
                     "description": "每页大小",
-                    "type": "integer",
-                    "example": 10
+                    "type": "string",
+                    "example": "int 每页大小"
                 },
                 "path": {
                     "type": "string",
@@ -3622,9 +4035,8 @@
                     "example": "用户头像"
                 },
                 "id": {
-                    "description": "主键ID",
-                    "type": "number",
-                    "example": 7
+                    "type": "string",
+                    "example": "uint 主键ID"
                 },
                 "nickName": {
                     "type": "string",
@@ -3647,6 +4059,23 @@
                     "type": "string"
                 },
                 "picPath": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Column": {
+            "type": "object",
+            "properties": {
+                "columnComment": {
+                    "type": "string"
+                },
+                "columnName": {
+                    "type": "string"
+                },
+                "dataType": {
+                    "type": "string"
+                },
+                "dataTypeLong": {
                     "type": "string"
                 }
             }
@@ -3758,6 +4187,14 @@
                 "ram": {
                     "type": "object",
                     "$ref": "#/definitions/response.Rrm"
+                }
+            }
+        },
+        "response.Table": {
+            "type": "object",
+            "properties": {
+                "tableName": {
+                    "type": "string"
                 }
             }
         },
@@ -3987,6 +4424,51 @@
                 },
                 "value": {
                     "type": "integer"
+                }
+            }
+        },
+        "system.Field": {
+            "type": "object",
+            "properties": {
+                "columnName": {
+                    "description": "数据库字段",
+                    "type": "string"
+                },
+                "comment": {
+                    "description": "数据库字段描述",
+                    "type": "string"
+                },
+                "dataType": {
+                    "description": "数据库字段类型",
+                    "type": "string"
+                },
+                "dataTypeLong": {
+                    "description": "数据库字段长度",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典",
+                    "type": "string"
+                },
+                "fieldDesc": {
+                    "description": "中文名",
+                    "type": "string"
+                },
+                "fieldJson": {
+                    "description": "FieldJson",
+                    "type": "string"
+                },
+                "fieldName": {
+                    "description": "Field名",
+                    "type": "string"
+                },
+                "fieldSearchType": {
+                    "description": "搜索条件",
+                    "type": "string"
+                },
+                "fieldType": {
+                    "description": "Field数据类型",
+                    "type": "string"
                 }
             }
         },

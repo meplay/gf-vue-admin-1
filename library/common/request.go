@@ -2,17 +2,13 @@ package common
 
 // PageInfo Paging common input parameter structure
 type PageInfo struct {
-	Page     int `json:"page" form:"page" example:"1"`          // 页码
-	PageSize int `json:"pageSize" form:"pageSize" example:"10"` // 每页大小
+	Page     int `json:"page" form:"page" swaggertype:"string" example:"int 页码"`           // 页码
+	PageSize int `json:"pageSize" form:"pageSize" swaggertype:"string" example:"int 每页大小"` // 每页大小
 }
 
 // GetByID get by ID
 type GetByID struct {
-	ID float64 `json:"id" form:"page" example:"7"` // 主键ID
-}
-
-func (c *GetByID) ToUint() uint {
-	return uint(c.ID)
+	ID uint `json:"id" form:"page" swaggertype:"string" example:"uint 主键ID"` //
 }
 
 type GetByIDs struct {

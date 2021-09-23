@@ -2,6 +2,7 @@ package system
 
 import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
+	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"github.com/pkg/errors"
@@ -9,15 +10,15 @@ import (
 	"os"
 )
 
-// CreateTemp 创建代码
+// Create 创建代码
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *autoCode) CreateTemp(info *system.AutoCodeStruct) error {
+func (s *autoCode) Create(info *request.AutoCodeCreate) error {
 
 	if info.AutoMoveFile && AutoCodeHistory.Repeat(info.StructName) {
 		return errors.New("重复创建!")
 	} // 增加判断: 重复创建struct
 
-	dataList, fileList, needMkdir, err := s.getNeedList(info)
+	dataList, fileList, needMkdir, err := s.getNeedList(&info.AutoCodeStruct)
 	if err != nil {
 		return errors.Wrap(err, "获取模板信息失败!")
 	}
@@ -45,7 +46,7 @@ func (s *autoCode) CreateTemp(info *system.AutoCodeStruct) error {
 	}()
 
 	var apis system.AutoCodeApis
-	apis, err = s.AutoCreateApi(info)
+	apis, err = s.AutoCreateApi(&info.AutoCodeStruct)
 	if err != nil {
 		return errors.Wrap(err, "创建api记录失败!")
 	}
@@ -78,7 +79,7 @@ func (s *autoCode) CreateTemp(info *system.AutoCodeStruct) error {
 	}
 
 	if info.AutoMoveFile || info.AutoCreateApiToSql {
-		if err = AutoCodeHistory.Create(dataList.ToRequestAutoCodeHistoryCreate(info, apis)); err != nil {
+		if err = AutoCodeHistory.Create(dataList.ToRequestAutoCodeHistoryCreate(&info.AutoCodeStruct, apis)); err != nil {
 			return errors.Wrap(err, "创建自动化代码历史记录失败!")
 		}
 		return errors.New("创建代码成功并移动文件成功!")

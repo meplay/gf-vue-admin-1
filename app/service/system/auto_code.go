@@ -17,7 +17,7 @@ type autoCode struct{}
 
 const (
 	autoPath = "autocode_template/"
-	basePath = "resource/template"
+	basePath = "public/template"
 )
 
 type Templates []Template
@@ -89,7 +89,6 @@ func (t *Templates) ToRequestAutoCodeHistoryCreate(info *system.AutoCodeStruct, 
 func (s *autoCode) GetAllTemplateFile(path string, fileList []string) ([]string, error) {
 	files, err := ioutil.ReadDir(path)
 	length := len(files)
-	fileList = make([]string, 0, length)
 	for i := 0; i < length; i++ {
 		if files[i].IsDir() {
 			fileList, err = s.GetAllTemplateFile(path+"/"+files[i].Name(), fileList)

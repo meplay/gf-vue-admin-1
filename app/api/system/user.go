@@ -136,7 +136,7 @@ func (a *user) Delete(r *ghttp.Request) *response.Response {
 	}
 	claims := internal.NewClaims(r)
 	if id := claims.GetUserID(); id == 0 || claims.Error() != nil {
-		if id == info.ToUint() {
+		if id == info.ID {
 			return &response.Response{Error: claims.Error(), Message: "自我删除失败!"}
 		}
 	}

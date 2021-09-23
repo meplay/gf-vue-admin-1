@@ -27,7 +27,7 @@ func (s *autoCodeHistory) Create(info *request.AutoCodeHistoryCreate) error {
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *autoCodeHistory) First(info *common.GetByID) (*system.AutoCodeStruct, error) {
 	var entity system.AutoCodeHistory
-	err := global.Db.Model(system.AutoCodeHistory{}).Select("request").First(&entity, info.ToUint()).Error
+	err := global.Db.Model(system.AutoCodeHistory{}).Select("request").First(&entity, info.ID).Error
 	if err != nil {
 		return nil, errors.Wrap(err, "代码生成器历史记录寻找失败!")
 	}
@@ -56,7 +56,7 @@ func (s *autoCodeHistory) RollBack(info *common.GetByID) error {
 	} // 清除API表
 
 	var dbNames []response.Table
-	dbNames, err = AutoCode.GetTables(global.Config.Gorm.Dsn.Sources[0].GetDsn(global.Config.Gorm.Config))
+	dbNames, err = AutoCode.GetTables(global.Config.Gorm.Dsn.GetDefaultDsn(global.Config.Gorm.Config))
 	if err != nil {
 		return errors.Wrap(err, "获取表数据失败!")
 	} // 获取全部表名
@@ -93,8 +93,8 @@ func (s *autoCodeHistory) RollBack(info *common.GetByID) error {
 
 // Delete 删除历史数据
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *autoCodeHistory) Delete(id uint) error {
-	return global.Db.Delete(system.AutoCodeHistory{}, id).Error
+func (s *autoCodeHistory) Delete(info *common.GetByID) error {
+	return global.Db.Delete(system.AutoCodeHistory{}, info.ID).Error
 }
 
 // GetList 获取系统历史数据

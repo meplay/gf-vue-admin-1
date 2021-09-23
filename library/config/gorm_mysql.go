@@ -14,6 +14,20 @@ type Dsn struct {
 	Replicas        []Replica     `mapstructure:"replicas" json:"replicas" yaml:"replicas"`
 }
 
+func (d *Dsn) GetDefaultDbName() string {
+	if len(d.Sources) > 0 {
+		return d.Sources[0].DbName
+	}
+	return ""
+}
+
+func (d *Dsn) GetDefaultDsn(config string) string {
+	if len(d.Sources) > 0 {
+		return d.Sources[0].GetDsn(config)
+	}
+	return ""
+}
+
 type Source struct {
 	Host        string `mapstructure:"host" json:"host" yaml:"host"`
 	Port        string `mapstructure:"port" json:"port" yaml:"port"`
