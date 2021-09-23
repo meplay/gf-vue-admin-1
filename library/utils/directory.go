@@ -13,14 +13,11 @@ type directory struct{}
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (d *directory) PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
-	if err != nil {
-		return false, err
+	if os.IsNotExist(err) {
+		return false, nil
 	}
 	if err == nil {
 		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
 	}
 	return false, err
 }
@@ -35,12 +32,12 @@ func (d *directory) Creates(dirs ...string) error {
 			return err
 		}
 		if !exist {
-			zap.L().Error("正在创建文件夹中......", zap.String("文件夹名称`", dirs[i]))
+			zap.L().Info("正在创建文件夹中......", zap.String("文件夹名称`", dirs[i]))
 			if err = os.MkdirAll(dirs[i], os.ModePerm); err != nil {
 				zap.L().Error("创建文件夹失败!", zap.String("文件夹名称`", dirs[i]), zap.Error(err))
 				return err
 			}
-			zap.L().Error("创建文件夹成功!", zap.String("文件夹名称`", dirs[i]))
+			zap.L().Info("创建文件夹成功!", zap.String("文件夹名称`", dirs[i]))
 		}
 	}
 	return nil
