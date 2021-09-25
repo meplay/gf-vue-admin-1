@@ -1,8 +1,17 @@
 package example
 
+import (
+	"github.com/flipped-aurora/gf-vue-admin/app/model/example/request"
+	"github.com/flipped-aurora/gf-vue-admin/app/service/example"
+	"github.com/flipped-aurora/gf-vue-admin/library/common"
+	"github.com/flipped-aurora/gf-vue-admin/library/response"
+	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/net/ghttp"
+)
+
 var {{.StructName}} = new({{.Abbreviation}})
 
-type {{.Abbreviation}} struct {}
+type {{.Abbreviation}} struct{}
 
 // Create
 // @Tags Example{{.StructName}}

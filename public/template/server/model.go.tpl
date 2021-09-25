@@ -1,4 +1,3 @@
-// 自动生成模板{{.StructName}}
 package autocode
 
 import "github.com/flipped-aurora/gf-vue-admin/library/global"
