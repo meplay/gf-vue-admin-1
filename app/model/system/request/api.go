@@ -23,7 +23,6 @@ type ApiUpdate struct {
 
 func (r *ApiUpdate) Update() system.Api {
 	return system.Api{Path: r.Path, Method: r.Method, ApiGroup: r.ApiGroup, Description: r.Description}
-
 }
 
 type DeleteApi struct {

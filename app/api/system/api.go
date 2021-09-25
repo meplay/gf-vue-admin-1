@@ -128,11 +128,11 @@ func (a *api) GetList(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
-	if list, total, err := system.Api.GetList(&info); err != nil {
+	list, total, err := system.Api.GetList(&info)
+	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
-	} else {
-		return &response.Response{Data: common.NewPageResult(list, total, info.PageInfo), MessageCode: response.SuccessGetList}
 	}
+	return &response.Response{Data: common.NewPageResult(list, total, info.PageInfo), MessageCode: response.SuccessGetList}
 }
 
 // GetAllApis
