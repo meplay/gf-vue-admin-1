@@ -1,13 +1,17 @@
-//+build mysql
+//go:build mysql
+// +build mysql
 
 package boot
 
 import (
+	"github.com/flipped-aurora/gf-vue-admin/interfaces"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
 )
+
+var _ interfaces.Gorm = (*_mysql)(nil)
 
 var DbResolver = new(_mysql)
 

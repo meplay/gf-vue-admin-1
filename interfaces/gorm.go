@@ -14,6 +14,8 @@ type Gorm interface {
 	GetResolver() gorm.Plugin
 	// GetGormDialector 获取数据库的 gorm.Dialector
 	GetGormDialector() gorm.Dialector
+	// GetConfigPath 设置配置文件路径
+	GetConfigPath() string
 }
 
 type GormConfig interface {

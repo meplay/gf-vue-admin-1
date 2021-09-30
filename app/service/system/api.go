@@ -1,12 +1,11 @@
 package system
 
 import (
-	"errors"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
-	_errors "github.com/pkg/errors"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
 
@@ -18,10 +17,10 @@ type api struct{}
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *api) Create(info *request.ApiCreate) error {
 	if !errors.Is(global.Db.Where("path = ? AND method = ?", info.Path, info.Method).First(&system.Api{}).Error, gorm.ErrRecordNotFound) {
-		return _errors.New("存在相同api!")
+		return errors.New("存在相同api!")
 	}
 	if err := global.Db.Create(&info).Error; err != nil {
-		return _errors.Wrap(err, "创建失败!")
+		return errors.Wrap(err, "创建失败!")
 	}
 	return nil
 }
@@ -39,18 +38,20 @@ func (s *api) First(info *common.GetByID) (entity *system.Api, err error) {
 func (s *api) Update(info *request.ApiUpdate) error {
 	var entity system.Api
 	if err := global.Db.First(&entity, info.ID).Error; err != nil {
-		return _errors.Wrap(err, "找不到记录!")
+		return errors.Wrap(err, "找不到记录!")
 	}
 	if entity.Path != info.Path || entity.Method != info.Method {
 		if !errors.Is(global.Db.Where("path = ? AND method = ?", entity.Path, entity.Method).First(&system.Api{}).Error, gorm.ErrRecordNotFound) {
-			return _errors.New("存在相同api!")
+			return errors.New("存在相同api!")
 		}
 	}
 	err := global.Db.Transaction(func(tx *gorm.DB) error {
-		// TODO Casbin.UpdateCasbinApi(entity.Path, info.Path, entity.Method, info.Method)
+		if err := Casbin.UpdateApi(entity.Path, info.Path, entity.Method, info.Method); err != nil {
+			return errors.Wrap(err, "Casbin 更新api信息失败!")
+		}
 		entity = info.Update()
 		if err := tx.Model(&system.Api{}).Where("id = ?", info.ID).Updates(&info).Error; err != nil {
-			return _errors.Wrap(err, "更新api信息失败!")
+			return errors.Wrap(err, "更新api信息失败!")
 		}
 		return nil
 	})
@@ -61,9 +62,11 @@ func (s *api) Update(info *request.ApiUpdate) error {
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *api) Delete(info *request.DeleteApi) error {
 	if err := global.Db.Delete(&system.Api{}, info.ID).Error; err != nil {
-		return _errors.Wrap(err, "删除api失败!")
+		return errors.Wrap(err, "删除api失败!")
 	}
-	// TODO CasbinServiceApp.ClearCasbin(1, api.Path, api.Method)
+	if Casbin.Clear(1, info.Path, info.Method) {
+		return errors.New("Clear Casbin api失败")
+	}
 	return nil
 }
 

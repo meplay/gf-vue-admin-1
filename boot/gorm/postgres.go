@@ -1,13 +1,17 @@
-//+build postgres
+//go:build postgres
+// +build postgres
 
 package boot
 
 import (
+	"github.com/flipped-aurora/gf-vue-admin/interfaces"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
 )
+
+var _ interfaces.Gorm = (*_postgres)(nil)
 
 var DbResolver = new(_postgres)
 

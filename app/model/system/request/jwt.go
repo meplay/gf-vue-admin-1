@@ -1,15 +1,13 @@
 package request
 
-import "github.com/dgrijalva/jwt-go"
+import "github.com/golang-jwt/jwt"
 
-// CustomClaims Custom claims structure
 type CustomClaims struct {
 	ID          uint
-	BufferTime  int64
-	UUID        string
+	Uuid        string
+	Nickname    string
 	Username    string
-	NickName    string
 	AuthorityId string
-
+	BufferTime  int64
 	jwt.StandardClaims
 }

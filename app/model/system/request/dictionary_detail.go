@@ -7,11 +7,11 @@ import (
 )
 
 type DictionaryDetailCreate struct {
-	Sort         int    `json:"sort" example:"排序标记"`
-	Value        int    `json:"value" example:"字典值"`
+	Sort         int    `json:"sort" example:"7"`
+	Value        int    `json:"value" example:"7"`
 	Label        string `json:"label" example:"展示值"`
-	Status       *bool  `json:"status" example:"启用状态"`
-	DictionaryID int    `json:"dictionaryId" example:"关联标记"`
+	Status       *bool  `json:"status"`
+	DictionaryID int    `json:"dictionaryId" example:"7"`
 }
 
 func (r *DictionaryDetailCreate) Create() system.DictionaryDetail {
@@ -20,11 +20,11 @@ func (r *DictionaryDetailCreate) Create() system.DictionaryDetail {
 
 type DictionaryDetailUpdate struct {
 	common.GetByID
-	Sort         int    `json:"sort" example:"排序标记"`
-	Value        int    `json:"value" example:"字典值"`
+	Sort         int    `json:"sort" example:"7"`
+	Value        int    `json:"value" example:"7"`
 	Label        string `json:"label" example:"展示值"`
-	Status       *bool  `json:"status" example:"启用状态"`
-	DictionaryID int    `json:"dictionaryId" example:"关联标记"`
+	Status       *bool  `json:"status"`
+	DictionaryID int    `json:"dictionaryId" example:"7"`
 }
 
 func (r *DictionaryDetailUpdate) Update() system.DictionaryDetail {
@@ -33,11 +33,11 @@ func (r *DictionaryDetailUpdate) Update() system.DictionaryDetail {
 
 type DictionaryDetailSearch struct {
 	common.PageInfo
-	Sort         int    `json:"sort" example:"排序标记"`
-	Value        int    `json:"value" example:"字典值"`
+	Sort         int    `json:"sort" example:"7"`
+	Value        int    `json:"value" example:"7"`
 	Label        string `json:"label" example:"展示值"`
-	Status       *bool  `json:"status" example:"启用状态"`
-	DictionaryID int    `json:"dictionaryId" example:"关联标记"`
+	Status       *bool  `json:"status"`
+	DictionaryID int    `json:"dictionaryId" example:"7"`
 }
 
 func (r *DictionaryDetailSearch) Search() func(db *gorm.DB) *gorm.DB {

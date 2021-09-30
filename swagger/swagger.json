@@ -1,0 +1,4694 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a GF-VUE-ADMIN Server",
+        "title": "GF-VUE-ADMIN Swagger Docs",
+        "contact": {},
+        "license": {},
+        "version": "2.4.5"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/createApi": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemApi"
+                ],
+                "summary": "创建api",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ApiCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/deleteApi": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemApi"
+                ],
+                "summary": "删除api",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeleteApi"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/deleteApisByIds": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemApi"
+                ],
+                "summary": "批量删除api",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByIDs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "批量删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getAllApis": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemApi"
+                ],
+                "summary": "获取所有的Api",
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Api"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getApiById": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemApi"
+                ],
+                "summary": "根据id获取api",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取数据成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/getApiList": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemApi"
+                ],
+                "summary": "分页获取api列表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ApiSearch"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Api"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/updateApi": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemApi"
+                ],
+                "summary": "更新api",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ApiUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/request.ApiUpdate"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/authority/copyAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "拷贝角色",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityCopy"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "拷贝成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.Authority"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/authority/createAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "创建角色",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.Authority"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/authority/deleteAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "删除角色",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityDelete"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/authority/getAuthorityList": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "分页获取角色列表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.PageInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Authority"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/authority/updateAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthority"
+                ],
+                "summary": "更新角色信息",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AuthorityUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.Authority"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/createTemp": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "自动代码模板",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AutoCodeCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/delSysHistory": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AutoCode"
+                ],
+                "summary": "删除回滚记录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getColumn": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "获取当前表所有字段",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "数据库名",
+                        "name": "dbName",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "表名",
+                        "name": "tableName",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.Column"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getDatabase": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "获取当前所有数据库",
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getMeta": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCodeHistory"
+                ],
+                "summary": "回滚",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getSysHistory": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCodeHistory"
+                ],
+                "summary": "查询回滚记录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AutoCodeHistorySearch"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "回滚成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/getTables": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "获取当前数据库所有表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "数据库名",
+                        "name": "dbName",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.Table"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/preview": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCode"
+                ],
+                "summary": "预览创建后的代码",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AutoCodeCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/autoCode/rollback": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAutoCodeHistory"
+                ],
+                "summary": "回滚",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "回滚成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/base/captcha": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemCaptcha"
+                ],
+                "summary": "生成验证码",
+                "responses": {
+                    "200": {
+                        "description": "验证码获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.Captcha"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/base/login": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登录成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UserLogin"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/casbin/UpdateCasbin": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemCasbin"
+                ],
+                "summary": "更新角色api权限",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CasbinInReceive"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/casbin/getPolicyPathByAuthorityId": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemCasbin"
+                ],
+                "summary": "获取权限列表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CasbinInReceive"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/jwt/jsonInBlacklist": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemJwt"
+                ],
+                "summary": "jwt加入黑名单",
+                "responses": {
+                    "200": {
+                        "description": "拉黑成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/addBaseMenu": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemMenu"
+                ],
+                "summary": "新增菜单",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.MenuCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/addMenuAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemMenu"
+                ],
+                "summary": "增加menu和角色关联关系",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddMenuAuthority"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "添加成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/deleteBaseMenu": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemMenu"
+                ],
+                "summary": "删除菜单",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/getBaseMenuById": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemMenu"
+                ],
+                "summary": "根据id获取菜单",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.Menu"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/getBaseMenuTree": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemMenu"
+                ],
+                "summary": "获取用户动态路由",
+                "parameters": [
+                    {
+                        "description": "空",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.Empty"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Menu"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/getMenu": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthorityMenu"
+                ],
+                "summary": "获取用户动态路由",
+                "parameters": [
+                    {
+                        "description": "空",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.Empty"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.AuthorityMenu"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/getMenuAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemAuthorityMenu"
+                ],
+                "summary": "获取指定角色menu",
+                "parameters": [
+                    {
+                        "description": "角色ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetAuthorityId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.AuthorityMenu"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/getMenuList": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemMenu"
+                ],
+                "summary": "分页获取基础menu列表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.PageInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Menu"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/updateBaseMenu": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemMenu"
+                ],
+                "summary": "更新菜单",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.MenuUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionary/createSysDictionary": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionary"
+                ],
+                "summary": "创建系统字典",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictionaryCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionary/deleteSysDictionary": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionary"
+                ],
+                "summary": "删除系统字典",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionary/findSysDictionary": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionary"
+                ],
+                "summary": "用id查询系统字典",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "uint 主键ID",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "字典名(英)",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取数据成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionary/getSysDictionaryList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionary"
+                ],
+                "summary": "分页获取系统字典列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "描述",
+                        "name": "desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "字典名(中)",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "int 页码",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "int 每页大小",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "字典名(英)",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.Dictionary"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionary/updateSysDictionary": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionary"
+                ],
+                "summary": "更新系统字典",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictionaryUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.Dictionary"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionaryDetail/createSysDictionaryDetail": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionaryDetail"
+                ],
+                "summary": "创建系统字典详情",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictionaryDetailCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionaryDetail/deleteSysDictionaryDetail": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionaryDetail"
+                ],
+                "summary": "删除系统详情字典",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionaryDetail/findSysDictionaryDetail": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionaryDetail"
+                ],
+                "summary": "用id查询系统详情字典",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "uint 主键ID",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取数据成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionaryDetail/getSysDictionaryDetailList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionaryDetail"
+                ],
+                "summary": "分页获取系统字典详情列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "example": 7,
+                        "name": "dictionaryId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "展示值",
+                        "name": "label",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "int 页码",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "int 每页大小",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "example": 7,
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "example": 7,
+                        "name": "value",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.DictionaryDetail"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/sysDictionaryDetail/updateSysDictionaryDetail": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemDictionaryDetail"
+                ],
+                "summary": "更新系统详情字典",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictionaryDetailUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.DictionaryDetail"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/createSysOperationRecord": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "创建操作日志记录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.OperationRecordCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/deleteSysOperationRecord": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "删除操作日志记录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/deleteSysOperationRecordByIds": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "批量删除操作日志记录",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "批量删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/findSysOperationRecord": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "用id查询操作日志记录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "uint 主键ID",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取数据成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/sysOperationRecord/getSysOperationRecordList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemOperationRecord"
+                ],
+                "summary": "分页获取操作日志记录列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "请求方法",
+                        "name": "method",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "int 页码",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "int 每页大小",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "请求路径",
+                        "name": "path",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "example": 7,
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.OperationRecord"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/getServerInfo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "获取服务器信息",
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.Server"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/getSystemConfig": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "获取配置文件内容",
+                "responses": {
+                    "200": {
+                        "description": "获取成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/config.Config"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/reloadSystem": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "重启系统",
+                "responses": {
+                    "200": {
+                        "description": "重启系统成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/system/setSystemConfig": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemServer"
+                ],
+                "summary": "设置配置文件内容",
+                "parameters": [
+                    {
+                        "description": "设置配置文件内容",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/config.Config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "设置成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/changePassword": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "用户修改密码",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserChangePassword"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/deleteUser": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "删除用户",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/getUserInfo": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "获取用户信息",
+                "responses": {
+                    "200": {
+                        "description": "获取用户信息成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.User"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/getUserList": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "分页获取用户列表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.PageInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/system.User"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/register": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "用户注册账号",
+                "parameters": [
+                    {
+                        "description": "用户名, 昵称, 密码, 角色ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserRegister"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "注册成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/setUserAuthorities": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "设置用户权限",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserSetAuthorities"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/setUserAuthority": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "更改用户权限",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserSetAuthority"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/setUserInfo": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SystemUser"
+                ],
+                "summary": "设置用户信息",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "设置成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.User"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "common.Empty": {
+            "type": "object"
+        },
+        "common.GetAuthorityId": {
+            "type": "object",
+            "properties": {
+                "authorityId": {
+                    "description": "角色ID",
+                    "type": "string",
+                    "example": "角色ID"
+                }
+            }
+        },
+        "common.GetByID": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
+                }
+            }
+        },
+        "common.GetByIDs": {
+            "type": "object",
+            "properties": {
+                "ids": {
+                    "description": "主键Ids",
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "common.PageInfo": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "description": "页码",
+                    "type": "string",
+                    "example": "int 页码"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "string",
+                    "example": "int 每页大小"
+                }
+            }
+        },
+        "config.Aliyun": {
+            "type": "object",
+            "properties": {
+                "accessKeyId": {
+                    "type": "string"
+                },
+                "accessKeySecret": {
+                    "type": "string"
+                },
+                "basePath": {
+                    "type": "string"
+                },
+                "bucketName": {
+                    "type": "string"
+                },
+                "bucketUrl": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.AutoCode": {
+            "type": "object",
+            "properties": {
+                "restart": {
+                    "type": "boolean"
+                },
+                "root": {
+                    "type": "string"
+                },
+                "server": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Server"
+                },
+                "web": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Web"
+                }
+            }
+        },
+        "config.Captcha": {
+            "type": "object",
+            "properties": {
+                "imgHeight": {
+                    "description": "验证码高度",
+                    "type": "integer"
+                },
+                "imgWidth": {
+                    "description": "验证码宽度",
+                    "type": "integer"
+                },
+                "keyLong": {
+                    "description": "验证码长度",
+                    "type": "integer"
+                }
+            }
+        },
+        "config.Casbin": {
+            "type": "object",
+            "properties": {
+                "modelPath": {
+                    "description": "存放casbin模型的相对路径",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Config": {
+            "type": "object",
+            "properties": {
+                "aliyun": {
+                    "description": "阿里云对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Aliyun"
+                },
+                "autoCode": {
+                    "description": "代码生成器",
+                    "type": "object",
+                    "$ref": "#/definitions/config.AutoCode"
+                },
+                "captcha": {
+                    "description": "captcha 验证码",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Captcha"
+                },
+                "casbin": {
+                    "description": "casbin 权限",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Casbin"
+                },
+                "gorm": {
+                    "description": "gorm",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Gorm"
+                },
+                "jwt": {
+                    "description": "jwt",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Jwt"
+                },
+                "local": {
+                    "description": "本地",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Local"
+                },
+                "minio": {
+                    "description": "minio对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Minio"
+                },
+                "qiniu": {
+                    "description": "七牛云对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Qiniu"
+                },
+                "redis": {
+                    "description": "redis",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Redis"
+                },
+                "system": {
+                    "description": "system 系统",
+                    "type": "object",
+                    "$ref": "#/definitions/config.System"
+                },
+                "tencent": {
+                    "description": "腾讯对象存储",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Tencent"
+                },
+                "zap": {
+                    "description": "zap 日志",
+                    "type": "object",
+                    "$ref": "#/definitions/config.Zap"
+                }
+            }
+        },
+        "config.Dsn": {
+            "type": "object",
+            "properties": {
+                "connMaxIdleTime": {
+                    "type": "string"
+                },
+                "connMaxLifetime": {
+                    "type": "string"
+                },
+                "maxIdleConnes": {
+                    "type": "integer"
+                },
+                "maxOpenConnes": {
+                    "type": "integer"
+                },
+                "replicas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/config.Replica"
+                    }
+                },
+                "sources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/config.Source"
+                    }
+                }
+            }
+        },
+        "config.Gorm": {
+            "type": "object",
+            "properties": {
+                "autoMigrate": {
+                    "type": "boolean"
+                },
+                "config": {
+                    "type": "string"
+                },
+                "connMaxIdleTime": {
+                    "type": "string"
+                },
+                "connMaxLifetime": {
+                    "type": "string"
+                },
+                "dns": {
+                    "type": "object",
+                    "$ref": "#/definitions/config.Dsn"
+                },
+                "logMode": {
+                    "type": "string"
+                },
+                "logZap": {
+                    "type": "boolean"
+                },
+                "maxIdleConnes": {
+                    "type": "integer"
+                },
+                "maxOpenConnes": {
+                    "type": "integer"
+                }
+            }
+        },
+        "config.Jwt": {
+            "type": "object",
+            "properties": {
+                "bufferTime": {
+                    "description": "缓冲时间",
+                    "type": "integer"
+                },
+                "expiresTime": {
+                    "description": "过期时间",
+                    "type": "integer"
+                },
+                "signingKey": {
+                    "description": "签名",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Local": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "description": "本地文件路径",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Minio": {
+            "type": "object",
+            "properties": {
+                "bucket": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "secret": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "useSsl": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "config.Qiniu": {
+            "type": "object",
+            "properties": {
+                "accessKey": {
+                    "description": "秘钥AK",
+                    "type": "string"
+                },
+                "bucket": {
+                    "description": "空间名称",
+                    "type": "string"
+                },
+                "imgPath": {
+                    "description": "CDN加速域名",
+                    "type": "string"
+                },
+                "secretKey": {
+                    "description": "秘钥SK",
+                    "type": "string"
+                },
+                "useCdnDomains": {
+                    "description": "上传是否使用CDN上传加速",
+                    "type": "boolean"
+                },
+                "useHttps": {
+                    "description": "是否使用https",
+                    "type": "boolean"
+                },
+                "zone": {
+                    "description": "存储区域",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Redis": {
+            "type": "object",
+            "properties": {
+                "addr": {
+                    "description": "服务器地址:端口",
+                    "type": "string"
+                },
+                "db": {
+                    "description": "redis的哪个数据库",
+                    "type": "integer"
+                },
+                "password": {
+                    "description": "密码",
+                    "type": "string"
+                }
+            }
+        },
+        "config.Replica": {
+            "type": "object",
+            "properties": {
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "otherConfig": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Server": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "boot": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "request": {
+                    "type": "string"
+                },
+                "root": {
+                    "type": "string"
+                },
+                "router": {
+                    "type": "string"
+                },
+                "service": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Source": {
+            "type": "object",
+            "properties": {
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "otherConfig": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.System": {
+            "type": "object",
+            "properties": {
+                "env": {
+                    "description": "环境值",
+                    "type": "string"
+                },
+                "ossType": {
+                    "description": "Oss类型",
+                    "type": "string"
+                },
+                "useMultipoint": {
+                    "description": "多点登录拦截",
+                    "type": "boolean"
+                }
+            }
+        },
+        "config.Tencent": {
+            "type": "object",
+            "properties": {
+                "baseURL": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "pathPrefix": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "secretID": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Web": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "flow": {
+                    "type": "string"
+                },
+                "form": {
+                    "type": "string"
+                },
+                "root": {
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            }
+        },
+        "config.Zap": {
+            "type": "object",
+            "properties": {
+                "director": {
+                    "description": "日志文件夹",
+                    "type": "string"
+                },
+                "encodeLevel": {
+                    "description": "编码级",
+                    "type": "string"
+                },
+                "format": {
+                    "description": "输出",
+                    "type": "string"
+                },
+                "level": {
+                    "description": "级别",
+                    "type": "string"
+                },
+                "linkName": {
+                    "description": "软链接名称",
+                    "type": "string"
+                },
+                "logInConsole": {
+                    "description": "输出控制台",
+                    "type": "boolean"
+                },
+                "prefix": {
+                    "description": "日志前缀",
+                    "type": "string"
+                },
+                "showLine": {
+                    "description": "显示行",
+                    "type": "boolean"
+                },
+                "stacktraceKey": {
+                    "description": "栈名",
+                    "type": "string"
+                }
+            }
+        },
+        "request.AddMenuAuthority": {
+            "type": "object",
+            "properties": {
+                "authorityId": {
+                    "type": "string",
+                    "example": "角色Id"
+                },
+                "menus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                }
+            }
+        },
+        "request.ApiCreate": {
+            "type": "object",
+            "properties": {
+                "apiGroup": {
+                    "type": "string",
+                    "example": "api组"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "api中文描述"
+                },
+                "method": {
+                    "type": "string",
+                    "example": "请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "/api/create"
+                }
+            }
+        },
+        "request.ApiSearch": {
+            "type": "object",
+            "properties": {
+                "apiGroup": {
+                    "type": "string",
+                    "example": "api组"
+                },
+                "desc": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "description": {
+                    "type": "string",
+                    "example": "api中文描述"
+                },
+                "method": {
+                    "type": "string",
+                    "example": "请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"
+                },
+                "orderKey": {
+                    "type": "string",
+                    "example": "排序"
+                },
+                "page": {
+                    "description": "页码",
+                    "type": "string",
+                    "example": "int 页码"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "string",
+                    "example": "int 每页大小"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "/api/create"
+                }
+            }
+        },
+        "request.ApiUpdate": {
+            "type": "object",
+            "properties": {
+                "apiGroup": {
+                    "type": "string",
+                    "example": "api请求方法"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "中文描述"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
+                },
+                "method": {
+                    "type": "string",
+                    "example": "api组"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "api路径"
+                }
+            }
+        },
+        "request.AuthorityCopy": {
+            "type": "object",
+            "properties": {
+                "authority": {
+                    "type": "object",
+                    "$ref": "#/definitions/system.Authority"
+                },
+                "oldAuthorityId": {
+                    "type": "string",
+                    "example": "旧角色ID"
+                }
+            }
+        },
+        "request.AuthorityCreate": {
+            "type": "object",
+            "required": [
+                "authorityId"
+            ],
+            "properties": {
+                "authorityId": {
+                    "type": "string",
+                    "example": "角色ID"
+                },
+                "authorityName": {
+                    "type": "string",
+                    "example": "角色名"
+                },
+                "defaultRouter": {
+                    "type": "string",
+                    "example": "登录菜单(默认dashboard)"
+                },
+                "parentId": {
+                    "type": "string",
+                    "example": "父角色ID"
+                }
+            }
+        },
+        "request.AuthorityDelete": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authorityId": {
+                    "description": "角色ID",
+                    "type": "string"
+                },
+                "authorityName": {
+                    "description": "角色名",
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "dataAuthorityId": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "defaultRouter": {
+                    "description": "默认菜单(默认dashboard)",
+                    "type": "string"
+                },
+                "menus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "parentId": {
+                    "description": "父角色ID",
+                    "type": "string"
+                }
+            }
+        },
+        "request.AuthorityUpdate": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authorityId": {
+                    "description": "角色ID",
+                    "type": "string"
+                },
+                "authorityName": {
+                    "description": "角色名",
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "dataAuthorityId": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "defaultRouter": {
+                    "description": "默认菜单(默认dashboard)",
+                    "type": "string"
+                },
+                "menus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "parentId": {
+                    "description": "父角色ID",
+                    "type": "string"
+                }
+            }
+        },
+        "request.AutoCodeCreate": {
+            "type": "object",
+            "properties": {
+                "abbreviation": {
+                    "description": "Struct简称",
+                    "type": "string"
+                },
+                "autoCreateApiToSql": {
+                    "description": "是否自动创建api",
+                    "type": "boolean"
+                },
+                "autoMoveFile": {
+                    "description": "是否自动移动文件",
+                    "type": "boolean"
+                },
+                "description": {
+                    "description": "Struct中文名称",
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Field"
+                    }
+                },
+                "humpPackageName": {
+                    "description": "go文件名称",
+                    "type": "string"
+                },
+                "packageName": {
+                    "description": "文件名称",
+                    "type": "string"
+                },
+                "structName": {
+                    "description": "Struct名称",
+                    "type": "string"
+                },
+                "tableName": {
+                    "description": "表名",
+                    "type": "string"
+                }
+            }
+        },
+        "request.AutoCodeHistorySearch": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "description": "页码",
+                    "type": "string",
+                    "example": "int 页码"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "string",
+                    "example": "int 每页大小"
+                }
+            }
+        },
+        "request.CasbinInReceive": {
+            "type": "object",
+            "properties": {
+                "authorityId": {
+                    "description": "权限id",
+                    "type": "string"
+                },
+                "casbinInfos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/request.CasbinInfo"
+                    }
+                }
+            }
+        },
+        "request.CasbinInfo": {
+            "type": "object",
+            "properties": {
+                "method": {
+                    "description": "方法",
+                    "type": "string"
+                },
+                "path": {
+                    "description": "路径",
+                    "type": "string"
+                }
+            }
+        },
+        "request.DeleteApi": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
+                },
+                "method": {
+                    "type": "string",
+                    "example": "请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "/api/create"
+                }
+            }
+        },
+        "request.DictionaryCreate": {
+            "type": "object",
+            "properties": {
+                "desc": {
+                    "type": "string",
+                    "example": "描述"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "字典名(中)"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "字典名(英)"
+                }
+            }
+        },
+        "request.DictionaryDetailCreate": {
+            "type": "object",
+            "properties": {
+                "dictionaryId": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "label": {
+                    "type": "string",
+                    "example": "展示值"
+                },
+                "sort": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "value": {
+                    "type": "integer",
+                    "example": 7
+                }
+            }
+        },
+        "request.DictionaryDetailSearch": {
+            "type": "object",
+            "properties": {
+                "dictionaryId": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "label": {
+                    "type": "string",
+                    "example": "展示值"
+                },
+                "page": {
+                    "description": "页码",
+                    "type": "string",
+                    "example": "int 页码"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "string",
+                    "example": "int 每页大小"
+                },
+                "sort": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "value": {
+                    "type": "integer",
+                    "example": 7
+                }
+            }
+        },
+        "request.DictionaryDetailUpdate": {
+            "type": "object",
+            "properties": {
+                "dictionaryId": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
+                },
+                "label": {
+                    "type": "string",
+                    "example": "展示值"
+                },
+                "sort": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "value": {
+                    "type": "integer",
+                    "example": 7
+                }
+            }
+        },
+        "request.DictionaryFirst": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "字典名(英)"
+                }
+            }
+        },
+        "request.DictionarySearch": {
+            "type": "object",
+            "properties": {
+                "desc": {
+                    "type": "string",
+                    "example": "描述"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "字典名(中)"
+                },
+                "page": {
+                    "description": "页码",
+                    "type": "string",
+                    "example": "int 页码"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "string",
+                    "example": "int 每页大小"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "字典名(英)"
+                }
+            }
+        },
+        "request.DictionaryUpdate": {
+            "type": "object",
+            "properties": {
+                "desc": {
+                    "type": "string",
+                    "example": "描述"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "字典名(中)"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "字典名(英)"
+                }
+            }
+        },
+        "request.MenuCreate": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authoritys": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "closeTab": {
+                    "type": "boolean"
+                },
+                "component": {
+                    "type": "string"
+                },
+                "defaultMenu": {
+                    "type": "boolean"
+                },
+                "hidden": {
+                    "type": "boolean"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "keepAlive": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.MenuParameter"
+                    }
+                },
+                "parentId": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.MenuUpdate": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authoritys": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "closeTab": {
+                    "type": "boolean"
+                },
+                "component": {
+                    "type": "string"
+                },
+                "defaultMenu": {
+                    "type": "boolean"
+                },
+                "hidden": {
+                    "type": "boolean"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "keepAlive": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.MenuParameter"
+                    }
+                },
+                "parentId": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.OperationRecordCreate": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "agent": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "error_message": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "latency": {
+                    "type": "string"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "resp": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "user": {
+                    "type": "object",
+                    "$ref": "#/definitions/system.User"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.OperationRecordSearch": {
+            "type": "object",
+            "properties": {
+                "method": {
+                    "type": "string",
+                    "example": "请求方法"
+                },
+                "page": {
+                    "description": "页码",
+                    "type": "string",
+                    "example": "int 页码"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "string",
+                    "example": "int 每页大小"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "请求路径"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 7
+                }
+            }
+        },
+        "request.UserChangePassword": {
+            "type": "object",
+            "properties": {
+                "new_password": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserLogin": {
+            "type": "object",
+            "properties": {
+                "captcha": {
+                    "type": "string",
+                    "example": "验证码"
+                },
+                "captchaId": {
+                    "type": "string",
+                    "example": "验证码id"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "密码"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "用户名"
+                }
+            }
+        },
+        "request.UserRegister": {
+            "type": "object",
+            "properties": {
+                "authorityId": {
+                    "type": "string"
+                },
+                "authorityIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "headerImg": {
+                    "type": "string"
+                },
+                "nickName": {
+                    "type": "string"
+                },
+                "passWord": {
+                    "type": "string"
+                },
+                "userName": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserSetAuthorities": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "authorityIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "角色id切片"
+                    ]
+                }
+            }
+        },
+        "request.UserSetAuthority": {
+            "type": "object",
+            "properties": {
+                "authority_id": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserUpdate": {
+            "type": "object",
+            "properties": {
+                "activeColor": {
+                    "type": "string",
+                    "example": "用户角色ID"
+                },
+                "baseColor": {
+                    "type": "string",
+                    "example": "基础颜色"
+                },
+                "headerImg": {
+                    "type": "string",
+                    "example": "用户头像"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
+                },
+                "nickName": {
+                    "type": "string",
+                    "example": "用户昵称"
+                },
+                "sideMode": {
+                    "type": "string",
+                    "example": "用户侧边主题"
+                },
+                "userName": {
+                    "type": "string",
+                    "example": "用户登录名"
+                }
+            }
+        },
+        "response.Captcha": {
+            "type": "object",
+            "properties": {
+                "captchaId": {
+                    "type": "string"
+                },
+                "picPath": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Column": {
+            "type": "object",
+            "properties": {
+                "columnComment": {
+                    "type": "string"
+                },
+                "columnName": {
+                    "type": "string"
+                },
+                "dataType": {
+                    "type": "string"
+                },
+                "dataTypeLong": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Cpu": {
+            "type": "object",
+            "properties": {
+                "cores": {
+                    "type": "integer"
+                },
+                "cpus": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "response.Disk": {
+            "type": "object",
+            "properties": {
+                "totalGb": {
+                    "type": "integer"
+                },
+                "totalMb": {
+                    "type": "integer"
+                },
+                "usedGb": {
+                    "type": "integer"
+                },
+                "usedMb": {
+                    "type": "integer"
+                },
+                "usedPercent": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Os": {
+            "type": "object",
+            "properties": {
+                "compiler": {
+                    "type": "string"
+                },
+                "goVersion": {
+                    "type": "string"
+                },
+                "goos": {
+                    "type": "string"
+                },
+                "numCpu": {
+                    "type": "integer"
+                },
+                "numGoroutine": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "int 状态码(成功:0, 失败:7)"
+                },
+                "data": {
+                    "type": "string",
+                    "example": "object 数据"
+                },
+                "err": {
+                    "type": "string",
+                    "example": "错误信息"
+                },
+                "msg": {
+                    "type": "string",
+                    "example": "消息"
+                }
+            }
+        },
+        "response.Rrm": {
+            "type": "object",
+            "properties": {
+                "totalMb": {
+                    "type": "integer"
+                },
+                "usedMb": {
+                    "type": "integer"
+                },
+                "usedPercent": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Server": {
+            "type": "object",
+            "properties": {
+                "cpu": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Cpu"
+                },
+                "disk": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Disk"
+                },
+                "os": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Os"
+                },
+                "ram": {
+                    "type": "object",
+                    "$ref": "#/definitions/response.Rrm"
+                }
+            }
+        },
+        "response.Table": {
+            "type": "object",
+            "properties": {
+                "tableName": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.UserLogin": {
+            "type": "object",
+            "properties": {
+                "expiresAt": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "object",
+                    "$ref": "#/definitions/system.User"
+                }
+            }
+        },
+        "system.Api": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "apiGroup": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "method": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "system.Authority": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authorityId": {
+                    "description": "角色ID",
+                    "type": "string"
+                },
+                "authorityName": {
+                    "description": "角色名",
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "dataAuthorityId": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "defaultRouter": {
+                    "description": "默认菜单(默认dashboard)",
+                    "type": "string"
+                },
+                "menus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "parentId": {
+                    "description": "父角色ID",
+                    "type": "string"
+                }
+            }
+        },
+        "system.AuthorityMenu": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authoritys": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.AuthorityMenu"
+                    }
+                },
+                "closeTab": {
+                    "type": "boolean"
+                },
+                "component": {
+                    "type": "string"
+                },
+                "defaultMenu": {
+                    "type": "boolean"
+                },
+                "hidden": {
+                    "type": "boolean"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "keepAlive": {
+                    "type": "boolean"
+                },
+                "menuId": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.MenuParameter"
+                    }
+                },
+                "parentId": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "system.Dictionary": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "sysDictionaryDetails": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.DictionaryDetail"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "system.DictionaryDetail": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "label": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "sysDictionaryID": {
+                    "type": "integer"
+                },
+                "value": {
+                    "type": "integer"
+                }
+            }
+        },
+        "system.Field": {
+            "type": "object",
+            "properties": {
+                "columnName": {
+                    "description": "数据库字段",
+                    "type": "string"
+                },
+                "comment": {
+                    "description": "数据库字段描述",
+                    "type": "string"
+                },
+                "dataType": {
+                    "description": "数据库字段类型",
+                    "type": "string"
+                },
+                "dataTypeLong": {
+                    "description": "数据库字段长度",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典",
+                    "type": "string"
+                },
+                "fieldDesc": {
+                    "description": "中文名",
+                    "type": "string"
+                },
+                "fieldJson": {
+                    "description": "FieldJson",
+                    "type": "string"
+                },
+                "fieldName": {
+                    "description": "Field名",
+                    "type": "string"
+                },
+                "fieldSearchType": {
+                    "description": "搜索条件",
+                    "type": "string"
+                },
+                "fieldType": {
+                    "description": "Field数据类型",
+                    "type": "string"
+                }
+            }
+        },
+        "system.Menu": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "authoritys": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
+                },
+                "closeTab": {
+                    "type": "boolean"
+                },
+                "component": {
+                    "type": "string"
+                },
+                "defaultMenu": {
+                    "type": "boolean"
+                },
+                "hidden": {
+                    "type": "boolean"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "keepAlive": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.MenuParameter"
+                    }
+                },
+                "parentId": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "system.MenuParameter": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "key": {
+                    "description": "地址栏携带参数的key",
+                    "type": "string"
+                },
+                "menu_id": {
+                    "description": "menu ID",
+                    "type": "integer"
+                },
+                "type": {
+                    "description": "地址栏携带参数为params还是query",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "地址栏携带参数的值",
+                    "type": "string"
+                }
+            }
+        },
+        "system.OperationRecord": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "agent": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "error_message": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "latency": {
+                    "type": "string"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "resp": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "user": {
+                    "type": "object",
+                    "$ref": "#/definitions/system.User"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "system.User": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "activeColor": {
+                    "description": "活跃颜色",
+                    "type": "string"
+                },
+                "authorities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Authority"
+                    }
+                },
+                "authority": {
+                    "type": "object",
+                    "$ref": "#/definitions/system.Authority"
+                },
+                "authorityId": {
+                    "description": "用户角色ID",
+                    "type": "string"
+                },
+                "baseColor": {
+                    "description": "基础颜色",
+                    "type": "string"
+                },
+                "headerImg": {
+                    "description": "用户头像",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "nickName": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "sideMode": {
+                    "description": "用户侧边主题",
+                    "type": "string"
+                },
+                "userName": {
+                    "description": "用户登录名",
+                    "type": "string"
+                },
+                "uuid": {
+                    "description": "用户UUID",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
