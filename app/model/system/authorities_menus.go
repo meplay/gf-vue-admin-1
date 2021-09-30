@@ -1,4 +1,4 @@
-package model
+package system
 
 // AuthoritiesMenus 角色按钮关联表
 type AuthoritiesMenus struct {
