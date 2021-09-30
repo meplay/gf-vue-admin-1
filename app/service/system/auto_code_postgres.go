@@ -22,8 +22,7 @@ func (s *autoCode) GetDbs() (dbs *[]response.Db, err error) {
 
 // GetTables 获取指定数据库的所有表名
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *autoCode) GetTables(dbName string) (tables *[]response.Table, err error) {
-	tables = &[]response.Table{}
+func (s *autoCode) GetTables(dbName string) (tables []response.Table, err error) {
 	db, _err := gorm.Open(postgres.Open(global.Config.Gorm.Dsn.LinkDsn(global.Config.Gorm.Config, dbName)), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
 	if _err != nil {
 		return nil, err
