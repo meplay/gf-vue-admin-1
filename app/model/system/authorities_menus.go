@@ -7,5 +7,5 @@ type AuthoritiesMenus struct {
 }
 
 func (a *AuthoritiesMenus) TableName() string {
-	return "authorities_menus"
+	return "system_authorities_menus"
 }

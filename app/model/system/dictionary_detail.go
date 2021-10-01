@@ -12,5 +12,5 @@ type DictionaryDetail struct {
 }
 
 func (d *DictionaryDetail) TableName() string {
-	return "dictionary_details"
+	return "system_dictionary_details"
 }

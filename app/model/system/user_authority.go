@@ -6,5 +6,5 @@ type UseAuthority struct {
 }
 
 func (s *UseAuthority) TableName() string {
-	return "users_authorities"
+	return "system_users_authorities"
 }

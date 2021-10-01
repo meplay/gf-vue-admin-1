@@ -138,7 +138,7 @@ func (s *authority) Delete(info *request.AuthorityDelete) error {
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *authority) GetAuthorityInfo(info *common.GetAuthorityId) (*system.Authority, error) {
 	var entity system.Authority
-	err := global.Db.Preload("AuthorityResources").Where("authority_id = ?", info.AuthorityId).First(&entity).Error
+	err := global.Db.Preload("Resources").Where("authority_id = ?", info.AuthorityId).First(&entity).Error
 	return &entity, err
 }
 
@@ -146,10 +146,10 @@ func (s *authority) GetAuthorityInfo(info *common.GetAuthorityId) (*system.Autho
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *authority) SetAuthorityResources(info *request.AuthoritySetResources) error {
 	var entity system.Authority
-	if err := global.Db.Preload("AuthorityResources").First(&entity, "authority_id = ?", info.AuthorityId).Error; err != nil {
+	if err := global.Db.Preload("Resources").First(&entity, "authority_id = ?", info.AuthorityId).Error; err != nil {
 		return errors.Wrap(err, "角色查找失败!")
 	}
-	if err := global.Db.Model(&entity).Association("AuthorityResources").Replace(&info.AuthorityResources); err != nil {
+	if err := global.Db.Model(&entity).Association("Resources").Replace(&info.Resources); err != nil {
 		return errors.Wrap(err, "设置角色资源权限!")
 	}
 	return nil
@@ -186,7 +186,7 @@ func (s *authority) SetAuthorityMenuByTransaction(tx *gorm.DB, info *request.Aut
 func (s *authority) GetList(info *common.PageInfo) (list []system.Authority, total int64, err error) {
 	var entities []system.Authority
 	db := global.Db.Model(&system.Authority{})
-	err = db.Scopes(common.Paginate(info)).Preload("AuthorityResources").Where("parent_id = 0").Find(&entities).Error
+	err = db.Scopes(common.Paginate(info)).Preload("Resources").Where("parent_id = 0").Find(&entities).Error
 	length := len(entities)
 	for i := 0; i < length; i++ {
 		if err = s.findChildrenAuthority(&entities[i]); err != nil {
@@ -199,7 +199,7 @@ func (s *authority) GetList(info *common.PageInfo) (list []system.Authority, tot
 // findChildrenAuthority 查询子角色 todo 循环sql优化
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *authority) findChildrenAuthority(authority *system.Authority) error {
-	err := global.Db.Preload("AuthorityResources").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error
+	err := global.Db.Preload("Resources").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error
 	if len(authority.Children) > 0 {
 		for k := range authority.Children {
 			err = s.findChildrenAuthority(&authority.Children[k])

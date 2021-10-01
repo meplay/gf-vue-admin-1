@@ -23,9 +23,9 @@ func (r *AutoCodeHistoryCreate) Create() system.AutoCodeHistory {
 		Injection:     r.Injection,
 	}
 	if r.TableName != "" {
-		entity.TableName = r.AutoCodeStruct.TableName
+		entity.TablesName = r.AutoCodeStruct.TableName
 	} else {
-		entity.TableName = r.AutoCodeStruct.StructName
+		entity.TablesName = r.AutoCodeStruct.StructName
 	}
 	return entity
 }

@@ -21,6 +21,6 @@ type OperationRecord struct {
 }
 
 func (o *OperationRecord) TableName() string {
-	return "operation_records"
+	return "system_operation_records"
 }
 

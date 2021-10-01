@@ -12,5 +12,5 @@ type Dictionary struct {
 }
 
 func (s *Dictionary) TableName() string {
-	return "dictionaries"
+	return "system_dictionaries"
 }

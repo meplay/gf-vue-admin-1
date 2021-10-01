@@ -62,7 +62,7 @@ func (s *autoCodeHistory) RollBack(info *common.GetByID) error {
 	} // 获取全部表名
 
 	for _, name := range dbNames {
-		if strings.Contains(strings.ToUpper(strings.Replace(name.TableName, "_", "", -1)), strings.ToUpper(entity.TableName)) {
+		if strings.Contains(strings.ToUpper(strings.Replace(name.TableName, "_", "", -1)), strings.ToUpper(entity.TablesName)) {
 			if err = global.Db.Migrator().DropTable(name.TableName); err != nil {
 				return errors.Wrap(err, "删除表失败!")
 			} // 删除表

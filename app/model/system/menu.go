@@ -13,8 +13,8 @@ type Menu struct {
 	ParentId    string `json:"parentId" gorm:"column:parent_id;comment:父菜单ID"`
 	Meta        `json:"meta" gorm:"comment:附加属性"`
 	Children    []Menu          `json:"children" gorm:"-"`
-	Parameters  []MenuParameter `json:"parameters" gorm:"many2many:menus_parameters;foreignKey:ID;joinForeignKey:MenuID;References:MenuID;JoinReferences:ParameterID"`
-	Authorities []Authority     `json:"authoritys" gorm:"many2many:authorities_menus;foreignKey:ID;joinForeignKey:MenuID;References:AuthorityId;JoinReferences:AuthorityId"`
+	Parameters  []MenuParameter `json:"parameters" gorm:"many2many:system_menus_parameters;foreignKey:ID;joinForeignKey:MenuID;References:MenuID;JoinReferences:ParameterID"`
+	Authorities []Authority     `json:"authoritys" gorm:"many2many:system_authorities_menus;foreignKey:ID;joinForeignKey:MenuID;References:AuthorityId;JoinReferences:AuthorityId"`
 }
 
 type Meta struct {
@@ -26,5 +26,5 @@ type Meta struct {
 }
 
 func (m *Menu) TableName() string {
-	return "menus"
+	return "system_menus"
 }

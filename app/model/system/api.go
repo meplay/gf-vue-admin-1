@@ -15,7 +15,7 @@ type Api struct {
 }
 
 func (a *Api) TableName() string {
-	return "apis"
+	return "system_apis"
 }
 
 // BeforeCreate api创建前钩子函数

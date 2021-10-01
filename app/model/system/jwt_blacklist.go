@@ -8,5 +8,5 @@ type JwtBlacklist struct {
 }
 
 func (j *JwtBlacklist) TableName() string {
-	return "jwt_blacklist"
+	return "system_jwt_blacklist"
 }
