@@ -3,7 +3,10 @@
 
 package config
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Dsn struct {
 	MaxIdleConnes   int           `mapstructure:"max-idle-connes" json:"maxIdleConnes" yaml:"max-idle-connes"`
@@ -24,6 +27,14 @@ func (d *Dsn) GetDefaultDbName() string {
 func (d *Dsn) GetDefaultDsn(config string) string {
 	if len(d.Sources) > 0 {
 		return d.Sources[0].GetDsn(config)
+	}
+	return ""
+}
+
+// GetEmptyDsn 获取主库的获取主库的空数据库dsn
+func (d *Dsn) GetEmptyDsn() string {
+	if len(d.Sources) > 0 {
+		return fmt.Sprintf("%s:%s@tcp(%s:%s)/", d.Sources[0].Username, d.Sources[0].Password, d.Sources[0].Host, d.Sources[0].Port)
 	}
 	return ""
 }
