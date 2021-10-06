@@ -7,6 +7,6 @@ type AuthoritiesResources struct {
 }
 
 func (a *AuthoritiesResources) TableName() string {
-	return "authorities_resources"
+	return "system_authorities_resources"
 }
 

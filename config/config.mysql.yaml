@@ -30,7 +30,7 @@ gorm:
     sources:
       - host: '127.0.0.1'
         port: '13307'
-        db-name: 'gf-vue-admin'
+        db-name: 'gf-vue-admin-test'
         username: 'root'
         password: 'gdkid,,..'
       - host: ''
