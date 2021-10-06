@@ -1,3 +1,0 @@
-[submodule "cmd"]
-	path = cmd
-	url = git@github.com:flipped-aurora/cmd.git
