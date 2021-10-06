@@ -19,5 +19,5 @@ type Authority struct {
 }
 
 func (a *Authority) TableName() string {
-	return "authorities"
+	return "system_authorities"
 }
