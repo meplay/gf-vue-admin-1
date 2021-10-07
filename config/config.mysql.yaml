@@ -71,6 +71,7 @@ captcha:
   key-long: 6
   img-width: 240
   img-height: 80
+  verification: false
 
 # auto-code configuration
 auto-code:

@@ -6,6 +6,7 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/app/service/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/auth"
 	"github.com/flipped-aurora/gf-vue-admin/library/common"
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
@@ -47,15 +48,17 @@ func (a *user) Login(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorCreated}
 	}
-	if system.Store.Verify(info.CaptchaId, info.Captcha, true) {
-		data, err := system.User.Login(&info)
-		if err != nil {
-			return &response.Response{Error: err, Message: "登录失败!"}
+	if global.Config.Captcha.Verification {
+		if !system.Store.Verify(info.CaptchaId, info.Captcha, true) {
+			return &response.Response{Code: 7, Message: "验证码错误!"}
 		}
-		return &response.Response{Data: data, Message: "登录成功!"}
-	} else {
-		return &response.Response{Code: 7, Message: "验证码错误!"}
 	}
+	data, err := system.User.Login(&info)
+	if err != nil {
+		return &response.Response{Error: err, Message: "登录失败!"}
+	}
+	return &response.Response{Data: data, Message: "登录成功!"}
+
 }
 
 // GetUserInfo
