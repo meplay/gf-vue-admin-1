@@ -87,7 +87,7 @@ func (s *user) ChangePassword(info *request.UserChangePassword) error {
 // SetAuthority 设置用户的活跃角色
 // Author: [SliverHorn](https://github.com/SliverHorn)
 func (s *user) SetAuthority(info *request.UserSetAuthority) error {
-	err := global.Db.Where("user_id = ? AND authority_id = ?", info.Uuid, info.AuthorityId).First(&system.UseAuthority{}).Error
+	err := global.Db.Where("user_id = ? AND authority_id = ?", info.ID, info.AuthorityId).First(&system.UseAuthority{}).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return errors.New("该用户无此角色!")
 	}
@@ -128,7 +128,7 @@ func (s *user) GetList(info *common.PageInfo) (list []system.User, total int64, 
 	entities := make([]system.User, 0, info.PageSize)
 	db := global.Db.Model(&system.User{})
 	err = db.Count(&total).Error
-	err = db.Scopes(common.Paginate(info)).Preload("Authority").Find(&entities).Error
+	err = db.Scopes(common.Paginate(info)).Preload("Authority").Preload("Authorities").Find(&entities).Error
 	return entities, total, err
 }
 
