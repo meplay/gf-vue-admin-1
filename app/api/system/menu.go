@@ -139,6 +139,9 @@ func (a *menu) GetTree(r *ghttp.Request) *response.Response {
 // @Router /menu/addMenuAuthority [post]
 func (a *menu) AddMenuAuthority(r *ghttp.Request) *response.Response {
 	var info request.AddMenuAuthority
+	if err := r.Parse(&info); err != nil {
+		return &response.Response{Error: err, Message: "添加失败!"}
+	}
 	if err := system.Menu.AddMenuAuthority(&info); err != nil {
 		return &response.Response{Error: err, Message: "添加失败!"}
 	}
