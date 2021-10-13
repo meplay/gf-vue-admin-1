@@ -13,7 +13,7 @@ type Gorm interface {
 	// GetResolver 通过主库与从库的链接组装 gorm.Plugin
 	GetResolver() gorm.Plugin
 	// GetGormDialector 获取数据库的 gorm.Dialector
-	GetGormDialector() gorm.Dialector
+	GetGormDialector(dsn string) gorm.Dialector
 	// GetConfigPath 设置配置文件路径
 	GetConfigPath() string
 }

@@ -15,8 +15,8 @@ var Gorm = new(_gorm)
 type _gorm struct{}
 
 func (g *_gorm) Initialize(i interfaces.Gorm) {
-	resolver := i.GetResolver()
-	db, err := gorm.Open(i.GetGormDialector(), boot.Gorm.GenerateConfig())
+	resolver := boot.DbResolver.GetResolver()
+	db, err := gorm.Open(i.GetGormDialector(global.Config.Gorm.Dsn.GetDefaultDsn(global.Config.Gorm.Config)), boot.Gorm.GenerateConfig())
 	if err != nil {
 		zap.L().Error("gorm链接数据库失败!", zap.Error(err))
 		os.Exit(0)
