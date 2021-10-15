@@ -18,10 +18,10 @@ type _gorm struct{}
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (g *_gorm) GenerateConfig() *gorm.Config {
 	_config := &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true}
-	_default := New(log.New(os.Stdout, "\r\n", log.LstdFlags), config{
-		SlowThreshold: 200 * time.Millisecond,
-		LogLevel:      logger.Info,
-		Colorful:      true,
+	_default := logger.New(NewWriter(log.New(os.Stdout, "\r\n", log.LstdFlags)), logger.Config{
+		SlowThreshold:             200 * time.Millisecond,
+		IgnoreRecordNotFoundError: false,
+		Colorful:                  true,
 	})
 	switch global.Config.Gorm.LogMode {
 	case "silent", "Silent":
