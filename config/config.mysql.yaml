@@ -29,10 +29,10 @@ gorm:
   dsn:
     sources:
       - host: '127.0.0.1'
-        port: '13307'
+        port: '3306'
         db-name: 'gf-vue-admin'
         username: 'root'
-        password: 'gdkid,,..'
+        password: '123456'
       - host: ''
         port: ''
         db-name: ''
