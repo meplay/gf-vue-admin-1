@@ -57,5 +57,5 @@ func (z *_zap) GetEncoderCore(writer zapcore.WriteSyncer, level zapcore.Level) (
 // CustomTimeEncoder 自定义日志输出时间格式
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (z *_zap) CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format(global.Config.Zap.Prefix + "2006/01/02 - 15:04:05.000"))
+	enc.AppendString(t.Format(global.Config.Zap.Prefix + "2006-01-02 15:04:05.000"))
 }
