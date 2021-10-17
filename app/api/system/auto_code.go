@@ -108,13 +108,14 @@ func (a *autoCode) Create(r *ghttp.Request) *response.Response {
 	}
 	err := system.AutoCode.Create(&info)
 	if err != nil {
-		if errors.As(err, errors.New("创建代码成功并移动文件成功!")) {
+		_err := errors.New("创建代码成功并移动文件成功!")
+		if errors.As(err, &_err) {
 			r.Response.Header().Add("success", "true")
 			r.Response.Header().Add("msg", url.QueryEscape(err.Error()))
+			_ = os.Remove("./gf-vue-admin.zip")
 		} else {
 			r.Response.Header().Add("success", "false")
 			r.Response.Header().Add("msg", url.QueryEscape(err.Error()))
-			_ = os.Remove("./gf-vue-admin.zip")
 		}
 	} else {
 		r.Response.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "gf-vue-admin.zip")) // fmt.Sprintf("attachment; filename=%s", filename)对下载的文件重命名

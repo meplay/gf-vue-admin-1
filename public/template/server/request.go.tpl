@@ -1,22 +1,22 @@
 package request
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/model/example"
+	"github.com/flipped-aurora/gf-vue-admin/app/model/example"
 	"github.com/flipped-aurora/gf-vue-admin/library/common"
     "gorm.io/gorm"
 )
 
-type request.{{.StructName}}Create {
+type {{.StructName}}Create struct {
     example.{{.StructName}}
 }
 
-type request.{{.StructName}}Update {
+type {{.StructName}}Update struct {
     example.{{.StructName}}
 }
 
 type {{.StructName}}Search struct{
     example.{{.StructName}}
-    request.PageInfo
+common.PageInfo
 }
 
 func (r *{{.StructName}}Search) Search() func(db *gorm.DB) *gorm.DB {
@@ -46,5 +46,6 @@ func (r *{{.StructName}}Search) Search() func(db *gorm.DB) *gorm.DB {
             {{- end }}
         {{- end }}
     {{- end }}
+        return db
     }
 }

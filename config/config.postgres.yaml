@@ -80,7 +80,7 @@ auto-code:
     root: ''
     api: '/app/api/example'
     boot: '/boot'
-    router: '/boot'
+    router: '/app/router/example'
     model: '/app/model/example'
     request: '/app/model/example/request'
     service: '/app/service/example'

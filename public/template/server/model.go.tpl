@@ -1,4 +1,4 @@
-package autocode
+package example
 
 import "github.com/flipped-aurora/gf-vue-admin/library/global"
 

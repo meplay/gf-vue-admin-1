@@ -13,7 +13,7 @@ type {{.Abbreviation}} struct {
 	response *response.Handler
 }
 
-func NewUserRouter(router *ghttp.RouterGroup) interfaces.Router {
+func New{{.StructName}}Router(router *ghttp.RouterGroup) interfaces.Router {
 	return &{{.Abbreviation}}{router: router, response: &response.Handler{}}
 }
 
@@ -39,7 +39,7 @@ func (r *{{.Abbreviation}}) PublicWithoutRecord() interfaces.Router {
 func (r *{{.Abbreviation}}) PrivateWithoutRecord() interfaces.Router {
 	group := r.router.Group("/{{.Abbreviation}}")
 	{
-		group.GET("find", r.response.Handler()(example.{{.StructName}}.Find))       // 根据id获取{.Description}}
+		group.GET("first", r.response.Handler()(example.{{.StructName}}.First))       // 根据id获取{.Description}}
 		group.POST("getList", r.response.Handler()(example.{{.StructName}}.GetList)) // 分页获取{.Description}}列表
 	}
 	return r
