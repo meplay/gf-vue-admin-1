@@ -11,7 +11,7 @@ type DictionaryDetailCreate struct {
 	Value        int    `json:"value" example:"7"`
 	Label        string `json:"label" example:"展示值"`
 	Status       *bool  `json:"status"`
-	DictionaryID int    `json:"dictionaryId" example:"7"`
+	DictionaryID int    `json:"sysDictionaryID" example:"7"`
 }
 
 func (r *DictionaryDetailCreate) Create() system.DictionaryDetail {
@@ -24,7 +24,7 @@ type DictionaryDetailUpdate struct {
 	Value        int    `json:"value" example:"7"`
 	Label        string `json:"label" example:"展示值"`
 	Status       *bool  `json:"status"`
-	DictionaryID int    `json:"dictionaryId" example:"7"`
+	DictionaryID int    `json:"sysDictionaryID" example:"7"`
 }
 
 func (r *DictionaryDetailUpdate) Update() system.DictionaryDetail {
@@ -37,7 +37,7 @@ type DictionaryDetailSearch struct {
 	Value        int    `json:"value" example:"7"`
 	Label        string `json:"label" example:"展示值"`
 	Status       *bool  `json:"status"`
-	DictionaryID int    `json:"dictionaryId" example:"7"`
+	DictionaryID int    `json:"sysDictionaryID" example:"7"`
 }
 
 func (r *DictionaryDetailSearch) Search() func(db *gorm.DB) *gorm.DB {

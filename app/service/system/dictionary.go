@@ -44,7 +44,7 @@ func (s *dictionary) Update(info *request.DictionaryUpdate) error {
 			return errors.New("存在相同的type，不允许创建!")
 		}
 	}
-	if err := global.Db.Model(&system.Dictionary{}).Updates(update).Error; err != nil {
+	if err := global.Db.Model(&system.Dictionary{}).Where("id = ?", info.ID).Updates(update).Error; err != nil {
 		return errors.Wrap(err, "更新失败!")
 	}
 	return nil
@@ -54,7 +54,7 @@ func (s *dictionary) Update(info *request.DictionaryUpdate) error {
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *dictionary) Delete(info *common.GetByID) error {
 	var entity system.Dictionary
-	if err := global.Db.First(&entity, info.ID).Error; err != nil {
+	if err := global.Db.Preload("DictionaryDetails").First(&entity, info.ID).Error; err != nil {
 		return errors.Wrap(err, "非法删除!")
 	}
 	if err := global.Db.Delete(&entity).Delete(&entity.DictionaryDetails).Error; err != nil {

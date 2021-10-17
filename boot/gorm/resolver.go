@@ -6,11 +6,11 @@ import (
 	"gorm.io/plugin/dbresolver"
 )
 
-type dbResolver struct{}
+type Resolver struct{}
 
 // GetSources 获取主库的 gorm.Dialector 切片对象
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (d *dbResolver) GetSources() (directories []gorm.Dialector) {
+func (d *Resolver) GetSources() (directories []gorm.Dialector) {
 	length := len(global.Config.Gorm.Dsn.Sources)
 	directories = make([]gorm.Dialector, 0, length)
 	for i := 0; i < length; i++ {
@@ -26,7 +26,7 @@ func (d *dbResolver) GetSources() (directories []gorm.Dialector) {
 
 // GetReplicas 获取从库库的 gorm.Dialector 切片对象
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (d *dbResolver) GetReplicas() (directories []gorm.Dialector) {
+func (d *Resolver) GetReplicas() (directories []gorm.Dialector) {
 	length := len(global.Config.Gorm.Dsn.Replicas)
 	directories = make([]gorm.Dialector, 0, length)
 	for i := 0; i < length; i++ {
@@ -42,7 +42,7 @@ func (d *dbResolver) GetReplicas() (directories []gorm.Dialector) {
 
 // GetResolver 通过主库与从库的链接组装 gorm.Plugin
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (d *dbResolver) GetResolver() gorm.Plugin {
+func (d *Resolver) GetResolver() gorm.Plugin {
 	sources := d.GetSources()
 	resolver := dbresolver.Register(dbresolver.Config{
 		Sources:  sources,

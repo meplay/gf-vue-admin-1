@@ -14,7 +14,7 @@ var _ interfaces.Gorm = (*_mysql)(nil)
 var DbResolver = new(_mysql)
 
 type _mysql struct {
-	dbResolver
+	Resolver
 }
 
 // GetGormDialector 获取数据库的 gorm.Dialector
