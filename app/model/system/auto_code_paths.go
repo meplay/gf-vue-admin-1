@@ -10,13 +10,15 @@ import (
 	"time"
 )
 
-type AutoCodePaths struct {
+type AutoCodePath struct {
 	Filepath string `json:"filepath"`
 }
 
-func (a *AutoCodePaths) RmFilePath() string {
+func (a *AutoCodePath) RmFilePath() string {
 	return filepath.Join(global.Config.AutoCode.Root, "rm_file", time.Now().Format("20060102"), filepath.Base(filepath.Dir(filepath.Dir(a.Filepath))), filepath.Base(filepath.Dir(a.Filepath)), filepath.Base(a.Filepath))
 }
+
+type AutoCodePaths []AutoCodePath
 
 // Scan 扫描
 // Author [SliverHorn](https://github.com/SliverHorn)

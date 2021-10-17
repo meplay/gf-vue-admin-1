@@ -93,5 +93,5 @@ func (a *autoCodeHistory) GetList(r *ghttp.Request) *response.Response {
 	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
-	return &response.Response{Data: common.NewPageResult(list, total, *info.PageInfo), MessageCode: response.ErrorGetList}
+	return &response.Response{Data: common.NewPageResult(list, total, *info.PageInfo), MessageCode: response.SuccessGetList}
 }

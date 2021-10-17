@@ -12,7 +12,7 @@
                 <a href="https://github.com/flipped-aurora/gf-vue-admin">
                   <img
                     class="org-img dom-center"
-                    src="@/assets/logo.png"
+                    src="https://www.gf-vue-admin.com/assets/images/gfvalogo-2d55bf3e10786fa0750614a3c022e198.png"
                     alt="gf-vue-admin"
                   >
                 </a>

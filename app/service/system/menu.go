@@ -93,9 +93,7 @@ func (s *_menu) GetList() (list []system.Menu, total int64, err error) {
 	}
 	list = treeMap["0"]
 	for i := 0; i < len(list); i++ {
-		if err = s.getChildrenList(&list[i], treeMap); err != nil {
-			return list, total, errors.Wrap(err, "查找子菜单数据失败!")
-		}
+		s.getChildrenList(&list[i], treeMap)
 	}
 	return list, total, err
 }
@@ -103,15 +101,14 @@ func (s *_menu) GetList() (list []system.Menu, total int64, err error) {
 // GetTree 获取动态菜单树
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *_menu) GetTree() (list []system.Menu, err error) {
-	treeMap, _err := s.getTreeMap()
-	if _err != nil {
-		return nil, _err
+	var treeMap map[string][]system.Menu
+	treeMap, err = s.getTreeMap()
+	if err != nil {
+		return nil, err
 	}
 	list = treeMap["0"]
 	for i := 0; i < len(list); i++ {
-		if err = s.getChildrenList(&list[i], treeMap); err != nil {
-			return list, errors.Wrap(err, "查找子菜单数据失败!")
-		}
+		s.getChildrenList(&list[i], treeMap)
 	}
 	return list, err
 }
@@ -139,16 +136,11 @@ func (s *_menu) getTreeMap() (treeMap map[string][]system.Menu, err error) {
 
 // getChildrenList 获取菜单的子菜单
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *_menu) getChildrenList(menu *system.Menu, treeMap map[string][]system.Menu) error {
+func (s *_menu) getChildrenList(menu *system.Menu, treeMap map[string][]system.Menu) {
 	if value, ok := treeMap[strconv.Itoa(int(menu.ID))]; ok {
 		menu.Children = value
 		for i := 0; i < len(menu.Children); i++ {
-			if err := s.getChildrenList(&menu.Children[i], treeMap); err != nil {
-				return err
-			}
+			s.getChildrenList(&menu.Children[i], treeMap)
 		}
-		return nil
-	} else {
-		return nil
 	}
 }

@@ -80,6 +80,6 @@ func (v *_viper) Initialize(path ...string) {
 		fmt.Println(`Json 序列化数据失败, err :`, err)
 	}
 	global.Viper = __viper
-	global.Config.AutoCode.Root, _ = filepath.Abs("..")
+	global.Config.AutoCode.Root, _ = filepath.Abs(".")
 	global.JwtCache = local_cache.NewCache(local_cache.SetDefaultExpire(time.Second * time.Duration(global.Config.Jwt.ExpiresTime)))
 }

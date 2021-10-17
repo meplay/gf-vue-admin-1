@@ -26,7 +26,7 @@ func (s *dictionaryDetail) First(info *common.GetByID) (data *system.DictionaryD
 	if err = global.Db.Where("id = ?", info.ID).First(&entity).Error; err != nil {
 		return nil, errors.Wrap(err, "更新字典详情失败!")
 	}
-	return nil, err
+	return &entity, err
 }
 
 // Update 更新字典详情数据
@@ -42,7 +42,7 @@ func (s *dictionaryDetail) Update(info *request.DictionaryDetailUpdate) error {
 // Delete 删除字典详情数据
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *dictionaryDetail) Delete(info *common.GetByID) error {
-	return global.Db.First(&system.DictionaryDetail{}, info.ID).Error
+	return global.Db.Delete(&system.DictionaryDetail{}, info.ID).Error
 }
 
 // GetList 分页获取字典详情列表

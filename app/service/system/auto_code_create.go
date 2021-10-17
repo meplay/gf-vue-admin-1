@@ -46,18 +46,18 @@ func (s *autoCode) Create(info *request.AutoCodeCreate) error {
 	}()
 
 	var apis system.AutoCodeApis
-	apis, err = s.AutoCreateApi(&info.AutoCodeStruct)
-	if err != nil {
-		return errors.Wrap(err, "创建api记录失败!")
+	if info.AutoCreateApiToSql {
+		apis, err = s.AutoCreateApi(&info.AutoCodeStruct)
+		if err != nil {
+			return errors.Wrap(err, "创建api记录失败!")
+		}
 	}
 
 	if info.AutoMoveFile { // 判断是否需要自动转移
 		length := len(dataList)
 		for i := 0; i < length; i++ {
-			dataList[i].GenerateAutoMoveFilePath() // 生成每个文件移动后的文件路径
-			if err = utils.File.Move(dataList[i].AutoCodePath, dataList[i].AutoMoveFilePath); err != nil {
-				return err
-			} // 移动文件
+			dataList[i].GenerateAutoMoveFilePath()                                      // 生成每个文件移动后的文件路径
+			_ = utils.File.Move(dataList[i].AutoCodePath, dataList[i].AutoMoveFilePath) // 移动文件
 		}
 
 		entities := info.GenerateInjection() // 生成注入内容

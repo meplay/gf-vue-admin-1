@@ -84,27 +84,22 @@ func (a *AutoCodeStruct) GenerateInjection() []AutoCodeInjection {
 		{
 			Filepath:       filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "gorm.go"),
 			FunctionName:   "Initialize",
-			CodeDataFormat: "new(example.%s)",
+			CodeDataFormat: "new(example.%s),",
 		},
 		{
 			Filepath:       filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "router.go"),
-			FunctionName:   "Initialize",
-			CodeDataFormat: "example.New%sRouter(private).Public().PublicWithoutRecord()",
+			FunctionName:   "PublicRouter",
+			CodeDataFormat: "example.New%sRouter(public).Public().PublicWithoutRecord()",
 		},
 		{
 			Filepath:       filepath.Join(global.Config.AutoCode.Root, global.Config.AutoCode.Server.Root, global.Config.AutoCode.Server.Boot, "router.go"),
-			FunctionName:   "Initialize",
+			FunctionName:   "PrivateRouter",
 			CodeDataFormat: "example.New%sRouter(private).Private().PrivateWithoutRecord()",
 		},
 	}
 	for i := 0; i < 3; i++ {
-		if a.TableName != "" {
-			entities[i].StructName = a.TableName
-			entities[i].CodeData = fmt.Sprintf(entities[i].CodeDataFormat, a.TableName)
-		} else {
-			entities[i].StructName = a.StructName
-			entities[i].CodeData = fmt.Sprintf(entities[i].CodeDataFormat, a.StructName)
-		}
+		entities[i].StructName = a.StructName
+		entities[i].CodeData = fmt.Sprintf(entities[i].CodeDataFormat, a.StructName)
 	}
 	a.Injection = entities
 	return entities

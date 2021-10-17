@@ -4,7 +4,7 @@
 
 const config = {
   appName: 'Gf-Vue-Admin',
-  appLogo: 'https://www.gin-vue-admin.com/img/logo.png'
+  appLogo: 'https://www.gf-vue-admin.com/assets/images/gfvalogo-2d55bf3e10786fa0750614a3c022e198.png'
 }
 
 export default config

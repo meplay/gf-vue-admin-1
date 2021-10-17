@@ -7,6 +7,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+type AutoCodeInjections []AutoCodeInjection
+
 type AutoCodeInjection struct {
 	Filepath       string `json:"filepath" gorm:"column:filepath;comment:注入的文件绝对路径"`
 	CodeData       string `json:"codeData" gorm:"column:code_data;comment:注入代码"`
@@ -17,7 +19,7 @@ type AutoCodeInjection struct {
 
 // Scan 扫描
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (a *AutoCodeInjection) Scan(value interface{}) error {
+func (a *AutoCodeInjections) Scan(value interface{}) error {
 	switch v := value.(type) {
 	case []byte:
 		if err := json.Unmarshal(v, a); err != nil {
@@ -35,7 +37,7 @@ func (a *AutoCodeInjection) Scan(value interface{}) error {
 
 // Value 值
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (a AutoCodeInjection) Value() (driver.Value, error) {
+func (a AutoCodeInjections) Value() (driver.Value, error) {
 	bytes, err := json.Marshal(&a)
 	if err != nil {
 		return nil, err

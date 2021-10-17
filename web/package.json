@@ -1,5 +1,5 @@
 {
-	"name": "gf-vue-admin",
+	"name": "gin-vue-admin",
 	"version": "2.3.5",
 	"private": true,
 	"scripts": {
@@ -8,6 +8,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@element-plus/icons": "0.0.11",
 		"axios": "^0.19.2",
 		"core-js": "^3.6.5",
 		"echarts": "4.9.0",

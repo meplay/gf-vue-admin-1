@@ -14,7 +14,7 @@ var _ interfaces.Gorm = (*_postgres)(nil)
 var DbResolver = new(_postgres)
 
 type _postgres struct {
-	dbResolver
+	Resolver
 }
 
 // GetGormDialector 获取数据库的 gorm.Dialector

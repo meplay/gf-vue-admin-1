@@ -37,12 +37,10 @@ func (f *file) Move(src string, dst string) error {
 	if dst == "" || src == "" {
 		return nil
 	}
-	src, err = filepath.Abs(src)
-	if err != nil {
+	if src, err = filepath.Abs(src); err != nil {
 		return err
 	}
-	dst, err = filepath.Abs(dst)
-	if err != nil {
+	if dst, err = filepath.Abs(dst); err != nil {
 		return err
 	}
 	var revoke bool
@@ -50,8 +48,7 @@ func (f *file) Move(src string, dst string) error {
 Redirect:
 	_, err = os.Stat(dir)
 	if err != nil {
-		err = os.MkdirAll(dir, 0755)
-		if err != nil {
+		if err = os.MkdirAll(dir, 0755); err != nil {
 			return err
 		}
 		if !revoke {
@@ -61,9 +58,10 @@ Redirect:
 	}
 	return os.Rename(src, dst)
 }
+
 // ZipFiles
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (f *file)ZipFiles(filename string, files []string, oldForm, newForm string) error {
+func (f *file) ZipFiles(filename string, files []string, oldForm, newForm string) error {
 	newZipFile, err := os.Create(filename)
 	if err != nil {
 		return err
