@@ -76,9 +76,12 @@ func (t *Templates) ToRequestAutoCodeHistoryCreate(info *system.AutoCodeStruct, 
 	}
 	templates := *t
 	length := len(templates)
-	paths := make([]system.AutoCodePaths, 0, length)
+	paths := make(system.AutoCodePaths, 0, length)
 	for i := 0; i < length; i++ {
-		paths = append(paths, system.AutoCodePaths{Filepath: templates[i].AutoMoveFilePath})
+		if templates[i].AutoMoveFilePath == "" {
+			continue
+		}
+		paths = append(paths, system.AutoCodePath{Filepath: templates[i].AutoMoveFilePath})
 	}
 	entity.AutoCodePaths = paths
 	return &entity

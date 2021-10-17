@@ -5,7 +5,6 @@ import (
     "github.com/flipped-aurora/gf-vue-admin/app/model/example/request"
     "github.com/flipped-aurora/gf-vue-admin/library/common"
     "github.com/flipped-aurora/gf-vue-admin/library/global"
-    "gorm.io/gorm"
 )
 
 var {{.StructName}} = new({{.Abbreviation}})

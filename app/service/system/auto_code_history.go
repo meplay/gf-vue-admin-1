@@ -88,13 +88,13 @@ func (s *autoCodeHistory) RollBack(info *common.GetByID) error {
 			return errors.Wrap(err, "清除注入代码失败!")
 		}
 	} // 清除注入
-	return global.Db.Model(&system.AutoCodeHistory{}).Update("flag", 1).Error
+	return global.Db.Model(&system.AutoCodeHistory{}).Where("id =?", info.ID).Update("flag", 1).Error
 }
 
 // Delete 删除历史数据
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *autoCodeHistory) Delete(info *common.GetByID) error {
-	return global.Db.Delete(system.AutoCodeHistory{}, info.ID).Error
+	return global.Db.Delete(&system.AutoCodeHistory{}, info.ID).Error
 }
 
 // GetList 获取系统历史数据
@@ -102,7 +102,6 @@ func (s *autoCodeHistory) Delete(info *common.GetByID) error {
 func (s *autoCodeHistory) GetList(info *request.AutoCodeHistorySearch) (list []system.AutoCodeHistory, total int64, err error) {
 	db := global.Db.Model(&system.AutoCodeHistory{})
 	entities := make([]system.AutoCodeHistory, 0, info.PageSize)
-	db = db.Scopes(info.Search())
-	err = db.Count(&total).Scopes(common.Paginate(info.PageInfo), info.Order()).Find(&entities).Error
+	err = db.Count(&total).Scopes(info.Select(), common.Paginate(info.PageInfo), info.Order()).Find(&entities).Error
 	return entities, total, err
 }

@@ -1,6 +1,7 @@
 package example
 
 import (
+	"github.com/flipped-aurora/gf-vue-admin/app/api/example"
 	"github.com/flipped-aurora/gf-vue-admin/interfaces"
 	"github.com/flipped-aurora/gf-vue-admin/library/response"
 	"github.com/gogf/gf/net/ghttp"

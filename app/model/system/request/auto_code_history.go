@@ -9,8 +9,8 @@ import (
 type AutoCodeHistoryCreate struct {
 	system.AutoCodeStruct
 	Apis          system.AutoCodeApis
-	Injection     []system.AutoCodeInjection
-	AutoCodePaths []system.AutoCodePaths
+	Injection     system.AutoCodeInjections
+	AutoCodePaths system.AutoCodePaths
 }
 
 func (r *AutoCodeHistoryCreate) Create() system.AutoCodeHistory {
@@ -34,7 +34,7 @@ type AutoCodeHistorySearch struct {
 	*common.PageInfo
 }
 
-func (s *AutoCodeHistorySearch) Search() func(db *gorm.DB) *gorm.DB {
+func (s *AutoCodeHistorySearch) Select() func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Select("id,created_at,updated_at,struct_name,struct_cn_name,flag,table_name")
 	}
