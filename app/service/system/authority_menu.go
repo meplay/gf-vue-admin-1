@@ -27,7 +27,7 @@ func (s *authorityMenu) GetMenuTree(authorityId string) ([]system.AuthorityMenu,
 	}
 	menus := treeMap["0"]
 	for i := 0; i < len(menus); i++ {
-		err = s.getChildrenList(&menus[i], treeMap)
+		s.getChildrenList(&menus[i], treeMap)
 	}
 	return menus, err
 }
@@ -48,12 +48,9 @@ func (s *authorityMenu) getMenuTreeMap(authorityId string) (treeMap map[string][
 
 // getChildrenList 获取子菜单列表
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *authorityMenu) getChildrenList(menu *system.AuthorityMenu, treeMap map[string][]system.AuthorityMenu) error {
+func (s *authorityMenu) getChildrenList(menu *system.AuthorityMenu, treeMap map[string][]system.AuthorityMenu) {
 	menu.Children = treeMap[menu.MenuId]
 	for i := 0; i < len(menu.Children); i++ {
-		if err := s.getChildrenList(&menu.Children[i], treeMap); err != nil {
-			return err
-		}
+		s.getChildrenList(&menu.Children[i], treeMap)
 	}
-	return nil
 }
