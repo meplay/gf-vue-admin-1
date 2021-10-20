@@ -1,6 +1,6 @@
 # jwt configuration
 jwt:
-  signing-key: 'qmPlus'
+  signing-key: 'SliverHorn'
   buffer-time: 86400
   expires-time: 604800
 
