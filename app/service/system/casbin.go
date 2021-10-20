@@ -59,7 +59,7 @@ func (s *_casbin) Update(authorityId string, casbinInfos []request.CasbinInfo) e
 		rules = append(rules, []string{authorityId, v.Path, v.Method})
 	}
 	success, _ := s.Casbin().AddPolicies(rules)
-	if success == false {
+	if !success {
 		return errors.New("存在相同api,添加失败,请联系管理员!")
 	}
 	return nil
