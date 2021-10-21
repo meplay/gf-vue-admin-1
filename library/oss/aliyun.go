@@ -7,6 +7,8 @@ import (
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"mime/multipart"
+	"os"
+	"path/filepath"
 )
 
 var _ interfaces.Oss = (*aliyun)(nil)
@@ -15,6 +17,7 @@ var Aliyun = new(aliyun)
 
 type aliyun struct {
 	filename string
+	filesize int64
 }
 
 func NewAliyunBucket() (bucket *oss.Bucket, err error) {
@@ -63,6 +66,22 @@ func (a *aliyun) UploadByFile(file multipart.File) (filepath string, filename st
 	}
 
 	return global.Config.Aliyun.BucketUrl + "/" + filepath, a.filename, nil
+}
+
+func (a *aliyun) UploadByFilepath(p string) (path string, filename string, err error) {
+	var file *os.File
+	file, err = os.Open(p)
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件不存在!", p)
+	}
+	var info os.FileInfo
+	info, err = file.Stat()
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件信息获取失败!", p)
+	}
+	a.filesize = info.Size()
+	_, a.filename = filepath.Split(path)
+	return a.UploadByFile(file)
 }
 
 func (a *aliyun) UploadByFileHeader(file *multipart.FileHeader) (filepath string, filename string, err error) {

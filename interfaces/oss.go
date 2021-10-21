@@ -9,6 +9,8 @@ type Oss interface {
 	DeleteByKey(key string) error
 	// UploadByFile 方便使用 os.File 数据上传oss
 	UploadByFile(file multipart.File) (filepath string, filename string, err error)
+	// UploadByFilepath 通过文件路径上传文件到oss
+	UploadByFilepath(path string) (filepath string, filename string, err error)
 	// UploadByFileHeader 方便从http框架接收到的 multipart.FileHeader 数据上传oss
-	UploadByFileHeader(file *multipart.FileHeader) (filepath string, filename string, err error)
+	UploadByFileHeader(header *multipart.FileHeader) (filepath string, filename string, err error)
 }

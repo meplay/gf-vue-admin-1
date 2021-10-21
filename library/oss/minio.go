@@ -10,6 +10,8 @@ import (
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"mime/multipart"
+	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -73,14 +75,30 @@ func (m *_minio) UploadByFile(file multipart.File) (filepath string, filename st
 	return filepath, filename, nil
 }
 
-func (m *_minio) UploadByFileHeader(file *multipart.FileHeader) (filepath string, filename string, err error) {
+func (m *_minio) UploadByFilepath(p string) (path string, filename string, err error) {
+	var file *os.File
+	file, err = os.Open(p)
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件不存在!", p)
+	}
+	var info os.FileInfo
+	info, err = file.Stat()
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件信息获取失败!", p)
+	}
+	m.filesize = info.Size()
+	_, m.filename = filepath.Split(path)
+	return m.UploadByFile(file)
+}
+
+func (m *_minio) UploadByFileHeader(header *multipart.FileHeader) (filepath string, filename string, err error) {
 	var open multipart.File
-	open, err = file.Open()
+	open, err = header.Open()
 	if err != nil {
 		return filepath, filename, err
 	}
-	m.contentType = file.Header.Get("content-type") // 获取文件类型
-	m.filename = fmt.Sprintf("%d%s", time.Now().Unix(), file.Filename)
-	m.filesize = file.Size
+	m.contentType = header.Header.Get("content-type") // 获取文件类型
+	m.filename = fmt.Sprintf("%d%s", time.Now().Unix(), header.Filename)
+	m.filesize = header.Size
 	return m.UploadByFile(open)
 }
