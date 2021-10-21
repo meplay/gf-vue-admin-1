@@ -10,6 +10,8 @@ import (
 	"github.com/qiniu/api.v7/v7/storage"
 	"go.uber.org/zap"
 	"mime/multipart"
+	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -54,6 +56,22 @@ func (q *qiniu) UploadByFile(file multipart.File) (filepath string, filename str
 	filename = result.Key
 	filepath = global.Config.Qiniu.ImgPath + "/" + filename
 	return filepath, filename, nil
+}
+
+func (q *qiniu) UploadByFilepath(p string) (path string, filename string, err error) {
+	var file *os.File
+	file, err = os.Open(p)
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件不存在!", p)
+	}
+	var info os.FileInfo
+	info, err = file.Stat()
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件信息获取失败!", p)
+	}
+	q.filesize = info.Size()
+	_, q.filename = filepath.Split(path)
+	return q.UploadByFile(file)
 }
 
 func (q *qiniu) UploadByFileHeader(file *multipart.FileHeader) (filepath string, filename string, err error) {

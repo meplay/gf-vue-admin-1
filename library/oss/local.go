@@ -8,6 +8,7 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -17,12 +18,13 @@ var Local = new(local)
 
 type local struct {
 	filename string
+	filesize int64
 }
 
 func (l *local) DeleteByKey(key string) error {
-	filepath := global.Config.Local.Path + "/" + key
-	if strings.Contains(filepath, global.Config.Local.Path) {
-		if err := os.Remove(filepath); err != nil {
+	path := global.Config.Local.Path + "/" + key
+	if strings.Contains(path, global.Config.Local.Path) {
+		if err := os.Remove(path); err != nil {
 			return errors.Wrap(err, "本地文件删除失败!")
 		}
 	}
@@ -49,6 +51,22 @@ func (l *local) UploadByFile(file multipart.File) (filepath string, filename str
 		return filepath, filename, errors.Wrap(err, "传输(拷贝)文件失败!")
 	} // 传输(拷贝)文件
 	return filepath, filename, nil
+}
+
+func (l *local) UploadByFilepath(p string) (path string, filename string, err error) {
+	var file *os.File
+	file, err = os.Open(p)
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件不存在!", p)
+	}
+	var info os.FileInfo
+	info, err = file.Stat()
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件信息获取失败!", p)
+	}
+	l.filesize = info.Size()
+	_, l.filename = filepath.Split(path)
+	return l.UploadByFile(file)
 }
 
 func (l *local) UploadByFileHeader(file *multipart.FileHeader) (filepath string, filename string, err error) {

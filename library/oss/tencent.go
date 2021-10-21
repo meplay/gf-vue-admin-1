@@ -11,6 +11,8 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -20,6 +22,7 @@ var Tencent = new(tencent)
 
 type tencent struct {
 	filename string
+	filesize int64
 }
 
 func NewTencentClient() (*cos.Client, error) {
@@ -70,6 +73,22 @@ func (t *tencent) UploadByFile(file multipart.File) (filepath string, filename s
 		return filepath, t.filename, errors.Wrap(err, "文件上传失败!")
 	}
 	return filepath, t.filename, nil
+}
+
+func (t *tencent) UploadByFilepath(p string) (path string, filename string, err error) {
+	var file *os.File
+	file, err = os.Open(p)
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件不存在!", p)
+	}
+	var info os.FileInfo
+	info, err = file.Stat()
+	if err != nil {
+		return path, filename, errors.Wrapf(err, "(%s)文件信息获取失败!", p)
+	}
+	t.filesize = info.Size()
+	_, t.filename = filepath.Split(path)
+	return t.UploadByFile(file)
 }
 
 func (t *tencent) UploadByFileHeader(file *multipart.FileHeader) (filepath string, filename string, err error) {
