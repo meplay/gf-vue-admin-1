@@ -29,3 +29,7 @@ type GormConfigGeneral interface {
 	GetConnMaxLifetime() time.Duration
 	GetConnMaxIdleTime() time.Duration
 }
+
+type Search interface {
+	Search() func(db *gorm.DB) *gorm.DB
+}

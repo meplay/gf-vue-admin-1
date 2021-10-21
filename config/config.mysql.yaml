@@ -21,7 +21,7 @@ gorm:
   config: 'charset=utf8mb4&parseTime=true&loc=Local'
   log-zap: false
   log-mode: "info"
-  auto-migrate: false
+  auto-migrate: true
   max-idle-conns: 10
   max-open-conns: 100
   conn-max-lifetime: 1h
