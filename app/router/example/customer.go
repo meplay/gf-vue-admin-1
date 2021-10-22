@@ -9,6 +9,7 @@ import (
 )
 
 var _ interfaces.Router = (*customer)(nil)
+
 type customer struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
@@ -19,17 +20,15 @@ func NewCustomerRouter(router *ghttp.RouterGroup) interfaces.Router {
 }
 
 func (c *customer) Public() interfaces.Router {
-
 	return c
 }
 
 func (c *customer) Private() interfaces.Router {
 	group := c.router.Group("/customer").Middleware(middleware.OperationRecord)
 	{
-		group.POST("create",c.response.Handler()(example.Customer.Create))		//创建客户表
-		group.POST("update",c.response.Handler()(example.Customer.Update))		//更新{.Description}
-		group.POST("delete",c.response.Handler()(example.Customer.Delete))		// 删除{.Description}}
-		group.DELETE("deletes",c.response.Handler()(example.Customer.Deletes))	// 批量删除{.Description}}
+		group.POST("customer", c.response.Handler()(example.Customer.Create))   // 创建客户
+		group.PUT("customer", c.response.Handler()(example.Customer.Update))    // 更新客户
+		group.DELETE("customer", c.response.Handler()(example.Customer.Delete)) // 删除客户
 	}
 	return c
 }
@@ -41,9 +40,8 @@ func (c *customer) PublicWithoutRecord() interfaces.Router {
 func (c *customer) PrivateWithoutRecord() interfaces.Router {
 	group := c.router.Group("/customer")
 	{
-		group.GET("first",c.response.Handler()(example.Customer.First))			// 根据id获取{.Description}}
-		group.POST("getList", c.response.Handler()(example.Customer.GetList))	// 分页获取{.Description}}列表
+		group.GET("customer", c.response.Handler()(example.Customer.First))        // 获取单一客户信息
+		group.POST("customerList", c.response.Handler()(example.Customer.GetList)) // 获取客户列表
 	}
 	return c
 }
-

@@ -1,8 +1,8 @@
 package system
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/app/api/system/internal"
 	"github.com/flipped-aurora/gf-vue-admin/app/service/system"
+	"github.com/flipped-aurora/gf-vue-admin/library/auth"
 	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/response"
 	"github.com/gogf/gf/frame/g"
@@ -22,14 +22,12 @@ type authorityMenu struct{}
 // @Success 200 {object} response.Response{data=[]system.AuthorityMenu} "获取列表数据成功!"
 // @Router /menu/getMenu [post]
 func (a *authorityMenu) GetMenu(r *ghttp.Request) *response.Response {
-	claims := internal.NewClaims(r)
-	data, err := system.AuthorityMenu.GetMenuTree(claims.GetUserAuthorityId())
+	data, err := system.AuthorityMenu.GetMenuTree(auth.Claims.GetUserInfo(r).AuthorityId)
 	if err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorGetList}
 	}
 	return &response.Response{Data: g.Map{"menus": data}, MessageCode: response.SuccessGetList}
 }
-
 
 // GetMenuAuthority
 // @Tags SystemAuthorityMenu
@@ -47,7 +45,7 @@ func (a *authorityMenu) GetMenuAuthority(r *ghttp.Request) *response.Response {
 	}
 	data, err := system.AuthorityMenu.GetAuthorityMenu(&info)
 	if err != nil {
-		return &response.Response{Data: g.Map{"menus":data}, MessageCode: response.ErrorGetList}
+		return &response.Response{Data: g.Map{"menus": data}, MessageCode: response.ErrorGetList}
 	}
-	return &response.Response{Data: g.Map{"menus":data}, MessageCode: response.SuccessGetList}
+	return &response.Response{Data: g.Map{"menus": data}, MessageCode: response.SuccessGetList}
 }

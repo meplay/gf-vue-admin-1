@@ -1,7 +1,6 @@
 package system
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/app/api/system/internal"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/app/service/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/auth"
@@ -72,10 +71,7 @@ func (a *user) Login(r *ghttp.Request) *response.Response {
 // @Router /user/getUserInfo [get]
 func (a *user) GetUserInfo(r *ghttp.Request) *response.Response {
 	var info request.UserFind
-	claims := internal.NewClaims(r)
-	if info.Uuid = claims.GetUserUuid(); info.Uuid == "" || claims.Error() != nil {
-		return &response.Response{Error: claims.Error(), Message: "获取用户信息失败!"}
-	}
+	info.Uuid = auth.Claims.GetUserInfo(r).Uuid
 	data, err := system.User.Find(&info)
 	if err != nil {
 		return &response.Response{Error: err, Message: "获取用户信息失败!"}
@@ -137,11 +133,9 @@ func (a *user) Delete(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
-	claims := internal.NewClaims(r)
-	if id := claims.GetUserID(); id == 0 || claims.Error() != nil {
-		if id == info.ID {
-			return &response.Response{Error: claims.Error(), Message: "自我删除失败!"}
-		}
+	claims := auth.Claims.GetUserInfo(r)
+	if info.ID == claims.ID {
+		return &response.Response{Code: response.ERROR, Message: "自我删除失败!"}
 	}
 	if err := system.User.Delete(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
@@ -184,25 +178,18 @@ func (a *user) SetUserAuthority(r *ghttp.Request) *response.Response {
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorUpdated}
 	}
-	claims := internal.NewClaims(r)
-	if info.ID = claims.GetUserID(); info.ID == 0 || claims.Error() != nil {
-		err := claims.Error()
-		return &response.Response{Error: err, Message: err.Error()}
-	}
-	if info.Uuid = claims.GetUserUuid(); info.Uuid == "" || claims.Error() != nil {
-		err := claims.Error()
-		return &response.Response{Error: err, Message: err.Error()}
-	}
+	claims := auth.Claims.GetUserInfo(r)
+	info.ID = claims.ID
+	info.Uuid = claims.Uuid
 	if err := system.User.SetAuthority(&info); err != nil {
 		return &response.Response{Error: err, Message: "修改失败!"}
 	}
-	_claims := claims.GetUserClaims()
-	_claims.AuthorityId = info.AuthorityId
-	if token, err := auth.NewJWT().CreateToken(_claims); err != nil {
+	claims.AuthorityId = info.AuthorityId
+	if token, err := auth.NewJWT().CreateToken(claims); err != nil {
 		return &response.Response{Error: err, Message: "修改失败!"}
 	} else {
 		r.Response.Header().Set("new-token", token)
-		r.Response.Header().Set("new-expires-at", strconv.FormatInt(_claims.ExpiresAt, 10))
+		r.Response.Header().Set("new-expires-at", strconv.FormatInt(claims.ExpiresAt, 10))
 		return &response.Response{Message: "修改成功!"}
 	}
 }

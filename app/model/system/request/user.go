@@ -82,13 +82,13 @@ type UserChangePassword struct {
 	Uuid        string
 	Username    string `json:"username"`
 	Password    string `json:"password"`
-	NewPassword string `json:"new_password"`
+	NewPassword string `json:"newPassword"`
 }
 
 type UserSetAuthority struct {
 	ID          uint   `json:"-"`
-	Uuid        string `json:"uuid"`
-	AuthorityId string `json:"authority_id"`
+	Uuid        string `json:"-"`
+	AuthorityId string `json:"authorityId"`
 }
 
 type UserSetAuthorities struct {

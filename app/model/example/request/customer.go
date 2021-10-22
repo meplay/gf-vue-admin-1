@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-
 type CustomerCreate struct {
 	example.Customer
 }
@@ -16,7 +15,7 @@ type CustomerUpdate struct {
 }
 
 type CustomerSearch struct {
-	example.Customer
+	UserAuthorityID string `json:"-"`
 	common.PageInfo
 }
 
