@@ -31,7 +31,7 @@ func (s *server) ReloadSystem(r *ghttp.Request) *response.Response {
 // @Summary 获取服务器信息
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {object} response.Response{data=[]response.Server} "获取成功!"
+// @Success 200 {object} response.Response{} "获取成功!"
 // @Router /system/getServerInfo [post]
 func (s *server) GetServerInfo(r *ghttp.Request) *response.Response {
 	data, err := system.Server.GetServerInfo()
@@ -46,8 +46,7 @@ func (s *server) GetServerInfo(r *ghttp.Request) *response.Response {
 // @Summary 获取配置文件内容
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Success 200 {string} string "{"success":true,"data":{},"msg":""}"
-// @Success 200 {object} response.Response{data=config.Config} "获取成功!"
+// @Success 200 {object} response.Response{} "获取成功!"
 // @Router /system/getSystemConfig [post]
 func (s *server) GetSystemConfig(r *ghttp.Request) *response.Response {
 	return &response.Response{}
@@ -58,7 +57,6 @@ func (s *server) GetSystemConfig(r *ghttp.Request) *response.Response {
 // @Summary 设置配置文件内容
 // @Security ApiKeyAuth
 // @Produce  application/json
-// @Param data body config.Config true "设置配置文件内容"
 // @Success 200 {object} response.Response{} "设置成功!"
 // @Router /system/setSystemConfig [post]
 func (s *server) SetSystemConfig(r *ghttp.Request) *response.Response {
