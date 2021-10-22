@@ -40,8 +40,8 @@ func (c *customer) PublicWithoutRecord() interfaces.Router {
 func (c *customer) PrivateWithoutRecord() interfaces.Router {
 	group := c.router.Group("/customer")
 	{
-		group.GET("customer", c.response.Handler()(example.Customer.First))        // 获取单一客户信息
-		group.POST("customerList", c.response.Handler()(example.Customer.GetList)) // 获取客户列表
+		group.GET("customer", c.response.Handler()(example.Customer.First))       // 获取单一客户信息
+		group.GET("customerList", c.response.Handler()(example.Customer.GetList)) // 获取客户列表
 	}
 	return c
 }
