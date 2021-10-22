@@ -1067,6 +1067,221 @@
                 }
             }
         },
+        "/customer/customer": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExampleCustomer"
+                ],
+                "summary": "用id查询 客户表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "uint 主键ID",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/example.Customer"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExampleCustomer"
+                ],
+                "summary": "更新 客户表",
+                "parameters": [
+                    {
+                        "description": "更新Customer",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CustomerUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExampleCustomer"
+                ],
+                "summary": "创建 客户表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CustomerCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/customerList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExampleCustomer"
+                ],
+                "summary": "分页获取 客户表 列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "int 页码",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "int 每页大小",
+                        "description": "每页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取列表数据成功!",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/example.Customer"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ExampleCustomer"
+                ],
+                "summary": "删除 客户表",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/common.GetByID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功!",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/fileUploadAndDownload/deleteFile": {
             "post": {
                 "security": [
@@ -2827,6 +3042,38 @@
                 }
             }
         },
+        "example.Customer": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "customerName": {
+                    "type": "string"
+                },
+                "customerPhoneData": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "sysUser": {
+                    "$ref": "#/definitions/system.User"
+                },
+                "sysUserAuthorityID": {
+                    "type": "string"
+                },
+                "sysUserId": {
+                    "type": "integer"
+                }
+            }
+        },
         "example.File": {
             "type": "object",
             "properties": {
@@ -3172,6 +3419,70 @@
                 }
             }
         },
+        "request.CustomerCreate": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "customerName": {
+                    "type": "string"
+                },
+                "customerPhoneData": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "sysUser": {
+                    "$ref": "#/definitions/system.User"
+                },
+                "sysUserAuthorityID": {
+                    "type": "string"
+                },
+                "sysUserId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.CustomerUpdate": {
+            "type": "object",
+            "properties": {
+                "CreatedAt": {
+                    "type": "string",
+                    "example": "创建时间"
+                },
+                "UpdatedAt": {
+                    "type": "string",
+                    "example": "更新时间"
+                },
+                "customerName": {
+                    "type": "string"
+                },
+                "customerPhoneData": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 7
+                },
+                "sysUser": {
+                    "$ref": "#/definitions/system.User"
+                },
+                "sysUserAuthorityID": {
+                    "type": "string"
+                },
+                "sysUserId": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.DeleteApi": {
             "type": "object",
             "properties": {
@@ -3474,7 +3785,7 @@
         "request.UserChangePassword": {
             "type": "object",
             "properties": {
-                "new_password": {
+                "newPassword": {
                     "type": "string"
                 },
                 "password": {
@@ -3556,10 +3867,7 @@
         "request.UserSetAuthority": {
             "type": "object",
             "properties": {
-                "authority_id": {
-                    "type": "string"
-                },
-                "uuid": {
+                "authorityId": {
                     "type": "string"
                 }
             }
