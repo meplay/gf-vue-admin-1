@@ -3,7 +3,9 @@
 
 package config
 
-import "time"
+import (
+	"time"
+)
 
 type Dsn struct {
 	MaxIdleConnes   int           `mapstructure:"max-idle-connes" json:"maxIdleConnes" yaml:"max-idle-connes"`
@@ -28,6 +30,14 @@ func (d *Dsn) GetDefaultDsn(config string) string {
 	return ""
 }
 
+// GetEmptyDsn 获取主库的获取主库的空数据库dsn
+func (d *Dsn) GetEmptyDsn() string {
+	if len(d.Sources) > 0 {
+		return "host=" + d.Sources[0].Host + " user=" + d.Sources[0].Username + " password=" + d.Sources[0].Password + " dbname=" + d.Sources[0].DbName + " port=" + d.Sources[0].Port + " " + d.Sources[0].OtherConfig
+	}
+	return ""
+}
+
 func (d *Dsn) LinkDsn(config string, dbName string) string {
 	if len(d.Sources) >= 1 {
 		if d.Sources[0].DbName != dbName {
@@ -38,13 +48,6 @@ func (d *Dsn) LinkDsn(config string, dbName string) string {
 		return "host=" + d.Sources[0].Host + " user=" + d.Sources[0].Username + " password=" + d.Sources[0].Password + " dbname=" + d.Sources[0].DbName + " port=" + d.Sources[0].Port + " " + d.Sources[0].OtherConfig
 	}
 	return "host=" + d.Sources[0].Host + " user=" + d.Sources[0].Username + " password=" + d.Sources[0].Password + " dbname=" + d.Sources[0].DbName + " port=" + d.Sources[0].Port + " " + config
-}
-
-func (d *Dsn) DbName() string {
-	if len(d.Sources) >= 1 {
-		return d.Sources[0].DbName
-	}
-	return ""
 }
 
 type Source struct {
