@@ -31,9 +31,9 @@ func (d *Dsn) GetDefaultDsn(config string) string {
 }
 
 // GetEmptyDsn 获取主库的获取主库的空数据库dsn
-func (d *Dsn) GetEmptyDsn() string {
+func (d *Dsn) GetEmptyDsn(config string) string {
 	if len(d.Sources) > 0 {
-		return "host=" + d.Sources[0].Host + " user=" + d.Sources[0].Username + " password=" + d.Sources[0].Password + " dbname=" + d.Sources[0].DbName + " port=" + d.Sources[0].Port + " " + d.Sources[0].OtherConfig
+		return "host=" + d.Sources[0].Host + " user=" + d.Sources[0].Username + " password=" + d.Sources[0].Password + " port=" + d.Sources[0].Port + " " + config
 	}
 	return ""
 }
