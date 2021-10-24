@@ -26,7 +26,7 @@ func (s *user) Register(info *request.UserRegister) (data *system.User, err erro
 		return nil, errors.Wrap(err, "用户名已注册")
 	}
 	create := info.Create()
-	if err = entity.EncryptedPassword(); err != nil {
+	if err = create.EncryptedPassword(); err != nil {
 		return nil, errors.Wrap(err, "密码加密失败!")
 	}
 	if err = global.Db.Create(&create).Error; err != nil {
