@@ -5,6 +5,7 @@ type Config struct {
 	Zap     Zap     `mapstructure:"zap" json:"zap" yaml:"zap"`             // zap 日志
 	Gorm    Gorm    `mapstructure:"gorm" json:"gorm" yaml:"gorm"`          // gorm
 	Redis   Redis   `mapstructure:"redis" json:"redis" yaml:"redis"`       // redis
+	Email   Email   `mapstructure:"email" json:"email" yaml:"email"`       // email 邮箱
 	System  System  `mapstructure:"system" json:"system" yaml:"system"`    // system 系统
 	Casbin  Casbin  `mapstructure:"casbin" json:"casbin" yaml:"casbin"`    // casbin 权限
 	Captcha Captcha `mapstructure:"captcha" json:"captcha" yaml:"captcha"` // captcha 验证码
@@ -17,4 +18,3 @@ type Config struct {
 
 	AutoCode AutoCode `mapstructure:"auto-code" json:"autoCode" yaml:"auto-code"` // 代码生成器
 }
-
