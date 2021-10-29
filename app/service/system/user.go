@@ -18,21 +18,21 @@ var User = new(user)
 
 type user struct{}
 
-// Register
+// Register 用户注册
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *user) Register(info *request.UserRegister) (data *system.User, err error) {
 	var entity system.User
 	if !errors.Is(global.Db.Where("username = ?", info.Username).First(&entity).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
 		return nil, errors.Wrap(err, "用户名已注册")
 	}
-	create := info.Create()
-	if err = create.EncryptedPassword(); err != nil {
+	entity = info.Create()
+	if err = entity.EncryptedPassword(); err != nil {
 		return nil, errors.Wrap(err, "密码加密失败!")
 	}
-	if err = global.Db.Create(&create).Error; err != nil {
+	if err = global.Db.Create(&entity).Error; err != nil {
 		return nil, errors.Wrap(err, "用户注册失败!")
 	}
-	return &create, nil
+	return &entity, nil
 }
 
 // Login 用户登录接口

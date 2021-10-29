@@ -33,7 +33,7 @@ func (s *authority) Create(info *request.AuthorityCreate) (data *system.Authorit
 			entities[i].AuthorityId = info.AuthorityId
 		}
 		if err = tx.Create(&entities).Error; err != nil {
-			return errors.Wrap(err, "新角色添加默认菜单权限失败!")
+			return errors.Wrap(err, "新角色添加默认api权限失败!")
 		}
 		entity.Menus = menus.Menus
 		return nil
