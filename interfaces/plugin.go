@@ -9,3 +9,11 @@ type Plugin interface {
 	// Register 注册路由
 	Register(group *ghttp.RouterGroup)
 }
+
+// PluginInit 注册
+func PluginInit(group *ghttp.RouterGroup, plugins ...Plugin) {
+	for i := 0; i < len(plugins); i++ {
+		plugin := group.Group(plugins[i].RouterPath())
+		plugins[i].Register(plugin)
+	}
+}
