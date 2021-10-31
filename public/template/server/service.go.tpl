@@ -33,7 +33,7 @@ func (s *{{.Abbreviation}}) Update(info *request.{{.StructName}}Update) error {
 
 // Delete 删除{{.Description}}记录
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *{{.Abbreviation}}) Delete(info *common.GetByID) (err error) {
+func (s *{{.Abbreviation}}) Delete(info *common.GetByID) error {
 	return global.Db.Delete(&example.{{.StructName}}{}, info.ID).Error
 }
 

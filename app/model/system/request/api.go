@@ -13,6 +13,15 @@ type ApiCreate struct {
 	Description string `json:"description" example:"api中文描述"`
 }
 
+func (r *ApiCreate) Create() system.Api {
+	return system.Api{
+		Path:        r.Path,
+		Method:      r.Method,
+		ApiGroup:    r.ApiGroup,
+		Description: r.Description,
+	}
+}
+
 type ApiUpdate struct {
 	common.GetByID
 	Path        string `json:"path" example:"api路径"`

@@ -16,7 +16,7 @@ type {{.StructName}}Update struct {
 
 type {{.StructName}}Search struct{
     example.{{.StructName}}
-common.PageInfo
+    common.PageInfo
 }
 
 func (r *{{.StructName}}Search) Search() func(db *gorm.DB) *gorm.DB {
