@@ -7,22 +7,18 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-var _ interfaces.Router = (*_email)(nil)
+var _ interfaces.PrivateRouter = (*_email)(nil)
 
 type _email struct {
 	router   *ghttp.RouterGroup
 	response *response.Handler
 }
 
-func NewEmailRouter(router *ghttp.RouterGroup) interfaces.Router {
+func NewEmailPrivateRouter(router *ghttp.RouterGroup) interfaces.PrivateRouter {
 	return &_email{router: router, response: &response.Handler{}}
 }
 
-func (r *_email) Public() interfaces.Router {
-	return r
-}
-
-func (r *_email) Private() interfaces.Router {
+func (r *_email) Private() interfaces.PrivateRouter {
 	group := r.router.Middleware(middleware.OperationRecord)
 	{
 		group.POST("emailTest", r.response.Handler()(Api.Test))
@@ -31,10 +27,6 @@ func (r *_email) Private() interfaces.Router {
 	return r
 }
 
-func (r *_email) PublicWithoutRecord() interfaces.Router {
-	return r
-}
-
-func (r *_email) PrivateWithoutRecord() interfaces.Router {
+func (r *_email) PrivateWithoutRecord() interfaces.PrivateRouter {
 	return r
 }
