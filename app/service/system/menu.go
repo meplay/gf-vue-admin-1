@@ -115,7 +115,7 @@ func (s *_menu) GetTree() (list []system.Menu, err error) {
 
 // AddMenuAuthority 为角色增加menu树
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *_menu) AddMenuAuthority(info *request.AddMenuAuthority) error {
+func (s *_menu) AddMenuAuthority(info *request.MenuAddAuthority) error {
 	entity := info.ToAuthoritySetMenu()
 	return Authority.SetAuthorityMenu(&entity)
 }

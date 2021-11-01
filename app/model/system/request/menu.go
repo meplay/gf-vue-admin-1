@@ -26,12 +26,12 @@ func (r *MenuUpdate) Update() map[string]interface{} {
 	}
 }
 
-type AddMenuAuthority struct {
+type MenuAddAuthority struct {
 	Menus       []system.Menu `json:"menus"`
 	AuthorityId string        `json:"authorityId" example:"角色Id"`
 }
 
-func (r *AddMenuAuthority) ToAuthoritySetMenu() AuthoritySetMenu {
+func (r *MenuAddAuthority) ToAuthoritySetMenu() AuthoritySetMenu {
 	entity := system.Authority{Menus: r.Menus, AuthorityId: r.AuthorityId}
 	return AuthoritySetMenu{Authority: entity}
 }

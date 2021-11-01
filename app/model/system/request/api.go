@@ -34,7 +34,7 @@ func (r *ApiUpdate) Update() system.Api {
 	return system.Api{Path: r.Path, Method: r.Method, ApiGroup: r.ApiGroup, Description: r.Description}
 }
 
-type DeleteApi struct {
+type ApiDelete struct {
 	common.GetByID
 	Path   string `json:"path" example:"/api/create"`
 	Method string `json:"method" example:"请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"`

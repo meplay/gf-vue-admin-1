@@ -61,7 +61,7 @@ func (s *api) Update(info *request.ApiUpdate) error {
 
 // Delete 删除基础api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) Delete(info *request.DeleteApi) error {
+func (s *api) Delete(info *request.ApiDelete) error {
 	if err := global.Db.Delete(&system.Api{}, info.ID).Error; err != nil {
 		return errors.Wrap(err, "删除api失败!")
 	}

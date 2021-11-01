@@ -80,11 +80,11 @@ func (a *api) Update(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.DeleteApi true "请求参数"
+// @Param data body request.ApiDelete true "请求参数"
 // @Success 200 {object} response.Response{} "删除成功!"
 // @Router /api/deleteApi [post]
 func (a *api) Delete(r *ghttp.Request) *response.Response {
-	var info request.DeleteApi
+	var info request.ApiDelete
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
