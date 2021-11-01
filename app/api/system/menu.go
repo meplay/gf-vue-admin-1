@@ -134,11 +134,11 @@ func (a *menu) GetTree(r *ghttp.Request) *response.Response {
 // @Security ApiKeyAuth
 // @accept application/json
 // @Produce application/json
-// @Param data body request.AddMenuAuthority true "请求参数"
+// @Param data body request.MenuAddAuthority true "请求参数"
 // @Success 200 {object} response.Response{} "添加成功!"
 // @Router /menu/addMenuAuthority [post]
 func (a *menu) AddMenuAuthority(r *ghttp.Request) *response.Response {
-	var info request.AddMenuAuthority
+	var info request.MenuAddAuthority
 	if err := r.Parse(&info); err != nil {
 		return &response.Response{Error: err, Message: "添加失败!"}
 	}

@@ -9,10 +9,10 @@ import (
 type Plugin interface {
 	// RouterPath 用户返回注册路由
 	RouterPath() string
-	// PublicRegister 公开路由组
-	PublicRegister(group *ghttp.RouterGroup)
-	// PrivateRegister 私有路由组注册
-	PrivateRegister(group *ghttp.RouterGroup)
+	// PublicRouterGroup 公开路由组
+	PublicRouterGroup(group *ghttp.RouterGroup) PublicRouter
+	// PrivateRouterGroup 私有路由组注册
+	PrivateRouterGroup(group *ghttp.RouterGroup) PrivateRouter
 }
 
 // PublicInit 公开路由注册初始化
@@ -23,7 +23,9 @@ func PublicInit(group *ghttp.RouterGroup, plugins ...Plugin) {
 			path = "/" + path
 		}
 		plugin := group.Group(path)
-		plugins[i].PublicRegister(plugin)
+		if router := plugins[i].PublicRouterGroup(plugin); router != nil {
+			router.Public().PublicWithoutRecord()
+		}
 	}
 }
 
@@ -35,6 +37,8 @@ func PrivateInit(group *ghttp.RouterGroup, plugins ...Plugin) {
 			path = "/" + path
 		}
 		plugin := group.Group(path)
-		plugins[i].PrivateRegister(plugin)
+		if router := plugins[i].PrivateRouterGroup(plugin); router != nil {
+			router.Private().PrivateWithoutRecord()
+		}
 	}
 }

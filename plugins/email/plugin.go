@@ -1,6 +1,7 @@
 package email
 
 import (
+	"github.com/flipped-aurora/gf-vue-admin/interfaces"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -12,10 +13,10 @@ func (p *plugin) RouterPath() string {
 	return "email"
 }
 
-func (p *plugin) PublicRegister(public *ghttp.RouterGroup) {
-	NewEmailRouter(public).Public().PublicWithoutRecord()
+func (p *plugin) PublicRouterGroup(public *ghttp.RouterGroup) interfaces.PublicRouter {
+	return nil
 }
 
-func (p *plugin) PrivateRegister(private *ghttp.RouterGroup) {
-	NewEmailRouter(private).Private().PrivateWithoutRecord()
+func (p *plugin) PrivateRouterGroup(private *ghttp.RouterGroup) interfaces.PrivateRouter {
+	return NewEmailPrivateRouter(private)
 }

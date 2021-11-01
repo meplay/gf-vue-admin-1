@@ -19,7 +19,8 @@ func (s *api) Create(info *request.ApiCreate) error {
 	if !errors.Is(global.Db.Where("path = ? AND method = ?", info.Path, info.Method).First(&system.Api{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("存在相同api!")
 	}
-	if err := global.Db.Create(&info).Error; err != nil {
+	entity := info.Create()
+	if err := global.Db.Create(&entity).Error; err != nil {
 		return errors.Wrap(err, "创建失败!")
 	}
 	return nil
@@ -27,10 +28,10 @@ func (s *api) Create(info *request.ApiCreate) error {
 
 // First 根据id获取api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) First(info *common.GetByID) (entity *system.Api, err error) {
-	entity = &system.Api{}
-	err = global.Db.Where("id = ?", info.ID).First(entity).Error
-	return
+func (s *api) First(info *common.GetByID) (data *system.Api, err error) {
+	var entity system.Api
+	err = global.Db.Where("id = ?", info.ID).First(&entity).Error
+	return &entity, err
 }
 
 // Update 根据id更新api
@@ -60,7 +61,7 @@ func (s *api) Update(info *request.ApiUpdate) error {
 
 // Delete 删除基础api
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *api) Delete(info *request.DeleteApi) error {
+func (s *api) Delete(info *request.ApiDelete) error {
 	if err := global.Db.Delete(&system.Api{}, info.ID).Error; err != nil {
 		return errors.Wrap(err, "删除api失败!")
 	}
