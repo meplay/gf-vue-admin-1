@@ -42,7 +42,7 @@ func (s *api) Update(info *request.ApiUpdate) error {
 		return errors.Wrap(err, "找不到记录!")
 	}
 	if entity.Path != info.Path || entity.Method != info.Method {
-		if !errors.Is(global.Db.Where("path = ? AND method = ?", entity.Path, entity.Method).First(&system.Api{}).Error, gorm.ErrRecordNotFound) {
+		if !errors.Is(global.Db.Where("path = ? AND method = ?", info.Path, info.Method).First(&system.Api{}).Error, gorm.ErrRecordNotFound) {
 			return errors.New("存在相同api!")
 		}
 	}
