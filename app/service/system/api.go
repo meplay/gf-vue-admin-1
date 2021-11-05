@@ -51,7 +51,7 @@ func (s *api) Update(info *request.ApiUpdate) error {
 			return errors.Wrap(err, "Casbin 更新api信息失败!")
 		}
 		entity = info.Update()
-		if err := tx.Model(&system.Api{}).Where("id = ?", info.ID).Updates(&info).Error; err != nil {
+		if err := tx.Model(&system.Api{}).Where("id = ?", info.ID).Updates(&entity).Error; err != nil {
 			return errors.Wrap(err, "更新api信息失败!")
 		}
 		return nil
