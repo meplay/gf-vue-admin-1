@@ -9,5 +9,5 @@ type AuthorityMenu struct {
 }
 
 func (s *AuthorityMenu) TableName() string {
-	return "system_authority_menu"
+	return "view_system_authorities_menus"
 }
