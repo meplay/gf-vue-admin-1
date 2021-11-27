@@ -19,6 +19,7 @@ type AutoCodeStruct struct {
 	HumpPackageName    string   `json:"humpPackageName"`    // go文件名称
 	AutoMoveFile       bool     `json:"autoMoveFile"`       // 是否自动移动文件
 	AutoCreateApiToSql bool     `json:"autoCreateApiToSql"` // 是否自动创建api
+	DictTypes          []string `json:"-"`                  // 字典列表
 	Fields             []*Field `json:"fields"`
 
 	Injection []AutoCodeInjection `json:"-" gorm:"-"`
@@ -74,6 +75,22 @@ func (a *AutoCodeStruct) TrimSpace() {
 	utils.File.TrimSpace(a)
 	for i := 0; i < len(a.Fields); i++ {
 		utils.File.TrimSpace(a.Fields[i])
+	}
+}
+
+// MakeDictTypes 组装 Field 的 DictType 字段去重并添加到 DictTypes
+// Author [SliverHorn](https://github.com/SliverHorn)
+func (a *AutoCodeStruct) MakeDictTypes() {
+	length := len(a.Fields)
+	_map := make(map[string]string, length)
+	for i := 0; i < length; i++ {
+		if a.Fields[i].DictType != "" {
+			_map[a.Fields[i].DictType] = ""
+		}
+	}
+
+	for key, _ := range _map {
+		a.DictTypes = append(a.DictTypes, key)
 	}
 }
 

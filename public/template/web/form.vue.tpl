@@ -49,10 +49,8 @@ export default {
   data() {
     return {
       type: '',
-      {{- range .Fields}}
-          {{- if .DictType }}
-      {{ .DictType }}Options: [],
-          {{- end }}
+      {{- range $index, $element := .DictTypes}}
+      {{ $element }}Options: [],
       {{- end }}
       formData: {
         {{- range .Fields}}
@@ -80,16 +78,14 @@ export default {
     if (this.$route.query.id) {
       const res = await find{{.StructName}}({ ID: this.$route.query.id })
       if (res.code === 0) {
-        this.formData = res.data.{{.Abbreviation}}
+        this.formData = res.data.re{{.Abbreviation}}
         this.type = 'update'
       }
     } else {
       this.type = 'create'
     }
-    {{- range .Fields }}
-      {{- if .DictType }}
-    await this.getDict('{{.DictType}}')
-      {{- end }}
+    {{- range $index, $element := .DictTypes }}
+    await this.getDict('{{$element}}')
     {{- end }}
   },
   methods: {
