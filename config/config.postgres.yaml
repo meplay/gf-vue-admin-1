@@ -80,8 +80,8 @@ auto-code:
     root: ''
     api: '/app/api/example'
     boot: '/boot'
-    router: '/app/router/example'
     model: '/app/model/example'
+    router: '/app/router/example'
     request: '/app/model/example/request'
     service: '/app/service/example'
   web:
@@ -91,3 +91,4 @@ auto-code:
     form: '/view'
     table: '/view'
   restart: false
+  rubbish-path: ''

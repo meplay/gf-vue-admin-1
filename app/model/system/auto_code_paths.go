@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	"github.com/flipped-aurora/gf-vue-admin/library/types"
 	"github.com/pkg/errors"
 	"path/filepath"
 	"time"
@@ -15,7 +16,11 @@ type AutoCodePath struct {
 }
 
 func (a *AutoCodePath) RmFilePath() string {
-	return filepath.Join(global.Config.AutoCode.Root, "rm_file", time.Now().Format("20060102"), filepath.Base(filepath.Dir(filepath.Dir(a.Filepath))), filepath.Base(filepath.Dir(a.Filepath)), filepath.Base(a.Filepath))
+	path := global.Config.AutoCode.RubbishPath
+	if path == "" {
+		path = global.Config.AutoCode.Root
+	}
+	return filepath.Join(path, "files", time.Now().Format(types.DateTimeFormat), filepath.Base(filepath.Dir(filepath.Dir(a.Filepath))), filepath.Base(filepath.Dir(a.Filepath)), filepath.Base(a.Filepath))
 }
 
 type AutoCodePaths []AutoCodePath
