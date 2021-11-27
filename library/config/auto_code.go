@@ -8,6 +8,8 @@ type AutoCode struct {
 	Server Server `mapstructure:"server" json:"server" yaml:"server"`
 
 	Restart bool `mapstructure:"restart" json:"restart" yaml:"restart"`
+
+	RubbishPath string `mapstructure:"rubbish-path" json:"rubbishPath" yaml:"rubbish-path"`
 }
 
 type Server struct {
