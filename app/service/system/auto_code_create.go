@@ -13,6 +13,7 @@ import (
 // Create 创建代码
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *autoCode) Create(info *request.AutoCodeCreate) error {
+	info.MakeDictTypes()
 
 	if info.AutoMoveFile && AutoCodeHistory.Repeat(info.StructName) {
 		return errors.New("重复创建!")

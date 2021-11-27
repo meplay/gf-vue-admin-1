@@ -21,7 +21,7 @@ func (s *_server) Initialize() {
 	server.Plugin(&swagger.Swagger{})
 	zap.L().Info(fmt.Sprintf(`
 	欢迎使用 Gf-Vue-Admin
-	当前版本:V2.4.5
+	当前版本:V1.0.1
 	加群方式:微信号：SliverHorn QQ群：1040044540
 	默认自动化文档地址:http://127.0.0.1%s/swagger
 	默认前端文件运行地址:http://127.0.0.1:8080

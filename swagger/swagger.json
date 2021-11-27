@@ -4,7 +4,7 @@
         "description": "This is a GF-VUE-ADMIN Server",
         "title": "GF-VUE-ADMIN Swagger Docs",
         "contact": {},
-        "version": "2.4.5"
+        "version": "1.0.1"
     },
     "basePath": "/",
     "paths": {
@@ -70,7 +70,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.DeleteApi"
+                            "$ref": "#/definitions/request.ApiDelete"
                         }
                     }
                 ],
@@ -1207,14 +1207,12 @@
                     {
                         "type": "string",
                         "example": "int 页码",
-                        "description": "页码",
                         "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "example": "int 每页大小",
-                        "description": "每页大小",
                         "name": "pageSize",
                         "in": "query"
                     }
@@ -1277,6 +1275,65 @@
                         "description": "删除成功!",
                         "schema": {
                             "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/email/emailTest": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PluginEmail"
+                ],
+                "summary": "发送测试邮件",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"发送成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/email/sendEmail": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PluginEmail"
+                ],
+                "summary": "发送邮件",
+                "parameters": [
+                    {
+                        "description": "请求参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/email.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"发送成功\"}",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -1507,7 +1564,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.AddMenuAuthority"
+                            "$ref": "#/definitions/request.MenuAddAuthority"
                         }
                     }
                 ],
@@ -2003,14 +2060,12 @@
                     {
                         "type": "string",
                         "example": "int 页码",
-                        "description": "页码",
                         "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "example": "int 每页大小",
-                        "description": "每页大小",
                         "name": "pageSize",
                         "in": "query"
                     },
@@ -2239,14 +2294,12 @@
                     {
                         "type": "string",
                         "example": "int 页码",
-                        "description": "页码",
                         "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "example": "int 每页大小",
-                        "description": "每页大小",
                         "name": "pageSize",
                         "in": "query"
                     },
@@ -2525,14 +2578,12 @@
                     {
                         "type": "string",
                         "example": "int 页码",
-                        "description": "页码",
                         "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "example": "int 每页大小",
-                        "description": "每页大小",
                         "name": "pageSize",
                         "in": "query"
                     },
@@ -3000,7 +3051,6 @@
             "type": "object",
             "properties": {
                 "authorityId": {
-                    "description": "角色ID",
                     "type": "string",
                     "example": "角色ID"
                 }
@@ -3019,7 +3069,6 @@
             "type": "object",
             "properties": {
                 "ids": {
-                    "description": "主键Ids",
                     "type": "array",
                     "items": {
                         "type": "number"
@@ -3031,14 +3080,29 @@
             "type": "object",
             "properties": {
                 "page": {
-                    "description": "页码",
                     "type": "string",
                     "example": "int 页码"
                 },
                 "pageSize": {
-                    "description": "每页大小",
                     "type": "string",
                     "example": "int 每页大小"
+                }
+            }
+        },
+        "email.Request": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "description": "邮件内容",
+                    "type": "string"
+                },
+                "subject": {
+                    "description": "邮件标题",
+                    "type": "string"
+                },
+                "to": {
+                    "description": "邮件发送给谁",
+                    "type": "string"
                 }
             }
         },
@@ -3103,21 +3167,6 @@
                 }
             }
         },
-        "request.AddMenuAuthority": {
-            "type": "object",
-            "properties": {
-                "authorityId": {
-                    "type": "string",
-                    "example": "角色Id"
-                },
-                "menus": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/system.Menu"
-                    }
-                }
-            }
-        },
         "request.ApiCreate": {
             "type": "object",
             "properties": {
@@ -3128,6 +3177,23 @@
                 "description": {
                     "type": "string",
                     "example": "api中文描述"
+                },
+                "method": {
+                    "type": "string",
+                    "example": "请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "/api/create"
+                }
+            }
+        },
+        "request.ApiDelete": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "uint 主键ID"
                 },
                 "method": {
                     "type": "string",
@@ -3163,12 +3229,10 @@
                     "example": "排序"
                 },
                 "page": {
-                    "description": "页码",
                     "type": "string",
                     "example": "int 页码"
                 },
                 "pageSize": {
-                    "description": "每页大小",
                     "type": "string",
                     "example": "int 每页大小"
                 },
@@ -3380,12 +3444,10 @@
             "type": "object",
             "properties": {
                 "page": {
-                    "description": "页码",
                     "type": "string",
                     "example": "int 页码"
                 },
                 "pageSize": {
-                    "description": "每页大小",
                     "type": "string",
                     "example": "int 每页大小"
                 }
@@ -3483,23 +3545,6 @@
                 }
             }
         },
-        "request.DeleteApi": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "uint 主键ID"
-                },
-                "method": {
-                    "type": "string",
-                    "example": "请求方法:创建POST(默认)|查看GET|更新PUT|删除DELETE"
-                },
-                "path": {
-                    "type": "string",
-                    "example": "/api/create"
-                }
-            }
-        },
         "request.DictionaryCreate": {
             "type": "object",
             "properties": {
@@ -3593,6 +3638,21 @@
                 "type": {
                     "type": "string",
                     "example": "字典名(英)"
+                }
+            }
+        },
+        "request.MenuAddAuthority": {
+            "type": "object",
+            "properties": {
+                "authorityId": {
+                    "type": "string",
+                    "example": "角色Id"
+                },
+                "menus": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.Menu"
+                    }
                 }
             }
         },
