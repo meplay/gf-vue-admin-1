@@ -14,6 +14,8 @@ import (
 // Preview 预览创建代码
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (s *autoCode) Preview(info *request.AutoCodeCreate) (map[string]string, error) {
+	info.MakeDictTypes()
+
 	dataList, _, needMkdir, err := s.getNeedList(&info.AutoCodeStruct)
 	if err != nil {
 		return nil, err
@@ -22,7 +24,7 @@ func (s *autoCode) Preview(info *request.AutoCodeCreate) (map[string]string, err
 	if err = utils.Directory.Creates(needMkdir...); err != nil {
 		return nil, err
 	} // 写入文件前，先创建文件夹
-	
+
 	length := len(dataList)
 	ret := make(map[string]string, length) // 创建map
 
