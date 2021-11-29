@@ -89,7 +89,7 @@ func (a *AutoCodeStruct) MakeDictTypes() {
 		}
 	}
 
-	for key, _ := range _map {
+	for key := range _map {
 		a.DictTypes = append(a.DictTypes, key)
 	}
 }
