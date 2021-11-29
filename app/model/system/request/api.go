@@ -65,10 +65,13 @@ func (r *ApiSearch) Search() func(db *gorm.DB) *gorm.DB {
 			db = db.Where("api_group = ?", r.ApiGroup)
 		}
 		if r.Order != "" {
-			if r.Desc {
-				db = db.Order(r.Order + " desc")
-			} else {
-				db = db.Order(r.Order)
+			_map := map[string]bool{"id": true, "path": true, "api_group": true, "description": true, "method": true}
+			if _map[r.Order] {
+				if r.Desc {
+					db = db.Order(r.Order + " desc")
+				} else {
+					db = db.Order(r.Order)
+				}
 			}
 		} else {
 			db = db.Order("api_group")
