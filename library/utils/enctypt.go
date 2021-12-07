@@ -7,7 +7,7 @@ import (
 
 var Encrypt = new(encrypt)
 
-type encrypt struct {}
+type encrypt struct{}
 
 func (e *encrypt) Md5(str []byte, b ...byte) string {
 	h := md5.New()

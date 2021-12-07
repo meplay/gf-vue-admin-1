@@ -1,6 +1,9 @@
 package middleware
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/service/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/auth"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
@@ -8,8 +11,6 @@ import (
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"go.uber.org/zap"
-	"strconv"
-	"time"
 )
 
 // JwtAuth jwt 中间件

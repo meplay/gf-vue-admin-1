@@ -1,6 +1,8 @@
 package boot
 
 import (
+	"os"
+
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/example"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
@@ -9,7 +11,6 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"os"
 )
 
 var Gorm = new(_gorm)

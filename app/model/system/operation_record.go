@@ -1,8 +1,9 @@
 package system
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"time"
+
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
 )
 
 type OperationRecord struct {

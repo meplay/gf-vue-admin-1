@@ -2,14 +2,15 @@ package middleware
 
 import (
 	"bytes"
+	"io"
+	"strconv"
+	"time"
+
 	model "github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/app/service/system"
 	"github.com/gogf/gf/net/ghttp"
 	"go.uber.org/zap"
-	"io"
-	"strconv"
-	"time"
 )
 
 func OperationRecord(r *ghttp.Request) {

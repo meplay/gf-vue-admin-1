@@ -1,14 +1,15 @@
 package system
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
-	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
-	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
+	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
 )
 
 var AutoCode = new(autoCode)

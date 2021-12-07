@@ -1,13 +1,14 @@
 package system
 
 import (
+	"os"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
-	"os"
 )
 
 // Create 创建代码
@@ -30,7 +31,7 @@ func (s *autoCode) Create(info *request.AutoCodeCreate) error {
 
 	for _, value := range dataList {
 		var file *os.File
-		file, err = os.OpenFile(value.AutoCodePath, os.O_CREATE|os.O_WRONLY, 0755)
+		file, err = os.OpenFile(value.AutoCodePath, os.O_CREATE|os.O_WRONLY, 0o755)
 		if err != nil {
 			return errors.Wrap(err, "打开模板文件失败!")
 		}

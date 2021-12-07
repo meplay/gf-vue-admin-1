@@ -1,10 +1,11 @@
 package config
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"path"
 	"strings"
 	"time"
+
+	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 )
 
 type Local struct {

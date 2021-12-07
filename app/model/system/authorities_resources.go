@@ -9,4 +9,3 @@ type AuthoritiesResources struct {
 func (a *AuthoritiesResources) TableName() string {
 	return "system_authorities_resources"
 }
-

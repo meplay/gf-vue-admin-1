@@ -3,17 +3,18 @@ package oss
 import (
 	"context"
 	"fmt"
-	"github.com/flipped-aurora/gf-vue-admin/interfaces"
-	"github.com/flipped-aurora/gf-vue-admin/library/global"
-	"github.com/pkg/errors"
-	"github.com/tencentyun/cos-go-sdk-v5"
-	"go.uber.org/zap"
 	"mime/multipart"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/flipped-aurora/gf-vue-admin/interfaces"
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	"github.com/pkg/errors"
+	"github.com/tencentyun/cos-go-sdk-v5"
+	"go.uber.org/zap"
 )
 
 var _ interfaces.Oss = (*tencent)(nil)

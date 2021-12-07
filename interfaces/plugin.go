@@ -1,8 +1,9 @@
 package interfaces
 
 import (
-	"github.com/gogf/gf/net/ghttp"
 	"strings"
+
+	"github.com/gogf/gf/net/ghttp"
 )
 
 // Plugin 插件模式接口化

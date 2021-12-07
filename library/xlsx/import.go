@@ -1,9 +1,10 @@
 package xlsx
 
 import (
+	"mime/multipart"
+
 	_errors "github.com/pkg/errors"
 	"github.com/xuri/excelize/v2"
-	"mime/multipart"
 )
 
 type Import interface {

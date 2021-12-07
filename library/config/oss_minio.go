@@ -15,6 +15,7 @@ type Minio struct {
 
 	UseSsl bool `mapstructure:"use-ssl" json:"useSsl" yaml:"use-ssl"`
 }
+
 // Filename 文件名格式 自己可以改 建议保证唯一性
 // Author [SliverHorn](https://github.com/SliverHorn)
 func (m *Minio) Filename(filename string) string {

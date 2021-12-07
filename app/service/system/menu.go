@@ -1,13 +1,14 @@
 package system
 
 import (
+	"strconv"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
-	"strconv"
 )
 
 var Menu = new(_menu)

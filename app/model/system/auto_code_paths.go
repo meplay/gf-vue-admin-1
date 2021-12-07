@@ -4,11 +4,12 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"fmt"
+	"path/filepath"
+	"time"
+
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/types"
 	"github.com/pkg/errors"
-	"path/filepath"
-	"time"
 )
 
 type AutoCodePath struct {

@@ -1,9 +1,10 @@
 package internal
 
 import (
+	"time"
+
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"go.uber.org/zap/zapcore"
-	"time"
 )
 
 var Zap = new(_zap)

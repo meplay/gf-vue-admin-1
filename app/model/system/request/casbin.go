@@ -14,7 +14,7 @@ type CasbinInReceive struct {
 }
 
 type CasbinSearch struct {
-	AuthorityId string       `json:"authorityId"` // 权限id
+	AuthorityId string `json:"authorityId"` // 权限id
 }
 
 func (r *CasbinSearch) Search() func(db *gorm.DB) *gorm.DB {

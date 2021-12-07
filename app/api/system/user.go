@@ -1,6 +1,8 @@
 package system
 
 import (
+	"strconv"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/app/service/system"
 	"github.com/flipped-aurora/gf-vue-admin/library/auth"
@@ -9,7 +11,6 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/library/response"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
-	"strconv"
 )
 
 var User = new(user)
@@ -57,7 +58,6 @@ func (a *user) Login(r *ghttp.Request) *response.Response {
 		return &response.Response{Error: err, Message: "登录失败!"}
 	}
 	return &response.Response{Data: data, Message: "登录成功!"}
-
 }
 
 // GetUserInfo

@@ -1,8 +1,9 @@
 package interfaces
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Gorm interface {

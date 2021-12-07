@@ -1,11 +1,12 @@
 package utils
 
 import (
-	"github.com/pkg/errors"
 	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
+
+	"github.com/pkg/errors"
 )
 
 var Server = new(server)

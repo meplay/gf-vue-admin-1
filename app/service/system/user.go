@@ -1,6 +1,8 @@
 package system
 
 import (
+	"time"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/response"
@@ -11,7 +13,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
-	"time"
 )
 
 var User = new(user)
@@ -166,7 +167,6 @@ func (s *user) tokenNext(user *system.User) (*response.UserLogin, error) {
 		return &entity, nil
 	} else if _err != nil {
 		return nil, errors.Wrap(_err, "设置登录状态失败!")
-
 	} else {
 		if !JwtBlacklist.IsBlacklist(jwtStr) {
 			return nil, errors.Wrap(_err, "jwt作废失败!")

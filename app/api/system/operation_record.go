@@ -46,7 +46,6 @@ func (a *operationRecord) First(r *ghttp.Request) *response.Response {
 		return &response.Response{Error: err, MessageCode: response.ErrorFirst}
 	}
 	return &response.Response{Data: g.Map{"resysOperationRecord": data}, MessageCode: response.SuccessFirst}
-
 }
 
 // Delete

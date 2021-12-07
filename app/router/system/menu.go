@@ -41,9 +41,9 @@ func (r *menu) PublicWithoutRecord() interfaces.Router {
 func (r *menu) PrivateWithoutRecord() interfaces.Router {
 	group := r.router.Group("/menu")
 	{
-		group.POST("getBaseMenuById", r.response.Handler()(system.Menu.First))             // 根据id获取菜单
-		group.POST("getMenuList", r.response.Handler()(system.Menu.GetList))               // 分页获取基础menu列表
-		group.POST("getBaseMenuTree", r.response.Handler()(system.Menu.GetTree))           // 获取用户动态路由
+		group.POST("getBaseMenuById", r.response.Handler()(system.Menu.First))   // 根据id获取菜单
+		group.POST("getMenuList", r.response.Handler()(system.Menu.GetList))     // 分页获取基础menu列表
+		group.POST("getBaseMenuTree", r.response.Handler()(system.Menu.GetTree)) // 获取用户动态路由
 
 	}
 	return r

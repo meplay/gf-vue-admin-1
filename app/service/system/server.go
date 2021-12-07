@@ -1,13 +1,14 @@
 package system
 
 import (
+	"runtime"
+	"time"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/response"
 	"github.com/pkg/errors"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"
-	"runtime"
-	"time"
 )
 
 const (

@@ -1,6 +1,9 @@
 package system
 
 import (
+	"path/filepath"
+	"strings"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/response"
@@ -8,8 +11,6 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/utils"
 	"github.com/pkg/errors"
-	"path/filepath"
-	"strings"
 )
 
 var AutoCodeHistory = new(autoCodeHistory)

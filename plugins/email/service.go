@@ -3,9 +3,10 @@ package email
 import (
 	"crypto/tls"
 	"fmt"
-	"github.com/jordan-wright/email"
 	"net/smtp"
 	"strings"
+
+	"github.com/jordan-wright/email"
 )
 
 var Service = new(service)
