@@ -3,16 +3,17 @@ package oss
 import (
 	"context"
 	"fmt"
+	"mime/multipart"
+	"os"
+	"path/filepath"
+	"time"
+
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/gogf/gf/frame/g"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
-	"mime/multipart"
-	"os"
-	"path/filepath"
-	"time"
 )
 
 var Minio = new(_minio)

@@ -48,7 +48,7 @@ func (f *file) Move(src string, dst string) error {
 Redirect:
 	_, err = os.Stat(dir)
 	if err != nil {
-		if err = os.MkdirAll(dir, 0755); err != nil {
+		if err = os.MkdirAll(dir, 0o755); err != nil {
 			return err
 		}
 		if !revoke {

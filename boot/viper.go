@@ -3,6 +3,11 @@ package boot
 import (
 	"flag"
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+	"time"
+
 	boot "github.com/flipped-aurora/gf-vue-admin/boot/gorm"
 	"github.com/flipped-aurora/gf-vue-admin/library/constant"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
@@ -11,10 +16,6 @@ import (
 	"github.com/gogf/gf/util/gmode"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
-	"log"
-	"os"
-	"path/filepath"
-	"time"
 )
 
 var Viper = new(_viper)
@@ -62,7 +63,7 @@ func (v *_viper) Initialize(path ...string) {
 		fmt.Println(`您正在使用func Viper()传递的值, 配置文件的路径为: `, v.path)
 	}
 
-	var __viper = viper.New()
+	__viper := viper.New()
 	__viper.SetConfigFile(v.path)
 	if err := __viper.ReadInConfig(); err != nil {
 		fmt.Println("读取文件失败!", g.Map{"path": v.path})

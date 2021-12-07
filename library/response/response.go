@@ -2,6 +2,7 @@ package response
 
 import (
 	"fmt"
+
 	"github.com/gogf/gf/net/ghttp"
 	"go.uber.org/zap"
 )
@@ -20,8 +21,10 @@ const (
 	SUCCESS = 0
 )
 
-type empty struct{}
-type Handler struct{}
+type (
+	empty   struct{}
+	Handler struct{}
+)
 
 type handler func(r *ghttp.Request) *Response
 

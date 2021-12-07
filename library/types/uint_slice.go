@@ -4,5 +4,3 @@ package types
 type UintSlice struct {
 	Uints []uint
 }
-
-

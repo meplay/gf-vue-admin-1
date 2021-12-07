@@ -2,12 +2,13 @@ package utils
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/ioutil"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 var Injection = new(injection)
@@ -33,12 +34,12 @@ func (i *injection) AutoCode(filepath string, funcName string, codeData string) 
 		return parseErr
 	}
 	codeData = strings.TrimSpace(codeData)
-	var codeStartPos = -1
-	var codeEndPos = srcDataLen
+	codeStartPos := -1
+	codeEndPos := srcDataLen
 	var expectedFunction *ast.FuncDecl
 
-	var startCommentPos = -1
-	var endCommentPos = srcDataLen
+	startCommentPos := -1
+	endCommentPos := srcDataLen
 
 	if funcName != "" {
 		for _, decl := range astFile.Decls {
@@ -104,7 +105,7 @@ func (i *injection) AutoCode(filepath string, funcName string, codeData string) 
 	srcData = append(append(srcData[:indexPos], insertData...), remainData...)
 
 	// 写回数据
-	return ioutil.WriteFile(filepath, srcData, 0600)
+	return ioutil.WriteFile(filepath, srcData, 0o600)
 }
 
 func (i *injection) checkExist(srcData *[]byte, startPos int, endPos int, blockStmt *ast.BlockStmt, target string) bool {
@@ -152,7 +153,7 @@ func (i *injection) ClearAutoCode(filepath string, codeData string) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(filepath, srcData, 0600)
+	return ioutil.WriteFile(filepath, srcData, 0o600)
 }
 
 func (i *injection) cleanCode(clearCode string, srcData string) ([]byte, error) {

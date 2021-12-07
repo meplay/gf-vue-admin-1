@@ -2,10 +2,11 @@ package store
 
 import (
 	"context"
+	"time"
+
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/mojocn/base64Captcha"
 	"go.uber.org/zap"
-	"time"
 )
 
 func NewRedisStore() *_redis {

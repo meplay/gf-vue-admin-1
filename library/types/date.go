@@ -4,8 +4,9 @@ import (
 	"database/sql"
 	"database/sql/driver"
 	"fmt"
-	"go.uber.org/zap"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 const DateFormat = "2006-01-02"

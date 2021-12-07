@@ -1,12 +1,13 @@
 package internal
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/library/global"
-	logs "github.com/lestrrat-go/file-rotatelogs"
-	"go.uber.org/zap/zapcore"
 	"os"
 	"path"
 	"time"
+
+	"github.com/flipped-aurora/gf-vue-admin/library/global"
+	logs "github.com/lestrrat-go/file-rotatelogs"
+	"go.uber.org/zap/zapcore"
 )
 
 // GetWriteSyncer zap logger中加入file-rotatelogs

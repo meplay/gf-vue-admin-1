@@ -1,14 +1,15 @@
 package system
 
 import (
-	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
-	"github.com/flipped-aurora/gf-vue-admin/library/utils"
-	"github.com/pkg/errors"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
+	"github.com/flipped-aurora/gf-vue-admin/library/utils"
+	"github.com/pkg/errors"
+	"go.uber.org/zap"
 )
 
 // Preview 预览创建代码
@@ -34,7 +35,7 @@ func (s *autoCode) Preview(info *request.AutoCodeCreate) (map[string]string, err
 			continue
 		}
 		var file *os.File
-		file, err = os.OpenFile(dataList[i].AutoCodePath, os.O_CREATE|os.O_WRONLY, 0755)
+		file, err = os.OpenFile(dataList[i].AutoCodePath, os.O_CREATE|os.O_WRONLY, 0o755)
 		if err != nil {
 			return nil, errors.Wrap(err, "打开文件失败!")
 		}
@@ -42,7 +43,7 @@ func (s *autoCode) Preview(info *request.AutoCodeCreate) (map[string]string, err
 			return nil, err
 		}
 		_ = file.Close()
-		file, err = os.OpenFile(dataList[i].AutoCodePath, os.O_CREATE|os.O_RDONLY, 0755)
+		file, err = os.OpenFile(dataList[i].AutoCodePath, os.O_CREATE|os.O_RDONLY, 0o755)
 		if err != nil {
 			return nil, err
 		}

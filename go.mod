@@ -12,6 +12,7 @@ require (
 	github.com/gogf/gf v1.16.6
 	github.com/gogf/swagger v1.3.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/huaweicloud/huaweicloud-sdk-go-obs v3.21.8+incompatible
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible

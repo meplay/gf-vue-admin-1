@@ -1,8 +1,9 @@
 package utils
 
 import (
-	"go.uber.org/zap"
 	"os"
+
+	"go.uber.org/zap"
 )
 
 var Directory = new(directory)

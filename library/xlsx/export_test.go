@@ -6,7 +6,6 @@ import (
 )
 
 func TestExportExcel(t *testing.T) {
-
 	t.Run("", func(t *testing.T) {
 		a1 := []string{"用户名", "性别", "年龄"}
 		rows := [][]interface{}{
@@ -25,5 +24,4 @@ func TestExportExcel(t *testing.T) {
 		}
 		fmt.Sprintln(err)
 	})
-
 }

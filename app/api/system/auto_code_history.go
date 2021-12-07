@@ -52,7 +52,6 @@ func (a *autoCodeHistory) Delete(r *ghttp.Request) *response.Response {
 		return &response.Response{Error: err, MessageCode: response.ErrorDeleted}
 	}
 	return &response.Response{MessageCode: response.SuccessDeleted}
-
 }
 
 // RollBack

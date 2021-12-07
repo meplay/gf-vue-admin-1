@@ -1,14 +1,15 @@
 package example
 
 import (
+	"mime/multipart"
+	"strings"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/example"
 	"github.com/flipped-aurora/gf-vue-admin/app/model/example/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/common"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/flipped-aurora/gf-vue-admin/library/oss"
 	"github.com/pkg/errors"
-	"mime/multipart"
-	"strings"
 )
 
 var File = new(file)

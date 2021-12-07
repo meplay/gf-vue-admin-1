@@ -2,6 +2,9 @@ package system
 
 import (
 	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
 	adapter "github.com/casbin/gorm-adapter/v3"
@@ -9,8 +12,6 @@ import (
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/request"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
 	"github.com/pkg/errors"
-	"strings"
-	"sync"
 )
 
 var (
