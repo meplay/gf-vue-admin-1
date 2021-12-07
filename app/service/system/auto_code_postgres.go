@@ -4,6 +4,8 @@
 package system
 
 import (
+	"strings"
+
 	"github.com/flipped-aurora/gf-vue-admin/app/model/system/response"
 	"github.com/flipped-aurora/gf-vue-admin/library/constant"
 	"github.com/flipped-aurora/gf-vue-admin/library/global"
@@ -39,6 +41,42 @@ func (s *autoCode) GetColumns(tableName string, dbName string) (columns *[]respo
 	if _err != nil {
 		return nil, err
 	}
+	sql := `
+		SELECT columns.COLUMN_NAME                                                                                      as column_name,
+		   columns.DATA_TYPE                                                                                        as data_type,
+		   CASE
+			   columns.DATA_TYPE
+			   WHEN 'text' THEN
+				   concat_ws('', '', columns.CHARACTER_MAXIMUM_LENGTH)
+			   WHEN 'varchar' THEN
+				   concat_ws('', '', columns.CHARACTER_MAXIMUM_LENGTH)
+			   WHEN 'smallint' THEN
+				   concat_ws(',', columns.NUMERIC_PRECISION, columns.NUMERIC_SCALE)
+			   WHEN 'decimal' THEN
+				   concat_ws(',', columns.NUMERIC_PRECISION, columns.NUMERIC_SCALE)
+			   WHEN 'integer' THEN
+				   concat_ws('', '', columns.NUMERIC_PRECISION)
+			   WHEN 'bigint' THEN
+				   concat_ws('', '', columns.NUMERIC_PRECISION)
+			   ELSE ''
+			   END                                                                                                  AS data_type_long,
+		   (select description.description
+			from pg_description description
+			where description.objoid = (select attribute.attrelid
+										from pg_attribute attribute
+										where attribute.attrelid =
+											  (select oid from pg_class class where class.relname = '@table_name') and attname =columns.COLUMN_NAME )
+			  and description.objsubid = (select attribute.attnum
+										  from pg_attribute attribute
+										  where attribute.attrelid =
+												(select oid from pg_class class where class.relname = '@table_name') and attname =columns.COLUMN_NAME )) as column_comment
+		FROM INFORMATION_SCHEMA.COLUMNS columns
+		WHERE table_catalog = '@table_catalog'
+		  and table_schema = 'public'
+		  and table_name = '@table_name';
+	`
+	sql = strings.ReplaceAll(sql, "@table_catalog", dbName)
+	sql = strings.ReplaceAll(sql, "@table_name", tableName)
 	err = db.Raw(constant.GetColumnsSql, dbName, "public", tableName).Scan(&columns).Error
 	return columns, err
 }
