@@ -30,17 +30,17 @@ func (l *local) Upload(file *multipart.FileHeader) (filepath string, key string,
 
 	if l.err = os.MkdirAll(global.Config.Local.Path, os.ModePerm); l.err != nil { // 尝试创建此路径
 		g.Log().Error("function os.MkdirAll() Failed!", g.Map{"err": l.err})
-		return filepath, key, err
+		return filepath, key, l.err
 	}
 
 	if l.file, l.err = file.Open(); l.err != nil { // 读取文件
 		g.Log().Error("function file.Open() Failed!", g.Map{"err": l.err})
-		return filepath, key, err
+		return filepath, key, l.err
 	}
 
 	if l.out, l.err = os.Create(filepath); l.err != nil {
 		g.Log().Error("function os.Create() Failed!", g.Map{"err": l.err})
-		return filepath, key, err
+		return filepath, key, l.err
 	}
 
 	defer func() { // multipart.File 对象 defer 关闭
@@ -48,9 +48,9 @@ func (l *local) Upload(file *multipart.FileHeader) (filepath string, key string,
 		_ = l.file.Close()
 	}()
 
-	if _, l.err = io.Copy(l.out, l.file); l.err != nil {// 传输（拷贝）文件
+	if _, l.err = io.Copy(l.out, l.file); l.err != nil { // 传输（拷贝）文件
 		g.Log().Error("function io.Copy Failed!", g.Map{"err": l.err})
-		return filepath, key, err
+		return filepath, key, l.err
 	}
 
 	return filepath, filename, nil
@@ -61,9 +61,9 @@ func (l *local) Delete(key string) error {
 	filepath := global.Config.Local.Path + "/" + key
 
 	if strings.Contains(filepath, global.Config.Local.Path) {
-		if err := os.Remove(filepath); err != nil {
-			g.Log().Error("本地文件删除失败!", g.Map{"err": err})
-			return err
+		if l.err = os.Remove(filepath); l.err != nil {
+			g.Log().Error("本地文件删除失败!", g.Map{"err": l.err})
+			return l.err
 		}
 	}
 	return nil
